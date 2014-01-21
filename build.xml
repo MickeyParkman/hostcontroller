@@ -56,9 +56,9 @@
 
   <target name="jar" depends="compile">
     <manifest file="MANIFEST.MF">
-       <attribute name="Main-Class" value="dialtest.DialTest"/>
+       <attribute name="Main-Class" value="mainhost.Main"/>
     </manifest>
-    <jar destfile="dialtest.jar" basedir="${build-dir}" manifest="MANIFEST.MF">
+    <jar destfile="mainhost.jar" basedir="${build-dir}" manifest="MANIFEST.MF">
       <zipgroupfileset dir="${lib-dir}" includes="**/*.jar"/>
     </jar>
   </target>
