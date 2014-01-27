@@ -7,7 +7,7 @@
 package mainhost;
 
 import ParameterSelection.ParamSelectionFrame;
-import ParameterSelection.NewJFrame1;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -106,9 +106,7 @@ public class MainHost extends javax.swing.JFrame {
 
     private void EntryWizard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntryWizard1ActionPerformed
         // TODO add your handling code here:
-        NewJFrame1 b = new NewJFrame1();
-        b.setVisible(true);
-        
+        JOptionPane.showMessageDialog(rootPane, "This is where the Entry Wizard needs to go.");       
     }//GEN-LAST:event_EntryWizard1ActionPerformed
 
     /**

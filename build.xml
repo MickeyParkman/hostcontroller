@@ -41,7 +41,7 @@
   </target>
 
   <target name="run" depends="compile">
-    <java classname="dialtest.DialTest">
+    <java classname="mainhost.Main">
       <classpath refid="classpath"/>
     </java>
   </target>

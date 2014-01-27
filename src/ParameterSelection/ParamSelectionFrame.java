@@ -33,330 +33,307 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        parameterSelectionFrame1 = new ParameterSelectionFrame();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        HeaderPanel = new javax.swing.JPanel();
+        titleLabel = new javax.swing.JLabel();
+        navigateEntryWizardButton = new javax.swing.JButton();
+        previousLaunchesPanel = new javax.swing.JPanel();
+        previousLaunchesScrollPane = new javax.swing.JScrollPane();
+        submitButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        environmentalVariablePanel = new javax.swing.JPanel();
+        environmentalVariablesTitle = new javax.swing.JLabel();
+        selectAirfieldPanel = new javax.swing.JPanel();
+        airfieldSelectTitle = new javax.swing.JLabel();
         airfieldTabbedPane = new javax.swing.JTabbedPane();
-        airfieldSelection1 = new AirfieldSelection();
-        jLabel7 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        airfieldSelectionPanel = new ParameterSelection.AirfieldSelection();
+        airfieldFromLabel = new javax.swing.JLabel();
+        selectSailplanePanel = new javax.swing.JPanel();
+        selectSailplaneTitle = new javax.swing.JLabel();
         sailplaneTabbedPane = new javax.swing.JTabbedPane();
-        sailplaneSelection1 = new SailplaneSelection();
-        jLabel9 = new javax.swing.JLabel();
-        oneTimePilotPanel = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        pilotSelectionPanel2 = new PilotSelectionPanel();
-        oneTimePilotPanel2 = new OneTimePilotPanel();
-        jSeparator2 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jSeparator3 = new javax.swing.JSeparator();
+        sailplaneSelectionPanel = new ParameterSelection.SailplaneSelection();
+        sailplaneFromLabel = new javax.swing.JLabel();
+        selectPilotPanel = new javax.swing.JPanel();
+        selectPilotTitle = new javax.swing.JLabel();
+        pilotFromLabel = new javax.swing.JLabel();
+        pilotTabbedPane = new javax.swing.JTabbedPane();
+        pilotScrollPane = new javax.swing.JScrollPane();
+        pilotSelectionPanel = new ParameterSelection.PilotSelectionPanel();
+        oneTimePilotPanel = new ParameterSelection.OneTimePilotPanel();
+        leftSideSeparator = new javax.swing.JSeparator();
+        previousLaunchesLabel = new javax.swing.JLabel();
+        orSeparatorLabel = new javax.swing.JLabel();
+        rightSideSeparator = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Launch Selection");
+        titleLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        titleLabel.setText("Launch Selection");
 
-        jButton3.setText("New Entry Wizzard");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        navigateEntryWizardButton.setText("New Entry Wizzard");
+        navigateEntryWizardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                navigateEntryWizardButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout HeaderPanelLayout = new javax.swing.GroupLayout(HeaderPanel);
+        HeaderPanel.setLayout(HeaderPanelLayout);
+        HeaderPanelLayout.setHorizontalGroup(
+            HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HeaderPanelLayout.createSequentialGroup()
+                .addGroup(HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(HeaderPanelLayout.createSequentialGroup()
                         .addGap(578, 578, 578)
-                        .addComponent(jButton3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(navigateEntryWizardButton))
+                    .addGroup(HeaderPanelLayout.createSequentialGroup()
                         .addGap(536, 536, 536)
-                        .addComponent(jLabel1)))
+                        .addComponent(titleLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        HeaderPanelLayout.setVerticalGroup(
+            HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HeaderPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(titleLabel)
                 .addGap(3, 3, 3)
-                .addComponent(jButton3)
+                .addComponent(navigateEntryWizardButton)
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
-        );
-
-        jButton1.setText("Submit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        submitButton.setText("Submit");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                submitButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout previousLaunchesPanelLayout = new javax.swing.GroupLayout(previousLaunchesPanel);
+        previousLaunchesPanel.setLayout(previousLaunchesPanelLayout);
+        previousLaunchesPanelLayout.setHorizontalGroup(
+            previousLaunchesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(previousLaunchesPanelLayout.createSequentialGroup()
+                .addGroup(previousLaunchesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(previousLaunchesPanelLayout.createSequentialGroup()
                         .addGap(189, 189, 189)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(previousLaunchesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(previousLaunchesPanelLayout.createSequentialGroup()
                         .addGap(525, 525, 525)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+        previousLaunchesPanelLayout.setVerticalGroup(
+            previousLaunchesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(previousLaunchesPanelLayout.createSequentialGroup()
+                .addComponent(previousLaunchesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(previousLaunchesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        environmentalVariablePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setText("<html>Environmental <br/> Conditions</html>");
+        environmentalVariablesTitle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        environmentalVariablesTitle.setText("<html>Environmental <br/> Conditions</html>");
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout environmentalVariablePanelLayout = new javax.swing.GroupLayout(environmentalVariablePanel);
+        environmentalVariablePanel.setLayout(environmentalVariablePanelLayout);
+        environmentalVariablePanelLayout.setHorizontalGroup(
+            environmentalVariablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(environmentalVariablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(environmentalVariablesTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        environmentalVariablePanelLayout.setVerticalGroup(
+            environmentalVariablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(environmentalVariablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(environmentalVariablesTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        selectAirfieldPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Select an Airfield");
+        airfieldSelectTitle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        airfieldSelectTitle.setText("Select an Airfield");
 
-        airfieldTabbedPane.addTab("Database", airfieldSelection1);
+        airfieldTabbedPane.addTab("Database", airfieldSelectionPanel);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("From:");
+        airfieldFromLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        airfieldFromLabel.setText("From:");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout selectAirfieldPanelLayout = new javax.swing.GroupLayout(selectAirfieldPanel);
+        selectAirfieldPanel.setLayout(selectAirfieldPanelLayout);
+        selectAirfieldPanelLayout.setHorizontalGroup(
+            selectAirfieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(selectAirfieldPanelLayout.createSequentialGroup()
                 .addGap(188, 188, 188)
-                .addComponent(jLabel2))
-            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(airfieldSelectTitle))
+            .addGroup(selectAirfieldPanelLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jLabel7))
+                .addComponent(airfieldFromLabel))
             .addComponent(airfieldTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        selectAirfieldPanelLayout.setVerticalGroup(
+            selectAirfieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(selectAirfieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addComponent(airfieldSelectTitle)
                 .addGap(12, 12, 12)
-                .addComponent(jLabel7)
+                .addComponent(airfieldFromLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(airfieldTabbedPane))
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        selectSailplanePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel8.setText("Select a Sailplane");
+        selectSailplaneTitle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        selectSailplaneTitle.setText("Select a Sailplane");
 
-        sailplaneTabbedPane.addTab("Database", sailplaneSelection1);
+        sailplaneTabbedPane.addTab("Database", sailplaneSelectionPanel);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel9.setText("From:");
+        sailplaneFromLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        sailplaneFromLabel.setText("From:");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout selectSailplanePanelLayout = new javax.swing.GroupLayout(selectSailplanePanel);
+        selectSailplanePanel.setLayout(selectSailplanePanelLayout);
+        selectSailplanePanelLayout.setHorizontalGroup(
+            selectSailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(selectSailplanePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9))
-            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(sailplaneFromLabel))
+            .addGroup(selectSailplanePanelLayout.createSequentialGroup()
                 .addGap(188, 188, 188)
-                .addComponent(jLabel8))
+                .addComponent(selectSailplaneTitle))
             .addComponent(sailplaneTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        selectSailplanePanelLayout.setVerticalGroup(
+            selectSailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(selectSailplanePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
+                .addComponent(selectSailplaneTitle)
                 .addGap(10, 10, 10)
-                .addComponent(jLabel9)
+                .addComponent(sailplaneFromLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sailplaneTabbedPane)
                 .addGap(2, 2, 2))
         );
 
-        oneTimePilotPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        selectPilotPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Select a Pilot");
+        selectPilotTitle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        selectPilotTitle.setText("Select a Pilot");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setText("From:");
+        pilotFromLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        pilotFromLabel.setText("From:");
 
-        jTabbedPane1.setFocusCycleRoot(true);
+        pilotTabbedPane.setFocusCycleRoot(true);
 
-        jScrollPane2.setViewportView(pilotSelectionPanel2);
+        pilotScrollPane.setViewportView(pilotSelectionPanel);
 
-        jTabbedPane1.addTab("Database", jScrollPane2);
-        jTabbedPane1.addTab("One Time Entry", oneTimePilotPanel2);
+        pilotTabbedPane.addTab("Database", pilotScrollPane);
+        pilotTabbedPane.addTab("One Time Entry", oneTimePilotPanel);
 
-        javax.swing.GroupLayout oneTimePilotPanelLayout = new javax.swing.GroupLayout(oneTimePilotPanel);
-        oneTimePilotPanel.setLayout(oneTimePilotPanelLayout);
-        oneTimePilotPanelLayout.setHorizontalGroup(
-            oneTimePilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(oneTimePilotPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout selectPilotPanelLayout = new javax.swing.GroupLayout(selectPilotPanel);
+        selectPilotPanel.setLayout(selectPilotPanelLayout);
+        selectPilotPanelLayout.setHorizontalGroup(
+            selectPilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(selectPilotPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel6))
-            .addGroup(oneTimePilotPanelLayout.createSequentialGroup()
+                .addComponent(pilotFromLabel))
+            .addGroup(selectPilotPanelLayout.createSequentialGroup()
                 .addGap(81, 81, 81)
-                .addComponent(jLabel5))
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(selectPilotTitle))
+            .addComponent(pilotTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        oneTimePilotPanelLayout.setVerticalGroup(
-            oneTimePilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(oneTimePilotPanelLayout.createSequentialGroup()
+        selectPilotPanelLayout.setVerticalGroup(
+            selectPilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(selectPilotPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
+                .addComponent(selectPilotTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
+                .addComponent(pilotFromLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1))
+                .addComponent(pilotTabbedPane))
         );
 
-        jTabbedPane1.getAccessibleContext().setAccessibleName("From Database");
+        pilotTabbedPane.getAccessibleContext().setAccessibleName("From Database");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Select a Previous Launch");
+        previousLaunchesLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        previousLaunchesLabel.setText("Select a Previous Launch");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("OR");
+        orSeparatorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        orSeparatorLabel.setText("OR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(previousLaunchesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(previousLaunchesLabel)
+                            .addComponent(leftSideSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(orSeparatorLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rightSideSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(selectPilotPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(selectSailplanePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(selectAirfieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(environmentalVariablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(oneTimePilotPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(selectAirfieldPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(selectSailplanePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(selectPilotPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(environmentalVariablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(leftSideSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(oneTimePilotPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4))
-                            .addComponent(jLabel3)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(previousLaunchesLabel))
+                    .addComponent(orSeparatorLabel)
+                    .addComponent(rightSideSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(previousLaunchesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        if(jTabbedPane1.getSelectedIndex() == 0) {
-            Pilot name = pilotSelectionPanel2.getSelectedPilot();
+        if(pilotTabbedPane.getSelectedIndex() == 0) {
+            Pilot name = pilotSelectionPanel.getSelectedPilot();
             if(name == null)
                 JOptionPane.showMessageDialog(rootPane, "You have not selected a pilot");
             else
@@ -365,7 +342,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
                         name.getEmergencyContact() + '\n' + name.getMedInfo());
         }
         else {
-            Pilot name = oneTimePilotPanel2.getOneTimePilot();
+            Pilot name = oneTimePilotPanel.getOneTimePilot();
             if(name == null)
                 JOptionPane.showMessageDialog(rootPane, "You have not selected a pilot");
             else
@@ -375,7 +352,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         }
         
         if(sailplaneTabbedPane.getSelectedIndex() == 0) {
-            Sailplane plane = sailplaneSelection1.getSelectedPlane();
+            Sailplane plane = sailplaneSelectionPanel.getSelectedPlane();
             if(plane == null){
                 JOptionPane.showMessageDialog(rootPane, "You have not selected a plane");
             }
@@ -389,7 +366,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         }
         
         if(airfieldTabbedPane.getSelectedIndex() == 0) {
-            Airfield airfield = airfieldSelection1.getSeleAirfiield();
+            Airfield airfield = airfieldSelectionPanel.getSeleAirfiield();
             if(airfield == null){
                 JOptionPane.showMessageDialog(rootPane, "You have not selected an airfield");
             }
@@ -402,16 +379,16 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
             //TODO add one time entry case
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void navigateEntryWizardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_navigateEntryWizardButtonActionPerformed
         // TODO make this open the entry wizzard
         JOptionPane.showMessageDialog(rootPane, "This is where the connection to the entry wizard will go");
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_navigateEntryWizardButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -449,38 +426,35 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private AirfieldSelection airfieldSelection1;
+    private javax.swing.JPanel HeaderPanel;
+    private javax.swing.JLabel airfieldFromLabel;
+    private javax.swing.JLabel airfieldSelectTitle;
+    private ParameterSelection.AirfieldSelection airfieldSelectionPanel;
     private javax.swing.JTabbedPane airfieldTabbedPane;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JPanel oneTimePilotPanel;
-    private OneTimePilotPanel oneTimePilotPanel2;
-    private ParameterSelectionFrame parameterSelectionFrame1;
-    private PilotSelectionPanel pilotSelectionPanel2;
-    private SailplaneSelection sailplaneSelection1;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JPanel environmentalVariablePanel;
+    private javax.swing.JLabel environmentalVariablesTitle;
+    private javax.swing.JSeparator leftSideSeparator;
+    private javax.swing.JButton navigateEntryWizardButton;
+    private ParameterSelection.OneTimePilotPanel oneTimePilotPanel;
+    private javax.swing.JLabel orSeparatorLabel;
+    private javax.swing.JLabel pilotFromLabel;
+    private javax.swing.JScrollPane pilotScrollPane;
+    private ParameterSelection.PilotSelectionPanel pilotSelectionPanel;
+    private javax.swing.JTabbedPane pilotTabbedPane;
+    private javax.swing.JLabel previousLaunchesLabel;
+    private javax.swing.JPanel previousLaunchesPanel;
+    private javax.swing.JScrollPane previousLaunchesScrollPane;
+    private javax.swing.JSeparator rightSideSeparator;
+    private javax.swing.JLabel sailplaneFromLabel;
+    private ParameterSelection.SailplaneSelection sailplaneSelectionPanel;
     private javax.swing.JTabbedPane sailplaneTabbedPane;
+    private javax.swing.JPanel selectAirfieldPanel;
+    private javax.swing.JPanel selectPilotPanel;
+    private javax.swing.JLabel selectPilotTitle;
+    private javax.swing.JPanel selectSailplanePanel;
+    private javax.swing.JLabel selectSailplaneTitle;
+    private javax.swing.JButton submitButton;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
