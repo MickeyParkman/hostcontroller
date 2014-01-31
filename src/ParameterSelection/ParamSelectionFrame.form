@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+    <Component class="org.netbeans.modules.form.InvalidComponent" name="parameterSelectionFrame1">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -405,7 +411,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="pilotFromLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="pilotTabbedPane" max="32767" attributes="0"/>
+                  <Component id="pilotTabbedPane" pref="90" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

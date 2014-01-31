@@ -44,6 +44,9 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         environmentalVariablesTitle = new javax.swing.JLabel();
         selectAirfieldPanel = new javax.swing.JPanel();
         airfieldSelectTitle = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        parameterSelectionFrame1 = new ParameterSelectionFrame();
+        
         airfieldTabbedPane = new javax.swing.JTabbedPane();
         airfieldSelectionPanel = new ParameterSelection.AirfieldSelection();
         airfieldFromLabel = new javax.swing.JLabel();
@@ -265,7 +268,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pilotFromLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pilotTabbedPane))
+                .addComponent((pilotTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
         );
 
         pilotTabbedPane.getAccessibleContext().setAccessibleName("From Database");

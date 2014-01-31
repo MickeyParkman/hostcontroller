@@ -6,6 +6,10 @@
 
 package ParameterSelection;
 
+import DataObjects.Sailplane;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author awilliams5
@@ -17,6 +21,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
      */
     public OneTimeSailplanePanel() {
         initComponents();
+        PassengerWeight.setEditable(true);
     }
 
     /**
@@ -30,10 +35,127 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        MaximumGrossWeight = new javax.swing.JTextField();
+        Type = new javax.swing.JTextField();
+        maximumGrossWeightLabel1 = new javax.swing.JLabel();
+        NNumber = new javax.swing.JTextField();
+        maximumGrossWeightLabel = new javax.swing.JLabel();
+        EmptyWeight = new javax.swing.JTextField();
+        maximumWinchingSpeedLabel = new javax.swing.JLabel();
+        MaxWinchingSpeed = new javax.swing.JTextField();
+        maximumTensionLabel = new javax.swing.JLabel();
+        maximumAllowableWeakLinkStrengthLabel = new javax.swing.JLabel();
+        indicatedStallSpeed = new javax.swing.JLabel();
+        ballastOnboardLabel = new javax.swing.JLabel();
+        MaximumAllowableWeakLinkStrength = new javax.swing.JTextField();
+        YesRadioButton = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        passengersWeightLabel = new javax.swing.JLabel();
+        PassengerWeight = new javax.swing.JTextField();
+        MaximumTension = new javax.swing.JTextField();
+        StallSpeed = new javax.swing.JTextField();
 
         jLabel1.setText("N-Number:");
 
         jLabel2.setText("Type:");
+
+        MaximumGrossWeight.setBackground(new java.awt.Color(255, 0, 0));
+        MaximumGrossWeight.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                MaximumGrossWeightKeyReleased(evt);
+            }
+        });
+
+        Type.setBackground(new java.awt.Color(255, 0, 0));
+        Type.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TypeKeyReleased(evt);
+            }
+        });
+
+        maximumGrossWeightLabel1.setText("<html>Maximum <br/>Gross Weight<html>");
+
+        NNumber.setBackground(new java.awt.Color(255, 0, 0));
+        NNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NNumberKeyReleased(evt);
+            }
+        });
+
+        maximumGrossWeightLabel.setText("Empty Weight");
+
+        EmptyWeight.setBackground(new java.awt.Color(255, 0, 0));
+        EmptyWeight.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                EmptyWeightKeyReleased(evt);
+            }
+        });
+
+        maximumWinchingSpeedLabel.setText("<html>Max Winching <br/>Speed</html>");
+
+        MaxWinchingSpeed.setBackground(new java.awt.Color(255, 0, 0));
+        MaxWinchingSpeed.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                MaxWinchingSpeedKeyReleased(evt);
+            }
+        });
+
+        maximumTensionLabel.setText("<html>Maximum <br/>Tension</html>");
+
+        maximumAllowableWeakLinkStrengthLabel.setText("<html>Maximum Allowable <br/>Weak Link Strenght</html>");
+
+        indicatedStallSpeed.setText("<html>Indicated <br/>Stall Speed</html>");
+
+        ballastOnboardLabel.setText("Ballast");
+
+        MaximumAllowableWeakLinkStrength.setBackground(new java.awt.Color(255, 0, 0));
+        MaximumAllowableWeakLinkStrength.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                MaximumAllowableWeakLinkStrengthKeyReleased(evt);
+            }
+        });
+
+        YesRadioButton.setText("Yes");
+        YesRadioButton.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                YesRadioButtonComponentResized(evt);
+            }
+        });
+
+        jRadioButton2.setText("No");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
+
+        passengersWeightLabel.setText("<html>Indicated <br/>Passenger Weight</html>");
+
+        PassengerWeight.setBackground(new java.awt.Color(255, 0, 0));
+        PassengerWeight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PassengerWeightActionPerformed(evt);
+            }
+        });
+        PassengerWeight.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                PassengerWeightKeyReleased(evt);
+            }
+        });
+
+        MaximumTension.setBackground(new java.awt.Color(255, 0, 0));
+        MaximumTension.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                MaximumTensionKeyReleased(evt);
+            }
+        });
+
+        StallSpeed.setBackground(new java.awt.Color(255, 0, 0));
+        StallSpeed.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                StallSpeedKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -42,24 +164,251 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addContainerGap(406, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(NNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(168, 168, 168))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maximumWinchingSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(MaximumGrossWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(maximumGrossWeightLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(MaxWinchingSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MaximumTension, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EmptyWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ballastOnboardLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(YesRadioButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jRadioButton2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(passengersWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(PassengerWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(maximumAllowableWeakLinkStrengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(MaximumAllowableWeakLinkStrength, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(StallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 12, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addContainerGap(285, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(EmptyWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(maximumGrossWeightLabel)
+                                .addComponent(MaximumGrossWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(maximumWinchingSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(MaxWinchingSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(MaximumTension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(maximumAllowableWeakLinkStrengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(MaximumAllowableWeakLinkStrength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(StallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ballastOnboardLabel)
+                    .addComponent(YesRadioButton)
+                    .addComponent(jRadioButton2))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(passengersWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PassengerWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void MaximumGrossWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MaximumGrossWeightKeyReleased
+         if(MaximumGrossWeight.getText().isEmpty()){
+            MaximumGrossWeight.setBackground(Color.RED);
+        }
+        else
+            MaximumGrossWeight.setBackground(Color.GREEN); 
+    }//GEN-LAST:event_MaximumGrossWeightKeyReleased
 
+    private void TypeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TypeKeyReleased
+        // TODO add your handling code here:
+            if(Type.getText().isEmpty()){
+            Type.setBackground(Color.RED);
+        }
+        else
+            Type.setBackground(Color.GREEN); 
+    }//GEN-LAST:event_TypeKeyReleased
+
+    private void NNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NNumberKeyReleased
+        // TODO add your handling code here:
+                 if(NNumber.getText().isEmpty()){
+            NNumber.setBackground(Color.RED);
+        }
+        else
+            NNumber.setBackground(Color.GREEN); 
+    }//GEN-LAST:event_NNumberKeyReleased
+
+    private void EmptyWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EmptyWeightKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmptyWeightKeyReleased
+
+    private void MaxWinchingSpeedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MaxWinchingSpeedKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MaxWinchingSpeedKeyReleased
+
+    private void MaximumAllowableWeakLinkStrengthKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MaximumAllowableWeakLinkStrengthKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MaximumAllowableWeakLinkStrengthKeyReleased
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void YesRadioButtonComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_YesRadioButtonComponentResized
+        // TODO add your handling code here:
+    }//GEN-LAST:event_YesRadioButtonComponentResized
+
+    private void PassengerWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PassengerWeightKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PassengerWeightKeyReleased
+
+    private void PassengerWeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassengerWeightActionPerformed
+        // TODO add your handling code here:
+        if(YesRadioButton.isSelected()){
+            PassengerWeight.setEditable(true);
+        }
+    }//GEN-LAST:event_PassengerWeightActionPerformed
+
+    private void MaximumTensionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MaximumTensionKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MaximumTensionKeyReleased
+
+    private void StallSpeedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StallSpeedKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StallSpeedKeyReleased
+
+public Sailplane getOneTimePilot() {
+        if(NNumber.getText().isEmpty())
+            JOptionPane.showMessageDialog(null, "Please provide a N-Number");
+        String newNNumber = NNumber.getText();
+        if(Type.getText().isEmpty())
+            JOptionPane.showMessageDialog(null, "Please provide a last type");
+        String newType = Type.getText();
+        int grossWeight = 0;
+        if(MaximumGrossWeight.getText().isEmpty())
+            JOptionPane.showMessageDialog(null, "Please provide a maximum gross weight");
+        try{
+            grossWeight = Integer.parseInt(MaximumGrossWeight.getText());
+        }catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please provide a VAILD maximum gross weight");
+        }
+        int emptyWeight = 0;
+        if(EmptyWeight.getText().isEmpty())
+            JOptionPane.showMessageDialog(null, "Please provide a empty weight");
+        try{
+           emptyWeight = Integer.parseInt(EmptyWeight.getText());
+        }catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please provide a VAILD empty weight");
+        }
+        int maxWinchingSpeed = 0;
+        if(MaxWinchingSpeed.getText().isEmpty())
+            JOptionPane.showMessageDialog(null, "Please provide a maximum wenching speed");
+        try{
+           maxWinchingSpeed = Integer.parseInt(MaxWinchingSpeed.getText());
+        }catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please provide a VAILD maximum wenching speed");
+        }
+        int maximumTension = 0;
+        if(MaximumTension.getText().isEmpty())
+            JOptionPane.showMessageDialog(null, "Please provide a maximum tension");
+        try{
+           maximumTension= Integer.parseInt(MaximumTension.getText());
+        }catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please provide a VALID maximum tension");
+        }
+        int weakLinkStrength = 0;
+        if(MaximumAllowableWeakLinkStrength.getText().isEmpty())
+            JOptionPane.showMessageDialog(null, "Please provide a maximum allowabel weak link strength");
+        try{
+           weakLinkStrength= Integer.parseInt(MaximumAllowableWeakLinkStrength.getText());
+        }catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please provide a VALID maximum allowabel weak link strength");
+        }
+        int stallSpeed= 0;
+        if(StallSpeed.getText().isEmpty())
+            JOptionPane.showMessageDialog(null, "Please provide a indicated stall speed");
+        try{
+           stallSpeed= Integer.parseInt(StallSpeed.getText());
+        }catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please provide a VALID indicated stall speed");
+        }
+        return (new Sailplane(newNNumber, newType, grossWeight, emptyWeight, stallSpeed, maxWinchingSpeed,  weakLinkStrength, maximumTension));
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField EmptyWeight;
+    private javax.swing.JTextField MaxWinchingSpeed;
+    private javax.swing.JTextField MaximumAllowableWeakLinkStrength;
+    private javax.swing.JTextField MaximumGrossWeight;
+    private javax.swing.JTextField MaximumTension;
+    private javax.swing.JTextField NNumber;
+    private javax.swing.JTextField PassengerWeight;
+    private javax.swing.JTextField StallSpeed;
+    private javax.swing.JTextField Type;
+    private javax.swing.JRadioButton YesRadioButton;
+    private javax.swing.JLabel ballastOnboardLabel;
+    private javax.swing.JLabel indicatedStallSpeed;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JLabel maximumAllowableWeakLinkStrengthLabel;
+    private javax.swing.JLabel maximumGrossWeightLabel;
+    private javax.swing.JLabel maximumGrossWeightLabel1;
+    private javax.swing.JLabel maximumTensionLabel;
+    private javax.swing.JLabel maximumWinchingSpeedLabel;
+    private javax.swing.JLabel passengersWeightLabel;
     // End of variables declaration//GEN-END:variables
 }

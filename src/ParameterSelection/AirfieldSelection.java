@@ -7,6 +7,8 @@
 package ParameterSelection;
 
 import DataObjects.Airfield;
+import DataObjects.Runway;
+import DataObjects.Positions;
 import java.awt.Color;
 import javax.swing.DefaultListModel;
 
@@ -20,10 +22,16 @@ public class AirfieldSelection extends javax.swing.JPanel {
      * Creates new form AirfieldSelection
      */
     // Mdl that is first displayed
-    DefaultListModel<Airfield> mdl = new DefaultListModel(); 
-   
+    //make these private
+    private DefaultListModel<Airfield> mdl = new DefaultListModel(); 
+    private DefaultListModel<Positions> positionsmdl = new DefaultListModel(); 
+    private DefaultListModel<Runway> runwaymdl = new DefaultListModel(); 
     // Array list of Airfield objects
-    Airfield [] airfieldNewList = new Airfield[3];         
+    Airfield [] airfieldNewList = new Airfield[3]; 
+    // Array list of Airfield objects
+    Runway[] runwayNewList = new Runway[3]; 
+
+    Positions[] positionsNewList = new Positions[3];  
     public AirfieldSelection() {
         initComponents();
         
@@ -35,27 +43,21 @@ public class AirfieldSelection extends javax.swing.JPanel {
             airfieldNewList[i].setLocation("location" + i);
             airfieldNewList[i].setAltitude("altitude" + i);
             airfieldNewList[i].setMagneticVariation("magnetic Variation"+i);
-            airfieldNewList[i].setRunway("runway" + i);
-            airfieldNewList[i].setMagneticHeading("Magnetic Heading" + i);
-            airfieldNewList[i].setPosition("position" +i);
-            airfieldNewList[i].setPositionMaximumLength("position Maximum Length"+i);
-            airfieldNewList[i].setPositionSlope("position Slope"+i);
-            airfieldNewList[i].setPositionCenterlineOffset("Position CenterlineOffest" +i);
             
             // Adds new created objects to defaultListModel
             mdl.addElement(airfieldNewList[i]);
         }
-        // Sets defaultListModel to be the model for jlist 
-        airfieldJList.setModel(mdl);
+         // Sets defaultListModel to be the model for jlist 
+        airfieldJList.setModel(mdl);    
+        positionsJList.setModel(positionsmdl);
+        runwayJList.setModel(runwaymdl);
         
         nameJTextField.setEditable(false);
         designatorJTextField.setEditable(false);
         locationJTextField.setEditable(false);
         altitudeJTextField.setEditable(false);
         magneticVariationJTextField.setEditable(false);
-        runwayJTextField.setEditable(false);
         magneticHeadingJTextField.setEditable(false);
-        positionJTextField.setEditable(false);
         maximumLengthJTextField.setEditable(false);
         slopeJTextField.setEditable(false);
         centerlineOffsetJTextField.setEditable(false);
@@ -73,7 +75,7 @@ public class AirfieldSelection extends javax.swing.JPanel {
     private void initComponents() {
 
         airfieldInputLabel = new javax.swing.JLabel();
-        airfieldInputJTextFiedl = new javax.swing.JTextField();
+        airfieldInputJTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         airfieldJList = new javax.swing.JList();
         centerlineOffsetLabel = new javax.swing.JLabel();
@@ -82,9 +84,7 @@ public class AirfieldSelection extends javax.swing.JPanel {
         locationlabel = new javax.swing.JLabel();
         Altitudelabel = new javax.swing.JLabel();
         magneticVariationLabel = new javax.swing.JLabel();
-        runwayLabel = new javax.swing.JLabel();
         magneticHeading = new javax.swing.JLabel();
-        positionLabel = new javax.swing.JLabel();
         slopeLabel = new javax.swing.JLabel();
         maximumLengthLabel = new javax.swing.JLabel();
         nameJTextField = new javax.swing.JTextField();
@@ -92,20 +92,26 @@ public class AirfieldSelection extends javax.swing.JPanel {
         locationJTextField = new javax.swing.JTextField();
         altitudeJTextField = new javax.swing.JTextField();
         magneticVariationJTextField = new javax.swing.JTextField();
-        runwayJTextField = new javax.swing.JTextField();
         magneticHeadingJTextField = new javax.swing.JTextField();
-        positionJTextField = new javax.swing.JTextField();
         maximumLengthJTextField = new javax.swing.JTextField();
         slopeJTextField = new javax.swing.JTextField();
         centerlineOffsetJTextField = new javax.swing.JTextField();
+        positionsInputJTextField = new javax.swing.JTextField();
+        airfieldInputLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        runwayJList = new javax.swing.JList();
+        runwayInputJTextField = new javax.swing.JTextField();
+        airfieldInputLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        positionsJList = new javax.swing.JList();
 
         airfieldInputLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         airfieldInputLabel.setText("Airfield Name :");
         airfieldInputLabel.setToolTipText("");
 
-        airfieldInputJTextFiedl.addKeyListener(new java.awt.event.KeyAdapter() {
+        airfieldInputJTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                airfieldInputJTextFiedlKeyReleased(evt);
+                airfieldInputJTextFieldKeyReleased(evt);
             }
         });
 
@@ -131,11 +137,7 @@ public class AirfieldSelection extends javax.swing.JPanel {
         magneticVariationLabel.setToolTipText("");
         magneticVariationLabel.setAutoscrolls(true);
 
-        runwayLabel.setText("Runway");
-
         magneticHeading.setText("<html> Magnetic <br/> Heading </html>");
-
-        positionLabel.setText("Position");
 
         slopeLabel.setText("Slope");
 
@@ -156,11 +158,7 @@ public class AirfieldSelection extends javax.swing.JPanel {
             }
         });
 
-        runwayJTextField.setBackground(new java.awt.Color(255, 0, 0));
-
         magneticHeadingJTextField.setBackground(new java.awt.Color(255, 0, 0));
-
-        positionJTextField.setBackground(new java.awt.Color(255, 0, 0));
 
         maximumLengthJTextField.setBackground(new java.awt.Color(255, 0, 0));
 
@@ -168,68 +166,117 @@ public class AirfieldSelection extends javax.swing.JPanel {
 
         centerlineOffsetJTextField.setBackground(new java.awt.Color(255, 0, 0));
 
+        positionsInputJTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                positionsInputJTextFieldKeyReleased(evt);
+            }
+        });
+
+        airfieldInputLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        airfieldInputLabel1.setText("Position Name :");
+        airfieldInputLabel1.setToolTipText("");
+
+        runwayJList.setModel(mdl);
+        runwayJList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                runwayJListMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(runwayJList);
+
+        runwayInputJTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                runwayInputJTextFieldKeyReleased(evt);
+            }
+        });
+
+        airfieldInputLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        airfieldInputLabel2.setText("Runway Name");
+        airfieldInputLabel2.setToolTipText("");
+
+        positionsJList.setModel(mdl);
+        positionsJList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                positionsJListMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(positionsJList);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(airfieldInputLabel)
-                .addGap(10, 10, 10)
-                .addComponent(airfieldInputJTextFiedl, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(airfieldNameLabel)
-                .addGap(43, 43, 43)
-                .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(runwayLabel)
-                .addGap(31, 31, 31)
-                .addComponent(runwayJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(desgnatorlabel)
-                .addGap(18, 18, 18)
-                .addComponent(designatorJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(magneticHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(magneticHeadingJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(locationlabel)
-                .addGap(30, 30, 30)
-                .addComponent(locationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(positionLabel)
-                .addGap(33, 33, 33)
-                .addComponent(positionJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(Altitudelabel)
-                .addGap(33, 33, 33)
-                .addComponent(altitudeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(maximumLengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(maximumLengthJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(magneticVariationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(magneticVariationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(slopeLabel)
-                .addGap(44, 44, 44)
-                .addComponent(slopeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addComponent(centerlineOffsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addComponent(centerlineOffsetJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(maximumLengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(maximumLengthJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(centerlineOffsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(centerlineOffsetJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(slopeLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(airfieldInputLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(runwayInputJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(locationlabel)
+                                    .addComponent(Altitudelabel))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(altitudeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(locationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(magneticVariationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(magneticVariationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(airfieldInputLabel)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(airfieldInputJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(airfieldNameLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(desgnatorlabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(designatorJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(102, 102, 102)
+                                .addComponent(magneticHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(magneticHeadingJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(airfieldInputLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(positionsInputJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(280, 280, 280)
+                        .addComponent(slopeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,52 +284,69 @@ public class AirfieldSelection extends javax.swing.JPanel {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(airfieldInputLabel)
-                    .addComponent(airfieldInputJTextFiedl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(airfieldInputJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(airfieldNameLabel)
-                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(runwayLabel)
-                    .addComponent(runwayJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(designatorJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(desgnatorlabel)
+                            .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(4, 4, 4))
+                    .addComponent(airfieldNameLabel))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(desgnatorlabel)
-                    .addComponent(designatorJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(magneticHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(magneticHeadingJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(locationlabel)
-                    .addComponent(locationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(positionLabel)
-                    .addComponent(positionJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Altitudelabel)
-                    .addComponent(altitudeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maximumLengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maximumLengthJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(magneticVariationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(magneticVariationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(slopeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(slopeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(locationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(locationlabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Altitudelabel)
+                            .addComponent(altitudeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(magneticVariationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(magneticVariationJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(runwayInputJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(airfieldInputLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(magneticHeadingJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(magneticHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(airfieldInputLabel1)
+                    .addComponent(positionsInputJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(maximumLengthJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(slopeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(slopeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(maximumLengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(centerlineOffsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(centerlineOffsetJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(centerlineOffsetJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void airfieldInputJTextFiedlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_airfieldInputJTextFiedlKeyReleased
+    private void airfieldInputJTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_airfieldInputJTextFieldKeyReleased
         // TODO add your handling code here:
         // Creates a string from a input
-        String matchstring = airfieldInputJTextFiedl.getText();
+        String matchstring = airfieldInputJTextField.getText();
        // makes new updated defaultListModel
         DefaultListModel airfieldeModel = new DefaultListModel();
         
@@ -293,7 +357,7 @@ public class AirfieldSelection extends javax.swing.JPanel {
         }
         // New updated defaultListModel is set the jlist
         airfieldJList.setModel(airfieldeModel);
-    }//GEN-LAST:event_airfieldInputJTextFiedlKeyReleased
+    }//GEN-LAST:event_airfieldInputJTextFieldKeyReleased
 
     private void magneticVariationJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_magneticVariationJTextFieldActionPerformed
         // TODO add your handling code here:
@@ -312,12 +376,7 @@ public class AirfieldSelection extends javax.swing.JPanel {
                 locationJTextField.setText(value.getLocation());
                 altitudeJTextField.setText(value.getAltitude());
                 magneticVariationJTextField.setText(value.getMagneticVariation());
-                runwayJTextField.setText(value.getRunway());
-                magneticHeadingJTextField.setText(value.getMagneticHeading());
-                positionJTextField.setText(value.getPosition());
-                maximumLengthJTextField.setText(value.getPositionMaximumLength());
-                slopeJTextField.setText(value.getPositionSlope());
-                centerlineOffsetJTextField.setText(value.getPositionCenterlineOffset());
+
             }
         
             // Checks if jTextfields are empty and changes background 
@@ -337,15 +396,102 @@ public class AirfieldSelection extends javax.swing.JPanel {
             if(!(magneticVariationJTextField.getText().equals(""))){
                 magneticVariationJTextField.setBackground(Color.GREEN);
             }
-            if(!(runwayJTextField.getText().equals(""))){
-                runwayJTextField.setBackground(Color.GREEN);       
+            for(int i = 0; i < runwayNewList.length; i++){
+            runwayNewList[i] = new Runway();
+            runwayNewList[i].setRunway1("RUNWAYrunway" + i);
+            runwayNewList[i].setMagneticHeading("RUNWAYMagnetic Heading" + i);
+            // Adds new created objects to defaultListModel
+            runwaymdl.addElement(runwayNewList[i]);
+        }
+            runwayJList.setModel(runwaymdl);
+        }
+        catch (Exception e) {
+        //TODO decide how to handle exception
+        }
+    }//GEN-LAST:event_airfieldJListMouseClicked
+
+    private void positionsInputJTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_positionsInputJTextFieldKeyReleased
+        // TODO add your handling code here:
+        // Creates a string from a input
+        String matchstring = positionsInputJTextField.getText();
+       // makes new updated defaultListModel
+        DefaultListModel positions2Model = new DefaultListModel();
+        
+        // TODO Change from String specific to type Sailplane
+        for(Positions myObj : positionsNewList){
+            if(myObj.toString().toUpperCase().startsWith(matchstring.toUpperCase()))
+                positions2Model .addElement(myObj);
+        }
+        // New updated defaultListModel is set the jlist
+        airfieldJList.setModel(positions2Model);
+    }//GEN-LAST:event_positionsInputJTextFieldKeyReleased
+
+    private void runwayJListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_runwayJListMouseClicked
+        // TODO add your handling code here:
+                try {
+            // do stuff
+            // Gets the object is that selected when the button is pushed
+            // fills the parts of the object to the right jtextfields
+            if(runwaymdl.getSize() > 0){
+                Runway value = (Runway) runwayJList.getSelectedValue();      
+                magneticHeadingJTextField.setText(value.getMagneticHeading());
             }
+        
+            // Checks if jTextfields are empty and changes background 
+            // of jtextfield if filled
             if(!(magneticHeadingJTextField.getText().equals(""))){
                 magneticHeadingJTextField.setBackground(Color.GREEN); 
             }
-            if(!(positionJTextField.getText().equals(""))){
-                positionJTextField.setBackground(Color.GREEN);
+            for(int i = 0; i < positionsNewList.length; i++){
+            positionsNewList[i] = new Positions();
+            positionsNewList[i].setPosition("position" +i);
+            positionsNewList[i].setPositionMaximumLength("position Maximum Length"+i);
+            positionsNewList[i].setPositionSlope("position Slope"+i);
+            positionsNewList[i].setPositionCenterlineOffset("Position CenterlineOffest" +i);
+            // Adds new created objects to defaultListModel
+            positionsmdl.addElement(positionsNewList[i]);
             }
+       
+          positionsJList.setModel(positionsmdl);
+        }
+        catch (Exception e) {
+        //TODO decide how to handle exception
+        }
+    }//GEN-LAST:event_runwayJListMouseClicked
+
+    private void runwayInputJTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_runwayInputJTextFieldKeyReleased
+        // TODO add your handling code here:
+        // Creates a string from a input
+        String matchstring = runwayInputJTextField.getText();
+       // makes new updated defaultListModel
+        DefaultListModel runway2Model = new DefaultListModel();
+        
+        // TODO Change from String specific to type Sailplane
+        for(Runway myObj : runwayNewList){
+            if(myObj.toString().toUpperCase().startsWith(matchstring.toUpperCase()))
+                runway2Model.addElement(myObj);
+        }
+        // New updated defaultListModel is set the jlist
+        airfieldJList.setModel(runway2Model);
+    }//GEN-LAST:event_runwayInputJTextFieldKeyReleased
+
+    private void positionsJListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_positionsJListMouseClicked
+        // TODO add your handling code here:
+                // TODO add your handling code here:
+                try {
+            // do stuff
+            // Gets the object is that selected when the button is pushed
+            // fills the parts of the object to the right jtextfields
+            if(positionsmdl.getSize() > 0){
+                Positions value = (Positions) positionsJList.getSelectedValue();
+                maximumLengthJTextField.setText(value.getPositionMaximumLength());
+                slopeJTextField.setText(value.getPositionSlope());
+                centerlineOffsetJTextField.setText(value.getPositionCenterlineOffset());
+            }
+        
+            // Checks if jTextfields are empty and changes background 
+            // of jtextfield if filled
+           
             if(!(maximumLengthJTextField.getText().equals(""))){
                 maximumLengthJTextField.setBackground(Color.GREEN);
             }
@@ -359,18 +505,31 @@ public class AirfieldSelection extends javax.swing.JPanel {
         catch (Exception e) {
         //TODO decide how to handle exception
         }
-    }//GEN-LAST:event_airfieldJListMouseClicked
+    }//GEN-LAST:event_positionsJListMouseClicked
 
 public Airfield getSeleAirfiield() {
     if(airfieldJList.getSelectedIndex() >= 0)
         return airfieldNewList[airfieldJList.getSelectedIndex()];
     return (null);
 }
+public Runway getRunway() {
+    if(runwayJList.getSelectedIndex() >= 0)
+        return runwayNewList[runwayJList.getSelectedIndex()];
+    return (null);
+}
+public Positions getPositions() {
+    if(positionsJList.getSelectedIndex() >= 0)
+        return positionsNewList[positionsJList.getSelectedIndex()];
+    return (null);
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Altitudelabel;
-    private javax.swing.JTextField airfieldInputJTextFiedl;
+    private javax.swing.JTextField airfieldInputJTextField;
     private javax.swing.JLabel airfieldInputLabel;
+    private javax.swing.JLabel airfieldInputLabel1;
+    private javax.swing.JLabel airfieldInputLabel2;
     private javax.swing.JList airfieldJList;
     private javax.swing.JLabel airfieldNameLabel;
     private javax.swing.JTextField altitudeJTextField;
@@ -379,6 +538,8 @@ public Airfield getSeleAirfiield() {
     private javax.swing.JLabel desgnatorlabel;
     private javax.swing.JTextField designatorJTextField;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField locationJTextField;
     private javax.swing.JLabel locationlabel;
     private javax.swing.JLabel magneticHeading;
@@ -388,10 +549,10 @@ public Airfield getSeleAirfiield() {
     private javax.swing.JTextField maximumLengthJTextField;
     private javax.swing.JLabel maximumLengthLabel;
     private javax.swing.JTextField nameJTextField;
-    private javax.swing.JTextField positionJTextField;
-    private javax.swing.JLabel positionLabel;
-    private javax.swing.JTextField runwayJTextField;
-    private javax.swing.JLabel runwayLabel;
+    private javax.swing.JTextField positionsInputJTextField;
+    private javax.swing.JList positionsJList;
+    private javax.swing.JTextField runwayInputJTextField;
+    private javax.swing.JList runwayJList;
     private javax.swing.JTextField slopeJTextField;
     private javax.swing.JLabel slopeLabel;
     // End of variables declaration//GEN-END:variables

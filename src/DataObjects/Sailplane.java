@@ -16,12 +16,12 @@ public class Sailplane {
     String type;
     String owner;
     String contactInformation;
-    String maximumGrossWeight;
-    String emptyWeight;
-    String indicatedStallSpeed;
-    String maximumWinchingSpeed;
-    String maximumAllowableWeakLinkStrength;
-    String maximumTension;
+    int maximumGrossWeight;
+    int emptyWeight;
+    int indicatedStallSpeed;
+    int maximumWinchingSpeed;
+    int maximumAllowableWeakLinkStrength;
+    int maximumTension;
  
     public String toString(){
         return Number;
@@ -48,9 +48,9 @@ public class Sailplane {
      * @param maximumTension1                    maximum tension of sailplane
      */
     public Sailplane(String number, String type1, String owners, String contactInfo,
-          String maximumGrossWeight1, String emptyWeight1, String indicatedStallSpeed1, 
-          String maximumWinchingSpeed1, String maximumAllowableWeakLinkStrength1,
-          String maximumTension1){
+          int maximumGrossWeight1, int emptyWeight1, int indicatedStallSpeed1, 
+          int maximumWinchingSpeed1, int maximumAllowableWeakLinkStrength1,
+          int maximumTension1){
        Number = number;
        type = type1;
        owner = owners;
@@ -61,6 +61,19 @@ public class Sailplane {
        maximumWinchingSpeed = maximumWinchingSpeed1;
        maximumAllowableWeakLinkStrength = maximumAllowableWeakLinkStrength1;
 }  
+    
+ public Sailplane(String number, String type1,
+          int maximumGrossWeight1, int emptyWeight1, int indicatedStallSpeed1, 
+          int maximumWinchingSpeed1, int maximumAllowableWeakLinkStrength1,
+          int maximumTension1){
+       Number = number;
+       type = type1;
+       maximumGrossWeight = maximumGrossWeight1;  
+       emptyWeight= emptyWeight1;
+       indicatedStallSpeed = indicatedStallSpeed1;
+       maximumWinchingSpeed = maximumWinchingSpeed1;
+       maximumAllowableWeakLinkStrength = maximumAllowableWeakLinkStrength1;
+} 
     /**
     * This method can change the n-number and makes the 
     * n-number part of the Sailplane object.
@@ -153,10 +166,10 @@ public class Sailplane {
     * This method always works, only if sailplane already
     * exists.
     *
-    * @param  maximumGrossWeight1  the String that is designated to the
+    * @param  maximumGrossWeight1  the int that is designated to the
     *                              maximum gross weight of the Sailplane object
     */
-    public void setMaximumGrossWeight(String maximumGrossWeight1){
+    public void setMaximumGrossWeight(int maximumGrossWeight1){
         maximumGrossWeight  = maximumGrossWeight1;
     }
    
@@ -166,7 +179,7 @@ public class Sailplane {
     * This method always returns immediately,only if sailplane exists. 
     * @return      the maximum gross weight of Sailplane object
     */
-    public String getMaximumGrossWeight (){
+    public int getMaximumGrossWeight (){
        return maximumGrossWeight ; 
     }  
     
@@ -176,10 +189,10 @@ public class Sailplane {
     * This method always works, only if sailplane already
     * exists.
     *
-    * @param  emptyWeight1  the String that is designated to empty weight
+    * @param  emptyWeight1  the int that is designated to empty weight
     *                       of the Sailplane object
     */
-    public void setEmptyWeight(String emptyWeight1){
+    public void setEmptyWeight(int emptyWeight1){
         emptyWeight  = emptyWeight1;
     }
   
@@ -189,7 +202,7 @@ public class Sailplane {
     * This method always returns immediately,only if sailplane exists. 
     * @return      the empty weight of Sailplane object
     */
-    public String getEmptyWeight(){
+    public int getEmptyWeight(){
        return emptyWeight ; 
     }      
  
@@ -199,10 +212,10 @@ public class Sailplane {
     * This method always works, only if sailplane already
     * exists.
     *
-    * @param  indicatedStallSpeed1  the String that is designated to indicated 
+    * @param  indicatedStallSpeed1  the int that is designated to indicated 
     *                               stall speed of the Sailplane object
     */
-    public void setIndicatedStallSpeed(String indicatedStallSpeed1){
+    public void setIndicatedStallSpeed(int indicatedStallSpeed1){
        indicatedStallSpeed  = indicatedStallSpeed1;
     }
        
@@ -211,7 +224,7 @@ public class Sailplane {
     * This method always returns immediately,only if sailplane exists. 
     * @return      the indicated stall speed of Sailplane object
     */
-    public String getIndicatedStallSpeed(){
+    public int getIndicatedStallSpeed(){
        return indicatedStallSpeed ; 
     }  
 
@@ -221,10 +234,10 @@ public class Sailplane {
     * This method always works, only if sailplane already
     * exists.
     *
-    * @param  maximumWinchingSpeed1 the String that is designated to maximum 
+    * @param  maximumWinchingSpeed1 the int that is designated to maximum 
     *                               winching speed of the Sailplane object
     */
-    public void setMaximumWinchingSpeed(String maximumWinchingSpeed1){
+    public void setMaximumWinchingSpeed(int maximumWinchingSpeed1){
         maximumWinchingSpeed  = maximumWinchingSpeed1;
     }
  
@@ -234,7 +247,7 @@ public class Sailplane {
     * This method always returns immediately,only if sailplane exists. 
     * @return      the maximum winching speed of Sailplane object
     */
-    public String getMaximumWinchingSpeed(){
+    public int getMaximumWinchingSpeed(){
        return maximumWinchingSpeed; 
     }      
    
@@ -244,12 +257,12 @@ public class Sailplane {
     * This method always works, only if sailplane already
     * exists.
     *
-    * @param  maximumAllowableWeakLinkStrength1  the String that is designated 
+    * @param  maximumAllowableWeakLinkStrength1  the int that is designated 
     *                                            to indicated stall speed of 
     *                                            the Sailplane object
     */
     public void setMaximumAllowableWeakLinkStrength(
-                String maximumAllowableWeakLinkStrength1){
+                int maximumAllowableWeakLinkStrength1){
         maximumAllowableWeakLinkStrength = maximumAllowableWeakLinkStrength1;
     }
          
@@ -260,7 +273,7 @@ public class Sailplane {
     * 
     * @return      the maximum allowableWeakLinkStrength of Sailplane object
     */
-    public String getMaximumAllowableWeakLinkStrength(){
+    public int getMaximumAllowableWeakLinkStrength(){
        return maximumAllowableWeakLinkStrength; 
     } 
    /**
@@ -269,10 +282,10 @@ public class Sailplane {
     * This method always works, only if sailplane already
     * exists.
     *
-    * @param  maximumTension1  the String that is designated to maximum Tension
+    * @param  maximumTension1  the int that is designated to maximum Tension
     *                          of the Sailplane object
     */
-    public void setMaximumTension(String maximumTension1){
+    public void setMaximumTension(int maximumTension1){
        maximumTension = maximumTension1;
     }
         
@@ -281,7 +294,7 @@ public class Sailplane {
     * This method always returns immediately,only if sailplane exists. 
     * @return      the maximum tension of Sailplane object
     */
-    public String getMaximumTension(){
+    public int getMaximumTension(){
        return maximumTension; 
     }      
 }
