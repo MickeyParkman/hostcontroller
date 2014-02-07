@@ -73,10 +73,8 @@ public class DatabaseInitialization {
                 + "FOREIGN KEY (capability) REFERENCES Capability (capability_id),"
                 + "FOREIGN KEY (preference) REFERENCES Preference (preference_id))";
         
-        try {
-            Statement createPilotTableStatement = connect.createStatement();
-            createPilotTableStatement.execute(createPilotString);
-            createPilotTableStatement.close();
+        try (Statement createPilotTableStatement = connect.createStatement()) {
+                createPilotTableStatement.execute(createPilotString);
         }catch(SQLException e) {
             throw e;
         }        
@@ -90,13 +88,11 @@ public class DatabaseInitialization {
         String addStudent = "INSERT INTO Capability(capability_id, capability_string) VALUES (1, 'Student')";
         String addProficient = "INSERT INTO Capability(capability_id, capability_string) VALUES (2, 'Proficient')";
         String addAdvanced = "INSERT INTO Capability(capability_id, capability_string) VALUES (3, 'Advanced')";
-        try {
-            Statement createCapabilityTableStatement = connect.createStatement();
-            createCapabilityTableStatement.execute(createCapablityString);
-            createCapabilityTableStatement.executeUpdate(addStudent);
-            createCapabilityTableStatement.executeUpdate(addProficient);
-            createCapabilityTableStatement.executeUpdate(addAdvanced);
-            createCapabilityTableStatement.close();
+        try (Statement createCapabilityTableStatement = connect.createStatement()) {
+                createCapabilityTableStatement.execute(createCapablityString);
+                createCapabilityTableStatement.executeUpdate(addStudent);
+                createCapabilityTableStatement.executeUpdate(addProficient);
+                createCapabilityTableStatement.executeUpdate(addAdvanced);
         }catch(SQLException e) {
             throw e;
         }        
@@ -110,16 +106,34 @@ public class DatabaseInitialization {
         String addMild = "INSERT INTO Preference(preference_id, preference_string) VALUES (1, 'Mild')";
         String addNominal = "INSERT INTO Preference(preference_id, preference_string) VALUES (2, 'Nominal')";
         String addPerformance = "INSERT INTO Preference(preference_id, preference_string) VALUES (3, 'Perfomrance')";
-        try {
-            Statement createPreferenceTableStatement = connect.createStatement();
-            createPreferenceTableStatement.execute(createPreferenceString);
-            createPreferenceTableStatement.executeUpdate(addMild);
-            createPreferenceTableStatement.executeUpdate(addNominal);
-            createPreferenceTableStatement.executeUpdate(addPerformance);
-            createPreferenceTableStatement.close();
+        try (Statement createPreferenceTableStatement = connect.createStatement()) {
+                createPreferenceTableStatement.execute(createPreferenceString);
+                createPreferenceTableStatement.executeUpdate(addMild);
+                createPreferenceTableStatement.executeUpdate(addNominal);
+                createPreferenceTableStatement.executeUpdate(addPerformance);
         }catch(SQLException e) {
             throw e;
         }        
+    }
+    
+    public static void createSailplane(Connection connect) throws SQLException {
+        String createSailplaneString = "CREATE TABLE Sailplane"
+                + "(number VARCHAR(30),"
+                + "type VARCHAR(30),"
+                + "owner VARCHAR(30),"
+                + "contact_info VARCHAR(50),"
+                + "max_gross_weight INT,"
+                + "empty_weight INT,"
+                + "indicated_stall_speed INT,"
+                + "max_winching_speed INT,"
+                + "max_allowable_weak_link_strength INT"
+                + "max_tension INT,"
+                + "PRIMARY KEY (number))";
+        try (Statement createPilotTableStatement = connect.createStatement()) {
+                createPilotTableStatement.execute(createSailplaneString);
+        }catch(SQLException e) {
+            throw e;
+        }   
     }
     
      public static void deleteDB() throws SQLException, ClassNotFoundException{
