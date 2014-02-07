@@ -6,7 +6,9 @@
 
 package mainhost;
 
-import javax.swing.UIManager;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author garreola-gutierrez
@@ -20,7 +22,24 @@ public class Main {
        
         MainHost a = new MainHost();
         a.setVisible(true);
+        
+            
         // TODO code application logic here
+        
+        /*try {
+            //DatabaseUtilities.DatabaseInitialization.deleteDB();
+            DatabaseUtilities.DatabaseInitialization.initDatabase();
+        }catch(ClassNotFoundException e1) {
+            JOptionPane.showMessageDialog(a, "ClassNotFoundException" + e1.getMessage());
+        }catch(SQLException e2) {
+            JOptionPane.showMessageDialog(a, "SQLException" + e2.getMessage());
+        }*/
+        
+        /*try{
+            DatabaseUtilities.DatabaseUtilities.addPilotToDB(new Pilot("Smith", "Matt", 145, Capability.ADVANCED, "Aggressive", null, null));
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(a, "SQLException " + e.getMessage());
+        }*/
     }
     
 }

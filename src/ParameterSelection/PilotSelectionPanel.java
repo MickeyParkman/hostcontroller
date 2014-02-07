@@ -8,11 +8,15 @@ package ParameterSelection;
 
 import DataObjects.Pilot;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,17 +27,27 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
     private List<Pilot> names = new ArrayList<Pilot>();
     
     private void initPilotList() {
-        names.add(new Pilot("Quartemain", "Alan", 160, Capability.ADVANCED, "Aggressive", null, null));
-        names.add(new Pilot("Williams", "Alex", 175, Capability.STUDENT, "Mild", null, null));
-        names.add(new Pilot("Costanzo", "Alexander", 165, Capability.PROFICIENT, "Nominal", null, null));
-        names.add(new Pilot("Hitchcock", "Alfred", 190, Capability.STUDENT, "Aggressive", null, null));
-        names.add(new Pilot("Takei", "George", 150, Capability.ADVANCED, "Aggressive", null, null));
-        names.add(new Pilot("Patten", "George", 185, Capability.STUDENT, "Nominal", null, null));
-        names.add(new Pilot("Washington", "George", 175, Capability.ADVANCED, "Nominal", null, null));
-        names.add(new Pilot("Areola-Gutierrez", "Gisela", 125, Capability.STUDENT, "Mild", null, null));
-        names.add(new Pilot("Dargen", "Matt", 175, Capability.STUDENT, "Mild", null, null));
-        names.add(new Pilot("Lower", "Matt", 160, Capability.PROFICIENT, "Nominal", null, null));
-        names.add(new Pilot("Smith", "Matt", 145, Capability.ADVANCED, "Aggressive", null, null));
+        try{
+            names = DatabaseUtilities.DatabaseUtilities.getPilots();
+            if (names == null)
+                names = new ArrayList<>();
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(pilotNameInput, e.getMessage());
+            names.add(new Pilot("Quartemain", "Alan", 160, Capability.ADVANCED, "Aggressive", null, null));
+            //names.add(new Pilot("Williams", "Alex", 175, Capability.STUDENT, "Mild", null, null));
+            //names.add(new Pilot("Costanzo", "Alexander", 165, Capability.PROFICIENT, "Nominal", null, null));
+            //names.add(new Pilot("Hitchcock", "Alfred", 190, Capability.STUDENT, "Aggressive", null, null));
+            //names.add(new Pilot("Takei", "George", 150, Capability.ADVANCED, "Aggressive", null, null));
+            //names.add(new Pilot("Patten", "George", 185, Capability.STUDENT, "Nominal", null, null));
+            //names.add(new Pilot("Washington", "George", 175, Capability.ADVANCED, "Nominal", null, null));
+           // names.add(new Pilot("Areola-Gutierrez", "Gisela", 125, Capability.STUDENT, "Mild", null, null));
+            //names.add(new Pilot("Dargen", "Matt", 175, Capability.STUDENT, "Mild", null, null));
+            //names.add(new Pilot("Lower", "Matt", 160, Capability.PROFICIENT, "Nominal", null, null));
+            //names.add(new Pilot("Smith", "Matt", 145, Capability.ADVANCED, "Aggressive", null, null));
+        } catch (ClassNotFoundException ex) {
+            // TODO change exception case
+            Logger.getLogger(PilotSelectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**

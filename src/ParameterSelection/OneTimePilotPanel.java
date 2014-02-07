@@ -120,7 +120,7 @@ public class OneTimePilotPanel extends javax.swing.JPanel {
 
         preferenceButtonGroup.add(aggressiveRadioButton);
         aggressiveRadioButton.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        aggressiveRadioButton.setText("Aggressive");
+        aggressiveRadioButton.setText("Performance");
 
         pilotLastNameLabel.setText("Last:");
 
