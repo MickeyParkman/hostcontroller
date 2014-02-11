@@ -8,10 +8,10 @@ package DataObjects;
 
 /**
  *
- * @author garreola-gutierrez
+ * @author garreola-gutierrez, matt dargen
  */
 public class Runway {
-    String runway;
+    Airfield parent;
     String magneticHeading;
    
     public Runway(){
@@ -27,27 +27,28 @@ public class Runway {
     }
     
    /**
-    * This method can change the runway and makes the 
-    * runway part of the Airfield object.
-    * This method always works, only if airfield already
+    * This method can change the Airfield parent of a Runway object
+    * This method always works, only if Runway already
     * exists.
     *
-    * @param runway1  the String that is designated to
-    *                 runway of the Airfield object
+    * @param parent1  the Airfield this runway belongs to
     */
-    public void setRunway1(String runway1){
-        runway= runway1;
+    public void setParent(Airfield parent1){
+        parent = parent1;
     }
     
    /**
-    * Returns an Airfield object runway to be displayed. 
-    * This method always returns immediately,only if airfield exists. 
-    * @return      the runway of Airfield object
+    * Returns the Airfield object this Runway belongs to. 
+    * This method always returns immediately, only if Runway exists. 
+    * @return      the parent of the Runway object
     */
-    public String getRunway(){
-       return runway; 
+    public Airfield getParent(){
+       return parent; 
     }
-        public void setMagneticHeading(String magneticHeading1){
+    
+    
+    
+    public void setMagneticHeading(String magneticHeading1){
         magneticHeading= magneticHeading1;
     }
   /**
