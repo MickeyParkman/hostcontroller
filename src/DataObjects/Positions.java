@@ -8,10 +8,10 @@ package DataObjects;
 
 /**
  *
- * @author garreola-gutierrez
+ * @author garreola-gutierrez, mtdargen
  */
 public class Positions {
-    String position;
+    Runway parent;
     String positionMaximumLength;
     String positionSlope;
     String positionCenterlineOffset;
@@ -23,34 +23,33 @@ public class Positions {
         return positionMaximumLength;
     }
     
-    public Positions(String position1, String positionMaximumLength1, String positionSlope1, 
+    public Positions(Runway parent1, String positionMaximumLength1, String positionSlope1, 
                     String positionCenterlineOffset1){
-       position = position1;
+       parent = parent1;
        positionMaximumLength = positionMaximumLength1;
        positionSlope = positionSlope1;
        positionCenterlineOffset = positionCenterlineOffset1;
     }
         
    /**
-    * This method can change the position and makes the 
-    * position part of the Airfield object.
+    * This method can change the Runway that a Position object
+    * belongs to.
     * This method always works, only if airfield already
     * exists.
     *
-    * @param  position1  the String that is designated to
-    *                    position of the Airfield object
+    * @param  parent1  the Runway this position belongs to
     */
-    public void setPosition(String position1){
-        position = position1;
+    public void setParent(Runway parent1){
+        parent = parent1;
     }
 
    /**
-    * Returns an Airfield object position to be displayed.
+    * Returns the Runway object this Position belongs to
     * This method always returns immediately,only if airfield exists. 
     * @return      the position of Airfield object
     */
-    public String getPosition(){
-       return position; 
+    public Runway getParent(){
+       return parent; 
     }
 
    /**
