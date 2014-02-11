@@ -16,12 +16,6 @@ public class Airfield {
     String location;
     String altitude;
     String magneticVariation;
-    String runway;
-    String position;
-    String magneticHeading;
-    String positionMaximumLength;
-    String positionSlope;
-    String positionCenterlineOffset;
     
     public Airfield(){
     }
@@ -31,19 +25,12 @@ public class Airfield {
     }
     
     public Airfield(String name1, String designator1, String location1, String altitude1, 
-                    String magneticVariation1, String runway, String magneticHeading1,
-                    String position1, String positionMaximumLength1, String positionSlope1, 
-                    String positionCenterlineOffset1){
+                    String magneticVariation1){
        name = name1;
        designator = designator1; 
        location = location1;
        altitude = altitude1;
        magneticVariation = magneticVariation1;
-       magneticHeading = magneticHeading1;
-       position = position1;
-       positionMaximumLength = positionMaximumLength1;
-       positionSlope = positionSlope1;
-       positionCenterlineOffset = positionCenterlineOffset1;
               }
    /**
     * This method can change the name and makes the 
