@@ -2,13 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainhost;
+package Wizards;
+
+import DataObjects.Pilot;
+import ParameterSelection.Capability;
+import ParameterSelection.Preference;
+import java.sql.SQLException;
 
 /**
  *
  * @author Matt
  */
-public class Wizard_Pilot extends mainhost.Wizard {
+public class Wizard_Pilot extends Wizard {
     
     /**
      * Creates new form Wizard_Pilot
@@ -30,15 +35,15 @@ public class Wizard_Pilot extends mainhost.Wizard {
         windowLabel = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        pilotRequiredPanel2 = new mainhost.PilotRequiredPanel();
-        pilotOptionalPanel2 = new mainhost.PilotOptionalPanel();
+        pilotRequiredPanel2 = new PilotRequiredPanel();
+        pilotOptionalPanel2 = new PilotOptionalPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         windowLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         windowLabel.setText("Pilot Data Entry Wizard");
 
-        submitButton.setText("Sumbit");
+        submitButton.setText("Submit");
         submitButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 submitButtonMousePressed(evt);
@@ -92,6 +97,35 @@ public class Wizard_Pilot extends mainhost.Wizard {
             
     }//GEN-LAST:event_submitButtonMousePressed
 
+    protected void submitData(){
+        String[] names = pilotRequiredPanel2.getPilotName().split(" ");
+        String firstName;
+        String lastName;
+        if (names.length >= 2) {
+            firstName = names[0];
+            lastName = names[1]; 
+        }
+        else {
+            firstName = names[0];
+            lastName = names[1]; 
+        }
+        int weight = pilotRequiredPanel2.getWeight();
+        String capability = Capability.convertCapabilityNumToString(pilotRequiredPanel2.getCapability());
+        System.out.println(pilotRequiredPanel2.getCapability());
+        String preference = Preference.convertPreferenceNumToString(pilotRequiredPanel2.getPreference());
+        System.out.println(pilotRequiredPanel2.getPreference());
+        
+        Pilot newPilot = new Pilot(firstName, lastName, weight, capability, preference, "", "");
+        try{
+            DatabaseUtilities.DatabaseUtilities.addPilotToDB(newPilot);
+        }catch(SQLException e1) {
+            //TODO Report error
+        }catch (ClassNotFoundException e2) {
+            //TODO Report error
+        }
+        this.dispose();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -128,8 +162,8 @@ public class Wizard_Pilot extends mainhost.Wizard {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane jTabbedPane1;
-    private mainhost.PilotOptionalPanel pilotOptionalPanel2;
-    private mainhost.PilotRequiredPanel pilotRequiredPanel2;
+    private PilotOptionalPanel pilotOptionalPanel2;
+    private PilotRequiredPanel pilotRequiredPanel2;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel windowLabel;
     // End of variables declaration//GEN-END:variables

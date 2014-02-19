@@ -21,8 +21,8 @@ public class Runway {
         return magneticHeading;
     }
     
-    public Runway(String runway1, String magneticHeading1){
-       runway = runway1;
+    public Runway(Airfield parent, String magneticHeading1){
+       this.parent = parent;
        magneticHeading = magneticHeading1;
     }
     

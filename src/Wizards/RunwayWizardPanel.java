@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainhost;
+package Wizards;
+
+import DataObjects.Runway;
 
 /**
  *
@@ -19,8 +21,8 @@ public class RunwayWizardPanel extends javax.swing.JPanel {
     
     public boolean isComplete(Runway r)
     {   
-            r.magneticHeading = magHeadField.getText();
-            if(r.magneticHeading.isEmpty()){
+            r.setMagneticHeading(magHeadField.getText());
+            if(r.getMagneticHeading().isEmpty()){
                 return false;
             }
         return true;

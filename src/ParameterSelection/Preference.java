@@ -16,9 +16,9 @@ public class Preference {
     public static final String PERFORMANCE = "Performance";
     
     public static String convertPreferenceNumToString(int num) {
-        if(num == 3)
+        if(num == 0)
             return MILD;
-        else if(num == 2)
+        else if(num == 1)
             return NOMINAL;
         else 
             return PERFORMANCE;
@@ -26,10 +26,10 @@ public class Preference {
     
     public static int convertPreferenceStringToNum(String preferenceString) {
         if(preferenceString.equals(MILD))
-            return 1;
+            return 0;
         else if(preferenceString.equals(NOMINAL))
-            return 2;
+            return 1;
         else 
-            return 3;
+            return 2;
     }
 }

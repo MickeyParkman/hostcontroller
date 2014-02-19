@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainhost;
+package Wizards;
+
+import DataObjects.Position;
 
 /**
  *
@@ -19,16 +21,16 @@ public class PositionWizardPanel extends javax.swing.JPanel {
 
     public boolean isComplete(Position p)
     {
-        p.maximumLength = maxLengthField.getText();
-        if(p.maximumLength.isEmpty()){
+        p.setPositionMaximumLength(maxLengthField.getText());
+        if(p.getPositionMaximumLength().isEmpty()){
             return false;
         }
-        p.slope = slopeField.getText();
-        if(p.slope.isEmpty()){
+        p.setPositionSlope(slopeField.getText());
+        if(p.getPositionSlope().isEmpty()){
             return false;
         }
-        p.centerlineOffset = clineOffsetField.getText();
-        if(p.centerlineOffset.isEmpty()){
+        p.setPositionCenterlineOffset(clineOffsetField.getText());
+        if(p.getPositionCenterlineOffset().isEmpty()){
             return false;
         }
         return true;

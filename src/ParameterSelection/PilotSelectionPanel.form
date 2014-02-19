@@ -22,13 +22,13 @@
                   <Component id="pilotWeightLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="pilotCapabilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="pilotPreferenceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="pilotWeightDisplay" alignment="0" max="32767" attributes="0"/>
+                  <Component id="pilotScrollPane" alignment="0" pref="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="pilotNameLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pilotNameInput" min="-2" pref="165" max="-2" attributes="0"/>
+                      <Component id="pilotNameInput" pref="91" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="pilotScrollPane" alignment="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="pilotWeightDisplay" alignment="0" max="32767" attributes="0"/>
                   <Component id="pilotCapabilityDisplay" alignment="0" max="32767" attributes="0"/>
                   <Component id="pilotPreferenceDisplay" alignment="0" max="32767" attributes="0"/>
               </Group>

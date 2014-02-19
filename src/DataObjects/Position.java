@@ -10,20 +10,20 @@ package DataObjects;
  *
  * @author garreola-gutierrez, mtdargen
  */
-public class Positions {
+public class Position {
     Runway parent;
     String positionMaximumLength;
     String positionSlope;
     String positionCenterlineOffset;
     
-    public Positions(){
+    public Position(){
     }
     @Override
     public String toString(){
         return positionMaximumLength;
     }
     
-    public Positions(Runway parent1, String positionMaximumLength1, String positionSlope1, 
+    public Position(Runway parent1, String positionMaximumLength1, String positionSlope1, 
                     String positionCenterlineOffset1){
        parent = parent1;
        positionMaximumLength = positionMaximumLength1;

@@ -16,9 +16,9 @@ public class Capability {
     public static final String ADVANCED = "Advanced";
     
     public static String convertCapabilityNumToString(int num) {
-        if(num == 3)
+        if(num == 2)
             return ADVANCED;
-        else if(num == 2)
+        else if(num == 1)
             return PROFICIENT;
         else 
             return STUDENT;
@@ -26,10 +26,10 @@ public class Capability {
     
     public static int convertCapabilityStringToNum(String preferenceString) {
         if(preferenceString.equals(STUDENT))
-            return 1;
+            return 0;
         else if(preferenceString.equals(PROFICIENT))
-            return 2;
+            return 1;
         else 
-            return 3;
+            return 2;
     }
 }

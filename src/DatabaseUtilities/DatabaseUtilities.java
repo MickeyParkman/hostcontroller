@@ -12,13 +12,14 @@ import ParameterSelection.Preference;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author awilliams5
  */
 public class DatabaseUtilities {
-    private static String databaseConnectionName = "jdbc:derby:WinchCommonsTest11DataBase;";
+    private static String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
     private static String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
     private static String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
 
@@ -44,7 +45,9 @@ public class DatabaseUtilities {
                     thePilot.getLastName());
             pilotInsertStatement.setString(2, String.valueOf(thePilot.getWeight()));
             pilotInsertStatement.setString(3, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getCapability())));
+            System.out.println(String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getCapability())));
             pilotInsertStatement.setString(4, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getPreference())));
+            System.out.println(String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getPreference())));
             pilotInsertStatement.setString(5, thePilot.getEmergencyContact());
             pilotInsertStatement.setString(6, thePilot.getMedInfo());
             pilotInsertStatement.executeUpdate();
@@ -82,6 +85,7 @@ public class DatabaseUtilities {
                     preference = Integer.parseInt(thePilots.getString(4));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 Pilot newPilot = new Pilot(names[0], names[1], weight , Capability.convertCapabilityNumToString(capability), Preference.convertPreferenceNumToString(preference), thePilots.getString(5), thePilots.getString(6));
                 pilots.add(newPilot);

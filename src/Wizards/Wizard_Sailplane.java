@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainhost;
+package Wizards;
 
 /**
  *
  * @author Matt
  */
-public class Wizard_Sailplane extends mainhost.Wizard {
+public class Wizard_Sailplane extends Wizard {
 
     /**
      * Creates new form Wizard_Sailplane

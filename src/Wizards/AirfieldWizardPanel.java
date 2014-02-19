@@ -1,4 +1,6 @@
-package mainhost;
+package Wizards;
+
+import DataObjects.Airfield;
 
 /**
  *

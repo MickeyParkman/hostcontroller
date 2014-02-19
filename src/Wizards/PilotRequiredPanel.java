@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainhost;
+package Wizards;
 
 /**
  *
@@ -15,6 +15,27 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
      */
     public PilotRequiredPanel() {
         initComponents();
+    }
+    
+    public int getWeight() {
+        try{
+            int weight = Integer.parseInt(weightField.getText());
+            return weight;
+        }catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+    
+    public String getPilotName() {
+        return nameField.getText();
+    }
+    
+    public int getCapability() {
+        return xpSlider.getValue();
+    }
+    
+    public int getPreference() {
+        return launchPrefSlider.getValue();
     }
     
     public boolean isComplete()

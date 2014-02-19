@@ -6,6 +6,9 @@
 
 package mainhost;
 
+import DataObjects.Pilot;
+import ParameterSelection.Capability;
+import ParameterSelection.Preference;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -33,12 +36,14 @@ public class Main {
             JOptionPane.showMessageDialog(a, "ClassNotFoundException" + e1.getMessage());
         }catch(SQLException e2) {
             JOptionPane.showMessageDialog(a, "SQLException" + e2.getMessage());
-        }*/
+        }
         
-        /*try{
-            DatabaseUtilities.DatabaseUtilities.addPilotToDB(new Pilot("Smith", "Matt", 145, Capability.ADVANCED, "Aggressive", null, null));
+        try{
+            DatabaseUtilities.DatabaseUtilities.addPilotToDB(new Pilot("A", "Williams", 145, Capability.ADVANCED, Preference.MILD, null, null));
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(a, "SQLException " + e.getMessage());
+        } catch(ClassNotFoundException e2) {
+            
         }*/
     }
     

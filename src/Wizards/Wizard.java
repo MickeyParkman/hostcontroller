@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainhost;
+package Wizards;
 
 
 /**
@@ -87,6 +87,7 @@ public class Wizard extends javax.swing.JFrame {
     protected void submitData()
     {
         System.out.println("The data has been sent to the database");
+        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

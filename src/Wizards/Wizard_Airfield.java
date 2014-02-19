@@ -2,7 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainhost;
+package Wizards;
+
+import DataObjects.Airfield;
+import DataObjects.Position;
+import DataObjects.Runway;
 
 /**
  *
@@ -30,9 +34,9 @@ public class Wizard_Airfield extends Wizard {
         windowLabel = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        airfieldPanel = new mainhost.AirfieldWizardPanel();
-        runwayPanel = new mainhost.RunwayWizardPanel();
-        positionPanel = new mainhost.PositionWizardPanel();
+        airfieldPanel = new AirfieldWizardPanel();
+        runwayPanel = new RunwayWizardPanel();
+        positionPanel = new PositionWizardPanel();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -155,11 +159,11 @@ public class Wizard_Airfield extends Wizard {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private mainhost.AirfieldWizardPanel airfieldPanel;
+    private AirfieldWizardPanel airfieldPanel;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToggleButton jToggleButton1;
-    private mainhost.PositionWizardPanel positionPanel;
-    private mainhost.RunwayWizardPanel runwayPanel;
+    private PositionWizardPanel positionPanel;
+    private RunwayWizardPanel runwayPanel;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel windowLabel;
     // End of variables declaration//GEN-END:variables

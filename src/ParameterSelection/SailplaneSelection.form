@@ -39,66 +39,59 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="nNumberLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="310" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="maximumGrossWeightLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                      <Component id="gliderInputLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="sailplaneInputTextField" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="nNumberLabel" min="-2" pref="67" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="nNumberTextField" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="maximumTensionLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="maximumTensionTextField" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="typeLabel" min="-2" pref="63" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="typeTextField" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                      <Component id="maximumAllowableWeakLinkStrengthLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="maximumAllowableWeakLinkStrengthTextField" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="maximumGrossWeightLabel1" min="-2" pref="67" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="maximumGrossWeightTextField" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="indicatedStallSpeed" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="indicatedStallSpeedTextField" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="maximumGrossWeightLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="emptyWeightTextField" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="ballastOnboardLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="ballastOnboardTextField" min="-2" pref="100" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="gliderInputLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="17" pref="17" max="-2" attributes="0"/>
-                                      <Component id="sailplaneInputTextField" min="-2" pref="320" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jScrollPane1" min="-2" pref="440" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="typeLabel" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                                              <Component id="typeTextField" min="-2" pref="100" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="maximumGrossWeightTextField" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="emptyWeightTextField" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="maximumWinchingSpeedTextField" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="nNumberTextField" min="-2" pref="100" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="maximumAllowableWeakLinkStrengthLabel" min="-2" max="-2" attributes="0"/>
-                                          <Component id="indicatedStallSpeed" min="-2" max="-2" attributes="0"/>
-                                          <Component id="maximumTensionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="ballastOnboardLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="passengersWeightLabel" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="passengersWeightTextField" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="ballastOnboardTextField" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="maximumAllowableWeakLinkStrengthTextField" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="indicatedStallSpeedTextField" min="-2" pref="100" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Component id="maximumWinchingSpeedLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="maximumGrossWeightLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="maximumWinchingSpeedLabel" min="-2" pref="67" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="maximumWinchingSpeedTextField" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="passengersWeightLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="passengersWeightTextField" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -112,66 +105,42 @@
               </Group>
               <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="60" max="-2" attributes="0"/>
-              <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="nNumberLabel" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="nNumberTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="maximumTensionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="maximumTensionTextField" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="nNumberLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="nNumberTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="maximumTensionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="maximumTensionTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="maximumAllowableWeakLinkStrengthLabel" min="-2" max="-2" attributes="0"/>
-                          <Component id="maximumAllowableWeakLinkStrengthTextField" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="indicatedStallSpeed" min="-2" max="-2" attributes="0"/>
-                          <Component id="indicatedStallSpeedTextField" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Component id="ballastOnboardLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="passengersWeightLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                              <Component id="ballastOnboardTextField" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="passengersWeightTextField" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="typeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="typeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="maximumGrossWeightLabel1" min="-2" max="-2" attributes="0"/>
-                          <Component id="maximumGrossWeightTextField" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="emptyWeightTextField" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="maximumGrossWeightLabel" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="maximumWinchingSpeedLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="maximumWinchingSpeedTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="typeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="typeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="maximumAllowableWeakLinkStrengthTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="maximumAllowableWeakLinkStrengthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="maximumGrossWeightLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="maximumGrossWeightTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="indicatedStallSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="indicatedStallSpeedTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="maximumGrossWeightLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="emptyWeightTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ballastOnboardTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ballastOnboardLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="maximumWinchingSpeedLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="maximumWinchingSpeedTextField" min="-2" max="-2" attributes="0"/>
+                  <Component id="passengersWeightLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="passengersWeightTextField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -216,6 +185,9 @@
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="typeTextFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="indicatedStallSpeedTextField">
       <Properties>
@@ -232,6 +204,9 @@
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="maximumGrossWeightTextFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="emptyWeightTextField">
       <Properties>
@@ -240,6 +215,9 @@
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emptyWeightTextFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="maximumWinchingSpeedTextField">
       <Properties>
@@ -247,7 +225,7 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="&#xa;"/>
+        <Property name="text" type="java.lang.String" value=" "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="maximumTensionTextField">
@@ -257,6 +235,9 @@
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="maximumTensionTextFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="maximumAllowableWeakLinkStrengthTextField">
       <Properties>
@@ -285,6 +266,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passengersWeightTextFieldActionPerformed"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="passengersWeightTextFieldKeyReleased"/>
       </Events>
     </Component>
