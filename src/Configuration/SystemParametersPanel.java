@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package SystemConfiguration;
+package Configuration;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -38,7 +38,7 @@ public class SystemParametersPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        drumParametersPanel = new SystemConfiguration.DrumParametersPanel();
+        drumParametersPanel = new Configuration.DrumParametersPanel();
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
@@ -99,7 +99,7 @@ public class SystemParametersPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
-    private SystemConfiguration.DrumParametersPanel drumParametersPanel;
+    private Configuration.DrumParametersPanel drumParametersPanel;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables

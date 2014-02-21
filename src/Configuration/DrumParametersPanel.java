@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package SystemConfiguration;
+package Configuration;
 
 import DataObjects.DrumParameters;
 import java.awt.Color;

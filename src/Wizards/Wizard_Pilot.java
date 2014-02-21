@@ -111,9 +111,7 @@ public class Wizard_Pilot extends Wizard {
         }
         int weight = pilotRequiredPanel2.getWeight();
         String capability = Capability.convertCapabilityNumToString(pilotRequiredPanel2.getCapability());
-        System.out.println(pilotRequiredPanel2.getCapability());
         String preference = Preference.convertPreferenceNumToString(pilotRequiredPanel2.getPreference());
-        System.out.println(pilotRequiredPanel2.getPreference());
         
         Pilot newPilot = new Pilot(firstName, lastName, weight, capability, preference, "", "");
         try{

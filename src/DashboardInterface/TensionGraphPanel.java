@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package mainhost;
+package DashboardInterface;
 
 import javax.swing.JButton;
 
@@ -49,6 +49,9 @@ public class TensionGraphPanel extends javax.swing.JPanel {
         });
 
         jTabbedPane1.setToolTipText("");
+        TensionGraph demo = new TensionGraph("Tension Graph");
+        jTabbedPane1.add(jComboBox1.getSelectedItem().toString(), demo);
+        demo.setVisible(true);
 
         tabCloseButton.setText("Close Current Tab");
         tabCloseButton.addActionListener(new java.awt.event.ActionListener() {

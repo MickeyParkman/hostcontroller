@@ -6,7 +6,8 @@
 
 package ParameterSelection;
 
-import SystemConfiguration.SystemParametersPanel;
+import Configuration.SystemParametersPanel;
+import Configuration.UnitSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -27,8 +28,8 @@ public class AppMenu extends JMenuBar{
     
     private void initMenu() {
         JMenu menu = new JMenu("System");
-        JMenuItem menuItem =  new JMenuItem("Parameters");
-        menuItem.addActionListener(new ActionListener() {
+        JMenuItem paramMenuItem =  new JMenuItem("Parameters");
+        paramMenuItem.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,7 +39,18 @@ public class AppMenu extends JMenuBar{
                 f.setVisible(true);
             }
         });
-        menu.add(menuItem);
+        JMenuItem unitSelectMenuItem =  new JMenuItem("Unit Selection");
+        unitSelectMenuItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UnitSelection units = new UnitSelection();
+                units.setVisible(true);
+                units.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+        menu.add(paramMenuItem);
+        menu.add(unitSelectMenuItem);
         add(menu);
     }
 }

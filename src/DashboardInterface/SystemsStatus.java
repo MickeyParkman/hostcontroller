@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
-package mainhost;
+package DashboardInterface;
+
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
@@ -43,7 +46,7 @@ public class SystemsStatus extends javax.swing.JPanel {
 
         jLabel8.setText("jLabel8");
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 0));
@@ -53,11 +56,11 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel1MouseClicked(evt);
             }
         });
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        add(jLabel1, new AbsoluteConstraints(20, 70, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("System Status");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, -1, -1));
+        add(jLabel2, new AbsoluteConstraints(130, 10, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 153, 0));
@@ -67,7 +70,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel6MouseClicked(evt);
             }
         });
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        add(jLabel6, new AbsoluteConstraints(20, 90, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 153, 0));
@@ -77,7 +80,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel7MouseClicked(evt);
             }
         });
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        add(jLabel7, new AbsoluteConstraints(20, 110, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 153, 0));
@@ -87,7 +90,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel9MouseClicked(evt);
             }
         });
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 80, 20));
+        add(jLabel9, new AbsoluteConstraints(20, 140, 80, 20));
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 153, 0));
@@ -97,7 +100,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel10MouseClicked(evt);
             }
         });
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        add(jLabel10, new AbsoluteConstraints(20, 170, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 153, 0));
@@ -107,7 +110,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel13MouseClicked(evt);
             }
         });
-        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
+        add(jLabel13, new AbsoluteConstraints(170, 110, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 153, 0));
@@ -117,7 +120,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel15MouseClicked(evt);
             }
         });
-        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, -1, -1));
+        add(jLabel15, new AbsoluteConstraints(170, 170, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 153, 0));
@@ -127,7 +130,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel11MouseClicked(evt);
             }
         });
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, -1, -1));
+        add(jLabel11, new AbsoluteConstraints(170, 70, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 153, 0));
@@ -137,7 +140,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel14MouseClicked(evt);
             }
         });
-        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, -1, -1));
+        add(jLabel14, new AbsoluteConstraints(170, 150, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 153, 0));
@@ -147,7 +150,7 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel12MouseClicked(evt);
             }
         });
-        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, -1));
+        add(jLabel12, new AbsoluteConstraints(170, 90, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked

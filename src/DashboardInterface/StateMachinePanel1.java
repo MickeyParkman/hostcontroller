@@ -1,4 +1,4 @@
-package mainhost;
+package DashboardInterface;
 
 
 import javax.swing.*;

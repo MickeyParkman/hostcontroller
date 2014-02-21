@@ -1,4 +1,4 @@
-package mainhost;
+package DashboardInterface;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,6 +9,7 @@ package mainhost;
 
 
 import java.awt.Dimension;
+import java.util.Random;
 
 /**
  *
@@ -23,7 +24,8 @@ public class DashboardInterface extends javax.swing.JFrame {
         initComponents();
        // StateMachinePanel machinePanel = new StateMachinePanel();
        // jPanel1.add(machinePanel);
-        
+        int newSpeed = 0;
+        int newTension = 0;
     }
 
     /**
@@ -35,15 +37,16 @@ public class DashboardInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        systemsStatus1 = new mainhost.SystemsStatus();
+        systemsStatus1 = new SystemsStatus();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        tensionGraphPanel1 = new mainhost.TensionGraphPanel();
-        stateMachinePanel12 = new mainhost.StateMachinePanel1();
+        tensionGraphPanel1 = new TensionGraphPanel();
+        stateMachinePanel12 = new StateMachinePanel1();
+        dial = new DemoPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         systemsStatus1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -51,7 +54,7 @@ public class DashboardInterface extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        /*jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "tension", " " };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
@@ -60,12 +63,14 @@ public class DashboardInterface extends javax.swing.JFrame {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jList1ValueChanged(evt);
             }
-        });
+        });*/
+        dial.setVisible(true);
+        
         jScrollPane1.setViewportView(jList1);
 
         jLabel1.setText("environmental variables");
 
-        jLabel2.setText("Pick a dial to be displayed:");
+        jLabel2.setText("Current Tension:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,12 +78,11 @@ public class DashboardInterface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(systemsStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(stateMachinePanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dial, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -93,10 +97,10 @@ public class DashboardInterface extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(systemsStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(2, 2, 2)
                         .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)
+                        .addComponent(dial, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(stateMachinePanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -116,7 +120,7 @@ public class DashboardInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_systemsStatus1MouseClicked
 
-    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+   /* private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         // TODO add your handling code here:
         DialTest dial = new DialTest("Tension");
         dial.setSize(new Dimension(300,300));
@@ -125,7 +129,8 @@ public class DashboardInterface extends javax.swing.JFrame {
         dial.setVisible(true);
         
     }//GEN-LAST:event_jList1ValueChanged
-
+    */
+    
     /**
      * @param args the command line arguments
      */
@@ -176,8 +181,9 @@ public class DashboardInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private mainhost.StateMachinePanel1 stateMachinePanel12;
-    private mainhost.SystemsStatus systemsStatus1;
-    private mainhost.TensionGraphPanel tensionGraphPanel1;
+    private StateMachinePanel1 stateMachinePanel12;
+    private SystemsStatus systemsStatus1;
+    private TensionGraphPanel tensionGraphPanel1;
+    private DemoPanel dial;
     // End of variables declaration//GEN-END:variables
 }

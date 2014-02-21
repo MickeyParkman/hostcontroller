@@ -212,8 +212,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
     private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pilotJListMouseClicked
         // TODO add your handling code here:
         if(pilotJList.getSelectedIndex() >= 0){
-            pilotWeightDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getFirstName() + " " +
-                                        ((Pilot)pilotJList.getSelectedValue()).getLastName());
+            pilotWeightDisplay.setText(String.valueOf(((Pilot)pilotJList.getSelectedValue()).getWeight()));
             pilotWeightDisplay.setBackground(Color.GREEN);
             
             pilotCapabilityDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getCapability());

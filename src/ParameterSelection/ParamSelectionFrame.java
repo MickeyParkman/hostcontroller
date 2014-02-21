@@ -6,6 +6,7 @@
 
 package ParameterSelection;
 
+import DashboardInterface.DashboardInterface;
 import DataObjects.Pilot;
 import DataObjects.Sailplane;
 import DataObjects.Airfield;
@@ -407,6 +408,10 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         else {
             //TODO add one time entry case
         }
+        
+        DashboardInterface dashboard = new DashboardInterface();
+        dashboard.setVisible(true);
+        dispose();
         
     }//GEN-LAST:event_submitButtonActionPerformed
 

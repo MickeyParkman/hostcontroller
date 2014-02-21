@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package mainhost;
+package DashboardInterface;
 
 import java.awt.Dimension;
 import java.awt.*;
@@ -21,67 +21,67 @@ import org.jfree.ui.StandardGradientPaintTransformer;
 
 
 
-public class DialTest extends JFrame
-{
-        static class DemoPanel extends JPanel
-                implements ChangeListener
+public class DemoPanel extends JPanel implements ChangeListener {
+        DefaultValueDataset dataset1;
+        DefaultValueDataset dataset2;
+        JSlider slider1;
+        JSlider slider2;
+
+        public void stateChanged(ChangeEvent changeevent)
         {
+                dataset1.setValue(new Integer(slider1.getValue()));
+                dataset2.setValue(new Integer(slider2.getValue()));
+        }
 
-                DefaultValueDataset dataset1;
-                DefaultValueDataset dataset2;
-                JSlider slider1;
-                JSlider slider2;
-
-                public void stateChanged(ChangeEvent changeevent)
-                {
-                        dataset1.setValue(new Integer(slider1.getValue()));
-                        dataset2.setValue(new Integer(slider2.getValue()));
-                }
-
-                public DemoPanel()
-                {
-                        super(new BorderLayout());
-                        dataset1 = new DefaultValueDataset(0D);
-                        dataset2 = new DefaultValueDataset(0D);
+        public void demoUpdate(int tension, int speed) {
+            dataset1.setValue(speed);
+            dataset2.setValue(tension);      
+        }
+        
+        public DemoPanel()
+        {
+                super(new BorderLayout());
+                dataset1 = new DefaultValueDataset(0D);
+                dataset2 = new DefaultValueDataset(0D);
                         
-                        DialPlot dialplot = new DialPlot();
+                DialPlot dialplot = new DialPlot();
                         
-                        dialplot.setView(0.0D, 0.0D, 1.0D, 1.0D);
-                        dialplot.setDataset(0, dataset1);
-                        dialplot.setDataset(1, dataset2);
+                dialplot.setView(0.0D, 0.0D, 1.0D, 1.0D);
+                dialplot.setDataset(0, dataset1);
+                dialplot.setDataset(1, dataset2);
                         
-                        StandardDialFrame standarddialframe = new StandardDialFrame();
-                        standarddialframe.setBackgroundPaint(Color.lightGray);
-                        standarddialframe.setForegroundPaint(Color.darkGray);
-                        dialplot.setDialFrame(standarddialframe);
+                StandardDialFrame standarddialframe = new StandardDialFrame();
+                standarddialframe.setBackgroundPaint(Color.lightGray);
+                standarddialframe.setForegroundPaint(Color.darkGray);
+                dialplot.setDialFrame(standarddialframe);
                         
-                        GradientPaint gradientpaint = new GradientPaint(new Point(), new Color(255, 255, 255), new Point(), new Color(170, 170, 220));
-                        DialBackground dialbackground = new DialBackground(gradientpaint);
+                GradientPaint gradientpaint = new GradientPaint(new Point(), new Color(255, 255, 255), new Point(), new Color(170, 170, 220));
+                DialBackground dialbackground = new DialBackground(gradientpaint);
                         
-                        dialbackground.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.VERTICAL));
-                        dialplot.setBackground(dialbackground);
+                dialbackground.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.VERTICAL));
+                dialplot.setBackground(dialbackground);
                         
-                        DialTextAnnotation dialtextannotation = new DialTextAnnotation("Tension");
-                        dialtextannotation.setFont(new Font("Dialog", 1, 14));
-                        dialtextannotation.setRadius(0.40999999999999996D);
-                        dialplot.addLayer(dialtextannotation);
+                DialTextAnnotation dialtextannotation = new DialTextAnnotation("Tension");
+                dialtextannotation.setFont(new Font("Dialog", 1, 14));
+                dialtextannotation.setRadius(0.30999999999999996D);
+                dialplot.addLayer(dialtextannotation);
                         
                         DialTextAnnotation dialtextannotation2 = new DialTextAnnotation("Speed");
                         dialtextannotation2.setFont(new Font("Dialog", 1, 14));
-                        dialtextannotation2.setRadius(0.65999999999999996D);
+                        dialtextannotation2.setRadius(0.60999999999999996D);
                         dialplot.addLayer(dialtextannotation2);
                         
                         DialValueIndicator dialvalueindicator = new DialValueIndicator(0);
                         dialvalueindicator.setFont(new Font("Dialog", 0, 10));
                         dialvalueindicator.setOutlinePaint(Color.darkGray);
-                        dialvalueindicator.setRadius(0.80999999999999998D);
+                        dialvalueindicator.setRadius(0.84999999999999998D);
                         dialvalueindicator.setAngle(-90D);
                         dialplot.addLayer(dialvalueindicator);
                         
                         DialValueIndicator dialvalueindicator1 = new DialValueIndicator(1);
                         dialvalueindicator1.setFont(new Font("Dialog", 0, 10));
                         dialvalueindicator1.setOutlinePaint(Color.darkGray);
-                        dialvalueindicator1.setRadius(0.55999999999999998D);
+                        dialvalueindicator1.setRadius(0.52999999999999998D);
                         dialvalueindicator1.setAngle(-90D);
                         dialplot.addLayer(dialvalueindicator1);
                         
@@ -142,43 +142,22 @@ public class DialTest extends JFrame
                         ChartPanel chartpanel = new ChartPanel(jfreechart);
                         chartpanel.setPreferredSize(new Dimension(400, 400));
                         JPanel jpanel = new JPanel(new GridLayout(2, 2));
-                        jpanel.add(new JLabel("Speed:"));
-                        jpanel.add(new JLabel("Tension:"));
-                        slider1 = new JSlider(0, 80, 0);
-                        slider1.setMajorTickSpacing(20);
-                        slider1.setPaintTicks(true);
-                        slider1.setPaintLabels(true);
-                        slider1.addChangeListener(this);
-                        jpanel.add(slider1);
-                        jpanel.add(slider1);
-                        slider2 = new JSlider(0, 100, 0);
-                        slider2.setMajorTickSpacing(20);
-                        slider2.setPaintTicks(true);
-                        slider2.setPaintLabels(true);
-                        slider2.addChangeListener(this);
-                        jpanel.add(slider2);
+                        //jpanel.add(new JLabel("Speed:"));
+                        //jpanel.add(new JLabel("Tension:"));
+                        //slider1 = new JSlider(0, 80, 0);
+                        //slider1.setMajorTickSpacing(20);
+                        //slider1.setPaintTicks(true);
+                        //slider1.setPaintLabels(true);
+                        //slider1.addChangeListener(this);
+                        //jpanel.add(slider1);
+                        //jpanel.add(slider1);
+                        //slider2 = new JSlider(0, 100, 0);
+                        //slider2.setMajorTickSpacing(20);
+                        //slider2.setPaintTicks(true);
+                        //slider2.setPaintLabels(true);
+                        //slider2.addChangeListener(this);
+                        //jpanel.add(slider2);
                         add(chartpanel);
                         add(jpanel, "South");
-                }
-        }
-
-
-        public DialTest(String s)
-        {
-                super(s);
-                setDefaultCloseOperation(3);
-                setContentPane(createDemoPanel());
-        }
-
-        public static JPanel createDemoPanel()
-        {
-                return new DemoPanel();
-        }
-
-        public static void main(String args[])
-        {
-                DialTest dialdemo2 = new DialTest("Instantaneous Data");
-                dialdemo2.pack();
-                dialdemo2.setVisible(true);
         }
 }

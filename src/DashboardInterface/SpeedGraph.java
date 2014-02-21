@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package mainhost;
+package DashboardInterface;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
