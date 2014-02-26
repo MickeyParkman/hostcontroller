@@ -30,35 +30,12 @@ public class TensionGraphPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        tabCloseButton = new javax.swing.JButton();
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Add Graph of:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tension", "Speed", "Height" }));
-
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
+        jTabbedPane1 = new javax.swing.JPanel();
         jTabbedPane1.setToolTipText("");
-        TensionGraph demo = new TensionGraph("Tension Graph");
-        jTabbedPane1.add(jComboBox1.getSelectedItem().toString(), demo);
+        SpeedGraph demo = new SpeedGraph("");
         demo.setVisible(true);
+        jTabbedPane1.add(demo);
 
-        tabCloseButton.setText("Close Current Tab");
-        tabCloseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tabCloseButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -69,67 +46,27 @@ public class TensionGraphPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
-                        .addComponent(jButton1)
                         .addGap(0, 777, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(tabCloseButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabCloseButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if(jComboBox1.getSelectedItem().toString().equals("Tension")) {
-            TensionGraph demo = new TensionGraph(
-                    "Time Series Chart Demo 1");
-            jTabbedPane1.add(jComboBox1.getSelectedItem().toString(), demo);
-            demo.setVisible(true);
-        }
-        else if(jComboBox1.getSelectedItem().toString().equals("Speed")){
-            SpeedGraph demo = new SpeedGraph(
-                    "Time Series Chart Demo 1");
-            demo.setVisible(true);
-            jTabbedPane1.add(jComboBox1.getSelectedItem().toString(), demo);
-        }
-        else {
-            TensionGraph demo = new TensionGraph(
-                    "Time Series Chart Demo 1");
-            demo.setVisible(true);
-            jTabbedPane1.add(jComboBox1.getSelectedItem().toString(), demo);
-        }
-        add(new JButton());
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void tabCloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tabCloseButtonActionPerformed
-        // TODO add your handling code here:
-        jTabbedPane1.remove(jTabbedPane1.getSelectedIndex());
-    }//GEN-LAST:event_tabCloseButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JButton tabCloseButton;
+    private javax.swing.JPanel jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

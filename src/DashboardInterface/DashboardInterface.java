@@ -44,7 +44,7 @@ public class DashboardInterface extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         tensionGraphPanel1 = new TensionGraphPanel();
         stateMachinePanel12 = new StateMachinePanel1();
-        dial = new DemoPanel();
+        dial = new TensionDial();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -184,6 +184,6 @@ public class DashboardInterface extends javax.swing.JFrame {
     private StateMachinePanel1 stateMachinePanel12;
     private SystemsStatus systemsStatus1;
     private TensionGraphPanel tensionGraphPanel1;
-    private DemoPanel dial;
+    private TensionDial dial;
     // End of variables declaration//GEN-END:variables
 }
