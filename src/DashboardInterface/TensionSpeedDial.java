@@ -21,7 +21,7 @@ import org.jfree.ui.StandardGradientPaintTransformer;
 
 
 
-public class DemoPanel extends JPanel implements ChangeListener {
+public class TensionSpeedDial extends JPanel implements ChangeListener {
         DefaultValueDataset dataset1;
         DefaultValueDataset dataset2;
         JSlider slider1;
@@ -38,7 +38,7 @@ public class DemoPanel extends JPanel implements ChangeListener {
             dataset2.setValue(tension);      
         }
         
-        public DemoPanel()
+        public TensionSpeedDial()
         {
                 super(new BorderLayout());
                 dataset1 = new DefaultValueDataset(0D);
