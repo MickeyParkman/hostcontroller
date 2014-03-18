@@ -9,14 +9,18 @@ package DashboardInterface;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.color.ColorSpace;
 import java.util.Date;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYAnnotation;
+import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
@@ -25,7 +29,7 @@ import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.TextAnchor;
+import org.jfree.ui.Layer;
 
 /**
  *
@@ -33,12 +37,6 @@ import org.jfree.ui.TextAnchor;
  */
 public class SpeedGraph extends JPanel {
     private static final long serialVersionUID = 1L;
-    private final int maxTension = 150;
-    private final int maxSpeed = 50;
-    private final int maxHeight = 120;
-    private int maxLaunchtime = 20000;
-    private JFreeChart chart;
-    
     
      public SpeedGraph(String title) {
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
@@ -53,9 +51,9 @@ public class SpeedGraph extends JPanel {
      *
      * @return A chart.
      */
-    private JFreeChart createChart(XYDataset dataset) {
+    private static JFreeChart createChart(XYDataset dataset) {
 
-        chart = ChartFactory.createXYLineChart(
+        JFreeChart chart = ChartFactory.createXYLineChart(
             "Speed v Time:",  // title
             "Time",             // x-axis label
             "Speed",   // y-axis label
@@ -65,6 +63,7 @@ public class SpeedGraph extends JPanel {
             true,               // generate tooltips?
             false               // generate URLs?
         );
+
         chart.setBackgroundPaint(Color.white);
 
         XYPlot plot = chart.getXYPlot();
@@ -73,7 +72,7 @@ public class SpeedGraph extends JPanel {
         XYSplineRenderer splinerenderer3 = new XYSplineRenderer();
         
 
-        XYDataset dataset1 = createDataset(0L);
+        XYDataset dataset1 = createDataset(0L, 14000);
         plot.setDataset(0,dataset1);
         plot.setRenderer(0,splinerenderer1);
         DateAxis domainAxis = new DateAxis("Date");
@@ -93,28 +92,15 @@ public class SpeedGraph extends JPanel {
         plot.mapDatasetToRangeAxis(0, 0);//1st dataset to 1st y-axis
         plot.mapDatasetToRangeAxis(1, 1); //2nd dataset to 2nd y-axis
         plot.mapDatasetToRangeAxis(2, 2);
-        
-        plot.getRangeAxis(0).setRange(0, maxHeight);
-        plot.getRangeAxis(1).setRange(0, maxSpeed);
-        plot.getRangeAxis(2).setRange(0, maxTension);
-        
+    
         plot.addRangeMarker(new ValueMarker(100, Color.RED, new BasicStroke()));
-        XYTextAnnotation text = new XYTextAnnotation("Max Tension", 600, 105);
-        text.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        plot.addAnnotation(text);
-        
-        
-        addStateTransition("Profile", 0, 50);
-        addStateTransition("Ramp", 1000, 60);
-        addStateTransition("Constant", 7000, 70);
-        addStateTransition("Recovery", 14000, 80);
-        /*plot.addDomainMarker(new ValueMarker(0, Color.BLUE, new BasicStroke((float) 2.5)));
+        plot.addDomainMarker(new ValueMarker(0, Color.BLUE, new BasicStroke((float) 2.5)));
         plot.addDomainMarker(new ValueMarker(1000, Color.BLUE, new BasicStroke((float) 2.5)));
         plot.addDomainMarker(new ValueMarker(7000, Color.BLUE, new BasicStroke((float) 2.5)));
         plot.addDomainMarker(new ValueMarker(14000, Color.BLUE, new BasicStroke((float) 2.5)));
-       
-        
-        
+        XYTextAnnotation text = new XYTextAnnotation("Max Tension", 10, 95);
+        text.setFont(new Font("SansSerif", Font.PLAIN, 9));
+        plot.addAnnotation(text);
         XYTextAnnotation text2 = new XYTextAnnotation("Profile", 0, 50);
         text2.setFont(new Font("SansSerif", Font.PLAIN, 9));
         plot.addAnnotation(text2);
@@ -126,18 +112,9 @@ public class SpeedGraph extends JPanel {
         plot.addAnnotation(text4);
         XYTextAnnotation text5 = new XYTextAnnotation("Recovery", 14000, 50);
         text5.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        plot.addAnnotation(text5);*/
+        plot.addAnnotation(text5);
         
         return chart;
-    }
-    
-    private void addStateTransition(String state, int time, int height) {
-        XYPlot chartPlot = chart.getXYPlot();
-        chartPlot.addDomainMarker(new ValueMarker(time, Color.BLUE, new BasicStroke((float) 2.5)));
-        XYTextAnnotation text = new XYTextAnnotation(state, time, height);
-        text.setTextAnchor(TextAnchor.BASELINE_LEFT);
-        text.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        chartPlot.addAnnotation(text);
     }
     
     /**
@@ -145,7 +122,7 @@ public class SpeedGraph extends JPanel {
      *
      * @return The dataset.
      */
-    private XYDataset createDataset(long startTimeMili) {
+    private static XYDataset createDataset(long startTimeMili, int maxOffset) {
         TimeSeries s1 = new TimeSeries("Height ");
         s1.add(new Second(new Date(startTimeMili)), 10);
         s1.add(new Second(new Date(startTimeMili + 1000)), 15);
@@ -159,7 +136,7 @@ public class SpeedGraph extends JPanel {
         s1.add(new Second(new Date(startTimeMili + 9000)), 105);
         s1.add(new Second(new Date(startTimeMili + 10000)), 105);
         s1.add(new Second(new Date(startTimeMili + 11000)), 104);
-        s1.add(new Second(new Date(startTimeMili + maxLaunchtime)), null);
+        s1.add(new Second(new Date(startTimeMili + maxOffset)), null);
         
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(s1);
@@ -229,13 +206,13 @@ public class SpeedGraph extends JPanel {
 
     }
     
-        /**
+    /**
      * Creates a panel for the demo (used by SuperDemo.java).
      *
      * @return A panel.
      */
-    public JPanel createDemoPanel() {
-        chart = createChart(createDataset(1387265266000L));
+    public static JPanel createDemoPanel() {
+        JFreeChart chart = createChart(createDataset(1387265266000L, 18000));
         ChartPanel panel = new ChartPanel(chart);
         panel.setFillZoomRectangle(false);
         panel.setMouseWheelEnabled(false);
@@ -244,4 +221,19 @@ public class SpeedGraph extends JPanel {
         panel.setFocusable(false);
         return panel;
     }
+    
+    /**
+     * Starting point for the demonstration application.
+     *
+     * @param args  ignored.
+     */
+    /*public static void main(String[] args) {
+
+        TensionGraph demo = new TensionGraph(
+                "Time Series Chart Demo 1");
+        demo.pack();
+        RefineryUtilities.centerFrameOnScreen(demo);
+        demo.setVisible(true);
+
+    }*/
 }
