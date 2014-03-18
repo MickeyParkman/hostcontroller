@@ -6,7 +6,9 @@
 
 package mainhost;
 
+import ApplicationFrame.ApplicationFrame;
 import DataObjects.Pilot;
+import DataObjects.Sailplane;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
 import java.sql.SQLException;
@@ -24,6 +26,7 @@ public class Main {
     public static void main(String[] args) {
        
         MainHost a = new MainHost();
+        //ApplicationFrame a = new ApplicationFrame();
         a.setVisible(true);
         
             
@@ -39,7 +42,7 @@ public class Main {
         }
         
         try{
-            DatabaseUtilities.DatabaseUtilities.addPilotToDB(new Pilot("A", "Williams", 145, Capability.ADVANCED, Preference.MILD, null, null));
+            DatabaseUtilities.DatabaseUtilities.addSailplaneToDB(new Sailplane("XF15D574930Z2", "Single Place", "Alex Williams", "None", 450, 1400, 400, 350, 1600, 240));
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(a, "SQLException " + e.getMessage());
         } catch(ClassNotFoundException e2) {

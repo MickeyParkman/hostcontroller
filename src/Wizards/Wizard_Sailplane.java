@@ -4,6 +4,8 @@
  */
 package Wizards;
 
+import java.awt.Color;
+
 /**
  *
  * @author Matt
@@ -185,8 +187,8 @@ public class Wizard_Sailplane extends Wizard {
                 throw new Exception();
             }
             
-            curField = "N-Number";
-            nNumberInt = Integer.parseInt(nNumberStr);
+            //curField = "N-Number";
+            //nNumberInt = Integer.parseInt(nNumberStr);
             
             curField = "Empty Weight";
             emptyWeightInt = Integer.parseInt(emptyWeightStr);
@@ -207,6 +209,26 @@ public class Wizard_Sailplane extends Wizard {
             ew = new ErrWindow("Please input a numerical value for " + curField);
         }catch(Exception e){
             ew = new ErrWindow("Please complete all require fields.");
+            if(nNumberField.getText().isEmpty())
+                nNumberField.setBackground(new Color(255, 105, 105));
+            else
+                nNumberField.setBackground(new Color(255, 255, 255));
+            if(emptyWeightField.getText().isEmpty())
+                emptyWeightField.setBackground(new Color(255, 105, 105));
+            else
+                emptyWeightField.setBackground(new Color(255, 255, 255));
+            if(maxGrossWeightField.getText().isEmpty())
+                maxGrossWeightField.setBackground(new Color(255, 105, 105));
+            else
+                maxGrossWeightField.setBackground(new Color(255, 255, 255));
+            if(stallSpeedField.getText().isEmpty())
+                stallSpeedField.setBackground(new Color(255, 105, 105));
+            else
+                stallSpeedField.setBackground(new Color(255, 255, 255));
+            if(maxWinchingSpeedField.getText().isEmpty())
+                maxWinchingSpeedField.setBackground(new Color(255, 105, 105));
+            else
+                maxWinchingSpeedField.setBackground(new Color(255, 255, 255));
         }
     }//GEN-LAST:event_submitButtonMouseClicked
 

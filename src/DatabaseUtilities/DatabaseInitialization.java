@@ -57,7 +57,13 @@ public class DatabaseInitialization {
             createPilot(connection);
         }catch(SQLException e) {
             throw e;
-        }        
+        }  
+        //Build the Sailplane tabel
+        try{
+             createSailplane(connection);
+        }catch(SQLException e) {
+            throw e;
+        }  
         connection.close();
     }
     
@@ -73,15 +79,34 @@ public class DatabaseInitialization {
                 + "FOREIGN KEY (capability) REFERENCES Capability (capability_id),"
                 + "FOREIGN KEY (preference) REFERENCES Preference (preference_id))";
         
-        try {
-            Statement createPilotTableStatement = connect.createStatement();
+        
+        try (Statement createPilotTableStatement = connect.createStatement()) {
             createPilotTableStatement.execute(createPilotString);
-            createPilotTableStatement.close();
         }catch(SQLException e) {
             throw e;
         }        
     }
     
+    private static void createSailplane(Connection connect) throws SQLException {
+        String createSailplaneString = "CREATE TABLE Sailplane"
+                + "(n_number VARCHAR(20),"
+                + "type VARCHAR(30),"
+                + "owner VARCHAR(30),"
+                + "contact_info VARCHAR(60),"
+                + "max_gross_weight INT,"
+                + "empty_weight INT,"
+                + "indicated_stall_speed INT,"
+                + "max_winching_speed INT,"
+                + "max_weak_link_strength INT,"
+                + "max_tension INT,"
+                + "PRIMARY KEY (n_number))";
+        try (Statement createPilotTableStatement = connect.createStatement()) {
+            createPilotTableStatement.execute(createSailplaneString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+        
     private static void createCapability(Connection connect) throws SQLException {
         String createCapablityString = "CREATE TABLE Capability"
                 + "(capability_id INT,"
@@ -100,6 +125,7 @@ public class DatabaseInitialization {
             throw e;
         }        
     }
+    
     
     private static void createPreference(Connection connect) throws SQLException {
         String createPreferenceString = "CREATE TABLE Preference"
@@ -120,42 +146,45 @@ public class DatabaseInitialization {
         }        
     }
     
-     public static void deleteDB() throws SQLException, ClassNotFoundException{
-         String databaseConnectionName = "jdbc:derby:WinchCommonsDB;";
-         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-         String removePreferenceString = "DROP TABLE Preference";
-         String removeCapabilityString = "DROP TABLE Capability";
-         String removePilotString = "DROP TABLE Pilot";
-         Connection connection = null;
-
-         //Check for DB drivers
-        try{
-            Class.forName(clientDriverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            throw e;
-        }
-    
-        //Try to connect to the specified database
-        try{
-            connection = DriverManager.getConnection(databaseConnectionName);
-            Statement removeTableStatement = connection.createStatement();
-            dropATable(removeTableStatement, removePreferenceString);
-            dropATable(removeTableStatement, removeCapabilityString);
-            dropATable(removeTableStatement, removePilotString);
-            connection.close();
-            connection = DriverManager.getConnection(databaseConnectionName + "drop=true");
+    public static void createAirfield(Connection connect) throws SQLException {
+        String createAirfieldString = "CREATE TABLE Airfield"
+                + "( name VARCHAR(30),"
+                + "designator VARCHAR(20),"
+                + "location VARCHAR(20),"
+                + "altitude VARCHAR(20),"
+                + "magneticVariation VARCHAR(20),"
+                + "PRIMARY KEY (name))";
+        try (Statement createAirfieldTableStatement = connect.createStatement()) {
+            createAirfieldTableStatement.execute(createAirfieldString);
         }catch(SQLException e) {
-            //TODO Fix error handling
             throw e;
         }
-        connection.close();
-     }
-     
-     private static void dropATable(Statement stmt, String removeString) {
-         try {
-             stmt.executeQuery(removeString);
-         }catch (SQLException e) {
-             //Do nothing because table doesn't exist
-         }
-     }
+    }
+    
+    public static void createRunway(Connection connect) throws SQLException {
+        String createRunwayString = "CREATE TABLE Runway"
+                + "( magnetic_heading VARCHAR(10), "
+                + "parent VARCHAR(30), "
+                + "PRIMARY KEY (magnetic_heading), "
+                + "FOREIGN KEY (parent) REFERENCES Airfield (name))";
+        try (Statement createRunwayTableStatement = connect.createStatement()) {
+            createRunwayTableStatement.execute(createRunwayString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    public static void createPosition(Connection connect) throws SQLException {
+        String createRunwayString = "CREATE TABLE Position"
+                + "( max_length FLOAT(10,6), "
+                + " slope FLOAT(10,6),"
+                + " centerline_offset FLOAT(10,6), "
+                + "PRIMARY KEY (name), "
+                + "FOREIGN KEY (parent) REFERENCES Airfield (name))";
+        try (Statement createRunwayTableStatement = connect.createStatement()) {
+            createRunwayTableStatement.execute(createRunwayString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
 }

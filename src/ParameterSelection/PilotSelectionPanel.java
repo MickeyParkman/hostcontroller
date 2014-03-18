@@ -96,7 +96,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
         pilotWeightLabel.setText("Weight:");
 
         pilotWeightDisplay.setEditable(false);
-        pilotWeightDisplay.setBackground(new java.awt.Color(255, 0, 0));
+        pilotWeightDisplay.setBackground(new java.awt.Color(255, 105, 105));
         pilotWeightDisplay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pilotWeightDisplayActionPerformed(evt);
@@ -107,7 +107,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
         pilotCapabilityLabel.setText("Capability:");
 
         pilotCapabilityDisplay.setEditable(false);
-        pilotCapabilityDisplay.setBackground(new java.awt.Color(255, 0, 0));
+        pilotCapabilityDisplay.setBackground(new java.awt.Color(255, 105, 105));
         pilotCapabilityDisplay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pilotCapabilityDisplayActionPerformed(evt);
@@ -118,7 +118,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
         pilotPreferenceLabel.setText("Launch Preference:");
 
         pilotPreferenceDisplay.setEditable(false);
-        pilotPreferenceDisplay.setBackground(new java.awt.Color(255, 0, 0));
+        pilotPreferenceDisplay.setBackground(new java.awt.Color(255, 105, 105));
         pilotPreferenceDisplay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pilotPreferenceDisplayActionPerformed(evt);
@@ -213,13 +213,13 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(pilotJList.getSelectedIndex() >= 0){
             pilotWeightDisplay.setText(String.valueOf(((Pilot)pilotJList.getSelectedValue()).getWeight()));
-            pilotWeightDisplay.setBackground(Color.GREEN);
+            pilotWeightDisplay.setBackground(new Color(142, 250, 127));
             
             pilotCapabilityDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getCapability());
-            pilotCapabilityDisplay.setBackground(Color.GREEN);
+            pilotCapabilityDisplay.setBackground(new Color(142, 250, 127));
             
             pilotPreferenceDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getPreference());
-            pilotPreferenceDisplay.setBackground(Color.GREEN);
+            pilotPreferenceDisplay.setBackground(new Color(142, 250, 127));
         }    
     }//GEN-LAST:event_pilotJListMouseClicked
 

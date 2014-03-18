@@ -9,6 +9,7 @@ package DashboardInterface;
 
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Random;
 
 /**
@@ -26,6 +27,8 @@ public class DashboardInterface extends javax.swing.JFrame {
        // jPanel1.add(machinePanel);
         int newSpeed = 0;
         int newTension = 0;
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
     }
 
     /**

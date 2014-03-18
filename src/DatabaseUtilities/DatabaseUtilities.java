@@ -7,6 +7,7 @@
 package DatabaseUtilities;
 
 import DataObjects.Pilot;
+import DataObjects.Sailplane;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
 import java.sql.*;
@@ -45,11 +46,42 @@ public class DatabaseUtilities {
                     thePilot.getLastName());
             pilotInsertStatement.setString(2, String.valueOf(thePilot.getWeight()));
             pilotInsertStatement.setString(3, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getCapability())));
-            System.out.println(String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getCapability())));
             pilotInsertStatement.setString(4, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getPreference())));
-            System.out.println(String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getPreference())));
             pilotInsertStatement.setString(5, thePilot.getEmergencyContact());
             pilotInsertStatement.setString(6, thePilot.getMedInfo());
+            pilotInsertStatement.executeUpdate();
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    public static void addSailplaneToDB(Sailplane theSailplane) throws SQLException, ClassNotFoundException {
+        //Check for DB drivers
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            PreparedStatement pilotInsertStatement = connect.prepareStatement(
+                    "INSERT INTO Sailplane(n_number, type, owner, contact_info,"
+                            + " max_gross_weight, empty_weight, indicated_stall_speed,"
+                            + "max_winching_speed, max_weak_link_strength, max_tension)"
+                            + "values (?,?,?,?,?,?,?,?,?,?)");
+            pilotInsertStatement.setString(1, theSailplane.getNumber());
+            pilotInsertStatement.setString(2, theSailplane.getType());
+            pilotInsertStatement.setString(3, theSailplane.getOwner());
+            pilotInsertStatement.setString(4, theSailplane.getContactInformation());
+            pilotInsertStatement.setString(5, String.valueOf(theSailplane.getMaximumGrossWeight()));
+            pilotInsertStatement.setString(6, String.valueOf(theSailplane.getEmptyWeight()));
+            pilotInsertStatement.setString(7, String.valueOf(theSailplane.getIndicatedStallSpeed()));
+            pilotInsertStatement.setString(8, String.valueOf(theSailplane.getMaximumWinchingSpeed()));
+            pilotInsertStatement.setString(9, String.valueOf(theSailplane.getMaximumAllowableWeakLinkStrength()));
+            pilotInsertStatement.setString(10, String.valueOf(theSailplane.getMaximumTension()));
             pilotInsertStatement.executeUpdate();
         }catch(SQLException e) {
             throw e;
@@ -91,6 +123,54 @@ public class DatabaseUtilities {
                 pilots.add(newPilot);
             }
             return pilots;
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+    
+    public static List<Sailplane> getSailplanes() throws SQLException, ClassNotFoundException {        
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Statement stmt = connect.createStatement();
+            ResultSet theSailplanes = stmt.executeQuery("SELECT n_number, type, owner,"
+                    + "contact_info, max_gross_weight, empty_weight, indicated_stall_speed,"
+                    + "max_winching_speed, max_weak_link_strength, max_tension "
+                    + "FROM Sailplane ORDER BY n_number");
+            List sailplanes = new ArrayList<Sailplane>();
+            
+            while(theSailplanes.next()) {
+                String nNumber = theSailplanes.getString(1);
+                String type = theSailplanes.getString(2);
+                String owner = theSailplanes.getString(3);
+                String contactInfo = theSailplanes.getString(4);
+                int maxGrossWeight = 0; 
+                int emptyWeight = 0;
+                int stallSpeed = 0;
+                int maxWinchingSpeed = 0;
+                int maxWeakLinkStrength = 0;
+                int maxTension = 0;
+                try {
+                    maxGrossWeight = Integer.parseInt(theSailplanes.getString(5));
+                    emptyWeight = Integer.parseInt(theSailplanes.getString(6));
+                    stallSpeed = Integer.parseInt(theSailplanes.getString(7));
+                    maxWinchingSpeed = Integer.parseInt(theSailplanes.getString(8));
+                    maxWeakLinkStrength = Integer.parseInt(theSailplanes.getString(9));
+                    maxTension = Integer.parseInt(theSailplanes.getString(10));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
+                Sailplane newSailplane = new Sailplane(nNumber, type, owner, contactInfo, maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, maxWeakLinkStrength, maxTension);
+                sailplanes.add(newSailplane);
+            }
+            return sailplanes;
         } catch (SQLException e) {
             throw e;
         }
