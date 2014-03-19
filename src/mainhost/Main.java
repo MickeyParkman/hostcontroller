@@ -41,7 +41,7 @@ public class Main {
             JOptionPane.showMessageDialog(a, "SQLException" + e2.getMessage());
         }
         
-        try{
+        /*try{
             DatabaseUtilities.DatabaseUtilities.addSailplaneToDB(new Sailplane("XF15D574930Z2", "Single Place", "Alex Williams", "None", 450, 1400, 400, 350, 1600, 240));
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(a, "SQLException " + e.getMessage());

@@ -29,6 +29,7 @@ public class DashboardInterface extends javax.swing.JFrame {
         int newTension = 0;
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         //setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
+        setVisible(true);
     }
 
     /**
@@ -46,7 +47,7 @@ public class DashboardInterface extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tensionGraphPanel1 = new TensionGraphPanel();
-        stateMachinePanel12 = new StateMachinePanel1();
+        stateMachinePanel12 = new StateMachinePanel();
         dial = new TensionSpeedDial();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -184,7 +185,7 @@ public class DashboardInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private StateMachinePanel1 stateMachinePanel12;
+    private StateMachinePanel stateMachinePanel12;
     private SystemsStatus systemsStatus1;
     private TensionGraphPanel tensionGraphPanel1;
     private TensionSpeedDial dial;

@@ -8,6 +8,7 @@ import DataObjects.Pilot;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -92,23 +93,13 @@ public class Wizard_Pilot extends Wizard {
         if(pilotRequiredPanel2.isComplete())
         {
             submitData();
-            this.dispose();
         }
             
     }//GEN-LAST:event_submitButtonMousePressed
 
     protected void submitData(){
-        String[] names = pilotRequiredPanel2.getPilotName().split(" ");
-        String firstName;
-        String lastName;
-        if (names.length >= 2) {
-            firstName = names[0];
-            lastName = names[1]; 
-        }
-        else {
-            firstName = names[0];
-            lastName = names[1]; 
-        }
+        String firstName = pilotRequiredPanel2.getPilotFirstName();
+        String lastName = pilotRequiredPanel2.getPilotLastName();
         int weight = pilotRequiredPanel2.getWeight();
         String capability = Capability.convertCapabilityNumToString(pilotRequiredPanel2.getCapability());
         String preference = Preference.convertPreferenceNumToString(pilotRequiredPanel2.getPreference());
@@ -116,12 +107,15 @@ public class Wizard_Pilot extends Wizard {
         Pilot newPilot = new Pilot(firstName, lastName, weight, capability, preference, "", "");
         try{
             DatabaseUtilities.DatabaseUtilities.addPilotToDB(newPilot);
+            this.dispose();
         }catch(SQLException e1) {
             //TODO Report error
+            if(e1.getErrorCode() == 30000) 
+                JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + firstName + " " + lastName + " already exists in the database");
         }catch (ClassNotFoundException e2) {
             //TODO Report error
         }
-        this.dispose();
+        
     }
     
     /**

@@ -45,7 +45,7 @@ public class DatabaseUtilities {
             pilotInsertStatement.setString(1, thePilot.getFirstName() + " " +
                     thePilot.getLastName());
             pilotInsertStatement.setString(2, String.valueOf(thePilot.getWeight()));
-            pilotInsertStatement.setString(3, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getCapability())));
+            pilotInsertStatement.setString(3, String.valueOf(Capability.convertCapabilityStringToNum(thePilot.getCapability())));
             pilotInsertStatement.setString(4, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getPreference())));
             pilotInsertStatement.setString(5, thePilot.getEmergencyContact());
             pilotInsertStatement.setString(6, thePilot.getMedInfo());

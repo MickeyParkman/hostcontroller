@@ -4,6 +4,8 @@
  */
 package Wizards;
 
+import DataObjects.Sailplane;
+import DatabaseUtilities.DatabaseUtilities;
 import java.awt.Color;
 
 /**
@@ -202,6 +204,8 @@ public class Wizard_Sailplane extends Wizard {
             curField = "Max Winching Speed";
             maxWinchingSpeedInt = Integer.parseInt(maxWinchingSpeedStr);
             
+            Sailplane s = new Sailplane(nNumberStr, "Single Place", maxGrossWeightInt, emptyWeightInt, stallSpeedInt, maxWinchingSpeedInt, 1000, 500);
+            DatabaseUtilities.addSailplaneToDB(s);
             submitData();
             this.dispose();
             
