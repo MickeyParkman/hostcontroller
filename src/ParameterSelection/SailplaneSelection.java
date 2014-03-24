@@ -7,7 +7,7 @@
 package ParameterSelection;
 
 import DataObjects.Sailplane;
-import DatabaseUtilities.DatabaseUtilities;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.awt.Color;
 import java.sql.SQLException;
 import javax.swing.DefaultListModel;
@@ -47,8 +47,8 @@ public class SailplaneSelection extends javax.swing.JPanel {
             mdl.addElement(gliderNewList[i]);
         }*/
         try {
-            for(Sailplane s: DatabaseUtilities.getSailplanes())
-            mdl.addElement(s);
+            for(Sailplane s: DatabaseDataObjectUtilities.getSailplanes())
+                mdl.addElement(s);
         } catch(SQLException e) {
             //TODO add handling for exception
             System.out.println("SQLError: " + e.getMessage());

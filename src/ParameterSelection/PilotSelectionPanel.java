@@ -28,7 +28,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
     
     private void initPilotList() {
         try{
-            names = DatabaseUtilities.DatabaseUtilities.getPilots();
+            names = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
             if (names == null)
                 names = new ArrayList<>();
         }catch(SQLException e) {

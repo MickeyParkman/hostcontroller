@@ -5,7 +5,7 @@
 package Wizards;
 
 import DataObjects.Sailplane;
-import DatabaseUtilities.DatabaseUtilities;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.awt.Color;
 
 /**
@@ -205,7 +205,7 @@ public class Wizard_Sailplane extends Wizard {
             maxWinchingSpeedInt = Integer.parseInt(maxWinchingSpeedStr);
             
             Sailplane s = new Sailplane(nNumberStr, "Single Place", maxGrossWeightInt, emptyWeightInt, stallSpeedInt, maxWinchingSpeedInt, 1000, 500);
-            DatabaseUtilities.addSailplaneToDB(s);
+            DatabaseDataObjectUtilities.addSailplaneToDB(s);
             submitData();
             this.dispose();
             

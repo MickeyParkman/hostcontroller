@@ -64,6 +64,11 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             throw e;
         }  
+        try{
+             createUnits(connection);
+        }catch(SQLException e) {
+            throw e;
+        }
         connection.close();
     }
     
@@ -146,7 +151,7 @@ public class DatabaseInitialization {
         }        
     }
     
-    public static void createAirfield(Connection connect) throws SQLException {
+    private static void createAirfield(Connection connect) throws SQLException {
         String createAirfieldString = "CREATE TABLE Airfield"
                 + "( name VARCHAR(30),"
                 + "designator VARCHAR(20),"
@@ -161,7 +166,7 @@ public class DatabaseInitialization {
         }
     }
     
-    public static void createRunway(Connection connect) throws SQLException {
+    private static void createRunway(Connection connect) throws SQLException {
         String createRunwayString = "CREATE TABLE Runway"
                 + "( magnetic_heading VARCHAR(10), "
                 + "parent VARCHAR(30), "
@@ -174,7 +179,7 @@ public class DatabaseInitialization {
         }
     }
     
-    public static void createPosition(Connection connect) throws SQLException {
+    private static void createPosition(Connection connect) throws SQLException {
         String createRunwayString = "CREATE TABLE Position"
                 + "( max_length FLOAT(10,6), "
                 + " slope FLOAT(10,6),"
@@ -183,6 +188,122 @@ public class DatabaseInitialization {
                 + "FOREIGN KEY (parent) REFERENCES Airfield (name))";
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createUnits(Connection connect) throws SQLException {
+        String createLengthUnitsString = "CREATE TABLE Units"
+                + "( index INT, "
+                + " abbreviation VARCHAR(5), "
+                + "PRIMARY KEY (index))";
+        String meters = "INSERT INTO Units(index, abbreviation) VALUES (0, 'm')";
+        String feet = "INSERT INTO Units(index, abbreviation) VALUES (1, 'ft')";
+        String millimeters = "INSERT INTO Units(index, abbreviation) VALUES (2, 'mm')";
+        String centimeters = "INSERT INTO Units(index, abbreviation) VALUES (3, 'cm')";
+        String kilometers = "INSERT INTO Units(index, abbreviation) VALUES (4, 'Km')";
+        String newtons = "INSERT INTO Units(index, abbreviation) VALUES (5, 'N')";
+        String poundForce = "INSERT INTO Units(index, abbreviation) VALUES (6, 'lbf')";
+        String kilogramForce = "INSERT INTO Units(index, abbreviation) VALUES (7, 'Kgf')";
+        String pounds = "INSERT INTO Units(index, abbreviation) VALUES (8, 'lbs')";
+        String kilograms = "INSERT INTO Units(index, abbreviation) VALUES (9, 'Kg')";
+        String milesPerHour = "INSERT INTO Units(index, abbreviation) VALUES (10, 'mph')";
+        String kmPerHour = "INSERT INTO Units(index, abbreviation) VALUES (11, 'Km/h')";
+        String metersPerSecond = "INSERT INTO Units(index, abbreviation) VALUES (12, 'm/s')";
+        String knots = "INSERT INTO Units(index, abbreviation) VALUES (13, 'kn')";
+        String fahrenheit = "INSERT INTO Units(index, abbreviation) VALUES (14, 'F')";
+        String celsius = "INSERT INTO Units(index, abbreviation) VALUES (15, 'C')";
+        String psi = "INSERT INTO Units(index, abbreviation) VALUES (16, 'psi')";
+        String megapascals = "INSERT INTO Units(index, abbreviation) VALUES (17, 'Mp')";
+        String kilopascals = "INSERT INTO Units(index, abbreviation) VALUES (18, 'Kp')";
+        try (Statement createLengthUnitsTableStatement = connect.createStatement()) {
+            createLengthUnitsTableStatement.execute(createLengthUnitsString);
+            createLengthUnitsTableStatement.executeUpdate(meters);
+            createLengthUnitsTableStatement.executeUpdate(feet);
+            createLengthUnitsTableStatement.executeUpdate(millimeters);
+            createLengthUnitsTableStatement.executeUpdate(centimeters);
+            createLengthUnitsTableStatement.executeUpdate(kilometers);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createPilotUnits(Connection connect) throws SQLException {
+        String createPressureUnitsString = "CREATE TABLE PilotUnits"
+                + "( index INT, "
+                + " unit VARCHAR(5), "
+                + "PRIMARY KEY (index))";
+        String fahrenheit = "INSERT INTO PressureUnits(index, abbreviation) VALUES (0, 'F')";
+        String celsius = "INSERT INTO PressureUnits(index, abbreviation) VALUES (1, 'C')";
+        try (Statement createPressureUnitsTableStatement = connect.createStatement()) {
+            createPressureUnitsTableStatement.execute(createPressureUnitsString);
+            createPressureUnitsTableStatement.executeUpdate(fahrenheit);
+            createPressureUnitsTableStatement.executeUpdate(celsius);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createSailplaneUnits(Connection connect) throws SQLException {
+        String createPressureUnitsString = "CREATE TABLE PressureUnits"
+                + "( index INT, "
+                + " abbreviation VARCHAR(5), "
+                + "PRIMARY KEY (index))";
+        String fahrenheit = "INSERT INTO PressureUnits(index, abbreviation) VALUES (0, 'F')";
+        String celsius = "INSERT INTO PressureUnits(index, abbreviation) VALUES (1, 'C')";
+        try (Statement createPressureUnitsTableStatement = connect.createStatement()) {
+            createPressureUnitsTableStatement.execute(createPressureUnitsString);
+            createPressureUnitsTableStatement.executeUpdate(fahrenheit);
+            createPressureUnitsTableStatement.executeUpdate(celsius);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createAirfieldUnits(Connection connect) throws SQLException {
+        String createPressureUnitsString = "CREATE TABLE PressureUnits"
+                + "( index INT, "
+                + " abbreviation VARCHAR(5), "
+                + "PRIMARY KEY (index))";
+        String fahrenheit = "INSERT INTO PressureUnits(index, abbreviation) VALUES (0, 'F')";
+        String celsius = "INSERT INTO PressureUnits(index, abbreviation) VALUES (1, 'C')";
+        try (Statement createPressureUnitsTableStatement = connect.createStatement()) {
+            createPressureUnitsTableStatement.execute(createPressureUnitsString);
+            createPressureUnitsTableStatement.executeUpdate(fahrenheit);
+            createPressureUnitsTableStatement.executeUpdate(celsius);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createDashboardUnits(Connection connect) throws SQLException {
+        String createPressureUnitsString = "CREATE TABLE PressureUnits"
+                + "( index INT, "
+                + " abbreviation VARCHAR(5), "
+                + "PRIMARY KEY (index))";
+        String fahrenheit = "INSERT INTO PressureUnits(index, abbreviation) VALUES (0, 'F')";
+        String celsius = "INSERT INTO PressureUnits(index, abbreviation) VALUES (1, 'C')";
+        try (Statement createPressureUnitsTableStatement = connect.createStatement()) {
+            createPressureUnitsTableStatement.execute(createPressureUnitsString);
+            createPressureUnitsTableStatement.executeUpdate(fahrenheit);
+            createPressureUnitsTableStatement.executeUpdate(celsius);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createEnvironmentalUnits(Connection connect) throws SQLException {
+        String createPressureUnitsString = "CREATE TABLE PressureUnits"
+                + "( index INT, "
+                + " abbreviation VARCHAR(5), "
+                + "PRIMARY KEY (index))";
+        String fahrenheit = "INSERT INTO PressureUnits(index, abbreviation) VALUES (0, 'F')";
+        String celsius = "INSERT INTO PressureUnits(index, abbreviation) VALUES (1, 'C')";
+        try (Statement createPressureUnitsTableStatement = connect.createStatement()) {
+            createPressureUnitsTableStatement.execute(createPressureUnitsString);
+            createPressureUnitsTableStatement.executeUpdate(fahrenheit);
+            createPressureUnitsTableStatement.executeUpdate(celsius);
         }catch(SQLException e) {
             throw e;
         }

@@ -106,7 +106,7 @@ public class Wizard_Pilot extends Wizard {
         
         Pilot newPilot = new Pilot(firstName, lastName, weight, capability, preference, "", "");
         try{
-            DatabaseUtilities.DatabaseUtilities.addPilotToDB(newPilot);
+            DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
             this.dispose();
         }catch(SQLException e1) {
             //TODO Report error
