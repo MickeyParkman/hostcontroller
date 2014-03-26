@@ -7,7 +7,9 @@
 package ParameterSelection;
 
 import DataObjects.Sailplane;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.awt.Color;
+import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 
 /**
@@ -28,7 +30,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
         initComponents();
         
         // For loop to create airfield objects
-        for(int i = 0; i < gliderNewList.length; i++){
+        /*for(int i = 0; i < gliderNewList.length; i++){
             gliderNewList[i] = new Sailplane();
             gliderNewList[i].setNumber("number"+ i);
             gliderNewList[i].setType("type" +i);
@@ -43,6 +45,15 @@ public class SailplaneSelection extends javax.swing.JPanel {
            
             // Adds new created objects to defaultListModel
             mdl.addElement(gliderNewList[i]);
+        }*/
+        try {
+            for(Sailplane s: DatabaseDataObjectUtilities.getSailplanes())
+                mdl.addElement(s);
+        } catch(SQLException e) {
+            //TODO add handling for exception
+            System.out.println("SQLError: " + e.getMessage());
+        } catch(ClassNotFoundException e2) {
+            //TODO add handling for exception
         }
         // Sets defaultListModel to be the model for jlist 
         sailplaneJList.setModel(mdl);
@@ -116,10 +127,10 @@ public class SailplaneSelection extends javax.swing.JPanel {
         jScrollPane1.setViewportView(sailplaneJList);
 
         nNumberTextField.setEditable(false);
-        nNumberTextField.setBackground(new java.awt.Color(255, 0, 0));
+        nNumberTextField.setBackground(new java.awt.Color(255, 105, 105));
 
         typeTextField.setEditable(false);
-        typeTextField.setBackground(new java.awt.Color(255, 0, 0));
+        typeTextField.setBackground(new java.awt.Color(255, 105, 105));
         typeTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 typeTextFieldActionPerformed(evt);
@@ -127,10 +138,10 @@ public class SailplaneSelection extends javax.swing.JPanel {
         });
 
         indicatedStallSpeedTextField.setEditable(false);
-        indicatedStallSpeedTextField.setBackground(new java.awt.Color(255, 0, 0));
+        indicatedStallSpeedTextField.setBackground(new java.awt.Color(255, 105, 105));
 
         maximumGrossWeightTextField.setEditable(false);
-        maximumGrossWeightTextField.setBackground(new java.awt.Color(255, 0, 0));
+        maximumGrossWeightTextField.setBackground(new java.awt.Color(255, 105, 105));
         maximumGrossWeightTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maximumGrossWeightTextFieldActionPerformed(evt);
@@ -138,7 +149,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
         });
 
         emptyWeightTextField.setEditable(false);
-        emptyWeightTextField.setBackground(new java.awt.Color(255, 0, 0));
+        emptyWeightTextField.setBackground(new java.awt.Color(255, 105, 105));
         emptyWeightTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emptyWeightTextFieldActionPerformed(evt);
@@ -146,11 +157,11 @@ public class SailplaneSelection extends javax.swing.JPanel {
         });
 
         maximumWinchingSpeedTextField.setEditable(false);
-        maximumWinchingSpeedTextField.setBackground(new java.awt.Color(255, 0, 0));
+        maximumWinchingSpeedTextField.setBackground(new java.awt.Color(255, 105, 105));
         maximumWinchingSpeedTextField.setText(" ");
 
         maximumTensionTextField.setEditable(false);
-        maximumTensionTextField.setBackground(new java.awt.Color(255, 0, 0));
+        maximumTensionTextField.setBackground(new java.awt.Color(255, 105, 105));
         maximumTensionTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maximumTensionTextFieldActionPerformed(evt);
@@ -158,10 +169,10 @@ public class SailplaneSelection extends javax.swing.JPanel {
         });
 
         maximumAllowableWeakLinkStrengthTextField.setEditable(false);
-        maximumAllowableWeakLinkStrengthTextField.setBackground(new java.awt.Color(255, 0, 0));
+        maximumAllowableWeakLinkStrengthTextField.setBackground(new java.awt.Color(255, 105, 105));
 
         ballastOnboardTextField.setEditable(false);
-        ballastOnboardTextField.setBackground(new java.awt.Color(255, 255, 51));
+        ballastOnboardTextField.setBackground(new java.awt.Color(245, 240, 100));
         ballastOnboardTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 ballastOnboardTextFieldKeyReleased(evt);
@@ -169,7 +180,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
         });
 
         passengersWeightTextField.setEditable(false);
-        passengersWeightTextField.setBackground(new java.awt.Color(255, 255, 51));
+        passengersWeightTextField.setBackground(new java.awt.Color(245, 240, 100));
         passengersWeightTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passengersWeightTextFieldActionPerformed(evt);
@@ -181,7 +192,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
             }
         });
 
-        maximumGrossWeightLabel.setText("Empty Weight");
+        maximumGrossWeightLabel.setText("<html>Empty<br/>Weight</html>");
 
         nNumberLabel.setText("N-Number");
 
@@ -212,58 +223,64 @@ public class SailplaneSelection extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(gliderInputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(sailplaneInputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(nNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(nNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addComponent(maximumTensionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(typeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(maximumAllowableWeakLinkStrengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(maximumAllowableWeakLinkStrengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(maximumGrossWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(indicatedStallSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(maximumGrossWeightLabel)
-                .addGap(10, 10, 10)
-                .addComponent(emptyWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ballastOnboardLabel)
-                .addGap(72, 72, 72)
-                .addComponent(ballastOnboardTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(maximumWinchingSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(maximumWinchingSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(passengersWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addComponent(passengersWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(gliderInputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(sailplaneInputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(nNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(nNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(maximumTensionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addComponent(typeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(maximumAllowableWeakLinkStrengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(maximumAllowableWeakLinkStrengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(maximumWinchingSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(maximumWinchingSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(passengersWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(passengersWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(maximumGrossWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(maximumGrossWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(emptyWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ballastOnboardLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ballastOnboardTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(indicatedStallSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,16 +318,21 @@ public class SailplaneSelection extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emptyWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ballastOnboardTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(maximumGrossWeightLabel)
-                            .addComponent(ballastOnboardLabel))))
-                .addGap(6, 6, 6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(emptyWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ballastOnboardLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(maximumGrossWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(6, 6, 6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ballastOnboardTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(maximumWinchingSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passengersWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -343,30 +365,30 @@ public class SailplaneSelection extends javax.swing.JPanel {
             // Checks if jTextfields are empty and changes background 
             // of jtextfield if filled
             if(!(nNumberTextField.getText().equals(""))){
-                nNumberTextField.setBackground(Color.GREEN);       
+                nNumberTextField.setBackground(new Color(142, 250, 127));       
             }
 
             if(!(typeTextField.getText().equals(""))){
-                typeTextField.setBackground(Color.GREEN);  
+                typeTextField.setBackground(new Color(142, 250, 127));  
             }
             if(!(indicatedStallSpeedTextField.getText().equals(""))){
-                indicatedStallSpeedTextField.setBackground(Color.GREEN);
+                indicatedStallSpeedTextField.setBackground(new Color(142, 250, 127));
             }
 
             if(!(maximumGrossWeightTextField.getText().equals(""))){
-                maximumGrossWeightTextField.setBackground(Color.GREEN);       
+                maximumGrossWeightTextField.setBackground(new Color(142, 250, 127));       
             }
             if(!(emptyWeightTextField.getText().equals(""))){
-                emptyWeightTextField.setBackground(Color.GREEN); 
+                emptyWeightTextField.setBackground(new Color(142, 250, 127)); 
             }
             if(!(maximumWinchingSpeedTextField.getText().equals(""))){
-                maximumWinchingSpeedTextField.setBackground(Color.GREEN);
+                maximumWinchingSpeedTextField.setBackground(new Color(142, 250, 127));
             }
             if(!(maximumTensionTextField.getText().equals(""))){
-                maximumTensionTextField.setBackground(Color.GREEN);
+                maximumTensionTextField.setBackground(new Color(142, 250, 127));
             }
             if(!(maximumAllowableWeakLinkStrengthTextField.getText().equals(""))){
-                maximumAllowableWeakLinkStrengthTextField.setBackground(Color.GREEN);
+                maximumAllowableWeakLinkStrengthTextField.setBackground(new Color(142, 250, 127));
          
             }
             
@@ -385,11 +407,11 @@ public class SailplaneSelection extends javax.swing.JPanel {
             if(numPassengers > 0) {
                 passengersWeightLabel.setVisible(true);
                 passengersWeightTextField.setVisible(true);
-                passengersWeightTextField.setBackground(Color.GREEN);
+                passengersWeightTextField.setBackground(new Color(142, 250, 127));
             }
-            passengersWeightTextField.setBackground(Color.GREEN);
+            passengersWeightTextField.setBackground(new Color(142, 250, 127));
         }catch(NumberFormatException e) {
-            passengersWeightTextField.setBackground(Color.RED);
+            passengersWeightTextField.setBackground(new Color(142, 250, 127));
             passengersWeightLabel.setVisible(false);
             passengersWeightTextField.setVisible(false);
         }
@@ -399,9 +421,9 @@ public class SailplaneSelection extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
             int passengersWeight = Integer.parseInt(ballastOnboardTextField.getText());
-            ballastOnboardTextField.setBackground(Color.GREEN);
+            ballastOnboardTextField.setBackground(new Color(142, 250, 127));
         }catch(NumberFormatException e) {
-            ballastOnboardTextField.setBackground(Color.YELLOW);
+            ballastOnboardTextField.setBackground(new Color(245, 240, 100));
         }
     }//GEN-LAST:event_ballastOnboardTextFieldKeyReleased
 

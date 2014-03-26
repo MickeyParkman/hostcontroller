@@ -274,35 +274,35 @@
     <Component class="javax.swing.JTextField" name="nameJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="designatorJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="locationJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="altitudeJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="magneticVariationJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <Events>
@@ -312,7 +312,7 @@
     <Component class="javax.swing.JTextField" name="magneticHeadingJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <Events>
@@ -322,7 +322,7 @@
     <Component class="javax.swing.JTextField" name="maximumLengthJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <Events>
@@ -332,7 +332,7 @@
     <Component class="javax.swing.JTextField" name="slopeJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <Events>
@@ -342,7 +342,7 @@
     <Component class="javax.swing.JTextField" name="centerlineOffsetJTextField">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <Events>

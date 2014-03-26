@@ -38,7 +38,6 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         HeaderPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
-        navigateEntryWizardButton = new javax.swing.JButton();
         previousLaunchesPanel = new javax.swing.JPanel();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -61,26 +60,14 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         pilotScrollPane = new javax.swing.JScrollPane();
         pilotSelectionPanel = new ParameterSelection.PilotSelectionPanel();
         oneTimePilotPanel = new ParameterSelection.OneTimePilotPanel();
-        leftSideSeparator = new javax.swing.JSeparator();
-        previousLaunchesLabel = new javax.swing.JLabel();
-        orSeparatorLabel = new javax.swing.JLabel();
-        rightSideSeparator = new javax.swing.JSeparator();
-        previousLaunchesScrollPane = new javax.swing.JScrollPane();
         appMenu1 = new ParameterSelection.AppMenu();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         titleLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         titleLabel.setText("Launch Selection");
-
-        navigateEntryWizardButton.setText("New Entry Wizzard");
-        navigateEntryWizardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                navigateEntryWizardButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout HeaderPanelLayout = new javax.swing.GroupLayout(HeaderPanel);
         HeaderPanel.setLayout(HeaderPanelLayout);
@@ -88,11 +75,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
             HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HeaderPanelLayout.createSequentialGroup()
                 .addGap(431, 431, 431)
-                .addGroup(HeaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLabel)
-                    .addGroup(HeaderPanelLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(navigateEntryWizardButton)))
+                .addComponent(titleLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         HeaderPanelLayout.setVerticalGroup(
@@ -100,9 +83,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
             .addGroup(HeaderPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(titleLabel)
-                .addGap(3, 3, 3)
-                .addComponent(navigateEntryWizardButton)
-                .addContainerGap())
+                .addGap(37, 37, 37))
         );
 
         submitButton.setText("Submit");
@@ -192,8 +173,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addComponent(airfieldFromLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(airfieldTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(airfieldTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         selectSailplanePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -226,8 +206,8 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(sailplaneFromLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sailplaneTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
+                .addComponent(sailplaneTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
         );
 
         selectPilotPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -273,16 +253,6 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
 
         pilotTabbedPane.getAccessibleContext().setAccessibleName("From Database");
 
-        leftSideSeparator.setBackground(new java.awt.Color(0, 0, 0));
-
-        previousLaunchesLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        previousLaunchesLabel.setText("Select a Previous Launch:");
-
-        orSeparatorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        orSeparatorLabel.setText("OR");
-
-        rightSideSeparator.setBackground(new java.awt.Color(0, 0, 0));
-
         jMenu1.setText("File");
         appMenu1.add(jMenu1);
 
@@ -299,62 +269,34 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(selectPilotPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(selectSailplanePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(environmentalVariablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selectAirfieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(previousLaunchesScrollPane))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(previousLaunchesLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(leftSideSeparator))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(orSeparatorLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rightSideSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(357, 357, 357)
-                .addComponent(previousLaunchesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(previousLaunchesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(selectPilotPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(selectSailplanePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(environmentalVariablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(selectAirfieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(selectSailplanePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(selectPilotPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(131, 131, 131))
+                        .addGap(129, 129, 129))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(environmentalVariablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(selectAirfieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(leftSideSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(previousLaunchesLabel))
-                    .addComponent(orSeparatorLabel)
-                    .addComponent(rightSideSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(previousLaunchesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(previousLaunchesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(previousLaunchesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -408,7 +350,6 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         else {
             //TODO add one time entry case
         }
-        
         DashboardInterface dashboard = new DashboardInterface();
         dashboard.setVisible(true);
         dispose();
@@ -418,12 +359,6 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
-
-    private void navigateEntryWizardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_navigateEntryWizardButtonActionPerformed
-        // TODO make this open the entry wizzard
-        PreWizard wiz = new PreWizard();
-        wiz.setVisible(true);
-    }//GEN-LAST:event_navigateEntryWizardButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -473,18 +408,12 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
     private javax.swing.JLabel environmentalVariablesTitle;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JSeparator leftSideSeparator;
-    private javax.swing.JButton navigateEntryWizardButton;
     private ParameterSelection.OneTimePilotPanel oneTimePilotPanel;
-    private javax.swing.JLabel orSeparatorLabel;
     private javax.swing.JLabel pilotFromLabel;
     private javax.swing.JScrollPane pilotScrollPane;
     private ParameterSelection.PilotSelectionPanel pilotSelectionPanel;
     private javax.swing.JTabbedPane pilotTabbedPane;
-    private javax.swing.JLabel previousLaunchesLabel;
     private javax.swing.JPanel previousLaunchesPanel;
-    private javax.swing.JScrollPane previousLaunchesScrollPane;
-    private javax.swing.JSeparator rightSideSeparator;
     private javax.swing.JLabel sailplaneFromLabel;
     private ParameterSelection.SailplaneSelection sailplaneSelectionPanel;
     private javax.swing.JTabbedPane sailplaneTabbedPane;

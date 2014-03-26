@@ -1,4 +1,4 @@
-package statemachine;
+package DashboardInterface;
 
 
 import javax.swing.*;
@@ -29,7 +29,7 @@ public class StateMachinePanel extends javax.swing.JPanel {
         last.setBackground(null);
         
         stateLabel.setIcon(new javax.swing.ImageIcon(
-                getClass().getResource("/statemachine/images/" + state + ".png")));
+                getClass().getResource("/DashboardInterface/images/" + state + ".png")));
         
     }
     
@@ -81,7 +81,7 @@ public class StateMachinePanel extends javax.swing.JPanel {
             }
         });
 
-        stateLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/statemachine/images/safe.png"))); // NOI18N
+        stateLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DashboardInterface/images/safe.png"))); // NOI18N
 
         jToggleButton1.setText("random");
         jToggleButton1.addMouseListener(new java.awt.event.MouseAdapter() {

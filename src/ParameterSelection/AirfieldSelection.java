@@ -143,43 +143,43 @@ public class AirfieldSelection extends javax.swing.JPanel {
 
         maximumLengthLabel.setText("<html>Maximum <br/> Length </html>");
 
-        nameJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        nameJTextField.setBackground(new java.awt.Color(255, 105, 105));
 
-        designatorJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        designatorJTextField.setBackground(new java.awt.Color(255, 105, 105));
 
-        locationJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        locationJTextField.setBackground(new java.awt.Color(255, 105, 105));
 
-        altitudeJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        altitudeJTextField.setBackground(new java.awt.Color(255, 105, 105));
 
-        magneticVariationJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        magneticVariationJTextField.setBackground(new java.awt.Color(255, 105, 105));
         magneticVariationJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 magneticVariationJTextFieldActionPerformed(evt);
             }
         });
 
-        magneticHeadingJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        magneticHeadingJTextField.setBackground(new java.awt.Color(255, 105, 105));
         magneticHeadingJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 magneticHeadingJTextFieldActionPerformed(evt);
             }
         });
 
-        maximumLengthJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        maximumLengthJTextField.setBackground(new java.awt.Color(255, 105, 105));
         maximumLengthJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maximumLengthJTextFieldActionPerformed(evt);
             }
         });
 
-        slopeJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        slopeJTextField.setBackground(new java.awt.Color(255, 105, 105));
         slopeJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 slopeJTextFieldActionPerformed(evt);
             }
         });
 
-        centerlineOffsetJTextField.setBackground(new java.awt.Color(255, 0, 0));
+        centerlineOffsetJTextField.setBackground(new java.awt.Color(255, 105, 105));
         centerlineOffsetJTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 centerlineOffsetJTextFieldActionPerformed(evt);
@@ -398,19 +398,19 @@ public class AirfieldSelection extends javax.swing.JPanel {
             // Checks if jTextfields are empty and changes background 
             // of jtextfield if filled
             if(!(nameJTextField.getText().equals(""))){
-                nameJTextField.setBackground(Color.GREEN);       
+                nameJTextField.setBackground(new Color(142, 250, 127));       
             }
             if(!(designatorJTextField.getText().equals(""))){
-                designatorJTextField.setBackground(Color.GREEN); 
+                designatorJTextField.setBackground(new Color(142, 250, 127)); 
             }
             if(!(locationJTextField.getText().equals(""))){
-                locationJTextField.setBackground(Color.GREEN);  
+                locationJTextField.setBackground(new Color(142, 250, 127));  
             }
             if(!(altitudeJTextField.getText().equals(""))){
-                altitudeJTextField.setBackground(Color.GREEN);
+                altitudeJTextField.setBackground(new Color(142, 250, 127));
             }
             if(!(magneticVariationJTextField.getText().equals(""))){
-                magneticVariationJTextField.setBackground(Color.GREEN);
+                magneticVariationJTextField.setBackground(new Color(142, 250, 127));
             }
             for(int i = 0; i < runwayNewList.length; i++){
             runwayNewList[i] = new Runway();
@@ -455,7 +455,7 @@ public class AirfieldSelection extends javax.swing.JPanel {
             // Checks if jTextfields are empty and changes background 
             // of jtextfield if filled
             if(!(magneticHeadingJTextField.getText().equals(""))){
-                magneticHeadingJTextField.setBackground(Color.GREEN); 
+                magneticHeadingJTextField.setBackground(new Color(142, 250, 127)); 
             }
             for(int i = 0; i < positionsNewList.length; i++){
             positionsNewList[i] = new Position();
@@ -508,13 +508,13 @@ public class AirfieldSelection extends javax.swing.JPanel {
             // of jtextfield if filled
            
             if(!(maximumLengthJTextField.getText().equals(""))){
-                maximumLengthJTextField.setBackground(Color.GREEN);
+                maximumLengthJTextField.setBackground(new Color(142, 250, 127));
             }
             if(!(slopeJTextField.getText().equals(""))){
-                slopeJTextField.setBackground(Color.GREEN);
+                slopeJTextField.setBackground(new Color(142, 250, 127));
             }
             if(!(centerlineOffsetJTextField.getText().equals(""))){
-                centerlineOffsetJTextField.setBackground(Color.GREEN);
+                centerlineOffsetJTextField.setBackground(new Color(142, 250, 127));
             }
         }
         catch (Exception e) {
