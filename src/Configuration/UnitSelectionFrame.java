@@ -157,13 +157,13 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private unitselection.AirfieldUnitsPanel airfieldPanel;
+    private Configuration.AirfieldUnitsPanel airfieldPanel;
     private javax.swing.JButton cancelButton;
-    private unitselection.DisplayUnitsPanel displayPanel;
+    private Configuration.DisplayUnitsPanel displayPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private unitselection.PilotUnitsPanel pilotPanel;
-    private unitselection.SailplaneUnitsPanel sailplanePanel;
+    private Configuration.PilotUnitsPanel pilotPanel;
+    private Configuration.SailplaneUnitsPanel sailplanePanel;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }
