@@ -7,9 +7,10 @@
 package ParameterSelection;
 
 import Configuration.SystemParametersPanel;
-import Configuration.UnitSelection;
+import Configuration.UnitSelectionFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -44,7 +45,7 @@ public class AppMenu extends JMenuBar{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                UnitSelection units = new UnitSelection();
+                UnitSelectionFrame units = new UnitSelectionFrame();
                 units.setVisible(true);
                 units.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }

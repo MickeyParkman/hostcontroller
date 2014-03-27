@@ -36,9 +36,10 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="ParameterSelection" min="-2" pref="151" max="-2" attributes="0"/>
-                          <Component id="EntryWizard1" min="-2" pref="151" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="ParameterSelection" pref="151" max="32767" attributes="0"/>
+                          <Component id="EntryWizard1" pref="151" max="32767" attributes="0"/>
+                          <Component id="UnitSelection" alignment="1" pref="151" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -53,7 +54,9 @@
               <Component id="label1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="title" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="162" max="32767" attributes="0"/>
+              <EmptySpace pref="129" max="32767" attributes="0"/>
+              <Component id="UnitSelection" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="EntryWizard1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="ParameterSelection" min="-2" max="-2" attributes="0"/>
@@ -99,6 +102,17 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EntryWizard1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="java.awt.Button" name="UnitSelection">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial" size="13" style="1"/>
+        </Property>
+        <Property name="label" type="java.lang.String" value="Unit Selection"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UnitSelectionActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

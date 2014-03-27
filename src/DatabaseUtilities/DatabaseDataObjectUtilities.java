@@ -35,21 +35,20 @@ public class DatabaseDataObjectUtilities {
             throw e;
         }
         
-        try {
-            
-            Connection connect = DriverManager.getConnection(databaseConnectionName);
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement pilotInsertStatement = connect.prepareStatement(
-                    "INSERT INTO Pilot(name, weight, capability, preference,"
-                            + " emergency_contact_info, emergency_medical_info)"
-                            + "values (?,?,?,?,?,?)");
+                "INSERT INTO Pilot(name, weight, capability, preference,"
+                        + " emergency_contact_info, emergency_medical_info)"
+                        + "values (?,?,?,?,?,?)");
             pilotInsertStatement.setString(1, thePilot.getFirstName() + " " +
-                    thePilot.getLastName());
+                thePilot.getLastName());
             pilotInsertStatement.setString(2, String.valueOf(thePilot.getWeight()));
             pilotInsertStatement.setString(3, String.valueOf(Capability.convertCapabilityStringToNum(thePilot.getCapability())));
             pilotInsertStatement.setString(4, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getPreference())));
             pilotInsertStatement.setString(5, thePilot.getEmergencyContact());
             pilotInsertStatement.setString(6, thePilot.getMedInfo());
             pilotInsertStatement.executeUpdate();
+            pilotInsertStatement.close();
         }catch(SQLException e) {
             throw e;
         }
@@ -64,9 +63,7 @@ public class DatabaseDataObjectUtilities {
             throw e;
         }
         
-        try {
-            
-            Connection connect = DriverManager.getConnection(databaseConnectionName);
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)){
             PreparedStatement pilotInsertStatement = connect.prepareStatement(
                     "INSERT INTO Sailplane(n_number, type, owner, contact_info,"
                             + " max_gross_weight, empty_weight, indicated_stall_speed,"
@@ -83,6 +80,7 @@ public class DatabaseDataObjectUtilities {
             pilotInsertStatement.setString(9, String.valueOf(theSailplane.getMaximumAllowableWeakLinkStrength()));
             pilotInsertStatement.setString(10, String.valueOf(theSailplane.getMaximumTension()));
             pilotInsertStatement.executeUpdate();
+            pilotInsertStatement.close();
         }catch(SQLException e) {
             throw e;
         }
@@ -122,6 +120,9 @@ public class DatabaseDataObjectUtilities {
                 Pilot newPilot = new Pilot(names[0], names[1], weight , Capability.convertCapabilityNumToString(capability), Preference.convertPreferenceNumToString(preference), thePilots.getString(5), thePilots.getString(6));
                 pilots.add(newPilot);
             }
+            thePilots.close();
+            stmt.close();
+            connect.close();
             return pilots;
         } catch (SQLException e) {
             throw e;
@@ -169,6 +170,9 @@ public class DatabaseDataObjectUtilities {
                 }
                 Sailplane newSailplane = new Sailplane(nNumber, type, owner, contactInfo, maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, maxWeakLinkStrength, maxTension);
                 sailplanes.add(newSailplane);
+                theSailplanes.close();
+                stmt.close();
+                connect.close();
             }
             return sailplanes;
         } catch (SQLException e) {

@@ -6,6 +6,7 @@
 
 package mainhost;
 
+import Configuration.UnitSelectionFrame;
 import ParameterSelection.ParamSelectionFrame;
 import Wizards.PreWizard;
 import javax.swing.JOptionPane;
@@ -36,6 +37,7 @@ public class MainHost extends javax.swing.JFrame {
         label1 = new java.awt.Label();
         ParameterSelection = new java.awt.Button();
         EntryWizard1 = new java.awt.Button();
+        UnitSelection = new java.awt.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +63,14 @@ public class MainHost extends javax.swing.JFrame {
             }
         });
 
+        UnitSelection.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        UnitSelection.setLabel("Unit Selection");
+        UnitSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UnitSelectionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,9 +85,10 @@ public class MainHost extends javax.swing.JFrame {
                         .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(125, 125, 125)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ParameterSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EntryWizard1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ParameterSelection, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                            .addComponent(EntryWizard1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                            .addComponent(UnitSelection, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))))
                 .addContainerGap(131, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -87,7 +98,9 @@ public class MainHost extends javax.swing.JFrame {
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                .addComponent(UnitSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EntryWizard1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ParameterSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -110,6 +123,13 @@ public class MainHost extends javax.swing.JFrame {
         PreWizard wiz = new PreWizard();
         wiz.setVisible(true);
     }//GEN-LAST:event_EntryWizard1ActionPerformed
+
+    private void UnitSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnitSelectionActionPerformed
+        // TODO add your handling code here:
+        UnitSelectionFrame f = new UnitSelectionFrame();
+        f.pack();
+        f.setVisible(true);
+    }//GEN-LAST:event_UnitSelectionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +165,7 @@ public class MainHost extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button EntryWizard1;
     private java.awt.Button ParameterSelection;
+    private java.awt.Button UnitSelection;
     private java.awt.Label label1;
     private java.awt.Label title;
     // End of variables declaration//GEN-END:variables

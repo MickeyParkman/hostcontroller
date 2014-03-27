@@ -28,10 +28,7 @@ public class Main {
         MainHost a = new MainHost();
         //ApplicationFrame a = new ApplicationFrame();
         a.setVisible(true);
-        
-            
-        // TODO code application logic here
-        
+                
         /*try {
             //DatabaseUtilities.DatabaseInitialization.deleteDB();
             DatabaseUtilities.DatabaseInitialization.initDatabase();

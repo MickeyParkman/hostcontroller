@@ -6,7 +6,9 @@
 
 package ParameterSelection;
 
+import Configuration.UnitConversionRate;
 import DataObjects.Pilot;
+import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -212,14 +214,18 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
     private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pilotJListMouseClicked
         // TODO add your handling code here:
         if(pilotJList.getSelectedIndex() >= 0){
-            pilotWeightDisplay.setText(String.valueOf(((Pilot)pilotJList.getSelectedValue()).getWeight()));
-            pilotWeightDisplay.setBackground(new Color(142, 250, 127));
-            
-            pilotCapabilityDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getCapability());
-            pilotCapabilityDisplay.setBackground(new Color(142, 250, 127));
-            
-            pilotPreferenceDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getPreference());
-            pilotPreferenceDisplay.setBackground(new Color(142, 250, 127));
+            try{
+                pilotWeightDisplay.setText(String.valueOf(((Pilot)pilotJList.getSelectedValue()).getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit())));
+                pilotWeightDisplay.setBackground(new Color(142, 250, 127));
+
+                pilotCapabilityDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getCapability());
+                pilotCapabilityDisplay.setBackground(new Color(142, 250, 127));
+
+                pilotPreferenceDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getPreference());
+                pilotPreferenceDisplay.setBackground(new Color(142, 250, 127));
+            } catch(ClassNotFoundException e1) {
+                //TODO respond to error
+            } 
         }    
     }//GEN-LAST:event_pilotJListMouseClicked
 

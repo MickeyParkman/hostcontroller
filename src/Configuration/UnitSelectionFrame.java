@@ -4,6 +4,10 @@
  */
 package Configuration;
 
+import DatabaseUtilities.DatabaseUnitSelectionUtilities;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Matt
@@ -43,10 +47,10 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        pilotPanel = new unitselection.PilotUnitsPanel();
-        sailplanePanel = new unitselection.SailplaneUnitsPanel();
-        airfieldPanel = new unitselection.AirfieldUnitsPanel();
-        displayPanel = new unitselection.DisplayUnitsPanel();
+        pilotPanel = new PilotUnitsPanel();
+        sailplanePanel = new SailplaneUnitsPanel();
+        airfieldPanel = new AirfieldUnitsPanel();
+        displayPanel = new DisplayUnitsPanel();
         jLabel1 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -111,11 +115,19 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonMouseClicked
-        // TODO: send pilotPanel.getSelectedIndices() to the database
-        // TODO: send sailplanePanel.getSelectedIndices() to the database
-        // TODO: send airfieldPanel.getSelectedIndices() to the database
-        // TODO: send displayPanel.getSelectedIndices() to the database
-        this.dispose();
+        try{
+            // TODO: send pilotPanel.getSelectedIndices() to the database
+            DatabaseUnitSelectionUtilities.storePilotUnits(pilotPanel.getSelectedIndices());
+            // TODO: send sailplanePanel.getSelectedIndices() to the database
+            // TODO: send airfieldPanel.getSelectedIndices() to the database
+            // TODO: send displayPanel.getSelectedIndices() to the database
+            //System.out.println(DatabaseUnitSelectionUtilities.getPilotWeightUnit());
+            this.dispose();
+        } catch(ClassNotFoundException e1) {
+            JOptionPane.showMessageDialog(rootPane, e1.getMessage());
+        } catch(SQLException e2) {
+            JOptionPane.showMessageDialog(rootPane, e2.getMessage());
+        } 
     }//GEN-LAST:event_submitButtonMouseClicked
 
     private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered

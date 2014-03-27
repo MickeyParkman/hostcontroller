@@ -100,7 +100,12 @@ public class Wizard_Pilot extends Wizard {
     protected void submitData(){
         String firstName = pilotRequiredPanel2.getPilotFirstName();
         String lastName = pilotRequiredPanel2.getPilotLastName();
-        int weight = pilotRequiredPanel2.getWeight();
+        int weight = 0;
+        try {
+            weight = (int) ((int) pilotRequiredPanel2.getWeight() * (1 / Configuration.UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUtilities.DatabaseUnitSelectionUtilities.getPilotWeightUnit())));
+        } catch (ClassNotFoundException e1) {
+            
+        }
         String capability = Capability.convertCapabilityNumToString(pilotRequiredPanel2.getCapability());
         String preference = Preference.convertPreferenceNumToString(pilotRequiredPanel2.getPreference());
         
