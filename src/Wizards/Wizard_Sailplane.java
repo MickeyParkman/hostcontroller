@@ -7,13 +7,16 @@ package Wizards;
 import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.awt.Color;
+import Configuration.UnitLabelUtilities;
+import DatabaseUtilities.DatabaseUnitSelectionUtilities;
+
 
 /**
  *
  * @author Matt
  */
 public class Wizard_Sailplane extends Wizard {
-
+    
     /**
      * Creates new form Wizard_Sailplane
      */
@@ -21,7 +24,7 @@ public class Wizard_Sailplane extends Wizard {
         super();
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +33,7 @@ public class Wizard_Sailplane extends Wizard {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        
         windowLabel = new javax.swing.JLabel();
         nNumberLabel = new javax.swing.JLabel();
         nNumberField = new javax.swing.JTextField();
@@ -45,26 +48,32 @@ public class Wizard_Sailplane extends Wizard {
         submitButton = new javax.swing.JButton();
         emptyWeightLabel = new javax.swing.JLabel();
         emptyWeightField = new javax.swing.JTextField();
-
+        emptyWeightUnits = new javax.swing.JLabel();
+        maxGrossWeightUnits = new javax.swing.JLabel();
+        indicatedStallSpeedUnits = new javax.swing.JLabel();
+        maxWinchingSpeedUnits = new javax.swing.JLabel();
+        DatabaseUnitSelectionUtilities units = new DatabaseUnitSelectionUtilities();
+        UnitLabelUtilities unitsLabel = new UnitLabelUtilities();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
+        
         windowLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         windowLabel.setText("Glider Data Entry Wizard");
-
+        indicatedStallSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
+        maxWinchingSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
         nNumberLabel.setText("N-Number:");
-
+        emptyWeightUnits.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         maxGrossWeightLabel.setText("Max Gross Weight:");
-
+        maxGrossWeightUnits.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         maxGrossWeightField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maxGrossWeightFieldActionPerformed(evt);
             }
         });
-
+        
         stallSpeedLabel.setText("Indicated Stall Speed:");
-
+        
         maxWinchingSpeedLabel.setText("Max Winching Speed:");
-
+        
         singleCheckBox.setText("Single seated?");
         singleCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         singleCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -73,102 +82,123 @@ public class Wizard_Sailplane extends Wizard {
                 singleCheckBoxActionPerformed(evt);
             }
         });
-
+        
         ballastCheckBox.setText("Can carry ballast?");
         ballastCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ballastCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
+        
         submitButton.setText("Submit");
         submitButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 submitButtonMouseClicked(evt);
             }
         });
-
+        
         emptyWeightLabel.setText("Empty Weight:");
-
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(windowLabel)
-                .addGap(121, 121, 121))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(emptyWeightLabel)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(maxGrossWeightLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(maxGrossWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(nNumberLabel)
-                                    .addGap(43, 43, 43)
-                                    .addComponent(nNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(emptyWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(stallSpeedLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(stallSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(singleCheckBox)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(maxWinchingSpeedLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(maxWinchingSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(ballastCheckBox))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(submitButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                                  layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                  .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(windowLabel)
+                                            .addGap(121, 121, 121))
+                                  .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                      .addGroup(layout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                        .addComponent(maxGrossWeightLabel)
+                                                                                                        .addComponent(emptyWeightLabel)
+                                                                                                        .addComponent(nNumberLabel))
+                                                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                              
+                                                                                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                                                        
+                                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                                  .addComponent(maxGrossWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)                                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                                  .addComponent(maxGrossWeightUnits))
+                                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                                  .addComponent(emptyWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)                                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                                  .addComponent(emptyWeightUnits))
+                                                                                                        
+                                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                                  
+                                                                                                                  .addComponent(nNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                                        ))))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                          
+                                                                          .addComponent(stallSpeedLabel)
+                                                                          .addComponent(maxWinchingSpeedLabel)
+                                                                          .addComponent(ballastCheckBox)
+                                                                          .addComponent(singleCheckBox))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                          .addGroup(layout.createSequentialGroup()
+                                                                                    .addComponent(stallSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                    .addComponent(indicatedStallSpeedUnits))
+                                                                          .addGroup(layout.createSequentialGroup()
+                                                                                    .addComponent(maxWinchingSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                    .addComponent(maxWinchingSpeedUnits))
+                                                                          ))
+                                                      .addGroup(layout.createSequentialGroup()
+                                                                .addGap(160, 160, 160)
+                                                                .addComponent(submitButton)))
+                                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                  .addGap(28, 28, 28)
+                                  );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(windowLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nNumberLabel)
-                    .addComponent(nNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stallSpeedLabel)
-                    .addComponent(stallSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(emptyWeightLabel)
-                    .addComponent(emptyWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maxWinchingSpeedLabel)
-                    .addComponent(maxWinchingSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(maxGrossWeightLabel)
-                    .addComponent(maxGrossWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(singleCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ballastCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(submitButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
+                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                          .addContainerGap()
+                                          .addComponent(windowLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(nNumberLabel)
+                                                    .addComponent(nNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(stallSpeedLabel)
+                                                    .addComponent(indicatedStallSpeedUnits)
+                                                    .addComponent(stallSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(emptyWeightLabel)
+                                                    .addComponent(emptyWeightUnits)
+                                                    .addComponent(maxWinchingSpeedUnits)
+                                                    .addComponent(emptyWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(maxWinchingSpeedLabel)
+                                                    
+                                                    .addComponent(maxWinchingSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(maxGrossWeightLabel)
+                                                    .addComponent(maxGrossWeightUnits)
+                                                    .addComponent(maxGrossWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(singleCheckBox))
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                          .addComponent(ballastCheckBox)
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                          .addComponent(submitButton)
+                                          .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                );
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void maxGrossWeightFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxGrossWeightFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_maxGrossWeightFieldActionPerformed
-
+    
     private void singleCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singleCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_singleCheckBoxActionPerformed
-
+    
     private void submitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonMouseClicked
         String curField = "";
         try
@@ -235,7 +265,7 @@ public class Wizard_Sailplane extends Wizard {
                 maxWinchingSpeedField.setBackground(new Color(255, 255, 255));
         }
     }//GEN-LAST:event_submitButtonMouseClicked
-
+    
     /**
      * @param args the command line arguments
      */
@@ -262,7 +292,7 @@ public class Wizard_Sailplane extends Wizard {
             java.util.logging.Logger.getLogger(Wizard_Sailplane.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -285,5 +315,9 @@ public class Wizard_Sailplane extends Wizard {
     private javax.swing.JLabel stallSpeedLabel;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel windowLabel;
+    private javax.swing.JLabel emptyWeightUnits;
+    private javax.swing.JLabel maxGrossWeightUnits;
+    private javax.swing.JLabel indicatedStallSpeedUnits;
+    private javax.swing.JLabel maxWinchingSpeedUnits;
     // End of variables declaration//GEN-END:variables
 }
