@@ -41,8 +41,8 @@ public class AirfieldSelection extends javax.swing.JPanel {
             airfieldNewList[i].setName("name"+ i);
             airfieldNewList[i].setDesignator("designator" +i);
             airfieldNewList[i].setLocation("location" + i);
-            airfieldNewList[i].setAltitude("altitude" + i);
-            airfieldNewList[i].setMagneticVariation("magnetic Variation"+i);
+            airfieldNewList[i].setAltitude(i);
+            airfieldNewList[i].setMagneticVariation(+i);
             
             // Adds new created objects to defaultListModel
             mdl.addElement(airfieldNewList[i]);
@@ -390,8 +390,8 @@ public class AirfieldSelection extends javax.swing.JPanel {
                 nameJTextField.setText(value.getName());
                 designatorJTextField.setText(value.getDesignator());
                 locationJTextField.setText(value.getLocation());
-                altitudeJTextField.setText(value.getAltitude());
-                magneticVariationJTextField.setText(value.getMagneticVariation());
+                altitudeJTextField.setText(String.valueOf(value.getAltitude()));
+                magneticVariationJTextField.setText(String.valueOf(value.getMagneticVariation()));
 
             }
         
@@ -460,9 +460,9 @@ public class AirfieldSelection extends javax.swing.JPanel {
             for(int i = 0; i < positionsNewList.length; i++){
             positionsNewList[i] = new Position();
             //positionsNewList[i].setPosition("position" +i);
-            positionsNewList[i].setPositionMaximumLength("position Maximum Length"+i);
-            positionsNewList[i].setPositionSlope("position Slope"+i);
-            positionsNewList[i].setPositionCenterlineOffset("Position CenterlineOffest" +i);
+            positionsNewList[i].setPositionMaximumLength(+i);
+            positionsNewList[i].setPositionSlope(+i);
+            positionsNewList[i].setPositionCenterlineOffset(+i);
             // Adds new created objects to defaultListModel
             positionsmdl.addElement(positionsNewList[i]);
             }
@@ -499,9 +499,9 @@ public class AirfieldSelection extends javax.swing.JPanel {
             // fills the parts of the object to the right jtextfields
             if(positionsmdl.getSize() > 0){
                 Position value = (Position) positionsJList.getSelectedValue();
-                maximumLengthJTextField.setText(value.getPositionMaximumLength());
-                slopeJTextField.setText(value.getPositionSlope());
-                centerlineOffsetJTextField.setText(value.getPositionCenterlineOffset());
+                maximumLengthJTextField.setText(String.valueOf(value.getPositionMaximumLength()));
+                slopeJTextField.setText(String.valueOf(value.getPositionSlope()));
+                centerlineOffsetJTextField.setText(String.valueOf(value.getPositionCenterlineOffset()));
             }
         
             // Checks if jTextfields are empty and changes background 

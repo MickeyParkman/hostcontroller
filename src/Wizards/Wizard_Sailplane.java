@@ -9,7 +9,7 @@ import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.awt.Color;
 import Configuration.UnitLabelUtilities;
 import DatabaseUtilities.DatabaseUnitSelectionUtilities;
-
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -237,6 +237,7 @@ public class Wizard_Sailplane extends Wizard {
             Sailplane s = new Sailplane(nNumberStr, "Single Place", maxGrossWeightInt, emptyWeightInt, stallSpeedInt, maxWinchingSpeedInt, 1000, 500);
             DatabaseDataObjectUtilities.addSailplaneToDB(s);
             submitData();
+            JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
             this.dispose();
             
         }catch(NumberFormatException e){

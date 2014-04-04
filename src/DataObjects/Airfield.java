@@ -14,8 +14,8 @@ public class Airfield {
     String name;
     String designator;
     String location;
-    String altitude;
-    String magneticVariation;
+    int altitude;
+    int magneticVariation;
     
     public Airfield(){
     }
@@ -24,8 +24,8 @@ public class Airfield {
         return name;
     }
     
-    public Airfield(String name1, String designator1, String location1, String altitude1, 
-                    String magneticVariation1){
+    public Airfield(String name1, String designator1, String location1, int altitude1, 
+                    int magneticVariation1){
        name = name1;
        designator = designator1; 
        location = location1;
@@ -106,7 +106,7 @@ public class Airfield {
     * @param  altitude1  the String that is designated to altitude 
     *                    of the Airfield object
     */
-    public void setAltitude(String altitude1){
+    public void setAltitude(int altitude1){
         altitude = altitude1;
     }
     
@@ -115,7 +115,7 @@ public class Airfield {
     * This method always returns immediately,only if airfield exists. 
     * @return      the altitude of Airfield object
     */
-    public String getAltitude(){
+    public int getAltitude(){
        return altitude; 
     }
     
@@ -129,7 +129,7 @@ public class Airfield {
     *                             magnetic variation of the 
     *                             Airfield object
     */
-    public void setMagneticVariation(String magneticVariation1){
+    public void setMagneticVariation(int magneticVariation1){
         magneticVariation = magneticVariation1;
     }
     
@@ -138,7 +138,7 @@ public class Airfield {
     * This method always returns immediately,only if airfield exists. 
     * @return      the magnetic variation of Airfield object
     */
-    public String getMagneticVariation(){
+    public int getMagneticVariation(){
        return magneticVariation; 
     }
 }

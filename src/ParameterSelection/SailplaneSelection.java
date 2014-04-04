@@ -10,6 +10,7 @@ import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.DefaultListModel;
 
 /**
@@ -47,7 +48,9 @@ public class SailplaneSelection extends javax.swing.JPanel {
             mdl.addElement(gliderNewList[i]);
         }*/
         try {
-            for(Sailplane s: DatabaseDataObjectUtilities.getSailplanes())
+            List<Sailplane> ls = DatabaseDataObjectUtilities.getSailplanes();
+            System.out.println(ls.size());
+            for(Sailplane s: ls)
                 mdl.addElement(s);
         } catch(SQLException e) {
             //TODO add handling for exception

@@ -19,6 +19,26 @@ public class AirfieldWizardPanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    public String getName(){
+        return nameField.getText();
+    }
+    
+    public String getDesignator(){
+        return designatorField.getText();
+    }
+    
+    public String getAirfieldLocation(){
+        return locationField.getText();
+    }
+    
+    public int getAltitude(){
+        return Integer.parseInt(altitudeField.getText());
+    }
+    
+    public int getMagneticVariation(){
+        return Integer.parseInt(magVarField.getText());
+    }
+
     public boolean isComplete(Airfield a)
     {
         a.setName(nameField.getText());
@@ -33,12 +53,12 @@ public class AirfieldWizardPanel extends javax.swing.JPanel {
         if(a.getLocation().isEmpty()){
             return false;
         }
-        a.setAltitude(altitudeField.getText());
-        if(a.getAltitude().isEmpty()){
+        a.setAltitude(Integer.parseInt(altitudeField.getText()));
+        if(altitudeField.getText().isEmpty()){
             return false;
         }
-        a.setMagneticVariation(magVarField.getText());
-        if(a.getMagneticVariation().isEmpty()){
+        a.setMagneticVariation(Integer.parseInt(magVarField.getText()));
+        if(magVarField.getText().isEmpty()){
             return false;
         }
         return true;

@@ -112,6 +112,7 @@ public class Wizard_Pilot extends Wizard {
         Pilot newPilot = new Pilot(firstName, lastName, weight, capability, preference, "", "");
         try{
             DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
+            JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
             this.dispose();
         }catch(SQLException e1) {
             //TODO Report error
@@ -119,6 +120,8 @@ public class Wizard_Pilot extends Wizard {
                 JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + firstName + " " + lastName + " already exists in the database");
         }catch (ClassNotFoundException e2) {
             //TODO Report error
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                    
         }
         
     }

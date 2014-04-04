@@ -12,19 +12,19 @@ package DataObjects;
  */
 public class Position {
     Runway parent;
-    String positionMaximumLength;
-    String positionSlope;
-    String positionCenterlineOffset;
+    int positionMaximumLength;
+    float positionSlope;
+    float positionCenterlineOffset;
     
     public Position(){
     }
     @Override
     public String toString(){
-        return positionMaximumLength;
+        return String.valueOf(positionMaximumLength);
     }
     
-    public Position(Runway parent1, String positionMaximumLength1, String positionSlope1, 
-                    String positionCenterlineOffset1){
+    public Position(Runway parent1, int positionMaximumLength1, float positionSlope1, 
+                    float positionCenterlineOffset1){
        parent = parent1;
        positionMaximumLength = positionMaximumLength1;
        positionSlope = positionSlope1;
@@ -62,7 +62,7 @@ public class Position {
     *                                 designated to position maximum 
     *                                 length of the Airfield object
     */
-    public void setPositionMaximumLength(String positionMaximumLength1){
+    public void setPositionMaximumLength(int positionMaximumLength1){
         positionMaximumLength= positionMaximumLength1;
     }
        /**
@@ -70,7 +70,7 @@ public class Position {
     * This method always returns immediately,only if airfield exists. 
     * @return      the designator of Airfield object
     */ 
-    public String getPositionMaximumLength(){
+    public int getPositionMaximumLength(){
        return positionMaximumLength; 
     }
 
@@ -83,7 +83,7 @@ public class Position {
  * @param  positionSlope1  the String that is designated to
  *                         position slop of the Airfield object
  */
-    public void setPositionSlope(String positionSlope1){
+    public void setPositionSlope(float positionSlope1){
             positionSlope= positionSlope1;
     }
     
@@ -92,7 +92,7 @@ public class Position {
     * This method always returns immediately,only if airfield exists. 
     * @return      the position slope of Airfield object
     */    
-    public String getPositionSlope(){
+    public float getPositionSlope(){
            return positionSlope; 
     }
     
@@ -106,7 +106,7 @@ public class Position {
     *                                    designated to position slope of 
     *                                    the Airfield object
     */
-    public void setPositionCenterlineOffset(String positionCenterlineOffset1){
+    public void setPositionCenterlineOffset(int positionCenterlineOffset1){
         positionCenterlineOffset = positionCenterlineOffset1;
     }
     
@@ -115,7 +115,7 @@ public class Position {
     * This method always returns immediately,only if airfield exists. 
     * @return      the position centerline offset of Airfield object
     */   
-    public String getPositionCenterlineOffset(){
+    public float getPositionCenterlineOffset(){
        return positionCenterlineOffset; 
     }
 }

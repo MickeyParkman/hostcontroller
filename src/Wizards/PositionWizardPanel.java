@@ -21,16 +21,16 @@ public class PositionWizardPanel extends javax.swing.JPanel {
 
     public boolean isComplete(Position p)
     {
-        p.setPositionMaximumLength(maxLengthField.getText());
-        if(p.getPositionMaximumLength().isEmpty()){
+        p.setPositionMaximumLength(Integer.parseInt(maxLengthField.getText()));
+        if(maxLengthField.getText().isEmpty()){
             return false;
         }
-        p.setPositionSlope(slopeField.getText());
-        if(p.getPositionSlope().isEmpty()){
+        p.setPositionSlope(Integer.parseInt(slopeField.getText()));
+        if(slopeField.getText().isEmpty()){
             return false;
         }
-        p.setPositionCenterlineOffset(clineOffsetField.getText());
-        if(p.getPositionCenterlineOffset().isEmpty()){
+        p.setPositionCenterlineOffset(Integer.parseInt(clineOffsetField.getText()));
+        if(clineOffsetField.getText().isEmpty()){
             return false;
         }
         return true;
