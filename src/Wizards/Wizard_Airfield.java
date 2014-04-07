@@ -110,6 +110,7 @@ public class Wizard_Airfield extends Wizard {
                 {
                     System.out.println("Position panel complete");
                     p.setParent(r);
+                    this.dispose();
                 }else{
                     ew = new ErrWindow("Please fill out all fields under \"Position\"");
                 }
@@ -119,7 +120,6 @@ public class Wizard_Airfield extends Wizard {
         }else{
             ew = new ErrWindow("Please fill out all fields under \"Airfield\"");
         }
-        this.dispose();
 
 
     }//GEN-LAST:event_submitButtonMouseClicked
