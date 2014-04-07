@@ -3,8 +3,10 @@ package Wizards;
 import DataObjects.Airfield;
 import Configuration.UnitLabelUtilities;
 import DatabaseUtilities.DatabaseUnitSelectionUtilities;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -12,11 +14,21 @@ import java.util.logging.Logger;
  */
 public class AirfieldWizardPanel extends javax.swing.JPanel {
     
+    ArrayList<Airfield> airfields = new ArrayList();
+    
     /**
      * Creates new form AirfieldWizardPanel
      */
     public AirfieldWizardPanel() {
         initComponents();
+    }
+    
+    public void populate(){
+        DefaultListModel airfieldListModel = new DefaultListModel();
+        for(Airfield a: airfields){
+            airfieldListModel.addElement(a.getName());
+        }
+        airfieldMenu.setModel(airfieldListModel);
     }
     
     public String getName(){
@@ -197,7 +209,14 @@ public class AirfieldWizardPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void airfieldMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_airfieldMenuMouseClicked
-        // TODO fill in fields with data from list item
+        Airfield selected = airfields.get(airfieldMenu.getSelectedIndex());
+        
+        altitudeField.setText("" + selected.getAltitude());
+        designatorField.setText(selected.getDesignator());
+        locationField.setText(selected.getLocation());
+        magVarField.setText("" + selected.getMagneticVariation());
+        nameField.setText(selected.getName());
+         
     }//GEN-LAST:event_airfieldMenuMouseClicked
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

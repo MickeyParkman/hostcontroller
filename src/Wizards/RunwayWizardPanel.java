@@ -5,6 +5,8 @@
 package Wizards;
 
 import DataObjects.Runway;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -12,11 +14,22 @@ import DataObjects.Runway;
  */
 public class RunwayWizardPanel extends javax.swing.JPanel {
     
+    ArrayList<Runway> runways = new ArrayList();
+    
     /**
      * Creates new form RunwayWizardPanel
      */
     public RunwayWizardPanel() {
         initComponents();
+    }
+    
+    public void populate(){
+        DefaultListModel runwayListModel = new DefaultListModel();
+        for(Runway r: runways){
+            runwayListModel.addElement(r.getMagneticHeading());
+        }
+        runwayMenu.setModel(runwayListModel);
+        
     }
     
     public boolean isComplete(Runway r)
@@ -102,7 +115,10 @@ public class RunwayWizardPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void runwayMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_runwayMenuMouseClicked
-        // TODO fill in info from list item
+        Runway selected = runways.get(runwayMenu.getSelectedIndex());
+        
+        magHeadField.setText(selected.getMagneticHeading());
+        
     }//GEN-LAST:event_runwayMenuMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

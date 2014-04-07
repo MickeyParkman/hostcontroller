@@ -19,6 +19,7 @@ public class Wizard_Airfield extends Wizard {
      */
     public Wizard_Airfield() {
         initComponents();
+        populatePanels();
     }
 
     /**
@@ -93,6 +94,23 @@ public class Wizard_Airfield extends Wizard {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void populatePanels()
+    {
+        // method not yet implemented: getPositions
+        positionPanel.positions = DatabaseUtilities.DatabaseDataObjectUtilities.getPositions();
+        
+        for(Position p: positionPanel.positions){
+            runwayPanel.runways.add(p.getParent());
+        }
+        for(Runway r: runwayPanel.runways){
+            airfieldPanel.airfields.add(r.getParent());
+        }
+        
+        airfieldPanel.populate();
+        runwayPanel.populate();
+        positionPanel.populate();
+    }
+    
     private void submitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonMouseClicked
         
         Airfield a = new Airfield();
@@ -110,6 +128,7 @@ public class Wizard_Airfield extends Wizard {
                 {
                     System.out.println("Position panel complete");
                     p.setParent(r);
+                    this.dispose();
                 }else{
                     ew = new ErrWindow("Please fill out all fields under \"Position\"");
                 }
@@ -119,7 +138,6 @@ public class Wizard_Airfield extends Wizard {
         }else{
             ew = new ErrWindow("Please fill out all fields under \"Airfield\"");
         }
-        this.dispose();
 
 
     }//GEN-LAST:event_submitButtonMouseClicked

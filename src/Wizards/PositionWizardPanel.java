@@ -5,6 +5,8 @@
 package Wizards;
 
 import DataObjects.Position;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -12,6 +14,8 @@ import DataObjects.Position;
  */
 public class PositionWizardPanel extends javax.swing.JPanel {
 
+    ArrayList<Position> positions = new ArrayList();
+    
     /**
      * Creates new form PositionWizardPanel
      */
@@ -19,6 +23,14 @@ public class PositionWizardPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void populate(){
+        DefaultListModel positionListModel = new DefaultListModel();
+        for(Position p: positions){
+            positionListModel.addElement(p.getPositionMaximumLength());
+        }
+        positionMenu.setModel(positionListModel);
+    }
+    
     public boolean isComplete(Position p)
     {
         p.setPositionMaximumLength(Integer.parseInt(maxLengthField.getText()));
@@ -135,7 +147,12 @@ public class PositionWizardPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void positionMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_positionMenuMouseClicked
-        // TODO fill in info from list item
+        Position selected = positions.get(positionMenu.getSelectedIndex());
+        
+        clineOffsetField.setText("" + selected.getPositionCenterlineOffset());
+        maxLengthField.setText("" + selected.getPositionMaximumLength());
+        slopeField.setText("" + selected.getPositionSlope());
+        
     }//GEN-LAST:event_positionMenuMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
