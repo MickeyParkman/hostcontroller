@@ -234,10 +234,16 @@ public class Wizard_Sailplane extends Wizard {
             curField = "Max Winching Speed";
             maxWinchingSpeedInt = Integer.parseInt(maxWinchingSpeedStr);
             
-            Sailplane s = new Sailplane(nNumberStr, "Single Place", maxGrossWeightInt, emptyWeightInt, stallSpeedInt, maxWinchingSpeedInt, 1000, 500);
+            if (ballastCheckBox.isSelected() ){
+                carryBallastBool = true;
+            }
+            else{
+                carryBallastBool = false;
+            }
+            
+            Sailplane s = new Sailplane(nNumberStr, "Single Place", maxGrossWeightInt, emptyWeightInt, stallSpeedInt, maxWinchingSpeedInt, 1000, 500, carryBallastBool);
             DatabaseDataObjectUtilities.addSailplaneToDB(s);
             submitData();
-            JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
             this.dispose();
             
         }catch(NumberFormatException e){
