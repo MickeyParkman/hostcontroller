@@ -16,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 
+//DatabaseUnitSelectionUtilities units = new DatabaseUnitSelectionUtilities();
+//UnitLabelUtilities unitsLabel = new UnitLabelUtilities();
 
 /**
  *
@@ -64,7 +66,6 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
         maxGrossWeightUnit = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -161,15 +162,14 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
         
         maxGrossWeightUnit.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         
-        jLabel5.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
+        jLabel5.setText(unitsLabel.tensionUnitIndexToString(units.getSailplaneTensionUnit()));
         
         jLabel6.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         
-        jLabel8.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
+        jLabel9.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneVelocityUnit())
+                        );
         
-        jLabel9.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
-        
-        jLabel10.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
+        jLabel10.setText(unitsLabel.tensionUnitIndexToString(units.getSailplaneTensionUnit()));
         
         jLabel11.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         
@@ -219,8 +219,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
                                                                 .addGap(36, 36, 36)
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                           .addComponent(jLabel6)
-                                                                          .addComponent(jLabel5)
-                                                                          .addComponent(jLabel8)))
+                                                                          .addComponent(jLabel5)))
                                                       .addGroup(layout.createSequentialGroup()
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                                           .addGroup(layout.createSequentialGroup()
@@ -263,9 +262,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
                                                                                   .addComponent(jLabel10))
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                   .addGap(2, 2, 2)
-                                                                                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                            .addComponent(StallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                            .addComponent(jLabel8)))
+                                                                                  .addComponent(StallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                         .addComponent(maximumAllowableWeakLinkStrengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
@@ -342,7 +339,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
     
     private void PassengerWeightKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
-    }                                           
+    }
     
     private void PassengerWeightActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
@@ -443,7 +440,6 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel maxGrossWeightUnit;
     private javax.swing.JLabel maximumAllowableWeakLinkStrengthLabel;

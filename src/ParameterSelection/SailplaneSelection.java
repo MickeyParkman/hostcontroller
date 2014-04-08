@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 package ParameterSelection;
 
@@ -12,6 +12,13 @@ import java.awt.Color;
 import java.util.List;
 import java.sql.SQLException;
 import javax.swing.DefaultListModel;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
+import Configuration.UnitLabelUtilities;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+
+
 
 /**
  *
@@ -84,7 +91,8 @@ public class SailplaneSelection extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-        
+        DatabaseUnitSelectionUtilities units = new DatabaseUnitSelectionUtilities();
+        UnitLabelUtilities unitsLabel = new UnitLabelUtilities();
         textField1 = new java.awt.TextField();
         choice3 = new java.awt.Choice();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -119,6 +127,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
         
         textField1.setText("textField1");
         
@@ -205,17 +214,20 @@ public class SailplaneSelection extends javax.swing.JPanel {
         
         passengersWeightLabel.setText("<html>Total <br/>Passenger <br/>Weight</html>");
         
-        jLabel1.setText("jLabel1");
+        jLabel1.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         
-        jLabel2.setText("jLabel2");
+        jLabel2.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         
-        jLabel3.setText("jLabel3");
+        jLabel3.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneVelocityUnit())
+                        
+                        );
         
-        jLabel4.setText("jLabel4");
+        jLabel4.setText(unitsLabel.tensionUnitIndexToString(units.getSailplaneTensionUnit()));
         
-        jLabel5.setText("jLabel5");
+        jLabel5.setText(unitsLabel.tensionUnitIndexToString(units.getSailplaneTensionUnit()));
         
-        jLabel6.setText("jLabel6");
+        jLabel6.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneVelocityUnit())
+                        );
         
         jRadioButton1.setText("Yes");
         jRadioButton1.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -232,6 +244,8 @@ public class SailplaneSelection extends javax.swing.JPanel {
             }
         });
         
+        jLabel7.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -239,78 +253,81 @@ public class SailplaneSelection extends javax.swing.JPanel {
                                   .addGroup(layout.createSequentialGroup()
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                       .addGroup(layout.createSequentialGroup()
-                                                                .addGap(14, 14, 14)
-                                                                .addComponent(gliderInputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(17, 17, 17)
-                                                                .addComponent(sailplaneInputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                      .addGroup(layout.createSequentialGroup()
                                                                 .addGap(10, 10, 10)
-                                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                      .addGroup(layout.createSequentialGroup()
-                                                                .addGap(10, 10, 10)
-                                                                .addComponent(maximumWinchingSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(10, 10, 10)
-                                                                .addComponent(maximumWinchingSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(2, 2, 2)
-                                                                .addComponent(jLabel3)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(passengersWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                      .addGroup(layout.createSequentialGroup()
-                                                                .addGap(10, 10, 10)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                    .addGroup(layout.createSequentialGroup()
+                                                                                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                                  .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                                  .addGap(10, 10, 10)
+                                                                                                                  .addComponent(maximumGrossWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                                  .addComponent(maximumGrossWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                                                  .addComponent(emptyWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                                  .addComponent(jLabel2)
+                                                                                                                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                                                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                            .addComponent(ballastOnboardLabel)
+                                                                                                                            .addComponent(passengersWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                                                                      .addComponent(jLabel1)
+                                                                                                                                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                                                      .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                                                                      .addGap(90, 90, 90)
+                                                                                                                                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                                                                .addComponent(maximumAllowableWeakLinkStrengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                                                                  .addGap(0, 0, Short.MAX_VALUE)))
+                                                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                        .addComponent(indicatedStallSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addComponent(maximumAllowableWeakLinkStrengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addComponent(maximumTensionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addComponent(jRadioButton1)
+                                                                                                        .addComponent(passengersWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                                                                    .addGroup(layout.createSequentialGroup()
+                                                                                              .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                              .addGap(14, 14, 14)
+                                                                                              .addComponent(typeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                              .addGap(0, 0, Short.MAX_VALUE)))
                                                                           .addGroup(layout.createSequentialGroup()
-                                                                                    .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                    .addGap(14, 14, 14)
-                                                                                    .addComponent(typeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                    .addGap(69, 69, 69)
-                                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                              .addComponent(maximumAllowableWeakLinkStrengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                              .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                              .addComponent(ballastOnboardLabel)))
-                                                                          .addGroup(layout.createSequentialGroup()
-                                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                                              .addGroup(layout.createSequentialGroup()
-                                                                                                        .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addGap(10, 10, 10)
-                                                                                                        .addComponent(maximumGrossWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                              .addGroup(layout.createSequentialGroup()
-                                                                                                        .addComponent(maximumGrossWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                                                        .addComponent(emptyWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                              .addComponent(jLabel1)
-                                                                                              .addComponent(jLabel2))
-                                                                                    .addGap(102, 102, 102)))
-                                                                .addGap(18, 18, 18)
+                                                                                    .addComponent(nNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addGap(10, 10, 10)
+                                                                                    .addComponent(nNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addGap(292, 292, 292))))
+                                                      .addGroup(layout.createSequentialGroup()
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                           .addGroup(layout.createSequentialGroup()
-                                                                                    .addComponent(maximumAllowableWeakLinkStrengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                                    .addComponent(jLabel5))
+                                                                                    .addGap(14, 14, 14)
+                                                                                    .addComponent(gliderInputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addGap(17, 17, 17)
+                                                                                    .addComponent(sailplaneInputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                           .addGroup(layout.createSequentialGroup()
-                                                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                              .addGroup(layout.createSequentialGroup()
-                                                                                                        .addGap(6, 6, 6)
-                                                                                                        .addComponent(passengersWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                              .addGroup(layout.createSequentialGroup()
-                                                                                                        .addComponent(indicatedStallSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                        .addComponent(jLabel6))
-                                                                                              .addComponent(jRadioButton1))
-                                                                                    .addGap(0, 0, Short.MAX_VALUE))))
-                                                      .addGroup(layout.createSequentialGroup()
-                                                                .addGap(10, 10, 10)
-                                                                .addComponent(nNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(10, 10, 10)
-                                                                .addComponent(nNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(37, 37, 37)
-                                                                .addComponent(maximumTensionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jLabel4)))
-                                            .addContainerGap())
+                                                                                    .addGap(10, 10, 10)
+                                                                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                          .addGroup(layout.createSequentialGroup()
+                                                                                    .addGap(10, 10, 10)
+                                                                                    .addComponent(maximumWinchingSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addGap(10, 10, 10)
+                                                                                    .addComponent(maximumWinchingSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                    .addGap(2, 2, 2)
+                                                                                    .addComponent(jLabel3)))
+                                                                .addGap(57, 57, 57)))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                      .addComponent(jLabel6)
+                                                      .addComponent(jLabel5)
+                                                      .addComponent(jLabel4)
+                                                      .addComponent(jLabel7))
+                                            .addContainerGap(14, Short.MAX_VALUE))
                                   );
         layout.setVerticalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,18 +338,16 @@ public class SailplaneSelection extends javax.swing.JPanel {
                                                     .addComponent(sailplaneInputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                           .addGap(11, 11, 11)
                                           .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                          .addGap(10, 10, 10)
-                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                          .addGap(11, 11, 11)
+                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                               .addComponent(nNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                              .addGroup(layout.createSequentialGroup()
-                                                                        .addGap(3, 3, 3)
-                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                  .addComponent(nNumberLabel)
-                                                                                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                            .addComponent(maximumTensionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                            .addComponent(jLabel4)))))
-                                                    .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                              .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                              .addComponent(maximumTensionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                              .addComponent(jLabel4))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                              .addGap(3, 3, 3)
+                                                              .addComponent(nNumberLabel)))
                                           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(layout.createSequentialGroup()
                                                               .addGap(18, 18, 18)
@@ -340,47 +355,34 @@ public class SailplaneSelection extends javax.swing.JPanel {
                                                                         .addComponent(typeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                   .addGap(3, 3, 3)
-                                                                                  .addComponent(typeLabel)))
-                                                              .addGap(7, 7, 7))
+                                                                                  .addComponent(typeLabel))))
                                                     .addGroup(layout.createSequentialGroup()
                                                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(maximumAllowableWeakLinkStrengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(maximumAllowableWeakLinkStrengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(jLabel5))))
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                                           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                              .addComponent(maximumGrossWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                              .addComponent(jLabel1)
+                                                              .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                              .addComponent(indicatedStallSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                              .addComponent(jLabel6))
                                                     .addGroup(layout.createSequentialGroup()
-                                                              .addGap(6, 6, 6)
-                                                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                  .addComponent(maximumGrossWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                  .addComponent(jLabel1))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                  .addGap(3, 3, 3)
-                                                                                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                            .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                                      .addComponent(indicatedStallSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                      .addComponent(jLabel6))))))
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                              .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                              .addGap(3, 3, 3)
+                                                              .addComponent(maximumGrossWeightLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                                           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                              .addComponent(emptyWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                              .addComponent(jLabel2)
+                                                              .addComponent(ballastOnboardLabel)
+                                                              .addComponent(jRadioButton1))
                                                     .addGroup(layout.createSequentialGroup()
-                                                              .addGap(11, 11, 11)
-                                                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                  .addComponent(emptyWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                  .addComponent(jLabel2))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                  .addGap(3, 3, 3)
-                                                                                  .addComponent(maximumGrossWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                              .addComponent(ballastOnboardLabel))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                              .addComponent(jRadioButton1)))
+                                                              .addGap(3, 3, 3)
+                                                              .addComponent(maximumGrossWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(layout.createSequentialGroup()
                                                               .addGap(6, 6, 6)
@@ -392,12 +394,14 @@ public class SailplaneSelection extends javax.swing.JPanel {
                                                                                             .addComponent(maximumWinchingSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                             .addComponent(jLabel3)))))
                                                     .addGroup(layout.createSequentialGroup()
-                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                               .addComponent(passengersWeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addGroup(layout.createSequentialGroup()
                                                               .addGap(18, 18, 18)
-                                                              .addComponent(passengersWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                          .addContainerGap(32, Short.MAX_VALUE))
+                                                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(jLabel7)
+                                                                        .addComponent(passengersWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                          .addContainerGap(16, Short.MAX_VALUE))
                                 );
     }// </editor-fold>
     
@@ -534,6 +538,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;

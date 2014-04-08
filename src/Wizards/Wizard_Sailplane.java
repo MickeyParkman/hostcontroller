@@ -58,13 +58,12 @@ public class Wizard_Sailplane extends Wizard {
         
         windowLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         windowLabel.setText("Glider Data Entry Wizard");
-        indicatedStallSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
-        maxWinchingSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
+        indicatedStallSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneVelocityUnit()));
+        maxWinchingSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneVelocityUnit()));
         nNumberLabel.setText("N-Number:");
         emptyWeightUnits.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         maxGrossWeightLabel.setText("Max Gross Weight:");
-        maxGrossWeightUnits.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
-        maxGrossWeightField.addActionListener(new java.awt.event.ActionListener() {
+        maxGrossWeightUnits.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));        maxGrossWeightField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maxGrossWeightFieldActionPerformed(evt);
             }
