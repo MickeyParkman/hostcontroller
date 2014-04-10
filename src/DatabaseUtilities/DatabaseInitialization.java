@@ -347,12 +347,14 @@ public class DatabaseInitialization {
                 + "( index INT, "
                 + " abbreviation VARCHAR(5), "
                 + "PRIMARY KEY (index))";
-        String fahrenheit = "INSERT INTO PressureUnits(index, abbreviation) VALUES (0, 'F')";
-        String celsius = "INSERT INTO PressureUnits(index, abbreviation) VALUES (1, 'C')";
+        String psi = "INSERT INTO PressureUnits(index, abbreviation) VALUES (0, 'psi')";
+        String megapascals = "INSERT INTO PressureUnits(index, abbreviation) VALUES (1, 'Mp')";
+        String kilopascals = "INSERT INTO PressureUnits(index, abbreviation) VALUES (2, 'Kp')";
         try (Statement createPressureUnitsTableStatement = connect.createStatement()) {
             createPressureUnitsTableStatement.execute(createPressureUnitsString);
-            createPressureUnitsTableStatement.executeUpdate(fahrenheit);
-            createPressureUnitsTableStatement.executeUpdate(celsius);
+            createPressureUnitsTableStatement.executeUpdate(psi);
+            createPressureUnitsTableStatement.executeUpdate(megapascals);
+            createPressureUnitsTableStatement.executeUpdate(kilopascals);
         }catch(SQLException e) {
             throw e;
         }

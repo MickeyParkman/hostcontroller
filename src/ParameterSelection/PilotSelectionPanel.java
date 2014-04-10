@@ -141,8 +141,11 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
             }
         });
         pilotScrollPane.setViewportView(pilotJList);
-        
-        jLabel1.setText(unitsLabel.weightUnitIndexToString(units.getPilotWeightUnit()));
+        try {
+            jLabel1.setText(unitsLabel.weightUnitIndexToString(units.getPilotWeightUnit()));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PilotSelectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -192,8 +195,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
                                           .addComponent(pilotPreferenceDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                           .addContainerGap(40, Short.MAX_VALUE))
                                 );
-    }// </editor-fold>
-    
+    }    
     private void pilotWeightDisplayActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }

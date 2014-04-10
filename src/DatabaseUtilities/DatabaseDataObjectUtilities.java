@@ -7,6 +7,7 @@
 package DatabaseUtilities;
 
 import DataObjects.Pilot;
+import DataObjects.Position;
 import DataObjects.Sailplane;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
@@ -82,6 +83,7 @@ public class DatabaseDataObjectUtilities {
             pilotInsertStatement.executeUpdate();
             pilotInsertStatement.close();
         }catch(SQLException e) {
+            System.out.println("Error adding sailplane to database");
             throw e;
         }
     }
@@ -147,6 +149,7 @@ public class DatabaseDataObjectUtilities {
             List sailplanes = new ArrayList<Sailplane>();
             
             while(theSailplanes.next()) {
+                System.out.println("Getting a sailplane");
                 String nNumber = theSailplanes.getString(1);
                 String type = theSailplanes.getString(2);
                 String owner = theSailplanes.getString(3);
@@ -168,12 +171,13 @@ public class DatabaseDataObjectUtilities {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
-                Sailplane newSailplane = new Sailplane(nNumber, type, owner, contactInfo, maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, maxWeakLinkStrength, maxTension);
+                Sailplane newSailplane = new Sailplane(nNumber, type, owner, contactInfo, maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, maxWeakLinkStrength, maxTension, true);
                 sailplanes.add(newSailplane);
-                theSailplanes.close();
-                stmt.close();
-                connect.close();
+                
             }
+            theSailplanes.close();
+            stmt.close();
+            connect.close();
             return sailplanes;
         } catch (SQLException e) {
             throw e;
@@ -196,5 +200,10 @@ public class DatabaseDataObjectUtilities {
                 throw sqle;
         }
         return true;            
+    }
+
+    public static List<Position> getPositions() {
+        List positions = new ArrayList<Position>();
+        return positions;
     }
 }

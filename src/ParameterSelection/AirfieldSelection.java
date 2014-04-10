@@ -230,11 +230,13 @@ public class AirfieldSelection extends javax.swing.JPanel {
             }
         });
         jScrollPane4.setViewportView(positionsJList);
-        
-        jLabel1.setText(unitsLabel.lenghtUnitInexToString(units.getAirfieldDistanceUnit()));
-        
-        jLabel2.setText(unitsLabel.lenghtUnitInexToString(units.getPositionDistanceUnit()));
-        
+        try {
+            jLabel1.setText(unitsLabel.lenghtUnitInexToString(DatabaseUnitSelectionUtilities.getAirfieldDistanceUnit()));
+            jLabel2.setText(unitsLabel.lenghtUnitInexToString(DatabaseUnitSelectionUtilities.getPositionDistanceUnit()));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AirfieldSelection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -384,8 +386,7 @@ public class AirfieldSelection extends javax.swing.JPanel {
                                                     .addComponent(slopeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                                           .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 );
-    }// </editor-fold>
-    
+    }    
     private void airfieldInputJTextFieldKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
         // Creates a string from a input

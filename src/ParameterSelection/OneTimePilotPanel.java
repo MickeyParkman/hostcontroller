@@ -19,13 +19,15 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import Configuration.UnitLabelUtilities;
 import DatabaseUtilities.DatabaseUnitSelectionUtilities;
+import static ParameterSelection.Capability.convertCapabilityNumToString;
+import static ParameterSelection.Preference.convertPreferenceNumToString;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Alex
  */
-public class PilotSelectionPanel extends javax.swing.JPanel {
+public class OneTimePilotPanel extends javax.swing.JPanel {
     //private List<String> names = Arrays.asList("Alan Quartemain","Alex Williams", "Alexander Costanzo", "Alfred Hitchcock", "George Moore", "George Patten", "George Washington", "Gisela Areola-Gutierrez", "Matt Dargen", "Matt Lower", "Matt Smith");
     private List<Pilot> names = new ArrayList<Pilot>();
     
@@ -56,7 +58,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
     /**
      * Creates new form PilotSelectionPanel
      */
-    public PilotSelectionPanel() {
+    public OneTimePilotPanel() {
         initPilotList();
         initComponents();
     }
@@ -141,8 +143,11 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
             }
         });
         pilotScrollPane.setViewportView(pilotJList);
-        
-        jLabel1.setText(unitsLabel.weightUnitIndexToString(units.getPilotWeightUnit()));
+        try {
+            jLabel1.setText(unitsLabel.weightUnitIndexToString(units.getPilotWeightUnit()));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PilotSelectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -192,8 +197,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
                                           .addComponent(pilotPreferenceDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                           .addContainerGap(40, Short.MAX_VALUE))
                                 );
-    }// </editor-fold>
-    
+    }    
     private void pilotWeightDisplayActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -282,5 +286,9 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
      */
     public void setNames(List<Pilot> names) {
         this.names = names;
+    }
+
+    public Pilot getOneTimePilot() {
+        return new Pilot("Joe", "smith", 0, convertCapabilityNumToString(1), convertPreferenceNumToString(0), "", "");
     }
 }

@@ -4,6 +4,9 @@
  */
 package Configuration;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Matt
@@ -43,7 +46,12 @@ public class AirfieldUnitsPanel extends javax.swing.JPanel {
         airfieldLengthSelection.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Meters (m)", "Feet (ft)", "Millimeters (mm)", "Centimeters (cm)", "Kilometers (Km)" }));
 
         jLabel3.setText("includes: Altitude, Max Length");
-
+        try {
+            airfieldLengthSelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getAirfieldDistanceUnit());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AirfieldUnitsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,8 +79,7 @@ public class AirfieldUnitsPanel extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addContainerGap(193, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    }    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox airfieldLengthSelection;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

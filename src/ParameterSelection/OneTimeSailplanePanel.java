@@ -159,19 +159,18 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
                 StallSpeedKeyReleased(evt);
             }
         });
+        try {
+            maxGrossWeightUnit.setText(unitsLabel.weightUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneWeightUnit()));
+            jLabel5.setText(unitsLabel.tensionUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneTensionUnit()));
+            jLabel6.setText(unitsLabel.weightUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneWeightUnit()));
+            jLabel9.setText(unitsLabel.velocityUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneVelocityUnit()));
+            jLabel10.setText(unitsLabel.tensionUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneTensionUnit()));
+            jLabel11.setText(unitsLabel.weightUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneWeightUnit()));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OneTimeSailplanePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        maxGrossWeightUnit.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         
-        jLabel5.setText(unitsLabel.tensionUnitIndexToString(units.getSailplaneTensionUnit()));
-        
-        jLabel6.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
-        
-        jLabel9.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneVelocityUnit())
-                        );
-        
-        jLabel10.setText(unitsLabel.tensionUnitIndexToString(units.getSailplaneTensionUnit()));
-        
-        jLabel11.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -293,8 +292,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
                                                               .addComponent(indicatedStallSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                           .addContainerGap(35, Short.MAX_VALUE))
                                 );
-    }// </editor-fold>
-    
+    }    
     public void setMaxGrossWeightUnit(JLabel maxGrossWeightUnit) {
         this.maxGrossWeightUnit = maxGrossWeightUnit;
     }

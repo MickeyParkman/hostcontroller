@@ -4,6 +4,9 @@
  */
 package Configuration;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Matt
@@ -47,6 +50,11 @@ public class PilotUnitsPanel extends javax.swing.JPanel {
         jLabel2.setText("Pilot Entry Units");
 
         jLabel3.setText("includes: Pilot Weight");
+        try {
+            pilotWeightSelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getPilotWeightUnit());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PilotUnitsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -79,8 +87,7 @@ public class PilotUnitsPanel extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addContainerGap(198, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    }    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -128,7 +128,11 @@ public class AirfieldWizardPanel extends javax.swing.JPanel {
         jLabel6.setText("Altitude:");
         
         jLabel7.setText("Magnetic Variation:");
-        altitudeUnits.setText(unitsLabel.lenghtUnitInexToString(units.getAirfieldDistanceUnit()));
+        try {
+            altitudeUnits.setText(unitsLabel.lenghtUnitInexToString(DatabaseUnitSelectionUtilities.getAirfieldDistanceUnit()));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AirfieldWizardPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -206,8 +210,7 @@ public class AirfieldWizardPanel extends javax.swing.JPanel {
                                                               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                           .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 );
-    }// </editor-fold>//GEN-END:initComponents
-    
+    }    
     private void airfieldMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_airfieldMenuMouseClicked
         Airfield selected = airfields.get(airfieldMenu.getSelectedIndex());
         

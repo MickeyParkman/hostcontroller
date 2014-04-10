@@ -1,4 +1,4 @@
-//*
+/**
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
 import Configuration.UnitLabelUtilities;
+import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -91,7 +92,6 @@ public class SailplaneSelection extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-        DatabaseUnitSelectionUtilities units = new DatabaseUnitSelectionUtilities();
         UnitLabelUtilities unitsLabel = new UnitLabelUtilities();
         textField1 = new java.awt.TextField();
         choice3 = new java.awt.Choice();
@@ -213,21 +213,18 @@ public class SailplaneSelection extends javax.swing.JPanel {
         });
         
         passengersWeightLabel.setText("<html>Total <br/>Passenger <br/>Weight</html>");
+        try {
+            jLabel1.setText(unitsLabel.weightUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneWeightUnit()));
+            jLabel2.setText(unitsLabel.weightUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneWeightUnit()));
+            jLabel3.setText(unitsLabel.velocityUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneVelocityUnit()));
+            jLabel4.setText(unitsLabel.tensionUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneTensionUnit()));
+            jLabel5.setText(unitsLabel.tensionUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneTensionUnit()));
+            jLabel6.setText(unitsLabel.velocityUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneVelocityUnit()));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SailplaneSelection.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        jLabel1.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         
-        jLabel2.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
-        
-        jLabel3.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneVelocityUnit())
-                        
-                        );
-        
-        jLabel4.setText(unitsLabel.tensionUnitIndexToString(units.getSailplaneTensionUnit()));
-        
-        jLabel5.setText(unitsLabel.tensionUnitIndexToString(units.getSailplaneTensionUnit()));
-        
-        jLabel6.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneVelocityUnit())
-                        );
         
         jRadioButton1.setText("Yes");
         jRadioButton1.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -243,8 +240,11 @@ public class SailplaneSelection extends javax.swing.JPanel {
                 jRadioButton1ActionPerformed(evt);
             }
         });
-        
-        jLabel7.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
+        try {
+            jLabel7.setText(unitsLabel.weightUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneWeightUnit()));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SailplaneSelection.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -403,8 +403,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
                                                                         .addComponent(passengersWeightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                           .addContainerGap(16, Short.MAX_VALUE))
                                 );
-    }// </editor-fold>
-    
+    }    
     private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         try {
