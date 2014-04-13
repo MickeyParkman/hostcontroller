@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Communications;
 
 import java.util.ArrayList;
@@ -21,9 +17,9 @@ public class FilterListener extends MessageListener{
     @Override
     public void msgAvailable(byte[] msg) {
         
-        // 1. George will convert the timestamp on the message
-        // 2. The message will be logged in the "Log Everything" DB
-        // 3. If we're in a launch, then the message will be converted to a Vector
+        /*
+         * space for George's code
+         */
         
         for(MessageListener ml: listeners){
             ml.msgAvailable(msg);
