@@ -5,6 +5,8 @@
 package Configuration;
 
 import DatabaseUtilities.DatabaseUnitSelectionUtilities;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -73,9 +75,11 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setText("Cancel");
-        cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cancelButtonMouseEntered(evt);
+        cancelButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelButtonMouseEntered();
             }
         });
 
@@ -119,18 +123,23 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
             // TODO: send pilotPanel.getSelectedIndices() to the database
             DatabaseUnitSelectionUtilities.storePilotUnits(pilotPanel.getSelectedIndices());
             // TODO: send sailplanePanel.getSelectedIndices() to the database
+            DatabaseUnitSelectionUtilities.storeSailplanesUnits(sailplanePanel.getSelectedIndices());
             // TODO: send airfieldPanel.getSelectedIndices() to the database
+            DatabaseUnitSelectionUtilities.storeAirfieldUnits(airfieldPanel.getSelectedIndices());
             // TODO: send displayPanel.getSelectedIndices() to the database
-            //System.out.println(DatabaseUnitSelectionUtilities.getPilotWeightUnit());
+            int[] displayUnits = displayPanel.getSelectedIndices();
+            DatabaseUnitSelectionUtilities.storeDashboardUnits(displayUnits);
+            int[] environmenUnits = new int[2];
+            environmenUnits[0] = displayUnits[4];
+            environmenUnits[1] = displayUnits[5];
+            DatabaseUnitSelectionUtilities.storeEnvironmentalUnits(environmenUnits);
             this.dispose();
-        } catch(ClassNotFoundException e1) {
+        } catch( ClassNotFoundException | SQLException e1) {
             JOptionPane.showMessageDialog(rootPane, e1.getMessage());
-        } catch(SQLException e2) {
-            JOptionPane.showMessageDialog(rootPane, e2.getMessage());
         } 
     }//GEN-LAST:event_submitButtonMouseClicked
 
-    private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
+    private void cancelButtonMouseEntered() {//GEN-FIRST:event_cancelButtonMouseEntered
         this.dispose();
     }//GEN-LAST:event_cancelButtonMouseEntered
 

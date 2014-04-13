@@ -8,6 +8,8 @@ import DataObjects.Pilot;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,7 +38,11 @@ public class Wizard_Pilot extends Wizard {
         windowLabel = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        pilotRequiredPanel2 = new PilotRequiredPanel();
+        try {
+            pilotRequiredPanel2 = new PilotRequiredPanel();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Wizard_Pilot.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pilotOptionalPanel2 = new PilotOptionalPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -87,8 +93,7 @@ public class Wizard_Pilot extends Wizard {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
-
+    }
     private void submitButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonMousePressed
         if(pilotRequiredPanel2.isComplete())
         {

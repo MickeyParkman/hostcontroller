@@ -9,6 +9,8 @@ import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.awt.Color;
 import Configuration.UnitLabelUtilities;
 import DatabaseUtilities.DatabaseUnitSelectionUtilities;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -58,12 +60,17 @@ public class Wizard_Sailplane extends Wizard {
         
         windowLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         windowLabel.setText("Glider Data Entry Wizard");
-        indicatedStallSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
-        maxWinchingSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(units.getSailplaneWeightUnit()));
+        try {
+            indicatedStallSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneVelocityUnit()));
+            maxWinchingSpeedUnits.setText(unitsLabel.velocityUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneVelocityUnit()));
+            emptyWeightUnits.setText(unitsLabel.weightUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneWeightUnit()));
+            maxGrossWeightUnits.setText(unitsLabel.weightUnitIndexToString(DatabaseUnitSelectionUtilities.getSailplaneWeightUnit()));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Wizard_Sailplane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         nNumberLabel.setText("N-Number:");
-        emptyWeightUnits.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         maxGrossWeightLabel.setText("Max Gross Weight:");
-        maxGrossWeightUnits.setText(unitsLabel.weightUnitIndexToString(units.getSailplaneWeightUnit()));
         maxGrossWeightField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maxGrossWeightFieldActionPerformed(evt);
@@ -189,8 +196,7 @@ public class Wizard_Sailplane extends Wizard {
                                 );
         
         pack();
-    }// </editor-fold>//GEN-END:initComponents
-    
+    }    
     private void maxGrossWeightFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxGrossWeightFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_maxGrossWeightFieldActionPerformed
@@ -201,6 +207,7 @@ public class Wizard_Sailplane extends Wizard {
     
     private void submitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonMouseClicked
         String curField = "";
+        boolean carryBallastBool = true;
         try
         {
             String nNumberStr, emptyWeightStr, maxGrossWeightStr, stallSpeedStr, maxWinchingSpeedStr;
@@ -234,10 +241,16 @@ public class Wizard_Sailplane extends Wizard {
             curField = "Max Winching Speed";
             maxWinchingSpeedInt = Integer.parseInt(maxWinchingSpeedStr);
             
-            Sailplane s = new Sailplane(nNumberStr, "Single Place", maxGrossWeightInt, emptyWeightInt, stallSpeedInt, maxWinchingSpeedInt, 1000, 500);
+            if (ballastCheckBox.isSelected() ){
+                carryBallastBool = true;
+            }
+            else{
+                carryBallastBool = false;
+            }
+            
+            Sailplane s = new Sailplane(nNumberStr, "Single Place", maxGrossWeightInt, emptyWeightInt, stallSpeedInt, maxWinchingSpeedInt, 1000, 500, carryBallastBool);
             DatabaseDataObjectUtilities.addSailplaneToDB(s);
             submitData();
-            JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
             this.dispose();
             
         }catch(NumberFormatException e){

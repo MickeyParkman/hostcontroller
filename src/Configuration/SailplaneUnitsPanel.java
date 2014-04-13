@@ -4,6 +4,9 @@
  */
 package Configuration;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Matt
@@ -71,6 +74,14 @@ public class SailplaneUnitsPanel extends javax.swing.JPanel {
         jLabel6.setText("includes: Empty Weight, MGW");
 
         jLabel7.setText("includes: Max Winching Speed");
+        try {
+            sailplaneWeightSelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getSailplaneWeightUnit());
+            sailplaneVelocitySelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getSailplaneVelocityUnit());
+            sailplaneTensionSelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getSailplaneTensionUnit());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SailplaneUnitsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -123,8 +134,7 @@ public class SailplaneUnitsPanel extends javax.swing.JPanel {
                 .addComponent(jLabel7)
                 .addContainerGap(103, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
-
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

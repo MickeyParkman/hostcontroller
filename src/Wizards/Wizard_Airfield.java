@@ -7,6 +7,7 @@ package Wizards;
 import DataObjects.Airfield;
 import DataObjects.Position;
 import DataObjects.Runway;
+import java.util.ArrayList;
 
 /**
  *
@@ -97,7 +98,7 @@ public class Wizard_Airfield extends Wizard {
     private void populatePanels()
     {
         // method not yet implemented: getPositions
-        positionPanel.positions = DatabaseUtilities.DatabaseDataObjectUtilities.getPositions();
+        positionPanel.positions = (ArrayList) DatabaseUtilities.DatabaseDataObjectUtilities.getPositions();
         
         for(Position p: positionPanel.positions){
             runwayPanel.runways.add(p.getParent());

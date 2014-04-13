@@ -4,6 +4,9 @@
  */
 package Configuration;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Matt
@@ -18,13 +21,13 @@ public class DisplayUnitsPanel extends javax.swing.JPanel {
     }
 
     public int[] getSelectedIndices() {
-        int[] indices = new int[5];
+        int[] indices = new int[6];
         indices[0] = displayLengthSelection.getSelectedIndex();
         indices[1] = displayTensionSelection.getSelectedIndex();
         indices[2] = displayWeightSelection.getSelectedIndex();
-        indices[0] = displayVelocitySelection.getSelectedIndex();
-        indices[0] = displayTempSelection.getSelectedIndex();
-        indices[0] = displayPressureSelection.getSelectedIndex();
+        indices[3] = displayVelocitySelection.getSelectedIndex();
+        indices[4] = displayTempSelection.getSelectedIndex();
+        indices[5] = displayPressureSelection.getSelectedIndex();
         return indices;
     }
     
@@ -88,7 +91,17 @@ public class DisplayUnitsPanel extends javax.swing.JPanel {
         displayTempSelection.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Degrees Fahrenheit (F)", "Degrees Celcius (C)" }));
 
         displayPressureSelection.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pounds/square inch (psi)", "Megapascals (Mp)", "Kilopascals (Kp)" }));
-
+        try {
+            displayLengthSelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getDashboardDistanceUnit());
+            displayPressureSelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getEnvironmentalPressureUnit());
+            displayTempSelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getEnvironmentalTempUnit());
+            displayTensionSelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getDashboardTensionUnit());
+            displayVelocitySelection.setSelectedIndex(DatabaseUtilities.DatabaseUnitSelectionUtilities.getDashboardVelocityUnit());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DisplayUnitsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,8 +167,7 @@ public class DisplayUnitsPanel extends javax.swing.JPanel {
                     .addComponent(displayPressureSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
-
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox displayLengthSelection;
     private javax.swing.JComboBox displayPressureSelection;
