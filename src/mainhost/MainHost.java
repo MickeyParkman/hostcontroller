@@ -6,9 +6,14 @@
 
 package mainhost;
 
+import Communications.CommPortConnection;
+import Communications.MessagePipeline;
+import Communications.MessagePipelineException;
 import Configuration.UnitSelectionFrame;
 import ParameterSelection.ParamSelectionFrame;
 import Wizards.PreWizard;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,11 +21,13 @@ import javax.swing.JOptionPane;
  * @author garreola-gutierrez
  */
 public class MainHost extends javax.swing.JFrame {
+    private MessagePipeline pipeline;
 
     /**
      * Creates new form NewJFrame
      */
-    public MainHost() {
+    public MainHost(MessagePipeline pipeline) {
+        this.pipeline = pipeline;
         initComponents();
     }
 
@@ -112,9 +119,12 @@ public class MainHost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ParameterSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ParameterSelectionActionPerformed
-        // TODO add your handling code here:
-        ParamSelectionFrame a = new ParamSelectionFrame();
-        a.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            pipeline.startParameterSelection();
+        } catch (MessagePipelineException ex) {
+            ex.displayError();
+        }
         
     }//GEN-LAST:event_ParameterSelectionActionPerformed
 
@@ -156,7 +166,9 @@ public class MainHost extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainHost frame = new MainHost();
+                CommPortConnection comm = new CommPortConnection();
+                MessagePipeline pipeline = new MessagePipeline(comm);
+                MainHost frame = new MainHost(pipeline);
                 frame.setVisible(true);
             }
         });

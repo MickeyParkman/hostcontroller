@@ -7,6 +7,8 @@
 package mainhost;
 
 import ApplicationFrame.ApplicationFrame;
+import Communications.CommPortConnection;
+import Communications.MessagePipeline;
 import DataObjects.Pilot;
 import DataObjects.Sailplane;
 import ParameterSelection.Capability;
@@ -24,8 +26,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
-        MainHost a = new MainHost();
+        CommPortConnection comm = new CommPortConnection();
+        MessagePipeline pipeline = new MessagePipeline(comm);
+        MainHost a = new MainHost(pipeline);
         //ApplicationFrame a = new ApplicationFrame();
         a.setVisible(true);
                 
