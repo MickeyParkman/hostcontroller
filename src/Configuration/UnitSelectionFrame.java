@@ -118,7 +118,7 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_submitButtonMouseClicked
 
-    private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
+    private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
         this.dispose();
     }//GEN-LAST:event_cancelButtonMouseEntered
 
