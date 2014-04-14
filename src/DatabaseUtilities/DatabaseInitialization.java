@@ -43,6 +43,7 @@ public class DatabaseInitialization {
         try{
             createCapability(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         } 
         
@@ -50,78 +51,93 @@ public class DatabaseInitialization {
         try{
             createPreference(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         //Build the Pilot table
         try{
             createPilot(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }  
         //Build the Sailplane tabel
         try{
              createSailplane(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }  
         try{
              createDistanceUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         try{
              createTensionUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         try{
              createVelocityUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         try{
              createWeightUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         try{
              createTemperatureUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         try{
              createPressureUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         try{
              createPilotUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         try{
              createSailplaneUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
-         try{
+        try{
              createAirfieldUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
-          try{
+        try{
              createPositionUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
-           try{
+        try{
              createDashboardUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
-            try{
+        try{
              createEnvironmentalUnits(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
         connection.close();

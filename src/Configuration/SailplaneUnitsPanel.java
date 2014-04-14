@@ -22,9 +22,9 @@ public class SailplaneUnitsPanel extends javax.swing.JPanel {
     
     public int[] getSelectedIndices(){
         int[] indices = new int[3];
-        indices[0] = sailplaneTensionSelection.getSelectedIndex();
-        indices[1] = sailplaneWeightSelection.getSelectedIndex();
-        indices[2] = sailplaneVelocitySelection.getSelectedIndex();
+        indices[0] = sailplaneWeightSelection.getSelectedIndex();
+        indices[1] = sailplaneVelocitySelection.getSelectedIndex();
+        indices[2] = sailplaneTensionSelection.getSelectedIndex();
         return indices;
     }
     
