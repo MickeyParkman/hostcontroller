@@ -4,12 +4,6 @@
  */
 package Configuration;
 
-import DatabaseUtilities.DatabaseUnitSelectionUtilities;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author Matt
@@ -49,10 +43,10 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        pilotPanel = new PilotUnitsPanel();
-        sailplanePanel = new SailplaneUnitsPanel();
-        airfieldPanel = new AirfieldUnitsPanel();
-        displayPanel = new DisplayUnitsPanel();
+        pilotPanel = new Configuration.PilotUnitsPanel();
+        sailplanePanel = new Configuration.SailplaneUnitsPanel();
+        airfieldPanel = new Configuration.AirfieldUnitsPanel();
+        displayPanel = new Configuration.DisplayUnitsPanel();
         jLabel1 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -67,7 +61,7 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Unit Selection");
 
-        submitButton.setText("Submit Changes");
+        submitButton.setText("Submit");
         submitButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 submitButtonMouseClicked(evt);
@@ -75,11 +69,9 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelButtonMouseEntered();
+        cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancelButtonMouseEntered(evt);
             }
         });
 
@@ -107,39 +99,26 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(cancelButton))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonMouseClicked
-        try{
-            // TODO: send pilotPanel.getSelectedIndices() to the database
-            DatabaseUnitSelectionUtilities.storePilotUnits(pilotPanel.getSelectedIndices());
-            // TODO: send sailplanePanel.getSelectedIndices() to the database
-            DatabaseUnitSelectionUtilities.storeSailplanesUnits(sailplanePanel.getSelectedIndices());
-            // TODO: send airfieldPanel.getSelectedIndices() to the database
-            DatabaseUnitSelectionUtilities.storeAirfieldUnits(airfieldPanel.getSelectedIndices());
-            // TODO: send displayPanel.getSelectedIndices() to the database
-            int[] displayUnits = displayPanel.getSelectedIndices();
-            DatabaseUnitSelectionUtilities.storeDashboardUnits(displayUnits);
-            int[] environmenUnits = new int[2];
-            environmenUnits[0] = displayUnits[4];
-            environmenUnits[1] = displayUnits[5];
-            DatabaseUnitSelectionUtilities.storeEnvironmentalUnits(environmenUnits);
-            this.dispose();
-        } catch( ClassNotFoundException | SQLException e1) {
-            JOptionPane.showMessageDialog(rootPane, e1.getMessage());
-        } 
+        // TODO: send pilotPanel.getSelectedIndices() to the database
+        // TODO: send sailplanePanel.getSelectedIndices() to the database
+        // TODO: send airfieldPanel.getSelectedIndices() to the database
+        // TODO: send displayPanel.getSelectedIndices() to the database
+        this.dispose();
     }//GEN-LAST:event_submitButtonMouseClicked
 
-    private void cancelButtonMouseEntered() {//GEN-FIRST:event_cancelButtonMouseEntered
+    private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
         this.dispose();
     }//GEN-LAST:event_cancelButtonMouseEntered
 
