@@ -4,6 +4,9 @@
  */
 package Configuration;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author Matt
@@ -69,9 +72,11 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setText("Cancel");
-        cancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cancelButtonMouseEntered(evt);
+        cancelButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelButtonMouseClicked();
             }
         });
 
@@ -118,7 +123,7 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_submitButtonMouseClicked
 
-    private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
+    private void cancelButtonMouseClicked() {//GEN-FIRST:event_cancelButtonMouseEntered
         this.dispose();
     }//GEN-LAST:event_cancelButtonMouseEntered
 
