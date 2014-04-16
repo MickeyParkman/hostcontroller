@@ -74,14 +74,14 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
         
         jLabel2.setText("Type:");
         
-        MaximumGrossWeight.setBackground(new java.awt.Color(255, 0, 0));
+        MaximumGrossWeight.setBackground(new Color(255, 105, 105));
         MaximumGrossWeight.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 MaximumGrossWeightKeyReleased(evt);
             }
         });
         
-        Type.setBackground(new java.awt.Color(255, 0, 0));
+        Type.setBackground(new Color(255, 105, 105));
         Type.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TypeKeyReleased(evt);
@@ -90,7 +90,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
         
         maximumGrossWeightLabel1.setText("<html>Maximum <br/>Gross Weight<html>");
         
-        NNumber.setBackground(new java.awt.Color(255, 0, 0));
+        NNumber.setBackground(new Color(255, 105, 105));
         NNumber.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 NNumberKeyReleased(evt);
@@ -99,7 +99,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
         
         maximumGrossWeightLabel.setText("Empty Weight");
         
-        EmptyWeight.setBackground(new java.awt.Color(255, 0, 0));
+        EmptyWeight.setBackground(new Color(255, 105, 105));
         EmptyWeight.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 EmptyWeightKeyReleased(evt);
@@ -108,7 +108,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
         
         maximumWinchingSpeedLabel.setText("<html>Max Winching <br/>Speed</html>");
         
-        MaxWinchingSpeed.setBackground(new java.awt.Color(255, 0, 0));
+        MaxWinchingSpeed.setBackground(new Color(255, 105, 105));
         MaxWinchingSpeed.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 MaxWinchingSpeedKeyReleased(evt);
@@ -117,13 +117,13 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
         
         maximumTensionLabel.setText("<html>Maximum <br/>Tension</html>");
         
-        maximumAllowableWeakLinkStrengthLabel.setText("<html>Maximum <br/>Allowable <br/>Weak Link Strenght</html>");
+        maximumAllowableWeakLinkStrengthLabel.setText("<html>Maximum <br/>Allowable <br/>Weak Link <br/>Strenght</html>");
         
         indicatedStallSpeed.setText("<html>Indicated <br/>Stall Speed</html>");
         
         ballastOnboardLabel.setText("Does it have ballast?");
         
-        MaximumAllowableWeakLinkStrength.setBackground(new java.awt.Color(255, 0, 0));
+        MaximumAllowableWeakLinkStrength.setBackground(new Color(255, 105, 105));
         MaximumAllowableWeakLinkStrength.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 MaximumAllowableWeakLinkStrengthKeyReleased(evt);
@@ -134,7 +134,7 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
         
         passengersWeightLabel.setText("<html>Indicated <br/>Passenger Weight</html>");
         
-        PassengerWeight.setBackground(new java.awt.Color(255, 0, 0));
+        PassengerWeight.setBackground(new Color(255, 105, 105));
         PassengerWeight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PassengerWeightActionPerformed(evt);
@@ -146,14 +146,14 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
             }
         });
         
-        MaximumTension.setBackground(new java.awt.Color(255, 0, 0));
+        MaximumTension.setBackground(new Color(255, 105, 105));
         MaximumTension.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 MaximumTensionKeyReleased(evt);
             }
         });
         
-        StallSpeed.setBackground(new java.awt.Color(255, 0, 0));
+        StallSpeed.setBackground(new Color(255, 105, 105));
         StallSpeed.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 StallSpeedKeyReleased(evt);
@@ -180,10 +180,10 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
                                             .addContainerGap()
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                       .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                           .addGroup(layout.createSequentialGroup()
                                                                                     .addComponent(jLabel1)
-                                                                                    .addGap(55, 55, 55)
+                                                                                    .addGap(30, 30, 30)
                                                                                     .addComponent(NNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                           .addGroup(layout.createSequentialGroup()
                                                                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +195,6 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
                                                                                               .addComponent(MaximumAllowableWeakLinkStrength, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                               .addComponent(MaxWinchingSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                               .addComponent(MaximumGrossWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                                                .addGap(18, 18, 18)
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                                                     .addComponent(maxGrossWeightUnit)
@@ -215,7 +214,6 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
                                                                                               .addComponent(MaximumTension, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                                           .addComponent(maximumGrossWeightLabel)
                                                                           .addComponent(maximumTensionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(36, 36, 36)
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                           .addComponent(jLabel6)
                                                                           .addComponent(jLabel5)))
@@ -299,44 +297,89 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
     
     private void MaximumGrossWeightKeyReleased(java.awt.event.KeyEvent evt) {
         if(MaximumGrossWeight.getText().isEmpty()){
-            MaximumGrossWeight.setBackground(Color.RED);
+            MaximumGrossWeight.setBackground(new Color(255, 105, 105));
         }
         else
-            MaximumGrossWeight.setBackground(Color.GREEN);
+            MaximumGrossWeight.setBackground(new Color(142, 250, 127));
     }
     
     private void TypeKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
         if(Type.getText().isEmpty()){
-            Type.setBackground(Color.RED);
+            Type.setBackground(new Color(255, 105, 105));
         }
         else
-            Type.setBackground(Color.GREEN);
+            Type.setBackground(new Color(142, 250, 127));
     }
     
     private void NNumberKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
         if(NNumber.getText().isEmpty()){
-            NNumber.setBackground(Color.RED);
+            NNumber.setBackground(new Color(255, 105, 105));
         }
         else
-            NNumber.setBackground(Color.GREEN);
+            NNumber.setBackground(new Color(142, 250, 127));
     }
     
     private void EmptyWeightKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
+        if(EmptyWeight.getText().isEmpty()) {
+            EmptyWeight.setBackground(new Color(255, 105, 105));
+        }
+        else {
+            try {
+                Integer.parseInt(EmptyWeight.getText());
+                EmptyWeight.setBackground(new Color(142, 250, 127));
+            }catch (NumberFormatException e) {
+                EmptyWeight.setBackground(new Color(255, 105, 105));
+            }
+        }
     }
     
     private void MaxWinchingSpeedKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
+        if(MaxWinchingSpeed.getText().isEmpty()) {
+            MaxWinchingSpeed.setBackground(new Color(255, 105, 105));
+        }
+        else {
+            try {
+                Integer.parseInt(MaxWinchingSpeed.getText());
+                MaxWinchingSpeed.setBackground(new Color(142, 250, 127));
+            }catch (NumberFormatException e) {
+                MaxWinchingSpeed.setBackground(new Color(255, 105, 105));
+            }
+        }
     }
     
     private void MaximumAllowableWeakLinkStrengthKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
+        if(MaximumAllowableWeakLinkStrength.getText().isEmpty()) {
+            MaximumAllowableWeakLinkStrength.setBackground(new Color(255, 105, 105));
+        }
+        else {
+            try {
+                Integer.parseInt(MaximumAllowableWeakLinkStrength.getText());
+                MaximumAllowableWeakLinkStrength.setBackground(new Color(142, 250, 127));
+            }catch (NumberFormatException e) {
+                MaximumAllowableWeakLinkStrength.setBackground(new Color(255, 105, 105));
+            }
+        }
+        
     }
     
     private void PassengerWeightKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
+        if(PassengerWeight.getText().isEmpty()) {
+            PassengerWeight.setBackground(new Color(255, 105, 105));
+        }
+        else {
+            try {
+                Integer.parseInt(PassengerWeight.getText());
+                PassengerWeight.setBackground(new Color(142, 250, 127));
+            }catch (NumberFormatException e) {
+                PassengerWeight.setBackground(new Color(255, 105, 105));
+            }
+        }
     }
     
     private void PassengerWeightActionPerformed(java.awt.event.ActionEvent evt) {                                                
@@ -348,73 +391,118 @@ public class OneTimeSailplanePanel extends javax.swing.JPanel {
     
     private void MaximumTensionKeyReleased(java.awt.event.KeyEvent evt) {                                           
         // TODO add your handling code here:
+        if(MaximumTension.getText().isEmpty()) {
+            MaximumTension.setBackground(new Color(255, 105, 105));
+        }
+        else {
+            try {
+                Integer.parseInt(MaximumTension.getText());
+                MaximumTension.setBackground(new Color(142, 250, 127));
+            }catch (NumberFormatException e) {
+                MaximumTension.setBackground(new Color(255, 105, 105));
+            }
+        }
     }                                          
     
     private void StallSpeedKeyReleased(java.awt.event.KeyEvent evt) {                                       
         // TODO add your handling code here:
+        if(StallSpeed.getText().isEmpty()) {
+            StallSpeed.setBackground(new Color(255, 105, 105));
+        }
+        else {
+            try {
+                Integer.parseInt(StallSpeed.getText());
+                StallSpeed.setBackground(new Color(142, 250, 127));
+            }catch (NumberFormatException e) {
+                StallSpeed.setBackground(new Color(255, 105, 105));
+            }
+        }
     }                                      
     
-    public Sailplane getOneTimePilot() {
-        if(NNumber.getText().isEmpty())
+    public Sailplane getOneTimeSailplnae() {
+        if(NNumber.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide a N-Number");
+            return null;
+        }
         String newNNumber = NNumber.getText();
-        if(Type.getText().isEmpty())
+        if(Type.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide a last type");
+            return null;
+        }
         String newType = Type.getText();
         int grossWeight = 0;
-        if(MaximumGrossWeight.getText().isEmpty())
+        if(MaximumGrossWeight.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide a maximum gross weight");
-        try{
+            return null;
+        }
+        else try{
             grossWeight = Integer.parseInt(MaximumGrossWeight.getText());
         }catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please provide a VAILD maximum gross weight");
         }
         int emptyWeight = 0;
-        if(EmptyWeight.getText().isEmpty())
+        if(EmptyWeight.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide a empty weight");
-        try{
+            return null;
+        }
+        else try{
             emptyWeight = Integer.parseInt(EmptyWeight.getText());
         }catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please provide a VAILD empty weight");
+            return null;
         }
         int maxWinchingSpeed = 0;
-        if(MaxWinchingSpeed.getText().isEmpty())
+        if(MaxWinchingSpeed.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide a maximum wenching speed");
-        try{
+            return null;
+        }
+        else try{
             maxWinchingSpeed = Integer.parseInt(MaxWinchingSpeed.getText());
         }catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please provide a VAILD maximum wenching speed");
+            return null;
         }
         int maximumTension = 0;
-        if(MaximumTension.getText().isEmpty())
+        if(MaximumTension.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide a maximum tension");
-        try{
+            return null;
+        }
+        else try{
             maximumTension= Integer.parseInt(MaximumTension.getText());
         }catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please provide a VALID maximum tension");
+            return null;
         }
         int weakLinkStrength = 0;
-        if(MaximumAllowableWeakLinkStrength.getText().isEmpty())
+        if(MaximumAllowableWeakLinkStrength.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide a maximum allowabel weak link strength");
-        try{
+            return null;
+        }
+        else try{
             weakLinkStrength= Integer.parseInt(MaximumAllowableWeakLinkStrength.getText());
         }catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please provide a VALID maximum allowabel weak link strength");
+            return null;
         }
         int stallSpeed= 0;
-        if(StallSpeed.getText().isEmpty())
+        if(StallSpeed.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please provide a indicated stall speed");
-        try{
+            return null;
+        }
+        else try{
             stallSpeed= Integer.parseInt(StallSpeed.getText());
         }catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please provide a VALID indicated stall speed");
+            return null;
         }
         boolean hasBallast= false;
         if(YesRadioButton.isSelected()){ 
             hasBallast = true;
         } 
         
-        else {}
+        else {
+            //TODO ???
+        }
         
         return (new Sailplane(newNNumber, newType, grossWeight, emptyWeight, stallSpeed, maxWinchingSpeed,  weakLinkStrength, maximumTension, hasBallast, hasBallast));
         

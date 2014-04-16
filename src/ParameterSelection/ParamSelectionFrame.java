@@ -36,6 +36,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        oneTimeSailplanePanel1 = new ParameterSelection.OneTimeSailplanePanel();
         HeaderPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         previousLaunchesPanel = new javax.swing.JPanel();
@@ -182,6 +183,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         selectSailplaneTitle.setText("Select a Sailplane");
 
         sailplaneTabbedPane.addTab("Database", sailplaneSelectionPanel);
+        sailplaneTabbedPane.addTab("One Time Entry", oneTimeSailplanePanel1);
 
         sailplaneFromLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         sailplaneFromLabel.setText("From:");
@@ -243,7 +245,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         selectPilotPanelLayout.setVerticalGroup(
             selectPilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(selectPilotPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(selectPilotTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pilotFromLabel)
@@ -287,14 +289,13 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
                 .addComponent(HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(selectSailplanePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(selectPilotPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(129, 129, 129))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(environmentalVariablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(selectAirfieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(selectAirfieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(selectPilotPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(selectSailplanePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(previousLaunchesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -303,11 +304,15 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // TODO add your handling code here:
+        boolean allValidEntries = true;
+
+        // Get the selected/provided pilot
         if(pilotTabbedPane.getSelectedIndex() == 0) {
             Pilot name = pilotSelectionPanel.getSelectedPilot();
-            if(name == null)
+            if(name == null) {
                 JOptionPane.showMessageDialog(rootPane, "You have not selected a pilot");
+                allValidEntries = false;
+            }
             else
                 JOptionPane.showMessageDialog(rootPane, "PILOT:" + '\n' + name.getFirstName() + " " + name.getLastName() + '\n' + 
                         name.getWeight() + '\n' + name.getCapability() + '\n' + name.getPreference() + '\n' + 
@@ -315,18 +320,23 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         }
         else {
             Pilot name = oneTimePilotPanel.getOneTimePilot();
-            if(name == null)
-                JOptionPane.showMessageDialog(rootPane, "You have not selected a pilot");
+            if(name == null) {
+                JOptionPane.showMessageDialog(rootPane, "You have not entered a valid pilot");
+                allValidEntries = false;
+            }
             else
                 JOptionPane.showMessageDialog(rootPane, "PILOT:" + '\n' + name.getFirstName() + " " + name.getLastName() + '\n' + 
                         name.getWeight() + '\n' + name.getCapability() + '\n' + name.getPreference() + '\n' + 
                         name.getEmergencyContact() + '\n' + name.getMedInfo());
         }
         
+        //Get the selected/provided sailplane
+        Sailplane plane;
         if(sailplaneTabbedPane.getSelectedIndex() == 0) {
-            Sailplane plane = sailplaneSelectionPanel.getSelectedPlane();
+            plane = sailplaneSelectionPanel.getSelectedPlane();
             if(plane == null){
-                JOptionPane.showMessageDialog(rootPane, "You have not selected a plane");
+                JOptionPane.showMessageDialog(rootPane, "You have not selected a sailplane");
+                allValidEntries = false;
             }
             else {
                 JOptionPane.showMessageDialog(rootPane, "PLANE:" + '\n' + plane.getNumber() + '\n' + 
@@ -334,25 +344,36 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
             }
         }
         else {
-            //TODO add one time entry case
+            plane = oneTimeSailplanePanel1.getOneTimeSailplnae();
+            if(plane == null){
+                JOptionPane.showMessageDialog(rootPane, "You have not entered a valid sailplane");
+                allValidEntries = false;
+            }
+            else {
+                JOptionPane.showMessageDialog(rootPane, "PLANE:" + '\n' + plane.getNumber() + '\n' + 
+                        plane.getType()+ '\n' + plane.getOwner()+ '\n' + "...");
+            }
         }
         
+        
+        //get the selected Airfield/Runway/Position
         if(airfieldTabbedPane.getSelectedIndex() == 0) {
             Airfield airfield = airfieldSelectionPanel.getSeleAirfiield();
             if(airfield == null){
                 JOptionPane.showMessageDialog(rootPane, "You have not selected an airfield");
+                allValidEntries = false;
             }
             else {
                 JOptionPane.showMessageDialog(rootPane, "AIRFIELD:" + '\n' + airfield.getName() + '\n' + 
                         airfield.getDesignator() + '\n' + airfield.getLocation() + '\n' + "...");
             }
         }
-        else {
-            //TODO add one time entry case
+        
+        if (allValidEntries) {
+            DashboardInterface dashboard = new DashboardInterface();
+            dashboard.setVisible(true);
+            dispose();
         }
-        DashboardInterface dashboard = new DashboardInterface();
-        dashboard.setVisible(true);
-        dispose();
         
     }//GEN-LAST:event_submitButtonActionPerformed
 
@@ -409,6 +430,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private ParameterSelection.OneTimePilotPanel oneTimePilotPanel;
+    private ParameterSelection.OneTimeSailplanePanel oneTimeSailplanePanel1;
     private javax.swing.JLabel pilotFromLabel;
     private javax.swing.JScrollPane pilotScrollPane;
     private ParameterSelection.PilotSelectionPanel pilotSelectionPanel;

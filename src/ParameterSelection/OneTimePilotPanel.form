@@ -26,41 +26,39 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="medicalInfoInput" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="emergencyContactInput" alignment="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="pilotfirstNameLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="pilotFirstNameInput" min="-2" pref="81" max="-2" attributes="0"/>
+                  <Component id="emergencyContactInput" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="pilotfirstNameLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="pilotFirstNameInput" min="-2" pref="81" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="emergencyContactLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="medicalInfoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="pilotLastNameLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="pilotLastNameInput" min="-2" pref="81" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="pilotWeightLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="pilotWeightInput" min="-2" pref="80" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="pilotNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="studentRadioButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="proficientRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="advancedRadioButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="pilotCapabilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="emergencyContactLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="medicalInfoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="pilotLastNameLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="pilotLastNameInput" min="-2" pref="81" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="pilotWeightLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="pilotWeightInput" min="-2" pref="80" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="pilotNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="studentRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <Component id="proficientRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="advancedRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <Component id="pilotCapabilityLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="pilotPreferenceLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="aggressiveRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <Component id="mildRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="nominalRadioButton" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="pilotPreferenceLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="aggressiveRadioButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="mildRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="nominalRadioButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -131,7 +129,7 @@
     <Component class="javax.swing.JTextField" name="pilotFirstNameInput">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <Events>
@@ -146,7 +144,7 @@
     <Component class="javax.swing.JTextField" name="pilotWeightInput">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <Events>
@@ -260,7 +258,7 @@
     <Component class="javax.swing.JTextField" name="pilotLastNameInput">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
+          <Color blue="69" green="69" red="ff" type="rgb"/>
         </Property>
       </Properties>
       <Events>

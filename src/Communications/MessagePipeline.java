@@ -30,9 +30,9 @@ public class MessagePipeline {
     //Logger for the pipeline for logging all messages
     
     
-    public MessagePipeline(CommPortConnection comm) {
+    public MessagePipeline(Connection comm) {
         filter = new FilterListener();
-        commConnection = comm;
+        commConnection = (CommPortConnection) comm;
         commConnection.attachFilter(filter);
         
         //TODO Attach a logger

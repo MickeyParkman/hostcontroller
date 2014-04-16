@@ -9,6 +9,7 @@ package mainhost;
 import ApplicationFrame.ApplicationFrame;
 import Communications.CommPortConnection;
 import Communications.MessagePipeline;
+import Communications.SocketConnection;
 import DataObjects.Pilot;
 import DataObjects.Sailplane;
 import ParameterSelection.Capability;
@@ -27,6 +28,7 @@ public class Main {
      */
     public static void main(String[] args) {
         CommPortConnection comm = new CommPortConnection();
+        //SocketConnection sock = new SocketConnection();
         MessagePipeline pipeline = new MessagePipeline(comm);
         MainHost a = new MainHost(pipeline);
         //ApplicationFrame a = new ApplicationFrame();
