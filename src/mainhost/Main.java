@@ -27,11 +27,14 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CommPortConnection comm = new CommPortConnection();
-        //SocketConnection sock = new SocketConnection();
-        MessagePipeline pipeline = new MessagePipeline(comm);
+        //*** USE FOR CONNECTION TO DEVICE OVER COM PORT ***//
+        //CommPortConnection connection = new CommPortConnection();
+        
+        //*** USE FOR CONNECTION TO DEVICE OVER SOCKET ***//
+        SocketConnection connection = new SocketConnection();
+        
+        MessagePipeline pipeline = new MessagePipeline(connection);
         MainHost a = new MainHost(pipeline);
-        //ApplicationFrame a = new ApplicationFrame();
         a.setVisible(true);
                 
         /*try {

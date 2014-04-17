@@ -15,7 +15,7 @@ import ParameterSelection.ParamSelectionFrame;
  */
 public class MessagePipeline {
     //Comm Port Connection for the pipeline
-    CommPortConnection commConnection;
+    Connection connection;
     
     //Message Filter for the pipeline for filtering incoming messages
     FilterListener filter;
@@ -32,8 +32,8 @@ public class MessagePipeline {
     
     public MessagePipeline(Connection comm) {
         filter = new FilterListener();
-        commConnection = (CommPortConnection) comm;
-        commConnection.attachFilter(filter);
+        connection = comm;
+        comm.attachFilter(filter);
         
         //TODO Attach a logger
                

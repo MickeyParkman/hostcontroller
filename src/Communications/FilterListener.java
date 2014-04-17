@@ -20,6 +20,7 @@ public class FilterListener extends MessageListener{
         /*
          * space for George's code
          */
+        System.out.println(new String(msg));
         
         // notify all attached listeners after message is filtered
         for(MessageListener ml: listeners){
