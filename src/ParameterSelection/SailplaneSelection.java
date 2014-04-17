@@ -143,6 +143,12 @@ public class SailplaneSelection extends javax.swing.JPanel {
                 sailplaneJListMouseClicked(evt);
             }
         });
+        sailplaneJList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                sailplaneJListKeyReleased(evt);
+            }
+        });
+        
         jScrollPane1.setViewportView(sailplaneJList);
         
         nNumberTextField.setEditable(false);
@@ -404,6 +410,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
                                           .addContainerGap(16, Short.MAX_VALUE))
                                 );
     }    
+    
     private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         try {
@@ -464,6 +471,10 @@ public class SailplaneSelection extends javax.swing.JPanel {
             //TODO add logic for what 
         }
     }                                           
+    
+    private void sailplaneJListKeyReleased(java.awt.event.KeyEvent evt) {
+        sailplaneJListMouseClicked(null);
+    }
     
     private void passengersWeightTextFieldKeyReleased(java.awt.event.KeyEvent evt) {                                                      
         // TODO add your handling code here:

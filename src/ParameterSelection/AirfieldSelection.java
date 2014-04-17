@@ -130,6 +130,12 @@ public class AirfieldSelection extends javax.swing.JPanel {
                 airfieldJListMouseClicked(evt);
             }
         });
+        airfieldJList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                airfieldJListKeyReleased(evt);
+            }
+        });
+        
         jScrollPane1.setViewportView(airfieldJList);
         
         centerlineOffsetLabel.setText("<html>Centerline <br/> Offset <html/>");
@@ -211,6 +217,11 @@ public class AirfieldSelection extends javax.swing.JPanel {
                 runwayJListMouseClicked(evt);
             }
         });
+        runwayJList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                runwayJList.addKeyListener(evt);
+            }
+        });
         jScrollPane3.setViewportView(runwayJList);
         
         runwayInputJTextField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -227,6 +238,11 @@ public class AirfieldSelection extends javax.swing.JPanel {
         positionsJList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 positionsJListMouseClicked(evt);
+            }
+        });
+        positionsJList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                positionsJListKeyReleased(evt);
             }
         });
         jScrollPane4.setViewportView(positionsJList);
@@ -407,6 +423,10 @@ public class AirfieldSelection extends javax.swing.JPanel {
         // TODO add your handling code here:
     }
     
+    private void airfieldJListKeyReleased(java.awt.event.KeyEvent evt) {
+        airfieldJListMouseClicked(null);
+    }
+    
     private void airfieldJListMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         try {
@@ -470,6 +490,10 @@ public class AirfieldSelection extends javax.swing.JPanel {
         airfieldJList.setModel(positions2Model);
     }
     
+    private void runwayJListKeyReleased(java.awt.event.KeyEvent evt) {
+        runwayJListMouseClicked(null);
+    }
+    
     private void runwayJListMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         try {
@@ -518,6 +542,11 @@ public class AirfieldSelection extends javax.swing.JPanel {
         // New updated defaultListModel is set the jlist
         airfieldJList.setModel(runway2Model);
     }                                                 
+    
+    
+    private void positionsJListKeyReleased(java.awt.event.KeyEvent evt) {
+        positionsJListMouseClicked(null);
+    }
     
     private void positionsJListMouseClicked(java.awt.event.MouseEvent evt) {                                            
         // TODO add your handling code here:

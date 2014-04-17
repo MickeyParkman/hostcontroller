@@ -102,22 +102,12 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
         
         pilotWeightDisplay.setEditable(false);
         pilotWeightDisplay.setBackground(new java.awt.Color(255, 105, 105));
-        pilotWeightDisplay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pilotWeightDisplayActionPerformed(evt);
-            }
-        });
         
         pilotCapabilityLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         pilotCapabilityLabel.setText("Capability:");
         
         pilotCapabilityDisplay.setEditable(false);
         pilotCapabilityDisplay.setBackground(new java.awt.Color(255, 105, 105));
-        pilotCapabilityDisplay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pilotCapabilityDisplayActionPerformed(evt);
-            }
-        });
         
         pilotPreferenceLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         pilotPreferenceLabel.setText("Launch Preference:");
@@ -139,6 +129,12 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pilotJListMouseClicked(evt);
             }
+        });
+        pilotJList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pilotJListKeyReleased(evt);
+            }
+        
         });
         pilotScrollPane.setViewportView(pilotJList);
         try {
@@ -196,18 +192,12 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
                                           .addContainerGap(40, Short.MAX_VALUE))
                                 );
     }    
-    private void pilotWeightDisplayActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
     
     private void pilotNameInputActionPerformed(java.awt.event.ActionEvent evt) {
         //PilotMatchDisplay.add(PilotNameInput.getText(), this);
         pilotWeightDisplay.setText(pilotNameInput.getText());
     }
     
-    private void pilotCapabilityDisplayActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
     
     private void pilotNameInputKeyReleased(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
@@ -224,7 +214,6 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
     }
     
     private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
         if(pilotJList.getSelectedIndex() >= 0){
             try{
                 pilotWeightDisplay.setText(String.valueOf(((Pilot)pilotJList.getSelectedValue()).getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit())));
@@ -239,6 +228,10 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
                 //TODO respond to error
             }
         }
+    }
+    
+    private void pilotJListKeyReleased(java.awt.event.KeyEvent evt) {
+        pilotJListMouseClicked(null);
     }
     
     private void pilotPreferenceDisplayActionPerformed(java.awt.event.ActionEvent evt) {                                                       
