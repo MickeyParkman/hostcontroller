@@ -57,7 +57,6 @@ public class SailplaneSelection extends javax.swing.JPanel {
          }*/
         try {
             List<Sailplane> ls = DatabaseDataObjectUtilities.getSailplanes();
-            System.out.println(ls.size());
             for(Sailplane s: ls)
                 mdl.addElement(s);
         } catch(SQLException e) {
@@ -529,8 +528,9 @@ public class SailplaneSelection extends javax.swing.JPanel {
     }                                            
     
     public Sailplane getSelectedPlane() {
-        if(sailplaneJList.getSelectedIndex() >= 0)
-            return gliderNewList[sailplaneJList.getSelectedIndex()];
+        if(sailplaneJList.getSelectedIndex() >= 0) {
+            return (Sailplane) sailplaneJList.getSelectedValue();
+        }
         return null;
     }
     

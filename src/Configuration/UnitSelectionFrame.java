@@ -4,8 +4,13 @@
  */
 package Configuration;
 
+import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -116,10 +121,26 @@ public class UnitSelectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitButtonMouseClicked
-        // TODO: send pilotPanel.getSelectedIndices() to the database
-        // TODO: send sailplanePanel.getSelectedIndices() to the database
-        // TODO: send airfieldPanel.getSelectedIndices() to the database
-        // TODO: send displayPanel.getSelectedIndices() to the database
+        try{
+             // TODO: send pilotPanel.getSelectedIndices() to the database
+             DatabaseUnitSelectionUtilities.storePilotUnits(pilotPanel.getSelectedIndices());
+             // TODO: send sailplanePanel.getSelectedIndices() to the database
+             DatabaseUnitSelectionUtilities.storeSailplanesUnits(sailplanePanel.getSelectedIndices());
+             // TODO: send airfieldPanel.getSelectedIndices() to the database
+             DatabaseUnitSelectionUtilities.storeAirfieldUnits(airfieldPanel.getSelectedIndices());
+             // TODO: send displayPanel.getSelectedIndices() to the database
+             int[] displayUnits = displayPanel.getSelectedIndices();
+             DatabaseUnitSelectionUtilities.storeDashboardUnits(displayUnits);
+             int[] environmenUnits = new int[2];
+             environmenUnits[0] = displayUnits[4];
+             environmenUnits[1] = displayUnits[5];
+             DatabaseUnitSelectionUtilities.storeEnvironmentalUnits(environmenUnits);
+             this.dispose();
+         } catch( ClassNotFoundException e1) {
+                JOptionPane.showMessageDialog(rootPane, e1.getMessage());
+         } catch (SQLException e2) { 
+                //Logger.getLogger(UnitSelectionFrame.class.getName()).log(Level.SEVERE, null, e2);
+        } 
         this.dispose();
     }//GEN-LAST:event_submitButtonMouseClicked
 

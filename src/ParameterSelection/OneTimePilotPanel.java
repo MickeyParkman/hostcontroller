@@ -241,7 +241,7 @@ public class OneTimePilotPanel extends javax.swing.JPanel {
 
     private void pilotWeightInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pilotWeightInputKeyReleased
         // TODO add your handling code here:
-        if(pilotFirstNameInput.getText().isEmpty()){
+        if(pilotWeightInput.getText().isEmpty()){
             pilotWeightInput.setBackground(new Color(255, 105, 105));
         }
         else {

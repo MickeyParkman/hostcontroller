@@ -206,8 +206,12 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
         
         // TODO Change from String specific to type Pilot
         for(Pilot plt : names){
-            if((plt.getFirstName() + plt.getLastName()).toUpperCase().startsWith(matchstring.toUpperCase()))
+            if(plt.getFirstName().toUpperCase().startsWith(matchstring.toUpperCase())) {
                 pilotModel.addElement(plt);
+            }
+            else if(plt.getLastName().toUpperCase().startsWith(matchstring.toUpperCase())) {
+                pilotModel.addElement(plt);
+            }
         }
         
         pilotJList.setModel(pilotModel);
@@ -216,7 +220,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
     private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
         if(pilotJList.getSelectedIndex() >= 0){
             try{
-                pilotWeightDisplay.setText(String.valueOf(((Pilot)pilotJList.getSelectedValue()).getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit())));
+                pilotWeightDisplay.setText(String.valueOf((int)(((Pilot)pilotJList.getSelectedValue()).getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
                 pilotWeightDisplay.setBackground(new Color(142, 250, 127));
                 
                 pilotCapabilityDisplay.setText(((Pilot)pilotJList.getSelectedValue()).getCapability());
