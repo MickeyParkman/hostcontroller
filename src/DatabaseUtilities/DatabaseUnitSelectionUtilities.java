@@ -24,9 +24,9 @@ import javax.swing.JOptionPane;
  * @author awilliams5
  */
 public class DatabaseUnitSelectionUtilities {
-    private static String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
-    private static String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-    private static String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
+    private static final String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
+    private static final String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
+    private static final String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
     
     public static int getPilotWeightUnit() throws ClassNotFoundException {
         int weightUnit = 0;

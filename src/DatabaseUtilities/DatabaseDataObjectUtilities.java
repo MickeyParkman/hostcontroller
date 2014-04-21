@@ -119,7 +119,7 @@ public class DatabaseDataObjectUtilities {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
-                Pilot newPilot = new Pilot(names[0], names[1], weight , Capability.convertCapabilityNumToString(capability), Preference.convertPreferenceNumToString(preference), thePilots.getString(5), thePilots.getString(6));
+                Pilot newPilot = new Pilot(names[1], names[0], weight , Capability.convertCapabilityNumToString(capability), Preference.convertPreferenceNumToString(preference), thePilots.getString(5), thePilots.getString(6));
                 pilots.add(newPilot);
             }
             thePilots.close();
@@ -181,6 +181,61 @@ public class DatabaseDataObjectUtilities {
             return sailplanes;
         } catch (SQLException e) {
             throw e;
+        }
+    }
+    
+    public static void updatePilotEntry(Pilot pilot) throws ClassNotFoundException, SQLException {
+         try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            PreparedStatement pilotEditStatement= connect.prepareStatement("UPDATE Pilot "
+                                        + "SET weight = ?, "
+                                        + " capability = ?, "
+                                        + " preference = ?,"
+                                        + " emergency_contact_info = ?, "
+                                        + " emergency_medical_info = ? "
+                                        + "WHERE name = ?");
+            pilotEditStatement.setString(1, String.valueOf(pilot.getWeight()));
+            pilotEditStatement.setString(2, String.valueOf(Capability.convertCapabilityStringToNum(pilot.getCapability())));
+            pilotEditStatement.setString(3, String.valueOf(Preference.convertPreferenceStringToNum(pilot.getPreference())));
+            pilotEditStatement.setString(4, pilot.getEmergencyContact());
+            pilotEditStatement.setString(5, pilot.getMedInfo());
+            pilotEditStatement.setString(6, pilot.getFirstName() + " " + pilot.getLastName());
+            pilotEditStatement.executeUpdate();
+            pilotEditStatement.close();
+            connect.close();
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    public static void deletePilot(Pilot pilot) throws ClassNotFoundException {
+       try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            PreparedStatement pilotEditStatement= connect.prepareStatement("DELETE FROM Pilot "
+                    + "WHERE name = ?");   
+            pilotEditStatement.setString(1, pilot.getFirstName() + " " + pilot.getLastName());
+            pilotEditStatement.executeUpdate();
+            pilotEditStatement.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
     
