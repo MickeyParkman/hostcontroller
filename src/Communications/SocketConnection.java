@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class SocketConnection implements Connection{
     private ArrayList<FilterListener> filters = new ArrayList<FilterListener>();
-    private String ipAddress = "127.0.0.1";
+    private String ipAddress = "192.168.1.80";
     private Socket socket;
     private BufferedReader in;
     OutputStreamWriter out;
@@ -35,7 +35,7 @@ public class SocketConnection implements Connection{
     
     private void initSocket() {
         try {
-            socket = new Socket(ipAddress, 32123);
+            socket = new Socket(ipAddress, 32124);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new OutputStreamWriter(socket.getOutputStream());
         } catch (IOException ex) {
