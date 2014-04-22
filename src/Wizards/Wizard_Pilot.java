@@ -114,7 +114,7 @@ public class Wizard_Pilot extends Wizard {
         String capability = Capability.convertCapabilityNumToString(pilotRequiredPanel2.getCapability());
         String preference = Preference.convertPreferenceNumToString(pilotRequiredPanel2.getPreference());
         
-        Pilot newPilot = new Pilot(firstName, lastName, weight, capability, preference, "", "");
+        Pilot newPilot = new Pilot(lastName, firstName, weight, capability, preference, "", "");
         try{
             DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
             JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");

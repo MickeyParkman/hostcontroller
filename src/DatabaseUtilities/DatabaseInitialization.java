@@ -140,6 +140,12 @@ public class DatabaseInitialization {
             JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
+        try{
+             createMessageBlackBoxTable(connection);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
         connection.close();
     }
     
@@ -473,6 +479,49 @@ public class DatabaseInitialization {
         try (Statement createPressureUnitsTableStatement = connect.createStatement()) {
             createPressureUnitsTableStatement.execute(createPressureUnitsString);
             createPressureUnitsTableStatement.executeUpdate(insertRow);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createMessageBlackBoxTable(Connection connect) throws SQLException {
+        String createBlackBoxString = "CREATE TABLE BlackBoxMessages"
+                + "( timestamp BIGINT, "
+                + " message VARCHAR(40))";
+        try (Statement createBlackBoxTableStatement = connect.createStatement()) {
+            createBlackBoxTableStatement.execute(createBlackBoxString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createPreviousLaunchesTable(Connection connect) throws SQLException {
+        String createPastLaunches = "CREATE TABLE PreviousLaunches"
+                + "( timestamp BIGINT, "
+                + " pilot VARCHAR(20), "
+                + " sailplane VARCHAR(20), "
+                + " PRIMARY KEY (timestamp, pilot, sailplane))";
+        try (Statement createPastLaunchesTableStatement = connect.createStatement()) {
+            createPastLaunchesTableStatement.execute(createPastLaunches);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    private static void createLaunchMessagesTable(Connection connect) throws SQLException {
+        String createLaunchMessages = "CREATE TABLE LaunchMessages"
+                + "( id INT NOT NULL AUTO_INCREMENT, "
+                + " can_message VARCHAR(40),"
+                + " can_message_id INT,"
+                + " message_timestamp BIGINT,"
+                + " launch_timestamp BIGINT, "
+                + " pilot VARCHAR(20),"
+                + " sailplane VARCHAR(20), "
+                + " PRIMARY KEY (id), "
+                + " FOREIGN KEY (launch_timestamp, pilot, sailplane) "
+                + " REFERENCES PreviousLaunches (timestamp, pilot, sailplane))";
+        try (Statement createLaunchMessagesTableStatement = connect.createStatement()) {
+            createLaunchMessagesTableStatement.execute(createLaunchMessages);
         }catch(SQLException e) {
             throw e;
         }

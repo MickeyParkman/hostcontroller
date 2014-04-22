@@ -7,6 +7,7 @@
 package Communications;
 
 import DashboardInterface.DashboardInterface;
+import DatabaseUtilities.BlackBoxLogger;
 import ParameterSelection.ParamSelectionFrame;
 
 /**
@@ -28,15 +29,16 @@ public class MessagePipeline {
     DashboardInterface dashboard;
     
     //Logger for the pipeline for logging all messages
+    BlackBoxLogger logger;
     
     
     public MessagePipeline(Connection comm) {
-        filter = new FilterListener();
+        filter = new FilterListener(this);
         connection = comm;
         comm.attachFilter(filter);
         
         //TODO Attach a logger
-               
+        logger = new BlackBoxLogger();               
     }
     
     public void startParameterSelection() throws MessagePipelineException {
@@ -62,5 +64,13 @@ public class MessagePipeline {
         }
     }
     
+    public void loggMesssage(String message) {
+        logger.loggMessage(message);
+    }
+    
+    public void loggMessage(long timestamp, String message) {
+        if(logger != null)
+            logger.loggMessage(timestamp, message);
+    }
     
 }

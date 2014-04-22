@@ -214,12 +214,12 @@ public class AirfieldSelection extends javax.swing.JPanel {
         runwayJList.setModel(mdl);
         runwayJList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                runwayJListMouseClicked(evt);
+                runwayJListMouseClicked();
             }
         });
         runwayJList.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                runwayJList.addKeyListener(evt);
+                runwayJListMouseClicked();
             }
         });
         jScrollPane3.setViewportView(runwayJList);
@@ -491,10 +491,10 @@ public class AirfieldSelection extends javax.swing.JPanel {
     }
     
     private void runwayJListKeyReleased(java.awt.event.KeyEvent evt) {
-        runwayJListMouseClicked(null);
+        runwayJListMouseClicked();
     }
     
-    private void runwayJListMouseClicked(java.awt.event.MouseEvent evt) {
+    private void runwayJListMouseClicked() {
         // TODO add your handling code here:
         try {
             // do stuff
