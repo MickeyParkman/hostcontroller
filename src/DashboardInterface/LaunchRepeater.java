@@ -1,8 +1,8 @@
+package DashboardInterface;
 
-package DashboardInterface
-
-import Communications.*
-import DatabaseUtilities.*
+import Communications.*;
+import DatabaseUtilities.*;
+import java.util.ArrayList;
 
 public class LaunchRepeater {
 	
@@ -11,11 +11,11 @@ public class LaunchRepeater {
 	
 	public LaunchRepeater(DashboardListener dl, PreviousLaunch pl){
 		dashboardListener = dl; 
-		messageList = DatabaseLaunchMessageUtilities.getMessagesForLaunch(pl)
+		messageList = (ArrayList) DatabaseLaunchMessageUtilities.getMessagesForLaunch(pl);
 		
 		for(InternalMessage im: messageList)
 		{
-			dashboardListener.msgAvailable(im);
+			//dashboardListener.msgAvailable(im);
 		}
 	}	
 	
