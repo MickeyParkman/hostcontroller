@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class BlackBoxLogger {
     private long currenttimestamp;
-    private ArrayList<String> messages = new ArrayList<String>();
+    private LinkedList<String> messages = new LinkedList<String>();
     private InternalLogger logger;
     private Thread loggingThread;
     
@@ -75,7 +76,7 @@ public class BlackBoxLogger {
                                 "INSERT INTO BlackBoxMessages(timestamp, message)"
                                     + "values (?,?)");
                         messageInsertStatement.setString(1, String.valueOf(currenttimestamp));
-                        messageInsertStatement.setString(2, messages.get(0));
+                        messageInsertStatement.setString(2, messages.remove(0));
                         messageInsertStatement.executeUpdate();
                         messageInsertStatement.close();
                     } catch (SQLException ex) {
