@@ -14,8 +14,12 @@ public class InternalMessage {
     
     private byte[] canMsg;
     private int id;
-    private Integer timestamp = null;
-    private ArrayList<MotorData> motors = null;
+    private float timestamp;
+    private float cableOut;
+    private float cableSpeed;
+    private float cableAngle;
+    private float tension;
+    private int state;
     
     /**
      * Constructs a new InternalMessage from the original CAN message.
@@ -33,14 +37,58 @@ public class InternalMessage {
         this.canMsg = payload;
     }
     
+    public InternalMessage(int id, byte[] rawMessage, float timestamp, float cableOut, float cableSpeed, float cabelAngle, float tension, int state) {
+        this.id = id;
+        this.canMsg = rawMessage;
+        this.timestamp = timestamp;
+        this.cableOut = cableOut;
+        this.cableSpeed = cableSpeed;
+        this.cableAngle = cabelAngle;
+        this.tension = tension;
+        this.state = state;
+    }
+    
+    public InternalMessage(float timestamp, float cableOut, float cableSpeed, float cabelAngle, float tension, int state) {
+        this.timestamp = timestamp;
+        this.cableOut = cableOut;
+        this.cableSpeed = cableSpeed;
+        this.cableAngle = cabelAngle;
+        this.tension = tension;
+        this.state = state;
+    }
+    
+    public void setRawMessage(byte[] canMessage) {
+        this.canMsg = canMessage;
+    }
+    
     /**
      * Sets the value of the "timestamp" data member
      * 
      * @param timestamp the timestamp of the message, in UNIX time
      */
-    public void setTimestamp(int timestamp)
+    public void setTimestamp(float timestamp)
     {
-        this.timestamp = new Integer(timestamp);
+        this.timestamp = timestamp;
+    }
+    
+    public void setCableOut(float cableOut) {
+        this.cableOut = cableOut;
+    }
+    
+    public void setCableSpeed(float cableSpeed) {
+        this.cableSpeed = cableSpeed;
+    }
+    
+    public void setCableAngle(float cableAngle) {
+        this.cableAngle = cableAngle;
+    }
+    
+    public void setTension(float tension) {
+        this.tension = tension;
+    }
+    
+    public void setState(int state) {
+        this.state = state;
     }
     
     /**
@@ -48,33 +96,25 @@ public class InternalMessage {
      * 
      * @return the timestamp value, if set, null if otherwise.
      */
-    public Integer getTimestamp()
+    public float getTimestamp()
     {
         return timestamp;
     }
     
-    public void addBattery(int motorNum, int batteryNum, float voltage)
-    {
-        if (motors == null)
-        {
-            motors = new ArrayList();
-            motors.add(new MotorData(motorNum));
-            motors.get(0).addBattery(batteryNum, voltage);
-        }else{
-            int i = 0;
-            for(MotorData m: motors)
-            {
-               if(m.getMotorNum() < motorNum){ 
-                   continue; 
-               }else if(m.getMotorNum() == motorNum){
-                   m.addBattery(batteryNum, voltage);
-                   break;
-               }else{
-                   motors.add(i, new MotorData(motorNum));
-                   motors.get(i).addBattery(batteryNum, voltage);
-               }
-               i++;
-            }
-        }
+    public float getCableOut() {
+        return cableOut;
     }
+
+    public float getCableSpeed() {
+        return cableSpeed;
+    }
+    
+    public float getCableAngle() {
+        return cableAngle;
+    }
+    
+    public float getTension() {
+        return tension;
+    }
+    
 }
