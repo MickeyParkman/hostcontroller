@@ -34,17 +34,19 @@ public class ReplayLaunch extends javax.swing.JFrame {
     String myString="" ;
     DefaultListModel<PreviousLaunch> mdl = new DefaultListModel();
     boolean valid;
-    private List<PreviousLaunch> names = new ArrayList<PreviousLaunch>();
+    private List<PreviousLaunch> names;
     private Object ex;
         private void initPilotList() {
-            if("Names".equals(myString)){
-                names = DatabaseUtilities.PreviousLaunch.getPilotName();
-            }
+            //names = DatabaseLaunchMessageUtilities.getPreviousLaunches();
+            
+        if("Names".equals(myString)){
+            //names = DatabaseUtilities.PreviousLaunch.getPilotName();
+        }
         if("Date".equals(myString)){
-            names = DatabaseUtilities.PreviousLaunch.getDate().toString();
+            //names = DatabaseUtilities.PreviousLaunch.getDate().toString();
         }
         if("N-Number".equals(myString)){
-            names = DatabaseUtilities.PreviousLaunch.getNNumber();
+            //names = DatabaseUtilities.PreviousLaunch.getNNumber();
         }
         if("".equals(myString))
             names = new ArrayList<>();

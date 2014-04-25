@@ -10,7 +10,13 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.color.ColorSpace;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -25,6 +31,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -35,13 +42,21 @@ import org.jfree.ui.Layer;
  *
  * @author Alex
  */
-public class SpeedGraph extends JPanel {
-    private static final long serialVersionUID = 1L;
+public class SpeedGraph extends JPanel implements Runnable {
+    private final long serialVersionUID = 1L;
+    TimeSeriesCollection heightDataset = new TimeSeriesCollection();
+    TimeSeriesCollection speedDataset = new TimeSeriesCollection();
+    TimeSeriesCollection tensionDataset = new TimeSeriesCollection();
+    TimeSeries tensionTimeSeries = new TimeSeries("Tension ");
+    TimeSeries speedTimeSeries = new TimeSeries("Speed ");
+    TimeSeries heightTimeSeries = new TimeSeries("Height ");
     
      public SpeedGraph(String title) {
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
         chartPanel.setPreferredSize(new java.awt.Dimension(1000, 270));
         add(chartPanel);
+        Thread t = new Thread(this);
+        t.start();
     }
      
      /**
@@ -51,7 +66,7 @@ public class SpeedGraph extends JPanel {
      *
      * @return A chart.
      */
-    private static JFreeChart createChart(XYDataset dataset) {
+    private JFreeChart createChart(XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
             "Speed v Time:",  // title
@@ -72,7 +87,7 @@ public class SpeedGraph extends JPanel {
         XYSplineRenderer splinerenderer3 = new XYSplineRenderer();
         
 
-        XYDataset dataset1 = createDataset(0L, 14000);
+        XYDataset dataset1 = createDataset(0L, 70000);
         plot.setDataset(0,dataset1);
         plot.setRenderer(0,splinerenderer1);
         DateAxis domainAxis = new DateAxis("Date");
@@ -122,79 +137,27 @@ public class SpeedGraph extends JPanel {
      *
      * @return The dataset.
      */
-    private static XYDataset createDataset(long startTimeMili, int maxOffset) {
-        TimeSeries s1 = new TimeSeries("Height ");
-        s1.add(new Second(new Date(startTimeMili)), 10);
-        s1.add(new Second(new Date(startTimeMili + 1000)), 15);
-        s1.add(new Second(new Date(startTimeMili + 2000)), 35);
-        s1.add(new Second(new Date(startTimeMili + 3000)), 60);
-        s1.add(new Second(new Date(startTimeMili + 4000)), 75);
-        s1.add(new Second(new Date(startTimeMili + 5000)), 100);
-        s1.add(new Second(new Date(startTimeMili + 6000)), 105);
-        s1.add(new Second(new Date(startTimeMili + 7000)), 106);
-        s1.add(new Second(new Date(startTimeMili + 8000)), 105);
-        s1.add(new Second(new Date(startTimeMili + 9000)), 105);
-        s1.add(new Second(new Date(startTimeMili + 10000)), 105);
-        s1.add(new Second(new Date(startTimeMili + 11000)), 104);
-        s1.add(new Second(new Date(startTimeMili + maxOffset)), null);
-        
-        TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(s1);
+    private XYDataset createDataset(long startTimeMili, int maxOffset) {
+        heightTimeSeries.add(new Millisecond(new Date(startTimeMili + maxOffset)), null);
+        heightDataset.addSeries(heightTimeSeries);
 
-        return dataset;
+        return heightDataset;
 
     }
     
-    private static XYDataset createDataset2() {
+    private XYDataset createDataset2() {
+        speedDataset.addSeries(speedTimeSeries);
+        return speedDataset;
+
+    }
+    
+    private XYDataset createDataset3 () {
+        tensionDataset.addSeries(tensionTimeSeries);
+        return tensionDataset;
+    }
+    
+    private XYDataset createDataset4(int offset) {
         long dateMili = 0L;
-
-        TimeSeries s1 = new TimeSeries("Speed ");
-        s1.add(new Second(new Date(dateMili)), 1.1);
-        s1.add(new Second(new Date(dateMili + 1000)), 1.3);
-        s1.add(new Second(new Date(dateMili + 2000)), 2.8);
-        s1.add(new Second(new Date(dateMili + 3000)), 4.0);
-        s1.add(new Second(new Date(dateMili + 4000)), 5.7);
-        s1.add(new Second(new Date(dateMili + 5000)), 8.0);
-        s1.add(new Second(new Date(dateMili + 6000)), 10.9);
-        s1.add(new Second(new Date(dateMili + 7000)), 9.6);
-        s1.add(new Second(new Date(dateMili + 8000)), 9.5);
-        s1.add(new Second(new Date(dateMili + 9000)), 9.5);
-        s1.add(new Second(new Date(dateMili + 10000)), 9.5);
-        s1.add(new Second(new Date(dateMili + 11000)), 10.4);
-
-        TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(s1);
-
-        return dataset;
-
-    }
-    
-    private static XYDataset createDataset3 () {
-        long dateMili = 0L;
-
-        TimeSeries s1 = new TimeSeries("Tension ");
-        s1.add(new Second(new Date(dateMili)), 90);
-        s1.add(new Second(new Date(dateMili + 1000)), 95);
-        s1.add(new Second(new Date(dateMili + 2000)), 103);
-        s1.add(new Second(new Date(dateMili + 3000)), 106);
-        s1.add(new Second(new Date(dateMili + 4000)), 112);
-        s1.add(new Second(new Date(dateMili + 5000)), 115);
-        s1.add(new Second(new Date(dateMili + 6000)), 126);
-        s1.add(new Second(new Date(dateMili + 7000)), 128);
-        s1.add(new Second(new Date(dateMili + 8000)), 135);
-        s1.add(new Second(new Date(dateMili + 9000)), 137);
-        s1.add(new Second(new Date(dateMili + 10000)), 139);
-        s1.add(new Second(new Date(dateMili + 11000)), 139);
-        
-        TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(s1);
-
-        return dataset;
-
-    }
-    
-    private static XYDataset createDataset4(int offset) {
-        long dateMili = 1387265266000L;
 
         TimeSeries s1 = new TimeSeries("");
         s1.add(new Second(new Date(dateMili)), 110);
@@ -206,13 +169,24 @@ public class SpeedGraph extends JPanel {
 
     }
     
+    private void addHeightValue(long time, float value) {
+        heightTimeSeries.add(new Millisecond(new Date(time)), value);
+    }
+    private void addTensionValue(long time, float value) {
+        tensionTimeSeries.add(new Millisecond(new Date(time)), value);
+    }
+    
+    private void addSpeedValue(long time, float value) {
+        speedTimeSeries.add(new Millisecond(new Date(time)), value);
+    }
+    
     /**
      * Creates a panel for the demo (used by SuperDemo.java).
      *
      * @return A panel.
      */
-    public static JPanel createDemoPanel() {
-        JFreeChart chart = createChart(createDataset(1387265266000L, 18000));
+    public JPanel createDemoPanel() {
+        JFreeChart chart = createChart(createDataset(0L, 18000));
         ChartPanel panel = new ChartPanel(chart);
         panel.setFillZoomRectangle(false);
         panel.setMouseWheelEnabled(false);
@@ -220,6 +194,464 @@ public class SpeedGraph extends JPanel {
         panel.setDomainZoomable(false);
         panel.setFocusable(false);
         return panel;
+    }
+
+    @Override
+    public void run() {
+        long time = 0L;
+        try {
+            time += 500;
+            addTensionValue(time, (float) 2.913);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 11.779);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 26.539);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 47.167);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 73.512);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 105.607);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 143.361);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 186.686);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 235.466);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 289.589);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 348.924);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 413.323);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 482.633);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            
+            
+             time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            addTensionValue(time, (float) 556.694);
+            Thread.sleep(50L);
+            time += 500;
+            
+            
+             
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SpeedGraph.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
