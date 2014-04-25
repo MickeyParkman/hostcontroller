@@ -136,9 +136,8 @@ public class FilterListener extends MessageListener
         /*for(MessageListener ml: listeners){
      ml.msgAvailable(msg);
      }*/
-}
 
-public void addMessageListener(MessageListener ml)
+    public void addMessageListener(MessageListener ml)
     {
         listeners.add(ml);
     }
