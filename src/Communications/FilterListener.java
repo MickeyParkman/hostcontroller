@@ -1,5 +1,6 @@
 package Communications;
 
+import Communications.MessageDataClasses.TensionMsgData;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,7 @@ public class FilterListener extends MessageListener
 
     ArrayList<MessageListener> listeners = new ArrayList();
     MessagePipeline pipeline;
+    TensionMsgData td = new TensionMsgData();
 
     public FilterListener(MessagePipeline pipeline)
     {
@@ -32,11 +34,26 @@ public class FilterListener extends MessageListener
             case 0x20000000:
                 //  Time message
                 System.out.println("Time Message");
+                
+               pipeline.loggMessage(msgin.get_int(0), message);
+                
+                
+                
+                
+                InternalMessage lnchdata = new InternalMessage(data);
+                pipeline.sendinternalmsg(lnchdata);
+                
+                
+                
+                
                 break;
 
             case 0x21000000:
                 //  Brake Command
                 System.out.println("Brake Command");
+                pipeline.loggMesssage(message);
+                
+                
                 break;
 
             case 0x22000000:
@@ -52,11 +69,18 @@ public class FilterListener extends MessageListener
             case 0x26000000:
                 //  State message
                 System.out.println("State Messge");
+                
+                
+                
+                
                 break;
 
             case 0x27000000:
                 //  Launch Parameter Request message
                 System.out.println("Launch Parameter Request");
+                
+                pipeline.launchParameterRequest();
+                
                 break;
 
             case 0x50200000:
@@ -121,7 +145,7 @@ public class FilterListener extends MessageListener
 
                             default:
                                 //  unrecognized id
-                                System.out.println("Unrecognized id");
+                                System.out.println("Unrecognized ID");
                                 System.out.println(msgin.id & 0xffe00000);
 
                         }
@@ -131,16 +155,11 @@ public class FilterListener extends MessageListener
         }
 
     }
+}
 
     // notify all attached listeners after message is filtered
         /*for(MessageListener ml: listeners){
      ml.msgAvailable(msg);
      }*/
-}
+    
 
-public void addMessageListener(MessageListener ml)
-    {
-        listeners.add(ml);
-    }
-
-}
