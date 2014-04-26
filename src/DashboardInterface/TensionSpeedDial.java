@@ -8,6 +8,8 @@ package DashboardInterface;
 
 import java.awt.Dimension;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -33,7 +35,7 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                 dataset2.setValue(new Integer(slider2.getValue()));
         }
 
-        public void demoUpdate(int tension, int speed) {
+        public void dialUpdate(int tension, int speed) {
             dataset1.setValue(speed);
             dataset2.setValue(tension);      
         }
@@ -159,5 +161,31 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                         //jpanel.add(slider2);
                         add(chartpanel);
                         add(jpanel, "South");
+                        DialUpdater update = new DialUpdater();
+                        Thread t = new Thread(update);
+                        t.start();
+        }
+        
+        private void updateDial() {
+            if(dataset1.getValue().intValue() < 80)
+                dataset1.setValue(dataset1.getValue().intValue() + 1);
+            if(dataset2.getValue().intValue() < 100)
+                dataset2.setValue(dataset2.getValue().intValue() + 1);
+        }
+        
+        private class DialUpdater implements Runnable {
+
+            @Override
+            public void run() {
+                for(int i = 0; i < 101; i ++) {
+                    updateDial();
+                    try {
+                        Thread.sleep(100L);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(TensionSpeedDial.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            
         }
 }

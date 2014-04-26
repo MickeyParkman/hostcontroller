@@ -169,14 +169,14 @@ public class SpeedGraph extends JPanel implements Runnable {
 
     }
     
-    private void addHeightValue(long time, float value) {
+    public void addHeightValue(long time, float value) {
         heightTimeSeries.add(new Millisecond(new Date(time)), value);
     }
-    private void addTensionValue(long time, float value) {
+    public void addTensionValue(long time, float value) {
         tensionTimeSeries.add(new Millisecond(new Date(time)), value);
     }
     
-    private void addSpeedValue(long time, float value) {
+    public void addSpeedValue(long time, float value) {
         speedTimeSeries.add(new Millisecond(new Date(time)), value);
     }
     
