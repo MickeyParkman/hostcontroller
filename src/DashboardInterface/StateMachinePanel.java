@@ -24,19 +24,16 @@ public class StateMachinePanel extends javax.swing.JPanel {
         initComponents();   
     }
     
-    public void updateState(String state){
-        
-        last.setBackground(null);
+    public void updateState(int state){
         
         stateLabel.setIcon(new javax.swing.ImageIcon(
-                getClass().getResource("/DashboardInterface/images/" + state + ".png")));
+                getClass().getResource("/DashboardInterface/images/" + stateIntToString(state) + ".png")));
         
     }
     
-    public String getRandomState()
+    public String stateIntToString(int state)
     {
-        Random rand = new Random();
-        switch(rand.nextInt(10)+1)
+        switch(state)
         {
             case 1:
                 return "safe";
