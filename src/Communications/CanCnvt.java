@@ -516,14 +516,18 @@ public class CanCnvt
                             //  on succeeding messages.
                             //  This could pose an issue if the highest message
                             //  field is not reloaded each time on repeated use
-                            //  because the value is fixed.                     
+                            //  because its value is fixed.                     
 
         int msglength = (dlc + 6); // Length not including checksum
 
         pb[(msglength)] = checksum(msglength); // Place checksum in array
+        
+                   
+                
 
         /* Convert binary array to ascii/hex */
         StringBuilder x = new StringBuilder(DatatypeConverter.printHexBinary(pb));
+        x.delete((msglength + 1) * 2, 31);
         x.append("\n"); // Line terminator
 
         return x.toString();
