@@ -511,26 +511,24 @@ public class CanCnvt
         pb[3] = (byte) ((id >> 16));
         pb[4] = (byte) ((id >> 24));
 
-        pb[5] = (byte) dlc; //  Payload size
+        pb[5] = (byte) dlc; //  Payload size                        
+
+        int msglength = (dlc + 6); // Length not including checksum
+        
         dlc = 0;            //  Reset dlc to zero in case message size changes 
                             //  on succeeding messages.
                             //  This could pose an issue if the highest message
                             //  field is not reloaded each time on repeated use
-                            //  because its value is fixed.                     
-
-        int msglength = (dlc + 6); // Length not including checksum
+                            //  because its value is fixed.  
 
         pb[(msglength)] = checksum(msglength); // Place checksum in array
         
-                   
-                
-
         /* Convert binary array to ascii/hex */
         StringBuilder x = new StringBuilder(DatatypeConverter.printHexBinary(pb));
         x.delete((msglength + 1) * 2, 31);
         x.append("\n"); // Line terminator
-
-        return x.toString();
+ 
+        return x.toString();   
     }
 
     /**
