@@ -117,7 +117,7 @@ public class StateMachinePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_formKeyPressed
 
     private void jToggleButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseClicked
-        updateState(getRandomState());
+        //updateState(getRandomState());
     }//GEN-LAST:event_jToggleButton1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

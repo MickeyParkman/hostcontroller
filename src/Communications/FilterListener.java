@@ -100,13 +100,13 @@ public class FilterListener extends MessageListener
                     currentTime = (lastIntTime) + lastFracTime
                             * (1.0f / 64);
                     //  ??  should there be gg in logg
-                    pipeline.loggMessage(message);
+                    pipeline.logMessage(message);
 
                 } else if (msgin.dlc == 4)
                 {
                     //  intergral second
                                                         
-                    pipeline.loggMessage(lastIntTime = msgin.get_int(0), message);
+                    pipeline.logMessage(lastIntTime = msgin.get_int(0), message);
                     lastFracTime = 0;
                     currentTime = lastIntTime; 
                     
@@ -178,13 +178,13 @@ public class FilterListener extends MessageListener
 
                     //  elasped time includes correction for CIC group delay and
                     //  data being from one tick before
-                    intData.setElaspedTime(currentTime - startTime
+                    intData.setElaspedTime((float)(currentTime - startTime)
                             - (groupDelay + timeTick));
 
                     //  case??
                     if (launchActive)
                     {
-                        pipeline.signalnewlaunchdataavaialbe();
+                        pipeline.signalNewLaunchdataAvaialbe();
                     }
 
                 }
@@ -232,8 +232,8 @@ public class FilterListener extends MessageListener
                                 launchActive = true;
                                 intData.setStartTime(lastTime);
                                 intData.setElaspedTime(-(groupDelay + timeTick));
-                                pipeline.signalnewlaunchdastarting();   //  ??case
-                                pipeline.signalnewlaunchdataavaialbe(); //  ??case
+                                pipeline.signalNewLaunchStarting();   //  ??case
+                                pipeline.signalNewLaunchdataAvaialbe(); //  ??case
                             } else
                             {
                                 System.out.println("Entry into Profile State with Launch Active");
@@ -262,7 +262,7 @@ public class FilterListener extends MessageListener
                 //  Launch Parameter Request message
                 System.out.println("Launch Parameter Request");
 
-                pipeline.launchParameterRequest();
+                pipeline.launchParametersRequested();
                 break;
 
             case 0x50200000:
