@@ -1,6 +1,5 @@
 package Communications;
 
-import Communications.MessageDataClasses.TensionMsgData;
 import java.util.ArrayList;
 
 /**
@@ -69,8 +68,7 @@ public class FilterListener extends MessageListener
 
     ArrayList<MessageListener> listeners = new ArrayList();
     MessagePipeline pipeline;
-    TensionMsgData td = new TensionMsgData();
-
+ 
     public FilterListener(MessagePipeline pipeline)
     {
         this.pipeline = pipeline;
