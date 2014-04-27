@@ -178,8 +178,8 @@ public class FilterListener extends MessageListener
 
                     //  elasped time includes correction for CIC group delay and
                     //  data being from one tick before
-                    intData.setElaspedTime(currentTime - startTime
-                            - (groupDelay + timeTick));
+                    intData.setElaspedTime(0.0); //(currentTime - startTime
+                           // - (groupDelay + timeTick));
 
                     //  case??
                     if (launchActive)
