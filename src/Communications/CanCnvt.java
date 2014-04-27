@@ -501,6 +501,9 @@ public class CanCnvt
         {
             return null;
         }
+        
+        //  insert sequence number
+        pb[0] = (byte) seq;        
 
         /* Setup Id bytes, little endian */
         pb[1] = (byte) (id);
@@ -508,7 +511,12 @@ public class CanCnvt
         pb[3] = (byte) ((id >> 16));
         pb[4] = (byte) ((id >> 24));
 
-        pb[5] = (byte) dlc;    // Payload size
+        pb[5] = (byte) dlc; //  Payload size
+        dlc = 0;            //  Reset dlc to zero in case message size changes 
+                            //  on succeeding messages.
+                            //  This could pose an issue if the highest message
+                            //  field is not reloaded each time on repeated use
+                            //  because the value is fixed.                     
 
         int msglength = (dlc + 6); // Length not including checksum
 

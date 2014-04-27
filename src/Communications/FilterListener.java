@@ -13,7 +13,7 @@ public class FilterListener extends MessageListener
     private final float timeTick = 1.0f / 64.0f;
     private final int numbDrums = 1;
     private final int numbMotors = 1;
-    private int referenceMotor = 0;
+    private final int referenceMotor = 0;
 
     //  variables for CIC3 filters, 
     private final int decimationFactor = 8;
