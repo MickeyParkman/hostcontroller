@@ -10,6 +10,8 @@ import DashboardInterface.DashboardInterface;
 import DataObjects.Pilot;
 import DataObjects.Sailplane;
 import DataObjects.Airfield;
+import DataObjects.Position;
+import DataObjects.Runway;
 import Wizards.PreWizard;
 import javax.swing.JOptionPane;
 
@@ -381,6 +383,14 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    
+    public void getSelectedLaunchElements(Pilot pilot, Sailplane sailplane, Airfield airfield, Runway runway, Position position) {
+        pilot = pilotSelectionPanel.getSelectedPilot();
+        sailplane = sailplaneSelectionPanel.getSelectedPlane();
+        airfield = airfieldSelectionPanel.getSeleAirfiield();
+        runway = airfieldSelectionPanel.getRunway();
+        position = airfieldSelectionPanel.getPositions();
+    }
     /**
      * @param args the command line arguments
      */

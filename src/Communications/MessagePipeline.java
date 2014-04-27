@@ -7,6 +7,11 @@
 package Communications;
 
 import DashboardInterface.DashboardInterface;
+import DataObjects.Airfield;
+import DataObjects.Pilot;
+import DataObjects.Position;
+import DataObjects.Runway;
+import DataObjects.Sailplane;
 import DatabaseUtilities.BlackBoxLogger;
 import ParameterSelection.ParamSelectionFrame;
 
@@ -31,6 +36,8 @@ public class MessagePipeline {
     //Logger for the pipeline for logging all messages
     BlackBoxLogger logger;
     
+    CANMessageGenerator msgGenerator;
+    
     
     public MessagePipeline(Connection comm) {
         filter = new FilterListener(this);
@@ -38,7 +45,9 @@ public class MessagePipeline {
         comm.attachFilter(filter);
         
         //TODO Attach a logger
-        logger = new BlackBoxLogger();               
+        logger = new BlackBoxLogger(); 
+        
+        msgGenerator = new CANMessageGenerator(this);
     }
     
     public void startParameterSelection() throws MessagePipelineException {
@@ -74,7 +83,15 @@ public class MessagePipeline {
     }
     
     public void launchParametersRequested() {
-        
+        Pilot pilot = null;
+        Sailplane sailplane = null;
+        Airfield airfield = null;
+        Runway runway = null;
+        Position position = null;
+        paramSelection.getSelectedLaunchElements(pilot, sailplane, airfield, runway, position);
+        if(pilot != null && sailplane != null && airfield  != null && runway  != null && position  != null) {
+            msgGenerator.generateAndSendLaunchParameters(pilot, sailplane, airfield, runway, position);
+        }
     }
     
     public void signalNewLaunchStarting() {
@@ -83,5 +100,10 @@ public class MessagePipeline {
     
     public void signalNewLaunchdataAvaialbe() {
         
+    }
+    
+    public void logAndSendLaunchParameterMessage(String message) {
+        logMessage(message);
+        //TODO send out messgae to com port/socket
     }
 }
