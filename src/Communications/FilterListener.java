@@ -100,16 +100,16 @@ public class FilterListener extends MessageListener
                     currentTime = (lastIntTime) + lastFracTime
                             * (1.0f / 64);
                     //  ??  should there be gg in logg
-                    pipeline. loggMessage(message);
+                    pipeline.loggMessage(message);
 
                 } else if (msgin.dlc == 4)
                 {
                     //  intergral second
-                    lastIntTime = msgin.get_int(0);
+                                                        
+                    pipeline.loggMessage(lastIntTime = msgin.get_int(0), message);
                     lastFracTime = 0;
+                    currentTime = lastIntTime; 
                     
-                    pipeline.loggMessage(currentTime = lastIntTime
-                            , message);
                 } else
                 {
                     System.out.println("Invalid Time Message Payload Length");

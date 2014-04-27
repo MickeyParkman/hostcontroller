@@ -16,7 +16,7 @@ public class InternalMessage
     //  CanMsg data
     //  ??should these be public or private
     public byte[] canMsg;
-    public double timestamp;    //  Unix time
+    public int timestamp;    //  Unix time, only second resolution
     public int state;
 
     //  launch related data variables
@@ -79,7 +79,7 @@ public class InternalMessage
      *
      * @param timestamp the timestamp of the message, in UNIX time
      */
-    public void setTimestamp(float timestamp)
+    public void setTimestamp(int timestamp)
     {
         this.timestamp = timestamp;
     }
@@ -114,7 +114,7 @@ public class InternalMessage
         this.startTime = time;
     }
     
-    public void setElaspedTime(double time)
+    public void setElaspedTime(float time)
     {
         this.elapsedTime = time;
     }

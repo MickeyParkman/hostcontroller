@@ -58,7 +58,7 @@ public class BlackBoxLogger {
         }
     }
     
-    public void loggMessage(long timeStamp, String message) {
+    public void loggMessage(int timeStamp, String message) {
         currenttimestamp = timeStamp;
         messages.add(message);
         synchronized(logger){

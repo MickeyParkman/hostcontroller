@@ -68,7 +68,7 @@ public class MessagePipeline {
         logger.loggMessage(message);
     }
     
-    public void loggMessage(long timestamp, String message) {
+    public void loggMessage(int timestamp, String message) {
         if(logger != null)
             logger.loggMessage(timestamp, message);
     }
