@@ -64,13 +64,24 @@ public class MessagePipeline {
         }
     }
     
-    public void loggMesssage(String message) {
+    public void logMessage(String message) {
         logger.loggMessage(message);
     }
     
-    public void loggMessage(int timestamp, String message) {
+    public void logMessage(int timestamp, String message) {
         if(logger != null)
             logger.loggMessage(timestamp, message);
     }
     
+    public void launchParametersRequested() {
+        
+    }
+    
+    public void signalNewLaunchStarting() {
+        
+    }
+    
+    public void signalNewLaunchdataAvaialbe() {
+        
+    }
 }
