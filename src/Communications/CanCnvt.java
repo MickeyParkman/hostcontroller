@@ -153,6 +153,7 @@ public class CanCnvt
         dlc = (pb[5] & 0xff);     // Save payload ct in an easy to remember variable
         id = ((((((pb[4] << 8) | (pb[3] & 0xff)) << 8)
                 | (pb[2] & 0xff)) << 8) | (pb[1] & 0xff));
+        
         return 0;
     }
 

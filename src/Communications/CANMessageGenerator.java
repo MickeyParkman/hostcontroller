@@ -27,7 +27,7 @@ public class CANMessageGenerator {
         String message = "Test";
         //Here is where you can do the work to generater a launch parameter
         //message and then call:
-        pipeline.logAndSendLaunchParameterMessage(message);
+        pipeline.logAndSendMessage(message);
         //To log and send the message. I am under the impression it's going
         //to be in a hex string fromat like the incoming messages, but this
         //can be modified if needed.

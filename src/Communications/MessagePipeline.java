@@ -20,6 +20,9 @@ import ParameterSelection.ParamSelectionFrame;
  * @author Alex
  */
 public class MessagePipeline {
+    
+    int sequenceNumber = 0;
+    
     //Comm Port Connection for the pipeline
     Connection connection;
     
@@ -102,8 +105,13 @@ public class MessagePipeline {
         
     }
     
-    public void logAndSendLaunchParameterMessage(String message) {
-        logMessage(message);
+    public void logAndSendMessage(String message) {
+        CanCnvt tempConvert = new CanCnvt();
+        sequenceNumber += 1;
+        
+        String asciiMessage = tempConvert.msg_prep();
+        logMessage(asciiMessage);
+        sendAsciiMessage(asciiMessage);
         //TODO send out messgae to com port/socket
     }
 }
