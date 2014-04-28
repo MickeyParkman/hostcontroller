@@ -107,11 +107,12 @@ public class MessagePipeline {
         
     }
     
-    public void logAndSendMessage(String message) {
-        CanCnvt tempConvert = new CanCnvt();
+    public void logAndSendMessage(CanCnvt byteMessage) 
+    {        
+        byteMessage.seq = sequenceNumber;
         sequenceNumber += 1;
-        
-        String asciiMessage = tempConvert.msg_prep();
+            
+        String asciiMessage = byteMessage.msg_prep();
         logMessage(asciiMessage);
         sendAsciiMessage(asciiMessage);
         //TODO send out messgae to com port/socket

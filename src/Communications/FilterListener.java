@@ -234,9 +234,10 @@ public class FilterListener extends MessageListener
                                     //     new launch begining
                                     launchActive = true;
                                     intData.setStartTime(lastTime);
-                                    intData.setElaspedTime(-(groupDelay + timeTick));
-                                    pipeline.signalNewLaunchStarting();   //  ??case
-                                    pipeline.signalNewLaunchdataAvaialbe(); //  ??case
+                                    intData.setElaspedTime(-(groupDelay 
+                                            + timeTick));
+                                    pipeline.signalNewLaunchStarting();  
+                                    pipeline.signalNewLaunchdataAvaialbe(); 
                                 } else
                                 {
                                     System.out.println("Entry into Profile State with Launch Active");
@@ -272,7 +273,8 @@ public class FilterListener extends MessageListener
                     //  control lever statu/data message
                     System.out.println("control lever statu/data message");
 
-                    intData.setControlLever(lastControlLever = msgin.get_ubyte(1));
+                    intData.setControlLever(lastControlLever 
+                            = msgin.get_ubyte(1));
                     break;
 
                 case 0x21000000:
@@ -357,7 +359,7 @@ public class FilterListener extends MessageListener
                                     System.out.println(msgin.id & 0xffe00000);
                                     break;
 
-                                //  still need decodes for low high/low priority messages
+                                //  still need decodes for  high/low priority messages
                             }
                     }
             }
