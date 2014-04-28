@@ -76,6 +76,10 @@ public class MessagePipeline {
         }
     }
     
+    public void sendAsciiMessage(String asciiMessage) {
+        
+    }
+    
     public void logMessage(String message) {
         logger.loggMessage(message);
     }
@@ -92,9 +96,7 @@ public class MessagePipeline {
         Runway runway = null;
         Position position = null;
         paramSelection.getSelectedLaunchElements(pilot, sailplane, airfield, runway, position);
-        if(pilot != null && sailplane != null && airfield  != null && runway  != null && position  != null) {
-            msgGenerator.generateAndSendLaunchParameters(pilot, sailplane, airfield, runway, position);
-        }
+        msgGenerator.generateAndSendLaunchParameters(pilot, sailplane, airfield, runway, position);
     }
     
     public void signalNewLaunchStarting() {
