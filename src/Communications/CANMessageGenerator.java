@@ -25,7 +25,8 @@ public class CANMessageGenerator
         this.pipeline = pipeline;
     }
 
-    public void generateAndSendLaunchParameters(Pilot pilot, Sailplane sailplane, Airfield airfield, Runway runway, Position position)
+    public void generateAndSendLaunchParameters(Pilot pilot, Sailplane sailplane
+            , Airfield airfield, Runway runway, Position position)
     {
         CanCnvt tempMsg = new CanCnvt();
 
