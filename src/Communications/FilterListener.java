@@ -55,8 +55,8 @@ public class FilterListener extends MessageListener
 
     private double startTime;
 
-    private int lastIntTime;
-    private int lastFracTime;
+    private int intTime;
+    private int fracTime;
     private double lastTime;
     private double currentTime;
 
@@ -76,8 +76,7 @@ public class FilterListener extends MessageListener
     //For testing and demo purposes
     FileDataGenerator fileData;
     
-    int activeMotor;
-
+    
     public FilterListener(MessagePipeline pipeline)
     {
         this.pipeline = pipeline;
@@ -118,7 +117,7 @@ public class FilterListener extends MessageListener
                     (short) ((int) (fileData.getCableOut() * 16 + 4096));
             lastCableAngle[activeDrum] = 
                     (byte) ((int) (fileData.getCableAngle() * 360f/3.141596 + 40));
-            lastMotorSpeed[0] = 
+            lastMotorSpeed[drum] = 
                     (short) (fileData.getCableSpeed() * 128f / 0.359);
             lastTension[activeDrum] = 
                     (short) ((int) (fileData.getTension() * 4 + 1024));
@@ -128,20 +127,23 @@ public class FilterListener extends MessageListener
             int fracTime = (int) ((unixTime - intTime) * 64);
             if (fracTime == 0)
             {
-                msgin.set_byte(0, 0);
-                msgin.dlc = 1;
-            } else
-            {
+                //  integral second tick
                 msgin.set_int(intTime, 0);
                 msgin.dlc = 4;
+                
+            } else
+            {
+                //  fractional second tick
+                msgin.set_byte(0, 0);
+                msgin.dlc = 1;
             }
 
             if (msgin.dlc == 1)
             {
                 //  fractional second tick
-                lastFracTime = msgin.get_byte(0);
-                currentTime = (lastIntTime) + lastFracTime
-                        * (1.0f / 64);
+                fracTime = msgin.get_byte(0);
+                currentTime = intTime + fracTime
+                        * (1.0d / 64);
 
                 pipeline.logMessage(message);
 
@@ -149,9 +151,10 @@ public class FilterListener extends MessageListener
             {
                 //  intergral second
 
-                pipeline.logMessage(lastIntTime = msgin.get_int(0), message);
-                lastFracTime = 0;
-                currentTime = lastIntTime;
+                pipeline.logMessage(intTime = msgin.get_int(0), message);
+                fracTime = 0;
+                currentTime = intTime;
+                System.out.println(currentTime);
 
             } else
             {
