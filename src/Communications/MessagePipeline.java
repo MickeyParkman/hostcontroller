@@ -117,4 +117,8 @@ public class MessagePipeline {
         sendAsciiMessage(asciiMessage);
         //TODO send out messgae to com port/socket
     }
+
+    void signalLaunchEnded() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

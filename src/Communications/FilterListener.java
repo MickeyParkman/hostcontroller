@@ -73,10 +73,14 @@ public class FilterListener extends MessageListener
 
     ArrayList<MessageListener> listeners = new ArrayList();
     MessagePipeline pipeline;
+    
+    //For testing and demo purposes
+    FileDataGenerator fileData;
 
     public FilterListener(MessagePipeline pipeline)
     {
         this.pipeline = pipeline;
+        fileData = new FileDataGenerator();
     }
 
     public void msgAvailable(byte[] msg)
