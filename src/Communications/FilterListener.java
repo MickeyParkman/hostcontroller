@@ -113,7 +113,7 @@ public class FilterListener extends MessageListener
                     (short) ((int) (fileData.getCableOut() * 16 + 4096));
             lastCableAngle[activeDrum] = 
                     (byte) ((int) (fileData.getCableAngle() * 360f/3.141596 + 40));
-            lastMotorSpeed[activeMotor] = 
+            lastMotorSpeed[0] = 
                     (short) (fileData.getCableSpeed() * 128f / 0.359);
             lastTension[activeDrum] = 
                     (short) ((int) (fileData.getTension() * 4 + 1024));
