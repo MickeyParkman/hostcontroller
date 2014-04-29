@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class FilterListener extends MessageListener
 {
 
+    CanCnvt msgin = new CanCnvt();
+    
     private final float timeTick = 1.0f / 64.0f;
     private final int numbDrums = 1;
     private final int numbMotors = 1;
@@ -75,7 +77,7 @@ public class FilterListener extends MessageListener
     public void msgAvailable(byte[] msg)
     {
         String message = new String(msg);
-        CanCnvt msgin = new CanCnvt();
+        
 
         int result = msgin.convert_msgtobin(message);
         System.out.println(msgin.id & 0xffe00000);
@@ -83,17 +85,32 @@ public class FilterListener extends MessageListener
         int maskedID = msgin.id & 0xffe00000;
         int motor = msgin.id & 0x00600000;
         int drum = msgin.id & 0x00e00000;
+        
+        maskedID = 0x200000;
 
         if (maskedID == 0x200000)
         {
             //  Time Message
             /*
-            Time messages are handled separately because they may be logged raw
-            or with a time index (on integral time).  All other messages are
-            logged raw with not time index
-            */
+             Time messages are handled separately because they may be logged raw
+             or with a time index (on integral time).  All other messages are
+             logged raw with not time index
+             */
             System.out.println("Time Message");
 
+            
+            //  Alex - these are the accessor methods I need.
+            int startUnixTime = fileData.getStartTime(0);
+            float filetime = fileData.getTime();
+            float fileCableOut = fileData.getCableOut();
+            float fileCableAngle = fileData.getCableAngle(0);
+            float fileCableSpeed = fileData.getCableSpeed();
+            float fileTension = fileData.getTension();
+            int fileState = fileData.getState();
+                    
+
+                    
+            
             if (msgin.dlc == 1)
             {
                 //  fractional second tick
@@ -234,18 +251,18 @@ public class FilterListener extends MessageListener
                                     //     new launch begining
                                     launchActive = true;
                                     intData.setStartTime(lastTime);
-                                    intData.setElaspedTime(-(groupDelay 
+                                    intData.setElaspedTime(-(groupDelay
                                             + timeTick));
-                                    pipeline.signalNewLaunchStarting();  
-                                    pipeline.signalNewLaunchdataAvaialbe(); 
+                                    pipeline.signalNewLaunchStarting();
+                                    pipeline.signalNewLaunchdataAvaialbe();
                                 } else
                                 {
                                     System.out.println("Entry into Profile State with Launch Active");
                                 }
                                 break;
 
-                            case 1:
-                                //  this should be end of launch for demo only
+                            case 0: case 1: case 2: case 7: case 14: case 15:
+                                //  should I call a method to signal?
                                 intData.setLauchActive(launchActive = false);
                                 break;
                         }
@@ -273,7 +290,7 @@ public class FilterListener extends MessageListener
                     //  control lever statu/data message
                     System.out.println("control lever statu/data message");
 
-                    intData.setControlLever(lastControlLever 
+                    intData.setControlLever(lastControlLever
                             = msgin.get_ubyte(1));
                     break;
 
