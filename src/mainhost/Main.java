@@ -8,6 +8,7 @@ package mainhost;
 
 import ApplicationFrame.ApplicationFrame;
 import Communications.CommPortConnection;
+import Communications.FileDummyConnection;
 import Communications.MessagePipeline;
 import Communications.SocketConnection;
 import DataObjects.Pilot;
@@ -31,7 +32,9 @@ public class Main {
         //CommPortConnection connection = new CommPortConnection();
         
         //*** USE FOR CONNECTION TO DEVICE OVER SOCKET ***//
-        SocketConnection connection = new SocketConnection();
+        //SocketConnection connection = new SocketConnection();
+        
+        FileDummyConnection connection = new FileDummyConnection();
         
         MessagePipeline pipeline = new MessagePipeline(connection);
         MainHost a = new MainHost(pipeline);

@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class SocketConnection implements Connection{
     private ArrayList<FilterListener> filters = new ArrayList<FilterListener>();
-    private String ipAddress = "192.168.1.80";
+    private String ipAddress = "127.0.0.1";
     private Socket socket;
     private BufferedReader in;
     OutputStreamWriter out;
@@ -35,7 +36,7 @@ public class SocketConnection implements Connection{
     
     private void initSocket() {
         try {
-            socket = new Socket(ipAddress, 32124);
+            socket = new Socket(ipAddress, 32123);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new OutputStreamWriter(socket.getOutputStream());
         } catch (IOException ex) {
@@ -67,8 +68,15 @@ public class SocketConnection implements Connection{
            while(true) {
                try {
                    String message = in.readLine();
+                   if(message == null)
+                       message = "dummy";
                    updateListeners(message);
                } catch (IOException ex) {
+                   Logger.getLogger(SocketConnection.class.getName()).log(Level.SEVERE, null, ex);
+               }
+               try {
+                   TimeUnit.MILLISECONDS.sleep(16L);
+               } catch (InterruptedException ex) {
                    Logger.getLogger(SocketConnection.class.getName()).log(Level.SEVERE, null, ex);
                }
                
