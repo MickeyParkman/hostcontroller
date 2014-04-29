@@ -1,6 +1,7 @@
 package Communications;
 
 import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  *
@@ -9,8 +10,11 @@ import java.util.ArrayList;
 public class FilterListener extends MessageListener
 {
 
+    //  variables for file based demo
+    int oldState = 2;
+
     CanCnvt msgin = new CanCnvt();
-    
+
     private final float timeTick = 1.0f / 64.0f;
     private final int numbDrums = 1;
     private final int numbMotors = 1;
@@ -39,7 +43,7 @@ public class FilterListener extends MessageListener
     private final int tensionOffset = 1024;
 
     private int[] lastCableAngle = new int[numbDrums];
-    private final float cableAngleScale = 1.0f / 2.0f;  //  degrees per lsb    
+    private final float cableAngleScale = 3.141596f / 360f;  //  radians per lsb    
     private final int cableAngleOffset = 40;
 
     private int[] lastCableOut = new int[numbDrums];
@@ -48,7 +52,7 @@ public class FilterListener extends MessageListener
 
     private int[] lastMotorSpeed = new int[numbMotors];
     private final float motorSpeedScale = 1.0f / 128.0f;
-    private final float motorToCableSpeed = 1.0f/0.359f;
+    private final float motorToCableSpeed = 1.0f / 0.359f;
 
     private double startTime;
 
@@ -78,18 +82,18 @@ public class FilterListener extends MessageListener
     public void msgAvailable(byte[] msg)
     {
         String message = new String(msg);
-        
-/*
-        int result = msgin.convert_msgtobin(message);
-        System.out.println(msgin.id & 0xffe00000);
-*/
+
+        /*
+         int result = msgin.convert_msgtobin(message);
+         System.out.println(msgin.id & 0xffe00000);
+         */
         //  assignment to make it look like a message was received 
-         msgin.id = 200000;
-                
+        msgin.id = 200000;
+
         int maskedID = msgin.id & 0xffe00000;
         int motor = msgin.id & 0x00600000;
         int drum = msgin.id & 0x00e00000;
-        
+
         if (maskedID == 0x200000)
         {
             //  Time Message
@@ -100,26 +104,37 @@ public class FilterListener extends MessageListener
              */
             System.out.println("Time Message");
 
-            
-            //  Alex - these are the accessor methods I need.
-            int startUnixTime = fileData.getStartTime(0);
-            float filetime = fileData.getTime();
-            lastCableOut[activeDrum] = fileData.getCableOut();
-            lastCableAngle[activeDrum] = fileData.getCableAngle(0);
-            float fileCableSpeed = fileData.getCableSpeed();
-            lastTension[activeDrum] = fileData.getTension();
-            int fileState = fileData.getState();
-                    
+            //  Get the data from the file line
+            double unixTime = fileData.getUnixTime();
+            lastCableOut[activeDrum] = 
+                    (short) ((int) (fileData.getCableOut() * 16 + 4096));
+            lastCableAngle[activeDrum] = 
+                    (byte) ((int) (fileData.getCableAngle() * 360f/3.141596 + 40));
+            lastMotorSpeed[activeMotor] = 
+                    (short) (fileData.getCableSpeed() * 128f / 0.359);
+            lastTension[activeDrum] = 
+                    (short) ((int) (fileData.getTension() * 4 + 1024));
+            lastState = (int) fileData.getState();
 
-                    
-            
+            int intTime = (int) ((long) unixTime);
+            int fracTime = (int) ((unixTime - intTime) * 64);
+            if (fracTime == 0)
+            {
+                msgin.set_byte(0, 0);
+                msgin.dlc = 1;
+            } else
+            {
+                msgin.set_int(intTime, 0);
+                msgin.dlc = 4;
+            }
+
             if (msgin.dlc == 1)
             {
                 //  fractional second tick
                 lastFracTime = msgin.get_byte(0);
                 currentTime = (lastIntTime) + lastFracTime
                         * (1.0f / 64);
-                //  ??  should there be gg in logg
+
                 pipeline.logMessage(message);
 
             } else if (msgin.dlc == 4)
@@ -194,7 +209,8 @@ public class FilterListener extends MessageListener
                 c2[3] = ctmpo;
                 ctmpo = ctmpe - c3[3];
                 c3[3] = ctmpe;
-                intData.setCableSpeed(ctmpo * (motorSpeedScale / gainCIC));
+                intData.setCableSpeed(ctmpo * (motorSpeedScale * motorToCableSpeed
+                        / gainCIC));
 
                 //  elasped time includes correction for CIC group delay and
                 //  data being from one tick before
@@ -210,185 +226,284 @@ public class FilterListener extends MessageListener
 
             lastTime = currentTime;
 
-        } else  //  other than time messages
+        }
+
+        //  tempory file state handling
+        if (oldState != lastState)
         {
-            pipeline.logMessage(message);   //  log the message           
-            switch (maskedID)
+            //  simulate a state message
+            msgin.set_byte((byte) lastState, 0);  
+        }
+
+        //  State message
+        System.out.println("State Messge");
+        int tmp = msgin.get_ubyte(0);
+        int tmpState = tmp & 0xf;
+        int tmpActiveDrum = tmp & 0xf0;
+
+        /*
+         State Assignments
+         0      SAFE
+         1      PREP
+         2      ARMED
+         3      PROFILE
+         4      RAMP
+         5      CONSTANT
+         6      RECOVERY
+         7      RETRIEVE
+         14 (E) STOP
+         15 (F) ABORT                    
+         */
+        if (lastState != tmpState)
+        //  state change
+        {
+            intData.setState(tmpState);
+
+            if (activeDrum != tmpActiveDrum)
             {
-                case 0x26000000:
-                    //  State message
-                    System.out.println("State Messge");
-                    int tmp = msgin.get_ubyte(0);
-                    int tmpState = tmp & 0xf;
-                    int tmpActiveDrum = tmp & 0xf0;
-
-                    /*
-                     State Assignments
-                     0      SAFE
-                     1      PREP
-                     2      ARMED
-                     3      PROFILE
-                     4      RAMP
-                     5      CONSTANT
-                     6      RECOVERY
-                     7      RETRIEVE
-                     14 (E) STOP
-                     15 (F) ABORT                    
-                     */
-                    if (lastState != tmpState)
-                    //  state change
-                    {
-                        intData.setState(tmpState);
-
-                        if (activeDrum != tmpActiveDrum)
-                        {
-                            intData.setActiveDrum(activeDrum = tmpActiveDrum);
-                        }
-
-                        switch (intData.state)
-                        {
-                            case 3:
-                                if (!launchActive)
-                                {
-                                    //     new launch begining
-                                    launchActive = true;
-                                    intData.setStartTime(lastTime);
-                                    intData.setElaspedTime(-(groupDelay
-                                            + timeTick));
-                                    pipeline.signalNewLaunchStarting();
-                                    pipeline.signalNewLaunchdataAvaialbe();
-                                } else
-                                {
-                                    System.out.println("Entry into Profile State with Launch Active");
-                                }
-                                break;
-
-                            case 0: case 1: case 2: case 7: case 14: case 15:
-                                //  should I call a method to signal?
-                                intData.setLauchActive(launchActive = false);
-                                pipeline.signalLaunchEnded();
-                                break;
-                        }
-                    }
-                    break;
-
-                case 0xa0200000:
-                    //  evironmental status/data message 
-                    System.out.println("evironmental status/data message");
-                    break;
-
-                case 0xa0400000:
-                    //  wind message
-                    System.out.println("wind message");
-                    break;
-
-                case 0x27000000:
-                    //  Launch Parameter Request message
-                    System.out.println("Launch Parameter Request");
-
-                    pipeline.launchParametersRequested();
-                    break;
-
-                case 0x50200000:
-                    //  control lever statu/data message
-                    System.out.println("control lever statu/data message");
-
-                    intData.setControlLever(lastControlLever
-                            = msgin.get_ubyte(1));
-                    break;
-
-                case 0x21000000:
-                    //  Brake Command
-                    System.out.println("Brake Command");
-                    break;
-
-                case 0x22000000:
-                    //  Guillotine command
-                    System.out.println("Guillotine Command");
-                    break;
-
-                case 0x23000000:
-                    //  Contactor command
-                    System.out.println("Contactor Command");
-                    break;
-
-                case 0x51400000:
-                    //  zero odometer from embedded controller command
-                    System.out.println("zero odometer from embedded controller command");
-                    break;
-
-                case 0x51800000:
-                    //  zero tensiometer from embedded controller command
-                    System.out.println("zero tensiometer from embedded controller command");
-                    break;
-
-                default:
-                    switch (msgin.id & 0xff800000)
-                    {
-                        case 0x24800000:
-                            //  Motor/Controller Status
-                            System.out.println("Motor/Controller Status");
-
-                            lastMotorSpeed[motor] = msgin.get_short(1);
-                            break;
-
-                        case 0x25800000:
-                            //  Torque/Speed Command
-                            System.out.println("Torque/Speed Command");
-                            break;
-
-                        default:
-                            switch (msgin.id & 0xff00000)
-                            {
-                                case 0x36000000:
-                                    //  active drum status/data during launch message
-                                    lastCableOut[drum] = msgin.get_short(1);
-
-                                    if (drum != activeDrum)
-                                    {
-                                        //  Mismatched drum indication
-                                        System.out.println("Mismatched Drum Indication");
-                                    }
-                                    break;
-
-                                case 0x3800000:
-                                    //  active tensiometer status/data during launch
-                                    lastTension[drum] = msgin.get_short(1);
-
-                                    if (drum != activeDrum)
-                                    {
-                                        //  Mismatched tensiometer indication
-                                        System.out.println("Mismatched Drum Indication");
-                                    }
-                                    break;
-
-                                case 0x3a000000:
-                                    //  active cable angle status/data during launch message
-
-                                    lastCableAngle[drum] = msgin.get_ubyte(1);
-                                    if (drum != activeDrum)
-                                    {
-                                        //  Mismatched cable angle sensor indication
-                                        System.out.println("Mismatched cable angle sensor indication");
-                                    }
-                                    break;
-
-                                default:
-                                    //  unrecognized id
-                                    System.out.println("Unrecognized ID");
-                                    System.out.println(msgin.id & 0xffe00000);
-                                    break;
-
-                                //  still need decodes for  high/low priority messages
-                            }
-                    }
+                intData.setActiveDrum(activeDrum = tmpActiveDrum);
             }
 
+            switch (intData.state)
+            {
+                case 3:
+                    if (!launchActive)
+                    {
+                        //     new launch begining
+                        launchActive = true;
+                        intData.setStartTime(lastTime);
+                        intData.setElaspedTime(-(groupDelay
+                                + timeTick));
+                        pipeline.signalNewLaunchStarting();
+                        pipeline.signalNewLaunchdataAvaialbe();
+                    } else
+                    {
+                        System.out.println("Entry into Profile State with Launch Active");
+                    }
+                    break;
+
+                case 7:
+                    //  should I call a method to signal?
+                    intData.setLauchActive(launchActive = false);
+                    pipeline.signalLaunchEnded();
+                    break;
+            }
         }
 
     }
 }
 
+/*else  //  other than time messages
+ {
+ pipeline.logMessage(message);   //  log the message           
+ switch (maskedID)
+ {
+ case 0x26000000:
+ //  State message
+ System.out.println("State Messge");
+ int tmp = msgin.get_ubyte(0);
+ int tmpState = tmp & 0xf;
+ int tmpActiveDrum = tmp & 0xf0;
+
+ /*
+ State Assignments
+ 0      SAFE
+ 1      PREP
+ 2      ARMED
+ 3      PROFILE
+ 4      RAMP
+ 5      CONSTANT
+ 6      RECOVERY
+ 7      RETRIEVE
+ 14 (E) STOP
+ 15 (F) ABORT                    
+ */ /*
+ if (lastState != tmpState
+
+    
+    
+ )
+ //  state change
+ {
+ intData.setState(tmpState);
+
+ if (activeDrum != tmpActiveDrum)
+ {
+ intData.setActiveDrum(activeDrum = tmpActiveDrum);
+ }
+
+ switch (intData.state)
+ {
+ case 3:
+ if (!launchActive)
+ {
+ //     new launch begining
+ launchActive = true;
+ intData.setStartTime(lastTime);
+ intData.setElaspedTime(-(groupDelay
+ + timeTick));
+ pipeline.signalNewLaunchStarting();
+ pipeline.signalNewLaunchdataAvaialbe();
+ } else
+ {
+ System.out.println("Entry into Profile State with Launch Active");
+ }
+ break;
+
+ case 7:
+ //  should I call a method to signal?
+ intData.setLauchActive(launchActive = false);
+ pipeline.signalLaunchEnded();
+ break;
+ }
+ }
+
+ break;
+
+ case 0xa0200000:
+ //  evironmental status/data message 
+ System.out.println (
+
+ "evironmental status/data message");
+ break;
+
+ case 0xa0400000:
+ //  wind message
+ System.out.println (
+
+ "wind message");
+ break;
+
+ case 0x27000000:
+ //  Launch Parameter Request message
+ System.out.println (
+
+ "Launch Parameter Request");
+
+ pipeline.launchParametersRequested ();
+
+ break;
+
+ case 0x50200000:
+ //  control lever statu/data message
+ System.out.println (
+
+ "control lever statu/data message");
+
+ intData.setControlLever (lastControlLever
+                            
+
+ = msgin.get_ubyte(1));
+ break;
+
+ case 0x21000000:
+ //  Brake Command
+ System.out.println (
+
+ "Brake Command");
+ break;
+
+ case 0x22000000:
+ //  Guillotine command
+ System.out.println (
+
+ "Guillotine Command");
+ break;
+
+ case 0x23000000:
+ //  Contactor command
+ System.out.println (
+
+ "Contactor Command");
+ break;
+
+ case 0x51400000:
+ //  zero odometer from embedded controller command
+ System.out.println (
+
+ "zero odometer from embedded controller command");
+ break;
+
+ case 0x51800000:
+ //  zero tensiometer from embedded controller command
+ System.out.println (
+ "zero tensiometer from embedded controller command");
+ break;
+
+ default
+ :
+ switch (msgin.id
+
+    
+    
+    
+
+ & 0xff800000)
+ {
+ case 0x24800000:
+ //  Motor/Controller Status
+ System.out.println("Motor/Controller Status");
+
+ lastMotorSpeed[motor] = msgin.get_short(1);
+ break;
+
+ case 0x25800000:
+ //  Torque/Speed Command
+ System.out.println("Torque/Speed Command");
+ break;
+
+ default:
+ switch (msgin.id & 0xff00000)
+ {
+ case 0x36000000:
+ //  active drum status/data during launch message
+ lastCableOut[drum] = msgin.get_short(1);
+
+ if (drum != activeDrum)
+ {
+ //  Mismatched drum indication
+ System.out.println("Mismatched Drum Indication");
+ }
+ break;
+
+ case 0x3800000:
+ //  active tensiometer status/data during launch
+ lastTension[drum] = msgin.get_short(1);
+
+ if (drum != activeDrum)
+ {
+ //  Mismatched tensiometer indication
+ System.out.println("Mismatched Drum Indication");
+ }
+ break;
+
+ case 0x3a000000:
+ //  active cable angle status/data during launch message
+
+ lastCableAngle[drum] = msgin.get_ubyte(1);
+ if (drum != activeDrum)
+ {
+ //  Mismatched cable angle sensor indication
+ System.out.println("Mismatched cable angle sensor indication");
+ }
+ break;
+
+ default:
+ //  unrecognized id
+ System.out.println("Unrecognized ID");
+ System.out.println(msgin.id & 0xffe00000);
+ break;
+
+ //  still need decodes for  high/low priority messages
+ }
+ }
+ }
+
+ }
+
+ }
+ }
+ */
     // notify all attached listeners after message is filtered
         /*for(MessageListener ml: listeners){
  ml.msgAvailable(msg);
