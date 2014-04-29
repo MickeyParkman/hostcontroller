@@ -75,6 +75,8 @@ public class FilterListener extends MessageListener
     
     //For testing and demo purposes
     FileDataGenerator fileData;
+    
+    int activeMotor;
 
     public FilterListener(MessagePipeline pipeline)
     {
@@ -85,6 +87,7 @@ public class FilterListener extends MessageListener
     public void msgAvailable(byte[] msg)
     {
         String message = new String(msg);
+        fileData.readLineOfValues();
 
         /*
          int result = msgin.convert_msgtobin(message);
@@ -96,6 +99,8 @@ public class FilterListener extends MessageListener
         int maskedID = msgin.id & 0xffe00000;
         int motor = msgin.id & 0x00600000;
         int drum = msgin.id & 0x00e00000;
+        
+        maskedID = 0x200000;
 
         if (maskedID == 0x200000)
         {
@@ -222,7 +227,7 @@ public class FilterListener extends MessageListener
 
                 if (launchActive)
                 {
-                    pipeline.signalNewLaunchdataAvaialbe();
+                    pipeline.signalNewLaunchdataAvaialbe(intData);
                 }
 
             }
@@ -278,7 +283,7 @@ public class FilterListener extends MessageListener
                         intData.setElaspedTime(-(groupDelay
                                 + timeTick));
                         pipeline.signalNewLaunchStarting();
-                        pipeline.signalNewLaunchdataAvaialbe();
+                        pipeline.signalNewLaunchdataAvaialbe(intData);
                     } else
                     {
                         System.out.println("Entry into Profile State with Launch Active");

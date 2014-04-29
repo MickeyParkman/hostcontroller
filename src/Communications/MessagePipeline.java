@@ -34,12 +34,12 @@ public class MessagePipeline {
     ParamSelectionFrame paramSelection;
     
     //Dashboard for the pipeline
-    DashboardInterface dashboard;
+    DashboardInterface dashboard = null;
     
     //Logger for the pipeline for logging all messages
     BlackBoxLogger logger;
     
-    CANMessageGenerator msgGenerator;
+    //CANMessageGenerator msgGenerator;
     
     
     public MessagePipeline(Connection comm) {
@@ -50,12 +50,12 @@ public class MessagePipeline {
         //TODO Attach a logger
         logger = new BlackBoxLogger(); 
         
-        msgGenerator = new CANMessageGenerator(this);
+        //msgGenerator = new CANMessageGenerator(this);
     }
     
     public void startParameterSelection() throws MessagePipelineException {
         if(filter != null) {
-            paramSelection = new ParamSelectionFrame();
+            paramSelection = new ParamSelectionFrame(this);
             paramSelection.setVisible(true);    
         }
         else{
@@ -67,7 +67,8 @@ public class MessagePipeline {
     
     public void startDashboard() throws MessagePipelineException {
         if(filter != null) {
-            
+            dashboard = new DashboardInterface();
+            dashboard.setVisible(true);
         }
         else {
             MessagePipelineException exception = new MessagePipelineException();
@@ -81,12 +82,13 @@ public class MessagePipeline {
     }
     
     public void logMessage(String message) {
-        logger.loggMessage(message);
+        if(logger != null);
+            //logger.loggMessage(message);
     }
     
     public void logMessage(int timestamp, String message) {
-        if(logger != null)
-            logger.loggMessage(timestamp, message);
+        if(logger != null);
+            //logger.loggMessage(timestamp, message);
     }
     
     public void launchParametersRequested() {
@@ -96,15 +98,18 @@ public class MessagePipeline {
         Runway runway = null;
         Position position = null;
         paramSelection.getSelectedLaunchElements(pilot, sailplane, airfield, runway, position);
-        msgGenerator.generateAndSendLaunchParameters(pilot, sailplane, airfield, runway, position);
+        //msgGenerator.generateAndSendLaunchParameters(pilot, sailplane, airfield, runway, position);
     }
     
     public void signalNewLaunchStarting() {
         
     }
     
-    public void signalNewLaunchdataAvaialbe() {
-        
+    public void signalNewLaunchdataAvaialbe(InternalMessage internalMsg) {
+        if(dashboard != null) {
+            System.out.println("Here");
+            dashboard.updateDisplay(internalMsg);
+        }
     }
     
     public void logAndSendMessage(CanCnvt byteMessage) 

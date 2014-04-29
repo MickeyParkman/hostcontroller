@@ -6,6 +6,8 @@
 
 package ParameterSelection;
 
+import Communications.MessagePipeline;
+import Communications.MessagePipelineException;
 import DashboardInterface.DashboardInterface;
 import DataObjects.Pilot;
 import DataObjects.Sailplane;
@@ -13,6 +15,8 @@ import DataObjects.Airfield;
 import DataObjects.Position;
 import DataObjects.Runway;
 import Wizards.PreWizard;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,11 +24,13 @@ import javax.swing.JOptionPane;
  * @author awilliams5
  */
 public class ParamSelectionFrame extends javax.swing.JFrame {
-
+    MessagePipeline pipeline;
+    
     /**
      * Creates new form ParamSelectionFrame
      */
-    public ParamSelectionFrame() {
+    public ParamSelectionFrame(MessagePipeline pipeline) {
+        this.pipeline = pipeline;
         initComponents();
     }
 
@@ -372,8 +378,11 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         }
         
         if (allValidEntries) {
-            DashboardInterface dashboard = new DashboardInterface();
-            dashboard.setVisible(true);
+            try {
+                pipeline.startDashboard();
+            } catch (MessagePipelineException ex) {
+                Logger.getLogger(ParamSelectionFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
             dispose();
         }
         
@@ -421,7 +430,7 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ParamSelectionFrame().setVisible(true);
+                //new ParamSelectionFrame().setVisible(true);
             }
         });
     }
