@@ -48,6 +48,7 @@ public class FilterListener extends MessageListener
 
     private int[] lastMotorSpeed = new int[numbMotors];
     private final float motorSpeedScale = 1.0f / 128.0f;
+    private final float motorToCableSpeed = 1.0f/0.359f;
 
     private double startTime;
 
@@ -78,16 +79,17 @@ public class FilterListener extends MessageListener
     {
         String message = new String(msg);
         
-
+/*
         int result = msgin.convert_msgtobin(message);
         System.out.println(msgin.id & 0xffe00000);
-
+*/
+        //  assignment to make it look like a message was received 
+         msgin.id = 200000;
+                
         int maskedID = msgin.id & 0xffe00000;
         int motor = msgin.id & 0x00600000;
         int drum = msgin.id & 0x00e00000;
         
-        maskedID = 0x200000;
-
         if (maskedID == 0x200000)
         {
             //  Time Message
@@ -102,10 +104,10 @@ public class FilterListener extends MessageListener
             //  Alex - these are the accessor methods I need.
             int startUnixTime = fileData.getStartTime(0);
             float filetime = fileData.getTime();
-            float fileCableOut = fileData.getCableOut();
-            float fileCableAngle = fileData.getCableAngle(0);
+            lastCableOut[activeDrum] = fileData.getCableOut();
+            lastCableAngle[activeDrum] = fileData.getCableAngle(0);
             float fileCableSpeed = fileData.getCableSpeed();
-            float fileTension = fileData.getTension();
+            lastTension[activeDrum] = fileData.getTension();
             int fileState = fileData.getState();
                     
 
@@ -264,6 +266,7 @@ public class FilterListener extends MessageListener
                             case 0: case 1: case 2: case 7: case 14: case 15:
                                 //  should I call a method to signal?
                                 intData.setLauchActive(launchActive = false);
+                                pipeline.signalLaunchEnded();
                                 break;
                         }
                     }
