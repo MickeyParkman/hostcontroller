@@ -8,6 +8,7 @@ package DashboardInterface;
 
 
 
+import Communications.InternalMessage;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Random;
@@ -178,6 +179,11 @@ public class DashboardInterface extends javax.swing.JFrame {
             frame.setVisible(true);
             }
         });
+    }
+    
+    public void updateDisplay(InternalMessage internalMsg) {
+        System.out.println("1");
+        dial.dialUpdate(internalMsg.getTension(), internalMsg.getCableSpeed());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -35,7 +35,8 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                 dataset2.setValue(new Integer(slider2.getValue()));
         }
 
-        public void dialUpdate(int tension, int speed) {
+        public void dialUpdate(double tension, double speed) {
+            System.out.println("2");
             dataset1.setValue(speed);
             dataset2.setValue(tension);      
         }
@@ -87,13 +88,13 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                         dialvalueindicator1.setAngle(-90D);
                         dialplot.addLayer(dialvalueindicator1);
                         
-                        StandardDialScale standarddialscale = new StandardDialScale(0D, 80D, -120D, -300D, 10D, 4);
+                        StandardDialScale standarddialscale = new StandardDialScale(0D, 400D, -120D, -300D, 40D, 4);
                         standarddialscale.setTickRadius(0.88D);
                         standarddialscale.setTickLabelOffset(0.14999999999999999D);
                         standarddialscale.setTickLabelFont(new Font("Dialog", 0, 14));
                         dialplot.addScale(0, standarddialscale);
                         
-                        StandardDialScale standarddialscale1 = new StandardDialScale(0.0D, 100D, -120D, -300D, 10D, 4);
+                        StandardDialScale standarddialscale1 = new StandardDialScale(0.0D, 70000D, -120D, -300D, 7000D, 4);
                         standarddialscale1.setTickRadius(0.5D);
                         standarddialscale1.setTickLabelOffset(0.14999999999999999D);
                         standarddialscale1.setTickLabelFont(new Font("Dialog", 0, 10));
@@ -161,9 +162,9 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                         //jpanel.add(slider2);
                         add(chartpanel);
                         add(jpanel, "South");
-                        DialUpdater update = new DialUpdater();
-                        Thread t = new Thread(update);
-                        t.start();
+                        //DialUpdater update = new DialUpdater();
+                        //Thread t = new Thread(update);
+                        //t.start();
         }
         
         private void updateDial() {
