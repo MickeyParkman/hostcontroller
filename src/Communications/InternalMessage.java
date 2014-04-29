@@ -16,7 +16,6 @@ public class InternalMessage
     //  CanMsg data
     //  ??should these be public or private
     public byte[] canMsg;
-    public int timestamp;    //  Unix time, only second resolution
     public int state;
 
     //  launch related data variables
@@ -74,17 +73,7 @@ public class InternalMessage
         this.canMsg = canMessage;
     }
 
-    /**
-     * Sets the value of the "timestamp" data member
-     *
-     * @param timestamp the timestamp of the message, in UNIX time
-     */
-    public void setTimestamp(int timestamp)
-    {
-        this.timestamp = timestamp;
-    }
-
-    public void setCableOut(float cableOut)
+        public void setCableOut(float cableOut)
     {
         this.cableOut = cableOut;
     }
@@ -132,17 +121,6 @@ public class InternalMessage
         this.controlLever = position;
     }
     
-
-    /**
-     * Method for acquiring the value of the message's timestamp.
-     *
-     * @return the timestamp value, if set, null if otherwise.
-     */
-    public double getTimestamp()
-    {
-        return timestamp;
-    }
-
     public float getCableOut()
     {
         return cableOut;
