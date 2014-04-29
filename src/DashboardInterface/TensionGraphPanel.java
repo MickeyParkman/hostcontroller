@@ -6,19 +6,33 @@
 
 package DashboardInterface;
 
+import java.util.Date;
 import javax.swing.JButton;
+import org.jfree.data.time.Millisecond;
 
 /**
  *
  * @author Alex
  */
 public class TensionGraphPanel extends javax.swing.JPanel {
+    SpeedGraph demo;
 
     /**
      * Creates new form TensionGraphPanel
      */
     public TensionGraphPanel() {
         initComponents();
+    }
+    
+    public void addHeightValue(long time, float value) {
+        demo.addHeightValue(time, value);
+    }
+    public void addTensionValue(long time, float value) {
+        demo.addTensionValue(time, value);
+    }
+    
+    public void addSpeedValue(long time, float value) {
+        demo.addSpeedValue(time, value);
     }
 
     /**
@@ -32,7 +46,7 @@ public class TensionGraphPanel extends javax.swing.JPanel {
 
         jTabbedPane1 = new javax.swing.JPanel();
         jTabbedPane1.setToolTipText("");
-        SpeedGraph demo = new SpeedGraph("");
+        demo = new SpeedGraph("");
         demo.setVisible(true);
         jTabbedPane1.add(demo);
 

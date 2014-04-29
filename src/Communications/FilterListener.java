@@ -66,7 +66,7 @@ public class FilterListener extends MessageListener
 
     private int lastState;
     private int activeDrum;
-    private boolean launchActive;
+    private boolean launchActive = true;
 
     InternalMessage intData = new InternalMessage();
 
@@ -286,6 +286,7 @@ public class FilterListener extends MessageListener
                         intData.setElaspedTime(-(groupDelay
                                 + timeTick));
                         pipeline.signalNewLaunchStarting();
+                        System.out.println("Send");
                         pipeline.signalNewLaunchdataAvaialbe(intData);
                     } else
                     {
