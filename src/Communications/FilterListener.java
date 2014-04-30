@@ -240,11 +240,11 @@ public class FilterListener extends MessageListener
                 c2[3] = ctmpo;
                 ctmpo = ctmpe - c3[3];
                 c3[3] = ctmpe;
-                intData.setCableSpeed(ctmpo * (motorSpeedScale * motorToCableSpeed
+                intData.setCableSpeed(ctmpo * ((motorSpeedScale / motorToCableSpeed)
                         / gainCIC));
                 
-                // System.out.println("  CS In  "  +  fileData.getCableSpeed() +  "  Out  "  + intData.getCableSpeed());
-
+                //System.out.println("  CS In  "  +  fileData.getCableSpeed() +  "  Out  "  + intData.getCableSpeed());
+                
                 //  elasped time includes correction for CIC group delay and
                 //  data being from one tick before
                 intData.setElaspedTime((float) (currentTime - startTime)
