@@ -113,12 +113,19 @@ public class FilterListener extends MessageListener
 
             //  Get the data from the file line
             double unixTime = fileData.getUnixTime();
-            lastTension[activeDrum] = (short) ((int) (fileData.getTension() * 4 + 1024.5));
-            lastCableAngle[activeDrum] = (byte) ((int) (fileData.getCableAngle() * 360f / 3.141596 + 40.5));
-            lastCableOut[activeDrum] = (short) ((int) (fileData.getCableOut() * 16 + 4096.5));
-
+            
+            lastTension[activeDrum] = 
+                    (int) (fileData.getTension() * 4 + 1024.5);
+            
+            lastCableAngle[activeDrum] = 
+                    (int) (fileData.getCableAngle() * 360f / 3.141596 + 40.5);
+            
+            lastCableOut[activeDrum] = (
+                    int) (fileData.getCableOut() * 16 + 4096.5);
+            
             lastMotorSpeed[drum]
-                    = (short) (fileData.getCableSpeed() * 128f / 0.359);
+                    = (int) (fileData.getCableSpeed() * 128f / 0.359);
+            
             newState = (int) fileData.getState();
             
 
@@ -162,11 +169,12 @@ public class FilterListener extends MessageListener
 
             //   Update CIC filter integrators
             //   0 -  tension, 1 - cable angle, 2 - cable out, 3 - motor speed
-            // i1[0] += lastTension[activeDrum];
-            
-            i1[0] += 40000;
+            // System.out.println("CICin  "  +  (lastTension[activeDrum] & 0x00000000ffffffff));
+            i1[0] += lastTension[activeDrum];
             i2[0] += i1[0];
             i3[0] += i2[0];
+            // System.out.println("integrators " + i1[0] + " " + i2[0] + " " + i3[0]);
+            
 
             i1[1] += lastCableAngle[activeDrum];
             i2[1] += i1[1];
@@ -182,11 +190,13 @@ public class FilterListener extends MessageListener
 
             downCounter -= 1;
 
-            if (downCounter <= 0)
+            if (downCounter < 0)
             {
                 downCounter = decimationFactor - 1; //  reset down counter
                 //  update the comb functions and set the output values
                 int ctmpe, ctmpo;
+                
+                // System.out.println("combs before " + c1[0] + " " + c2[0] + " " + c3[0] + " " );
 
                 ctmpo = i3[0] - c1[0];
                 c1[0] = i3[0];
@@ -196,6 +206,10 @@ public class FilterListener extends MessageListener
                 c3[0] = ctmpe;
                 intData.setTension((float) (((double) ctmpo / gainCIC - tensionOffset)
                         * tensionScale));
+                
+                //System.out.println(" CT In  "  +  fileData.getTension() +  "  Out  "  + intData.getTension());
+                        
+                                
 
                 ctmpo = i3[1] - c1[1];
                 c1[1] = i3[1];
@@ -205,6 +219,8 @@ public class FilterListener extends MessageListener
                 c3[1] = ctmpe;
                 intData.setCableAngle((ctmpo / gainCIC - cableAngleOffset)
                         * cableAngleScale);
+                
+                // System.out.println("CA  In  "  +  fileData.getCableAngle() +  "  Out  "  + intData.getCableAngle());
 
                 ctmpo = i3[2] - c1[2];
                 c1[2] = i3[2];
@@ -214,7 +230,10 @@ public class FilterListener extends MessageListener
                 c3[2] = ctmpe;
                 intData.setCableOut((float) (((double) ctmpo / gainCIC - cableOutOffset)
                         * cableOutScale));
-
+                
+                //System.out.println("CO  In  "  +  fileData.getCableOut() +  "  Out  "  + intData.getCableOut());
+                
+                
                 ctmpo = i3[3] - c1[3];
                 c1[3] = i3[3];
                 ctmpe = ctmpo - c2[3];
@@ -223,6 +242,8 @@ public class FilterListener extends MessageListener
                 c3[3] = ctmpe;
                 intData.setCableSpeed(ctmpo * (motorSpeedScale * motorToCableSpeed
                         / gainCIC));
+                
+                // System.out.println("  CS In  "  +  fileData.getCableSpeed() +  "  Out  "  + intData.getCableSpeed());
 
                 //  elasped time includes correction for CIC group delay and
                 //  data being from one tick before
@@ -279,8 +300,8 @@ public class FilterListener extends MessageListener
             //  state change
             {
                 intData.setState(tmpState);
-                System.out.println("State Change");
-                System.out.println(tmpState);
+                System.out.println("State Change to " + tmpState);
+                
                 lastState = tmpState;
 
                 if (activeDrum != tmpActiveDrum)
@@ -299,7 +320,7 @@ public class FilterListener extends MessageListener
                             intData.setElaspedTime(-(groupDelay
                                     + timeTick));
                             pipeline.signalNewLaunchStarting();
-                            System.out.println("Send");
+                            System.out.println("New Launch Signaled");
                             pipeline.signalNewLaunchdataAvaialbe(intData);
                         } else
                         {
