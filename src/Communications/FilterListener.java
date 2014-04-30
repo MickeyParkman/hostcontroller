@@ -208,7 +208,6 @@ public class FilterListener extends MessageListener
                         * tensionScale));
                 
                 //System.out.println(" CT In  "  +  fileData.getTension() +  "  Out  "  + intData.getTension());
-                        
                                 
 
                 ctmpo = i3[1] - c1[1];
