@@ -57,7 +57,7 @@ public class LaunchGraph extends JPanel implements Runnable {
     private XYPlot plot;
     
     private long previousTime = 0L;
-    private int maxTensionMarker = 1000;
+    private int maxTensionMarker = 950;
     
      public LaunchGraph(String title) {
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
@@ -77,7 +77,7 @@ public class LaunchGraph extends JPanel implements Runnable {
     private JFreeChart createChart(XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
-            "Speed v Time:",  // title
+            "Speed, Height and Tension v Time:",  // title
             "Time",             // x-axis label
             "Speed",   // y-axis label
             dataset,            // data
@@ -115,14 +115,15 @@ public class LaunchGraph extends JPanel implements Runnable {
         plot.setDataset(2, dataset3);
         plot.setRenderer(2, splinerenderer3);
         NumberAxis tensionYAxis = new NumberAxis("Tension");
-        tensionYAxis.setRange(0, 10000);
+        tensionYAxis.setRange(0, 8000);
         plot.setRangeAxis(2, tensionYAxis);
 
         plot.mapDatasetToRangeAxis(0, 0);//1st dataset to 1st y-axis
         plot.mapDatasetToRangeAxis(1, 1); //2nd dataset to 2nd y-axis
         plot.mapDatasetToRangeAxis(2, 2);
     
-        plot.addRangeMarker(new ValueMarker(maxTensionMarker, Color.RED, new BasicStroke()));
+        float[] dashArray = {1,1,1,0};
+        plot.addRangeMarker(new ValueMarker(maxTensionMarker, Color.YELLOW, new BasicStroke(1, 0, 0, 1, dashArray, 0)));
         XYTextAnnotation text = new XYTextAnnotation("Max Tension", 10, maxTensionMarker);
         text.setFont(new Font("SansSerif", Font.PLAIN, 9));
         plot.addAnnotation(text);

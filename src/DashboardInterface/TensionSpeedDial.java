@@ -64,12 +64,12 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                 dialbackground.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.VERTICAL));
                 dialplot.setBackground(dialbackground);
                         
-                DialTextAnnotation dialtextannotation = new DialTextAnnotation("Tension");
+                DialTextAnnotation dialtextannotation = new DialTextAnnotation("Tension (N)");
                 dialtextannotation.setFont(new Font("Dialog", 1, 14));
                 dialtextannotation.setRadius(0.30999999999999996D);
                 dialplot.addLayer(dialtextannotation);
                         
-                        DialTextAnnotation dialtextannotation2 = new DialTextAnnotation("Speed");
+                        DialTextAnnotation dialtextannotation2 = new DialTextAnnotation("Speed (m/s)");
                         dialtextannotation2.setFont(new Font("Dialog", 1, 14));
                         dialtextannotation2.setRadius(0.60999999999999996D);
                         dialplot.addLayer(dialtextannotation2);
@@ -88,7 +88,7 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                         dialvalueindicator1.setAngle(-90D);
                         dialplot.addLayer(dialvalueindicator1);
                         
-                        StandardDialScale standarddialscale = new StandardDialScale(0D, 50D, -120D, -300D, 5D, 4);
+                        StandardDialScale standarddialscale = new StandardDialScale(0D, 40D, -120D, -300D, 5D, 4);
                         standarddialscale.setTickRadius(0.88D);
                         standarddialscale.setTickLabelOffset(0.14999999999999999D);
                         standarddialscale.setTickLabelFont(new Font("Dialog", 0, 14));
@@ -104,7 +104,7 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                         
                         dialplot.mapDatasetToScale(1, 1);
                         
-                        StandardDialRange speedRangeOuter = new StandardDialRange(87.5D, 100D, Color.red);
+                        /*StandardDialRange speedRangeOuter = new StandardDialRange(87.5D, 100D, Color.red);
                         speedRangeOuter.setScaleIndex(1);
                         speedRangeOuter.setInnerRadius(0.89999999999999997D);
                         speedRangeOuter.setOuterRadius(0.90999999999999997D);
@@ -126,7 +126,7 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                         tensionRangeInner.setScaleIndex(1);
                         tensionRangeInner.setInnerRadius(0.50999999999999997D);
                         tensionRangeInner.setOuterRadius(0.51999999999999997D);
-                        dialplot.addLayer(tensionRangeInner);
+                        dialplot.addLayer(tensionRangeInner);*/
                         
                         org.jfree.chart.plot.dial.DialPointer.Pin pin = new org.jfree.chart.plot.dial.DialPointer.Pin(1);
                         pin.setRadius(0.55000000000000004D);
