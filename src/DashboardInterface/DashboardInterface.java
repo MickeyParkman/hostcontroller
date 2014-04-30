@@ -204,6 +204,10 @@ public class DashboardInterface extends javax.swing.JFrame {
         stateMachinePanel12.updateState(7);
     }
     
+    public void resetState() {
+        launchState = 0;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

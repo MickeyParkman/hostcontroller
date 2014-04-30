@@ -69,6 +69,9 @@ public class MessagePipeline {
         if(filter != null) {
             dashboard = new DashboardInterface();
             dashboard.setVisible(true);
+            connection.stop();
+            filter.restartFile();
+            dashboard.resetState();
             connection.start();
         }
         else {
@@ -125,7 +128,11 @@ public class MessagePipeline {
 
     void signalLaunchEnded() {
         dashboard.markEndLaunch();
-        connection.stop();
-        filter.restartFile();
+        //connection = new FileDummyConnection();
+        //connection.attachFilter(filter);
+    }
+    
+    public void closeLaunch() {
+        
     }
 }

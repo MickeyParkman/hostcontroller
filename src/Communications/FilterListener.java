@@ -85,7 +85,7 @@ public class FilterListener extends MessageListener
     }
     
     public void restartFile() {
-        fileData = new FileDataGenerator();
+        fileData.restartFile();
     }
 
     public void msgAvailable(byte[] msg)

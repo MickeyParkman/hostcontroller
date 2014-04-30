@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class FileDummyConnection implements Connection {
     private ArrayList<FilterListener> filters = new ArrayList<FilterListener>();
     Thread t;
+    boolean isRunning = true;
 
     public FileDummyConnection() {
         t = new Thread(new DummyMessageGenerator());
@@ -42,20 +43,22 @@ public class FileDummyConnection implements Connection {
     }
     
     public void start() {
+        isRunning = true;
+        t = new Thread(new DummyMessageGenerator());
         t.start();
     }
     
     public void stop() {
-        t = null;
-        t = new Thread(new DummyMessageGenerator());
+        isRunning = false;
     }
     
     private class DummyMessageGenerator implements Runnable {
         String dummyString = "Dummy";
+        
 
         @Override
         public void run() {
-           while(true) {
+           while(isRunning) {
                try {
                    TimeUnit.MICROSECONDS.sleep(15625L);
                    update(dummyString);

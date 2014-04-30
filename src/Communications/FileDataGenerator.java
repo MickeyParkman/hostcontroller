@@ -32,7 +32,7 @@ public class FileDataGenerator {
     
     public FileDataGenerator() {
         try {
-            reader = new Scanner(new File(System.getProperty("user.dir") + "/build/classes/Communications/lnchdata.txt"));
+            reader = new Scanner(new File(System.getProperty("user.dir") + "/lnchdata.txt"));
             readLineOfValues();
         } catch (FileNotFoundException ex) {
             System.out.println(System.getProperty("user.dir"));
@@ -43,7 +43,7 @@ public class FileDataGenerator {
     private void reopenFile() {
         reader.close();
         try {
-            reader = new Scanner(new File(System.getProperty("user.dir") + "/build/classes/Communications/lnchdata.txt"));
+            reader = new Scanner(new File(System.getProperty("user.dir") + "/lnchdata.txt"));
             readLineOfValues();
         } catch (FileNotFoundException ex) {
             System.out.println(System.getProperty("user.dir"));
@@ -86,5 +86,9 @@ public class FileDataGenerator {
 
     int getState() {
         return state;
+    }
+
+    public void restartFile() {
+        reopenFile();
     }
 }
