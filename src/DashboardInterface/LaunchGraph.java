@@ -95,7 +95,7 @@ public class LaunchGraph extends JPanel implements Runnable {
         XYSplineRenderer splinerenderer3 = new XYSplineRenderer();
         
 
-        XYDataset dataset1 = createDataset(0L, 90000);
+        XYDataset dataset1 = createDataset(0L, 125000);
         plot.setDataset(0,dataset1);
         plot.setRenderer(0,splinerenderer1);
         DateAxis domainAxis = new DateAxis("Date");

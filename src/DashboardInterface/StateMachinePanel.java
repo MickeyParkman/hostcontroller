@@ -35,8 +35,10 @@ public class StateMachinePanel extends javax.swing.JPanel {
     {
         switch(state)
         {
-            case 1:
+            case 0:
                 return "safe";
+            case 1:
+                return "prep";
             case 2:
                 return "armed";
             case 3:
@@ -48,12 +50,10 @@ public class StateMachinePanel extends javax.swing.JPanel {
             case 6:
                 return "recovery";
             case 7:
-                return "stop";
-            case 8:
                 return "retrieve";
-            case 9:
-                return "prep";
-            case 10:
+            case 14:
+                return "stop";
+            case 15:
                 return "abort";
             default:
                 return "";

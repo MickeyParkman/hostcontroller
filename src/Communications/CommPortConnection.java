@@ -17,10 +17,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.TooManyListenersException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,7 +43,19 @@ public class CommPortConnection implements Connection{
     } 
     
     private void initConnection() {
-        String comPortID = "COM3";
+        Enumeration ports = CommPortIdentifier.getPortIdentifiers();
+        ArrayList portList = new ArrayList();
+        String portArray[] = null;
+        while (ports.hasMoreElements()) {
+            CommPortIdentifier port = (CommPortIdentifier) ports.nextElement();
+            if (port.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+                portList.add(port.getName());
+            }
+        }
+        portArray = (String[]) portList.toArray(new String[0]);
+        
+        String comPortID = (String) JOptionPane.showInputDialog(null, "Select A Com Port: ", "Com Port Select", JOptionPane.INFORMATION_MESSAGE, null, portArray, "COM1");
+        
         try {
             CommPortIdentifier port = CommPortIdentifier.getPortIdentifier(comPortID);
             serialPort = (SerialPort) port.open(comPortID, 5000);
