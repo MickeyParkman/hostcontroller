@@ -112,7 +112,7 @@ public class InternalMessage
         this.activeDrum = drum;
     }
     
-    public void setLauchActive(boolean active)
+    public void setLauchStatus(boolean active)
     {
         this.launchActive = active;
     }

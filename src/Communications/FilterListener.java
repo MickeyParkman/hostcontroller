@@ -315,11 +315,11 @@ public class FilterListener extends MessageListener
                         if (!launchActive)
                         {
                             //     new launch begining
-                            launchActive = true;
+                            intData.setLauchStatus(launchActive = true);
                             intData.setStartTime(lastTime);
                             intData.setElaspedTime(-(groupDelay
                                     + timeTick));
-                            pipeline.signalNewLaunchStarting();
+                            pipeline.signalNewLaunchStarting();                            
                             System.out.println("New Launch Signaled");
                             pipeline.signalNewLaunchdataAvaialbe(intData);
                         } else
@@ -334,7 +334,7 @@ public class FilterListener extends MessageListener
                     case 0:
                     case 1:
                         //  should I call a method to signal?
-                        intData.setLauchActive(launchActive = false);
+                        intData.setLauchStatus(launchActive = false);
                         pipeline.signalLaunchEnded();
                         break;
                 }

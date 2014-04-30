@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Tue Apr 29 20:06:02 PDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0145-b098-9bdb-00000ad41f10 
-on database directory C:\Users\gsmoore\Documents\NetBeansProjects\HostManager\HostController1\WinchCommonsTest12DataBase  with class loader sun.misc.Launcher$AppClassLoader@1d6535bf 
+Tue Apr 29 20:23:02 PDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0145-b0a8-2be3-00000ad44c20 
+on database directory C:\Users\gsmoore\Documents\NetBeansProjects\HostManager\HostController1\WinchCommonsTest12DataBase  with class loader sun.misc.Launcher$AppClassLoader@714a8f44 
 Loaded from file:/C:/Users/gsmoore/Documents/NetBeansProjects/HostManager/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_51-b13
