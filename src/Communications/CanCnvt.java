@@ -663,7 +663,7 @@ public class CanCnvt
             return -1;
         } else
         {
-            pb[6 + offset] = (byte) (n);
+            pb[6 + offset] = (byte) n;
             dlc = Math.max(dlc, offset + 1);
             return 0;
         }

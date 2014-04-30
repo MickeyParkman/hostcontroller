@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class FilterListener extends MessageListener
 {
 
-    //  variables for file based demo
-    int oldState = 2;
-
     CanCnvt msgin = new CanCnvt();
+
+    //  temporary for file based simulations
+    int newState;
 
     private final float timeTick = 1.0f / 64.0f;
     private final int numbDrums = 1;
@@ -21,7 +21,8 @@ public class FilterListener extends MessageListener
 
     //  variables for CIC3 filters, 
     private final int decimationFactor = 8;
-    private final float gainCIC = decimationFactor ^ 3;
+    private final float gainCIC = decimationFactor * decimationFactor
+            * decimationFactor;
     private final float groupDelay = ((decimationFactor - 1) / 2.0f)
             * 3.0f * timeTick;
 
@@ -66,17 +67,16 @@ public class FilterListener extends MessageListener
 
     private int lastState;
     private int activeDrum;
-    private boolean launchActive = true;
+    private boolean launchActive = false;
 
     InternalMessage intData = new InternalMessage();
 
     ArrayList<MessageListener> listeners = new ArrayList();
     MessagePipeline pipeline;
-    
+
     //For testing and demo purposes
     FileDataGenerator fileData;
-    
-    
+
     public FilterListener(MessagePipeline pipeline)
     {
         this.pipeline = pipeline;
@@ -98,7 +98,7 @@ public class FilterListener extends MessageListener
         int maskedID = msgin.id & 0xffe00000;
         int motor = msgin.id & 0x00600000;
         int drum = msgin.id & 0x00e00000;
-        
+
         maskedID = 0x200000;
 
         if (maskedID == 0x200000)
@@ -109,19 +109,18 @@ public class FilterListener extends MessageListener
              or with a time index (on integral time).  All other messages are
              logged raw with not time index
              */
-            System.out.println("Time Message");
+            // System.out.println("Time Message");
 
             //  Get the data from the file line
             double unixTime = fileData.getUnixTime();
-            lastCableOut[activeDrum] = 
-                    (short) ((int) (fileData.getCableOut() * 16 + 4096));
-            lastCableAngle[activeDrum] = 
-                    (byte) ((int) (fileData.getCableAngle() * 360f/3.141596 + 40));
-            lastMotorSpeed[drum] = 
-                    (short) (fileData.getCableSpeed() * 128f / 0.359);
-            lastTension[activeDrum] = 
-                    (short) ((int) (fileData.getTension() * 4 + 1024));
-            lastState = (int) fileData.getState();
+            lastTension[activeDrum] = (short) ((int) (fileData.getTension() * 4 + 1024.5));
+            lastCableAngle[activeDrum] = (byte) ((int) (fileData.getCableAngle() * 360f / 3.141596 + 40.5));
+            lastCableOut[activeDrum] = (short) ((int) (fileData.getCableOut() * 16 + 4096.5));
+
+            lastMotorSpeed[drum]
+                    = (short) (fileData.getCableSpeed() * 128f / 0.359);
+            newState = (int) fileData.getState();
+            
 
             int intTime = (int) ((long) unixTime);
             int fracTime = (int) ((unixTime - intTime) * 64);
@@ -130,7 +129,7 @@ public class FilterListener extends MessageListener
                 //  integral second tick
                 msgin.set_int(intTime, 0);
                 msgin.dlc = 4;
-                
+
             } else
             {
                 //  fractional second tick
@@ -163,7 +162,9 @@ public class FilterListener extends MessageListener
 
             //   Update CIC filter integrators
             //   0 -  tension, 1 - cable angle, 2 - cable out, 3 - motor speed
-            i1[0] += lastTension[activeDrum];
+            // i1[0] += lastTension[activeDrum];
+            
+            i1[0] += 40000;
             i2[0] += i1[0];
             i3[0] += i2[0];
 
@@ -240,65 +241,82 @@ public class FilterListener extends MessageListener
         }
 
         //  tempory file state handling
-        if (oldState != lastState)
+        if (newState != lastState)            
         {
             //  simulate a state message
-            msgin.set_byte((byte) lastState, 0);  
-        }
+            msgin.set_byte((byte) newState, 0);
+            msgin.pb[5] = 1;
+            //System.out.println(msgin.dlc);
+            //System.out.println((byte) newState);
+            //System.out.println(msgin.pb[5]);
+            //System.out.println(msgin.pb[6]);
+            
+            
 
-        //  State message
-        System.out.println("State Messge");
-        int tmp = msgin.get_ubyte(0);
-        int tmpState = tmp & 0xf;
-        int tmpActiveDrum = tmp & 0xf0;
-
-        /*
-         State Assignments
-         0      SAFE
-         1      PREP
-         2      ARMED
-         3      PROFILE
-         4      RAMP
-         5      CONSTANT
-         6      RECOVERY
-         7      RETRIEVE
-         14 (E) STOP
-         15 (F) ABORT                    
-         */
-        if (lastState != tmpState)
-        //  state change
-        {
-            intData.setState(tmpState);
-
-            if (activeDrum != tmpActiveDrum)
+            //  State message
+           // System.out.println("State Message");   
+            int tmp = msgin.get_ubyte(0);
+            //System.out.println(msgin.val);
+            //System.out.println(tmp);
+            int tmpState = tmp & 0xf;
+            int tmpActiveDrum = tmp & 0xf0;
+            
+            
+             /*
+             State Assignments
+             0      SAFE
+             1      PREP
+             2      ARMED
+             3      PROFILE
+             4      RAMP
+             5      CONSTANT
+             6      RECOVERY
+             7      RETRIEVE
+             14 (E) STOP
+             15 (F) ABORT                    
+             */
+            if (lastState != tmpState)
+            //  state change
             {
-                intData.setActiveDrum(activeDrum = tmpActiveDrum);
-            }
+                intData.setState(tmpState);
+                System.out.println("State Change");
+                System.out.println(tmpState);
+                lastState = tmpState;
 
-            switch (intData.state)
-            {
-                case 3:
-                    if (!launchActive)
-                    {
-                        //     new launch begining
-                        launchActive = true;
-                        intData.setStartTime(lastTime);
-                        intData.setElaspedTime(-(groupDelay
-                                + timeTick));
-                        pipeline.signalNewLaunchStarting();
-                        System.out.println("Send");
-                        pipeline.signalNewLaunchdataAvaialbe(intData);
-                    } else
-                    {
-                        System.out.println("Entry into Profile State with Launch Active");
-                    }
-                    break;
+                if (activeDrum != tmpActiveDrum)
+                {
+                    intData.setActiveDrum(activeDrum = tmpActiveDrum);
+                }
 
-                case 7:
-                    //  should I call a method to signal?
-                    intData.setLauchActive(launchActive = false);
-                    pipeline.signalLaunchEnded();
-                    break;
+                switch (intData.state)
+                {
+                    case 3:
+                        if (!launchActive)
+                        {
+                            //     new launch begining
+                            launchActive = true;
+                            intData.setStartTime(lastTime);
+                            intData.setElaspedTime(-(groupDelay
+                                    + timeTick));
+                            pipeline.signalNewLaunchStarting();
+                            System.out.println("Send");
+                            pipeline.signalNewLaunchdataAvaialbe(intData);
+                        } else
+                        {
+                            System.out.println("Entry into Profile State with Launch Active");
+                        }
+                        break;
+
+                    case 7:
+                    case 14:
+                    case 15:
+                    case 0:
+                    case 1:
+                        //  should I call a method to signal?
+                        intData.setLauchActive(launchActive = false);
+                        pipeline.signalLaunchEnded();
+                        break;
+                }
             }
         }
 
