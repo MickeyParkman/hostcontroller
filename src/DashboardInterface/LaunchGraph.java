@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -30,6 +31,7 @@ import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.general.SeriesException;
 import org.jfree.data.time.Millisecond;
@@ -43,7 +45,7 @@ import org.jfree.ui.Layer;
  *
  * @author Alex
  */
-public class SpeedGraph extends JPanel implements Runnable {
+public class LaunchGraph extends JPanel implements Runnable {
     private final long serialVersionUID = 1L;
     TimeSeriesCollection heightDataset = new TimeSeriesCollection();
     TimeSeriesCollection speedDataset = new TimeSeriesCollection();
@@ -52,9 +54,12 @@ public class SpeedGraph extends JPanel implements Runnable {
     TimeSeries speedTimeSeries = new TimeSeries("Speed ");
     TimeSeries heightTimeSeries = new TimeSeries("Height ");
     
-    private long previousTime = 0L;
+    private XYPlot plot;
     
-     public SpeedGraph(String title) {
+    private long previousTime = 0L;
+    private int maxTensionMarker = 1000;
+    
+     public LaunchGraph(String title) {
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
         chartPanel.setPreferredSize(new java.awt.Dimension(1000, 270));
         add(chartPanel);
@@ -84,7 +89,7 @@ public class SpeedGraph extends JPanel implements Runnable {
 
         chart.setBackgroundPaint(Color.white);
 
-        XYPlot plot = chart.getXYPlot();
+        plot = chart.getXYPlot();        
         XYSplineRenderer splinerenderer1 = new XYSplineRenderer();
         XYSplineRenderer splinerenderer2 = new XYSplineRenderer();
         XYSplineRenderer splinerenderer3 = new XYSplineRenderer();
@@ -95,46 +100,83 @@ public class SpeedGraph extends JPanel implements Runnable {
         plot.setRenderer(0,splinerenderer1);
         DateAxis domainAxis = new DateAxis("Date");
         plot.setDomainAxis(domainAxis);
-        plot.setRangeAxis(new NumberAxis("Height"));
+        NumberAxis heightYAxis = new NumberAxis("Height");
+        heightYAxis.setRange(0, 1050);
+        plot.setRangeAxis(heightYAxis);
     
         XYDataset dataset2 = createDataset2();
         plot.setDataset(1, dataset2);
         plot.setRenderer(1, splinerenderer2);
         NumberAxis speedYAxis = new NumberAxis("Speed");
-        speedYAxis.setRange(0, 400);
+        speedYAxis.setRange(0, 50);
         plot.setRangeAxis(1, speedYAxis);
     
         XYDataset dataset3 = createDataset3();
         plot.setDataset(2, dataset3);
         plot.setRenderer(2, splinerenderer3);
-        plot.setRangeAxis(2, new NumberAxis("Tension"));
+        NumberAxis tensionYAxis = new NumberAxis("Tension");
+        tensionYAxis.setRange(0, 10000);
+        plot.setRangeAxis(2, tensionYAxis);
 
         plot.mapDatasetToRangeAxis(0, 0);//1st dataset to 1st y-axis
         plot.mapDatasetToRangeAxis(1, 1); //2nd dataset to 2nd y-axis
         plot.mapDatasetToRangeAxis(2, 2);
     
-        plot.addRangeMarker(new ValueMarker(100, Color.RED, new BasicStroke()));
-        plot.addDomainMarker(new ValueMarker(0, Color.BLUE, new BasicStroke((float) 2.5)));
-        plot.addDomainMarker(new ValueMarker(1000, Color.BLUE, new BasicStroke((float) 2.5)));
-        plot.addDomainMarker(new ValueMarker(7000, Color.BLUE, new BasicStroke((float) 2.5)));
-        plot.addDomainMarker(new ValueMarker(14000, Color.BLUE, new BasicStroke((float) 2.5)));
-        XYTextAnnotation text = new XYTextAnnotation("Max Tension", 10, 95);
+        plot.addRangeMarker(new ValueMarker(maxTensionMarker, Color.RED, new BasicStroke()));
+        XYTextAnnotation text = new XYTextAnnotation("Max Tension", 10, maxTensionMarker);
         text.setFont(new Font("SansSerif", Font.PLAIN, 9));
         plot.addAnnotation(text);
-        XYTextAnnotation text2 = new XYTextAnnotation("Profile", 0, 50);
-        text2.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        plot.addAnnotation(text2);
-        XYTextAnnotation text3 = new XYTextAnnotation("Ramp", 1000, 50);
-        text3.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        plot.addAnnotation(text3);
-        XYTextAnnotation text4 = new XYTextAnnotation("Constant", 7000, 50);
-        text4.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        plot.addAnnotation(text4);
-        XYTextAnnotation text5 = new XYTextAnnotation("Recovery", 14000, 50);
-        text5.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        plot.addAnnotation(text5);
+        
+                
+        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+        renderer.setBaseShapesVisible(false);
+        renderer.setBaseShapesFilled(false);
+        
+        XYLineAndShapeRenderer renderer2 = (XYLineAndShapeRenderer) plot.getRendererForDataset(speedDataset);
+        renderer2.setBaseShapesVisible(false);
+        renderer2.setBaseShapesFilled(false);
+        
+        XYLineAndShapeRenderer renderer3 = (XYLineAndShapeRenderer) plot.getRendererForDataset(tensionDataset);
+        renderer3.setBaseShapesVisible(false);
+        renderer3.setBaseShapesFilled(false);
         
         return chart;
+    }
+    
+    public void addStateMarker(int state) {
+        plot.addDomainMarker(new ValueMarker(previousTime, Color.BLUE, new BasicStroke((float) 2.5)));
+        switch(state) {
+            case 2:
+                XYTextAnnotation text = new XYTextAnnotation("Armed", previousTime + 2000, 500);
+                text.setFont(new Font("SansSerif", Font.PLAIN, 9));
+                plot.addAnnotation(text);
+                break;
+            case 3:
+                XYTextAnnotation text2 = new XYTextAnnotation("Profile", previousTime + 2000, 510);
+                text2.setFont(new Font("SansSerif", Font.PLAIN, 9));
+                plot.addAnnotation(text2);
+                break;
+            case 4:
+                XYTextAnnotation text3 = new XYTextAnnotation("Ramp", previousTime + 2000, 520);
+                text3.setFont(new Font("SansSerif", Font.PLAIN, 9));
+                plot.addAnnotation(text3);
+                break;
+            case 5:
+                XYTextAnnotation text4 = new XYTextAnnotation("Constant", previousTime + 2000, 530);
+                text4.setFont(new Font("SansSerif", Font.PLAIN, 9));
+                plot.addAnnotation(text4);
+                break;
+            case 6:
+                XYTextAnnotation text5 = new XYTextAnnotation("Recovery", previousTime + 2000, 540);
+                text5.setFont(new Font("SansSerif", Font.PLAIN, 9));
+                plot.addAnnotation(text5);
+                break;
+            case 7:
+                XYTextAnnotation text6 = new XYTextAnnotation("Retrieve", previousTime + 2000, 550);
+                text6.setFont(new Font("SansSerif", Font.PLAIN, 9));
+                plot.addAnnotation(text6);
+                break;
+        }
     }
     
     /**
@@ -175,10 +217,10 @@ public class SpeedGraph extends JPanel implements Runnable {
     }
     
     public void addHeightValue(long time, float value) {
-        heightTimeSeries.addOrUpdate(new Millisecond(new Date(time)), value);
+        heightTimeSeries.addOrUpdate(new Millisecond(new Date(previousTime)), value);
     }
     public void addTensionValue(long time, float value) {
-        tensionTimeSeries.addOrUpdate(new Millisecond(new Date(time)), value);
+        tensionTimeSeries.addOrUpdate(new Millisecond(new Date(previousTime)), value);
     }
     
     public void addSpeedValue(long time, float value) {

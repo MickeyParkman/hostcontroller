@@ -32,4 +32,9 @@ public class FileConnection implements Connection{
     private void readFromFile() {
         //TODO add read in form file and call notify
     }
+
+    @Override
+    public void start() {
+        //Not used for this class
+    }
 }

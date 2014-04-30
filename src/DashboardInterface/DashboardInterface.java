@@ -188,16 +188,22 @@ public class DashboardInterface extends javax.swing.JFrame {
         // long time = (long) internalMsg.getTimestamp() * 1000;
         long time = (long) (internalMsg.getElaspedTime() * -1000);
         //System.out.println(internalMsg.getElaspedTime());
-        //tensionGraphPanel1.addHeightValue(time, height);
-        //tensionGraphPanel1.addTensionValue(time, TOP_ALIGNMENT);
-        //tensionGraphPanel1.addSpeedValue(time, internalMsg.getCableSpeed());
+        tensionGraphPanel1.addSpeedValue(time, internalMsg.getCableSpeed());
+        tensionGraphPanel1.addHeightValue(time, height);
+        tensionGraphPanel1.addTensionValue(time, internalMsg.getTension());
         
         if(launchState != internalMsg.getState()) {
             launchState = internalMsg.getState();
             stateMachinePanel12.updateState(launchState);
+            tensionGraphPanel1.addStateMarker(launchState);
         }
     }
 
+    public void markEndLaunch() {
+        tensionGraphPanel1.addStateMarker(7);
+        stateMachinePanel12.updateState(7);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -93,6 +93,11 @@ public class CommPortConnection implements Connection{
             } catch (IOException e) {
         }
     }
+
+    @Override
+    public void start() {
+        //Not used for this class
+    }
     
     private class SerialEventHandler implements SerialPortEventListener {
         public void serialEvent(SerialPortEvent event) {

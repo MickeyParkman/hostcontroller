@@ -14,4 +14,6 @@ public interface Connection {
     void attachFilter(FilterListener newFilter);
     
     void notify(byte[] msg);
+    
+    void start();
 }

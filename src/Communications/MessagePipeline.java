@@ -69,6 +69,7 @@ public class MessagePipeline {
         if(filter != null) {
             dashboard = new DashboardInterface();
             dashboard.setVisible(true);
+            connection.start();
         }
         else {
             MessagePipelineException exception = new MessagePipelineException();
@@ -124,6 +125,6 @@ public class MessagePipeline {
     }
 
     void signalLaunchEnded() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dashboard.markEndLaunch();
     }
 }

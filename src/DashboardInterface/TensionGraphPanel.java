@@ -15,7 +15,7 @@ import org.jfree.data.time.Millisecond;
  * @author Alex
  */
 public class TensionGraphPanel extends javax.swing.JPanel {
-    SpeedGraph demo;
+    LaunchGraph demo;
 
     /**
      * Creates new form TensionGraphPanel
@@ -34,6 +34,10 @@ public class TensionGraphPanel extends javax.swing.JPanel {
     public void addSpeedValue(long time, float value) {
         demo.addSpeedValue(time, value);
     }
+    
+    public void addStateMarker(int state) {
+        demo.addStateMarker(state);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +50,7 @@ public class TensionGraphPanel extends javax.swing.JPanel {
 
         jTabbedPane1 = new javax.swing.JPanel();
         jTabbedPane1.setToolTipText("");
-        demo = new SpeedGraph("");
+        demo = new LaunchGraph("");
         demo.setVisible(true);
         jTabbedPane1.add(demo);
 

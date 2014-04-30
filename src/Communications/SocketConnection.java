@@ -60,6 +60,11 @@ public class SocketConnection implements Connection{
     private void updateListeners(String s) {
             notify(s.getBytes());
     }
+
+    @Override
+    public void start() {
+        //Not used for this class
+    }
     
     private class SocketDataListener implements Runnable {
 

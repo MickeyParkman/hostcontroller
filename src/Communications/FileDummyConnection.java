@@ -22,7 +22,7 @@ public class FileDummyConnection implements Connection {
 
     public FileDummyConnection() {
         t = new Thread(new DummyMessageGenerator());
-        t.start();
+        
     }
     
     @Override
@@ -41,8 +41,8 @@ public class FileDummyConnection implements Connection {
         notify(str.getBytes());
     }
     
-    public void startThread() {
-        
+    public void start() {
+        t.start();
     }
     
     private class DummyMessageGenerator implements Runnable {

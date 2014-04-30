@@ -52,15 +52,16 @@ public class FileDataGenerator {
     }
     
     public void readLineOfValues() {
-        if(!reader.hasNext()){
-            reopenFile();
+        if(reader.hasNext()){
+            //reopenFile();
+        
+            unixTime = new BigDecimal(reader.nextDouble());
+            cableOut = new BigDecimal(reader.nextDouble());
+            cableSpeed = new BigDecimal(reader.nextDouble());
+            cableAngle = new BigDecimal(reader.nextDouble());
+            tension = new BigDecimal(reader.nextDouble());
+            state = (int) reader.nextDouble(); 
         }
-        unixTime = new BigDecimal(reader.nextDouble());
-        cableOut = new BigDecimal(reader.nextDouble());
-        cableSpeed = new BigDecimal(reader.nextDouble());
-        cableAngle = new BigDecimal(reader.nextDouble());
-        tension = new BigDecimal(reader.nextDouble());
-        state = (int) reader.nextDouble();        
     }
 
     long getUnixTime() {
