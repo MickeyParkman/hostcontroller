@@ -25,7 +25,7 @@ public class CANMessageGenerator
         this.pipeline = pipeline;
     }
 
-    public void generateAndSendLaunchParameters(Pilot pilot, Sailplane sailplane
+    /*public void generateAndSendLaunchParameters(Pilot pilot, Sailplane sailplane
             , Airfield airfield, Runway runway, Position position)
     {
         CanCnvt tempMsg = new CanCnvt();
@@ -59,6 +59,6 @@ public class CANMessageGenerator
         //  .logAndSendMessage method produces a ASCII hex string to be logged 
         //  sent
 
-    }
+    }*/
 
 }

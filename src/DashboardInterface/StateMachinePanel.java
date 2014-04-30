@@ -97,8 +97,7 @@ public class StateMachinePanel extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(stateLabel))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(jToggleButton1)))
+                        .addGap(133, 133, 133)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -107,7 +106,6 @@ public class StateMachinePanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(stateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton1)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

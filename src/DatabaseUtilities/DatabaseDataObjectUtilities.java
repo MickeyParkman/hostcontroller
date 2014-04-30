@@ -83,7 +83,7 @@ public class DatabaseDataObjectUtilities {
             pilotInsertStatement.executeUpdate();
             pilotInsertStatement.close();
         }catch(SQLException e) {
-            System.out.println("Error adding sailplane to database");
+            //System.out.println("Error adding sailplane to database");
             throw e;
         }
     }
@@ -149,7 +149,7 @@ public class DatabaseDataObjectUtilities {
             List sailplanes = new ArrayList<Sailplane>();
             
             while(theSailplanes.next()) {
-                System.out.println("Getting a sailplane");
+                //System.out.println("Getting a sailplane");
                 String nNumber = theSailplanes.getString(1);
                 String type = theSailplanes.getString(2);
                 String owner = theSailplanes.getString(3);

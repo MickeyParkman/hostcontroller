@@ -61,7 +61,7 @@ public class SailplaneSelection extends javax.swing.JPanel {
                 mdl.addElement(s);
         } catch(SQLException e) {
             //TODO add handling for exception
-            System.out.println("SQLError: " + e.getMessage());
+            //System.out.println("SQLError: " + e.getMessage());
         } catch(ClassNotFoundException e2) {
             //TODO add handling for exception
         }
