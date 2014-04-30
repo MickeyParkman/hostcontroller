@@ -57,14 +57,14 @@ public class FileDataGenerator {
         }
         unixTime = new BigDecimal(reader.nextDouble());
         cableOut = new BigDecimal(reader.nextDouble());
-        cableAngle = new BigDecimal(reader.nextDouble());
         cableSpeed = new BigDecimal(reader.nextDouble());
+        cableAngle = new BigDecimal(reader.nextDouble());
         tension = new BigDecimal(reader.nextDouble());
         state = (int) reader.nextDouble();        
     }
 
-    double getUnixTime() {
-        return unixTime.doubleValue();
+    long getUnixTime() {
+        return unixTime.longValue();
     }
 
     double getCableOut() {

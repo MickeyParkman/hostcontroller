@@ -18,9 +18,10 @@ import java.util.logging.Logger;
  */
 public class FileDummyConnection implements Connection {
     private ArrayList<FilterListener> filters = new ArrayList<FilterListener>();
+    Thread t;
 
     public FileDummyConnection() {
-        Thread t = new Thread(new DummyMessageGenerator());
+        t = new Thread(new DummyMessageGenerator());
         t.start();
     }
     
@@ -38,6 +39,10 @@ public class FileDummyConnection implements Connection {
     
     private void update(String str) {
         notify(str.getBytes());
+    }
+    
+    public void startThread() {
+        
     }
     
     private class DummyMessageGenerator implements Runnable {

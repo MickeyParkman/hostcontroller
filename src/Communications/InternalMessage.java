@@ -73,7 +73,7 @@ public class InternalMessage
         this.canMsg = canMessage;
     }
 
-        public void setCableOut(float cableOut)
+    public void setCableOut(float cableOut)
     {
         this.cableOut = cableOut;
     }
@@ -162,6 +162,11 @@ public class InternalMessage
     public float getControlLever()
     {
         return controlLever;
+    }
+    
+    public int getState()
+    {
+        return state;
     }
 
 }
