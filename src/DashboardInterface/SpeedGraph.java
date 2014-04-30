@@ -31,6 +31,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.jfree.data.general.SeriesException;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
@@ -50,6 +51,8 @@ public class SpeedGraph extends JPanel implements Runnable {
     TimeSeries tensionTimeSeries = new TimeSeries("Tension ");
     TimeSeries speedTimeSeries = new TimeSeries("Speed ");
     TimeSeries heightTimeSeries = new TimeSeries("Height ");
+    
+    private long previousTime = 0L;
     
      public SpeedGraph(String title) {
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
@@ -87,7 +90,7 @@ public class SpeedGraph extends JPanel implements Runnable {
         XYSplineRenderer splinerenderer3 = new XYSplineRenderer();
         
 
-        XYDataset dataset1 = createDataset(0L, 70000);
+        XYDataset dataset1 = createDataset(0L, 90000);
         plot.setDataset(0,dataset1);
         plot.setRenderer(0,splinerenderer1);
         DateAxis domainAxis = new DateAxis("Date");
@@ -97,7 +100,9 @@ public class SpeedGraph extends JPanel implements Runnable {
         XYDataset dataset2 = createDataset2();
         plot.setDataset(1, dataset2);
         plot.setRenderer(1, splinerenderer2);
-        plot.setRangeAxis(1, new NumberAxis("Speed"));
+        NumberAxis speedYAxis = new NumberAxis("Speed");
+        speedYAxis.setRange(0, 400);
+        plot.setRangeAxis(1, speedYAxis);
     
         XYDataset dataset3 = createDataset3();
         plot.setDataset(2, dataset3);
@@ -170,14 +175,19 @@ public class SpeedGraph extends JPanel implements Runnable {
     }
     
     public void addHeightValue(long time, float value) {
-        heightTimeSeries.add(new Millisecond(new Date(time)), value);
+        heightTimeSeries.addOrUpdate(new Millisecond(new Date(time)), value);
     }
     public void addTensionValue(long time, float value) {
-        tensionTimeSeries.add(new Millisecond(new Date(time)), value);
+        tensionTimeSeries.addOrUpdate(new Millisecond(new Date(time)), value);
     }
     
     public void addSpeedValue(long time, float value) {
-        speedTimeSeries.add(new Millisecond(new Date(time)), value);
+        try{
+            previousTime += time;
+            speedTimeSeries.add(new Millisecond(new Date(previousTime)), value);
+        } catch(SeriesException e) {
+            
+        }
     }
     
     /**

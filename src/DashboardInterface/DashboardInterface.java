@@ -18,6 +18,7 @@ import java.util.Random;
  * @author garreola-gutierrez
  */
 public class DashboardInterface extends javax.swing.JFrame {
+    private int launchState = 0;
 
     /**
      * Creates new form ParameterSelection
@@ -185,11 +186,16 @@ public class DashboardInterface extends javax.swing.JFrame {
         dial.dialUpdate(internalMsg.getTension(), internalMsg.getCableSpeed());
         float height = (float)(internalMsg.getCableOut() * Math.sin(internalMsg.getCableAngle()));
         // long time = (long) internalMsg.getTimestamp() * 1000;
-        long time = (long) (internalMsg.getElaspedTime() * 1000);
-        System.out.println(time);
+        long time = (long) (internalMsg.getElaspedTime() * -1000);
+        //System.out.println(internalMsg.getElaspedTime());
         //tensionGraphPanel1.addHeightValue(time, height);
-        //tensionGraphPanel1.addTensionValue(WIDTH, TOP_ALIGNMENT);
-        //tensionGraphPanel1.addSpeedValue(WIDTH, TOP_ALIGNMENT);
+        //tensionGraphPanel1.addTensionValue(time, TOP_ALIGNMENT);
+        //tensionGraphPanel1.addSpeedValue(time, internalMsg.getCableSpeed());
+        
+        if(launchState != internalMsg.getState()) {
+            launchState = internalMsg.getState();
+            stateMachinePanel12.updateState(launchState);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

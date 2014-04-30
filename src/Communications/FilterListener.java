@@ -1,5 +1,6 @@
 package Communications;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -113,7 +114,7 @@ public class FilterListener extends MessageListener
 
             //  Get the data from the file line
             double unixTime = fileData.getUnixTime();
-            
+
             lastTension[activeDrum] = 
                     (int) (fileData.getTension() * 4 + 1024.5);
             
