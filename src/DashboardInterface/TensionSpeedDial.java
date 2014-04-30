@@ -36,7 +36,7 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
         }
 
         public void dialUpdate(double tension, double speed) {
-            System.out.println("2");
+            //System.out.println("2");
             dataset1.setValue(speed);
             dataset2.setValue(tension);      
         }

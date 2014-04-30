@@ -83,6 +83,10 @@ public class FilterListener extends MessageListener
         this.pipeline = pipeline;
         fileData = new FileDataGenerator();
     }
+    
+    public void restartFile() {
+        fileData = new FileDataGenerator();
+    }
 
     public void msgAvailable(byte[] msg)
     {
@@ -161,11 +165,11 @@ public class FilterListener extends MessageListener
                 pipeline.logMessage(intTime = msgin.get_int(0), message);
                 fracTime = 0;
                 currentTime = intTime;
-                System.out.println(currentTime);
+                //System.out.println(currentTime);
 
             } else
             {
-                System.out.println("Invalid Time Message Payload Length");
+                //System.out.println("Invalid Time Message Payload Length");
             }
 
             //   Update CIC filter integrators
@@ -300,7 +304,7 @@ public class FilterListener extends MessageListener
             //  state change
             {
                 intData.setState(tmpState);
-                System.out.println("State Change to " + tmpState);
+                //System.out.println("State Change to " + tmpState);
                 
                 lastState = tmpState;
 
@@ -320,11 +324,11 @@ public class FilterListener extends MessageListener
                             intData.setElaspedTime(-(groupDelay
                                     + timeTick));
                             pipeline.signalNewLaunchStarting();                            
-                            System.out.println("New Launch Signaled");
+                           //System.out.println("New Launch Signaled");
                             pipeline.signalNewLaunchdataAvaialbe(intData);
                         } else
                         {
-                            System.out.println("Entry into Profile State with Launch Active");
+                            //System.out.println("Entry into Profile State with Launch Active");
                         }
                         break;
 

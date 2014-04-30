@@ -45,6 +45,11 @@ public class FileDummyConnection implements Connection {
         t.start();
     }
     
+    public void stop() {
+        t = null;
+        t = new Thread(new DummyMessageGenerator());
+    }
+    
     private class DummyMessageGenerator implements Runnable {
         String dummyString = "Dummy";
 

@@ -112,6 +112,11 @@ public class CommPortConnection implements Connection{
     public void start() {
         //Not used for this class
     }
+
+    @Override
+    public void stop() {
+
+    }
     
     private class SerialEventHandler implements SerialPortEventListener {
         public void serialEvent(SerialPortEvent event) {

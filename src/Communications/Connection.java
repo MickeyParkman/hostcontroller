@@ -16,4 +16,6 @@ public interface Connection {
     void notify(byte[] msg);
     
     void start();
+    
+    void stop();
 }

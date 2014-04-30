@@ -108,7 +108,6 @@ public class MessagePipeline {
     
     public void signalNewLaunchdataAvaialbe(InternalMessage internalMsg) {
         if(dashboard != null) {
-            System.out.println("Here");
             dashboard.updateDisplay(internalMsg);
         }
     }
@@ -126,5 +125,7 @@ public class MessagePipeline {
 
     void signalLaunchEnded() {
         dashboard.markEndLaunch();
+        connection.stop();
+        filter.restartFile();
     }
 }

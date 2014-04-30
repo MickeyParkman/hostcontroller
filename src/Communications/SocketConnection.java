@@ -65,6 +65,11 @@ public class SocketConnection implements Connection{
     public void start() {
         //Not used for this class
     }
+
+    @Override
+    public void stop() {
+
+    }
     
     private class SocketDataListener implements Runnable {
 
