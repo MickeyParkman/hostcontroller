@@ -6,7 +6,6 @@
 
 package mainhost;
 
-import ApplicationFrame.ApplicationFrame;
 import Communications.CommPortConnection;
 import Communications.FileDummyConnection;
 import Communications.MessagePipeline;
@@ -19,8 +18,12 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author garreola-gutierrez
+ * The Main class is the launching point for this program where the UI and 
+ * the MessagePipeline are started up.
+ * @author Alex Williams
+ * @author Matt Dargen
+ * @author Gisela Gutierrez
+ * 
  */
 public class Main {
 

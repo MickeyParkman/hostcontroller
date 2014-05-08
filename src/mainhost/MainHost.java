@@ -15,6 +15,7 @@ import DatabaseUtilities.DatabaseBlackBoxMessageUtilities;
 import DatabaseUtilities.DatabaseEntryManager;
 import Wizards.PreWizard;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,6 +48,7 @@ public class MainHost extends javax.swing.JFrame {
         UnitSelection = new java.awt.Button();
         button1 = new java.awt.Button();
         button2 = new java.awt.Button();
+        button3 = new java.awt.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +99,14 @@ public class MainHost extends javax.swing.JFrame {
             }
         });
 
+        button3.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        button3.setLabel("Set Up Database");
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,7 +126,8 @@ public class MainHost extends javax.swing.JFrame {
                     .addComponent(EntryWizard1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(UnitSelection, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(button3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(107, 107, 107))
         );
         layout.setVerticalGroup(
@@ -126,7 +137,9 @@ public class MainHost extends javax.swing.JFrame {
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,6 +191,22 @@ public class MainHost extends javax.swing.JFrame {
         manager.setVisible(true);
     }//GEN-LAST:event_button2ActionPerformed
 
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        try {
+            //DatabaseUtilities.DatabaseInitialization.deleteDB();
+            DatabaseUtilities.DatabaseInitialization.initDatabase();
+        }catch(ClassNotFoundException e1) {
+            JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
+        }catch(SQLException e2) {
+            if(e2.getErrorCode() == 30000) {
+                JOptionPane.showMessageDialog(null, "Database Already Exists");
+            }
+            else { 
+                JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
+            }
+        }
+    }//GEN-LAST:event_button3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -217,6 +246,7 @@ public class MainHost extends javax.swing.JFrame {
     private java.awt.Button UnitSelection;
     private java.awt.Button button1;
     private java.awt.Button button2;
+    private java.awt.Button button3;
     private java.awt.Label label1;
     private java.awt.Label title;
     // End of variables declaration//GEN-END:variables
