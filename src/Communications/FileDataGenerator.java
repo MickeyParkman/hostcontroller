@@ -32,10 +32,19 @@ public class FileDataGenerator {
     
     public FileDataGenerator() {
         try {
-            reader = new Scanner(new File(System.getProperty("user.dir") + "/lnchdata.txt"));
+            //***********************************************
+            //**********For use outside of NetBeans**********
+            //***********************************************
+            //reader = new Scanner(new File(System.getProperty("user.dir") + "/lnchdata.txt"));
+            
+            //***********************************************
+            //**************For use in NetBeans**************
+            //***********************************************
+            reader = new Scanner(new File(System.getProperty("user.dir") + "/build/classes/Communications/lnchdata.txt"));
+            
             readLineOfValues();
         } catch (FileNotFoundException ex) {
-            System.out.println(System.getProperty("user.dir"));
+            System.out.println(System.getProperty("user.dir") + "/build/classes/Communications/lnchdata.txt");
             System.out.println("Bad file name");
         }
     }
@@ -43,7 +52,16 @@ public class FileDataGenerator {
     private void reopenFile() {
         reader.close();
         try {
-            reader = new Scanner(new File(System.getProperty("user.dir") + "/lnchdata.txt"));
+            //***********************************************
+            //**********For use outside of NetBeans**********
+            //***********************************************
+            //reader = new Scanner(new File(System.getProperty("user.dir") + "/lnchdata.txt"));
+            
+            //***********************************************
+            //**************For use in NetBeans**************
+            //***********************************************
+            reader = new Scanner(new File(System.getProperty("user.dir") + "/build/classes/Communications/lnchdata.txt"));
+            
             readLineOfValues();
         } catch (FileNotFoundException ex) {
             System.out.println(System.getProperty("user.dir"));
