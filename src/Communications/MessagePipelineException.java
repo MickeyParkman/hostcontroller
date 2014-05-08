@@ -9,6 +9,7 @@ package Communications;
 import javax.swing.JOptionPane;
 
 /**
+ * An exception to be used internally in the MessagePipeline
  *
  * @author Alex
  */

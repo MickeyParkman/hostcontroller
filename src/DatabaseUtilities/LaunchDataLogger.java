@@ -10,11 +10,14 @@ import Communications.InternalMessage;
 import java.util.ArrayList;
 
 /**
- *
- * @author Chris
+ * Provides the means to log Launch messages in the database in a separate thread
+ * 
+ * @author Alex Williams
  */
 public class LaunchDataLogger {
+    //Buffer for incoming messages 
     ArrayList<InternalMessage> launchMessages = new ArrayList<InternalMessage>();
+    //Threaded logging mechanism
     InternalLogger messageLogger;
     
     public LaunchDataLogger() {
@@ -23,6 +26,10 @@ public class LaunchDataLogger {
         loggingThread.start();
     }
     
+    /**
+     * Method for calling the object to log a message
+     * @param message the message to be logged
+     */
     public void logDisplayMessage(InternalMessage message) {
         launchMessages.add(message);
         synchronized(messageLogger) {
@@ -30,6 +37,9 @@ public class LaunchDataLogger {
         }
     }
     
+    /**
+     * Private class that implements the threaded logging of Launch messages
+     */
     private class InternalLogger implements Runnable {
 
         @Override

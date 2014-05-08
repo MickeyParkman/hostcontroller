@@ -11,6 +11,8 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
+ * Allows the user to specify the required data for a Pilot object to use in 
+ * parameterizing a launch without saving that data to the database
  *
  * @author Alex
  */
@@ -272,6 +274,11 @@ public class OneTimePilotPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_pilotLastNameInputActionPerformed
 
+    /**
+     * Gets the specified Pilot object from this panel if all required fields have been entered correctly
+     * 
+     * @return the generated Pilot object
+     */
     public Pilot getOneTimePilot() {
         if(pilotFirstNameInput.getText().isEmpty())
             JOptionPane.showMessageDialog(pilotFirstNameInput, "Please provide a first name");

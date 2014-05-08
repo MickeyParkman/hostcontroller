@@ -16,6 +16,9 @@ import DatabaseUtilities.BlackBoxLogger;
 import ParameterSelection.ParamSelectionFrame;
 
 /**
+ * The MessagePipeline is the entity that connects up a connection (Socket, CommPort,
+ * File, etc) a Filter, the loggers and the display so that they can all know 
+ * about each other and interact with each other. 
  *
  * @author Alex
  */
@@ -53,6 +56,11 @@ public class MessagePipeline {
         //msgGenerator = new CANMessageGenerator(this);
     }
     
+    /**
+     * Starts up the parameter selection page for this pipeline
+     * 
+     * @throws MessagePipelineException 
+     */
     public void startParameterSelection() throws MessagePipelineException {
         if(filter != null) {
             paramSelection = new ParamSelectionFrame(this);
@@ -65,6 +73,11 @@ public class MessagePipeline {
         }
     }
     
+    /**
+     * Starts up the dashboard display page for this pipeline
+     * 
+     * @throws MessagePipelineException 
+     */
     public void startDashboard() throws MessagePipelineException {
         if(filter != null) {
             dashboard = new DashboardInterface();
@@ -81,20 +94,40 @@ public class MessagePipeline {
         }
     }
     
+    /**
+     * Sends out an Ascii message to the embedded system from a CanCnvrt message
+     * @param asciiMessage 
+     */
     public void sendAsciiMessage(String asciiMessage) {
         
     }
     
+    /**
+     * Uses the CanBus message logger attached to the pipeline to log the raw 
+     * CanBus message
+     * 
+     * @param message the message to log
+     */
     public void logMessage(String message) {
         if(logger != null);
             //logger.loggMessage(message);
     }
     
+    /**
+     * Uses the CanBus message logger attached to the pipeline to log the raw 
+     * CanBus message with an associated timestamp
+     * 
+     * @param message the message to log
+     */
     public void logMessage(int timestamp, String message) {
         if(logger != null);
             //logger.loggMessage(timestamp, message);
     }
     
+    /**
+     * Method to be called when a request for launch parameters comes in form 
+     * the embedded system
+     */
     public void launchParametersRequested() {
         Pilot pilot = null;
         Sailplane sailplane = null;
@@ -105,16 +138,30 @@ public class MessagePipeline {
         //msgGenerator.generateAndSendLaunchParameters(pilot, sailplane, airfield, runway, position);
     }
     
+    /**
+     * Method to be called when a new launch is starting (signaled by specific
+     * state change)
+     */
     public void signalNewLaunchStarting() {
         
     }
     
+    /**
+     * Method to be called when new InternalMessage with launch data is available from the Filter
+     * 
+     * @param internalMsg the new launch data
+     */
     public void signalNewLaunchdataAvaialbe(InternalMessage internalMsg) {
         if(dashboard != null) {
             dashboard.updateDisplay(internalMsg);
         }
     }
     
+    /**
+     * Method to log and pass on an outgoing message to the embedded system
+     * 
+     * @param byteMessage the message to be logged and passed on to the embedded system
+     */
     public void logAndSendMessage(CanCnvt byteMessage) 
     {        
         byteMessage.seq = sequenceNumber;
@@ -126,10 +173,11 @@ public class MessagePipeline {
         //TODO send out messgae to com port/socket
     }
 
+    /**
+     * Method to be called at the end of a launch
+     */
     void signalLaunchEnded() {
         dashboard.markEndLaunch();
-        //connection = new FileDummyConnection();
-        //connection.attachFilter(filter);
     }
     
     public void closeLaunch() {

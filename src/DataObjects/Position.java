@@ -7,7 +7,8 @@
 package DataObjects;
 
 /**
- *
+ * This Class stores the data about a Position
+ * 
  * @author garreola-gutierrez, mtdargen
  */
 public class Position {

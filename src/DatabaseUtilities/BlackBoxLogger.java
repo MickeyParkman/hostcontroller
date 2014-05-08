@@ -16,13 +16,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Chris
+ * This Class allows the program to save all incoming CanBus messages to table 
+ * in the database in a multi-threaded fashion
+ * 
+ * @author Alex Williams
  */
 public class BlackBoxLogger {
+    //Last timestamp with which the most recent messages get associated
     private long currenttimestamp;
+    //Buffer of messages waiting to be saved
     private LinkedList<String> messages = new LinkedList<String>();
+    //Mulitthreaded logging mechanism
     private InternalLogger logger;
+    //Thread on which to run the logger
     private Thread loggingThread;
     
     private Connection connection;
@@ -51,6 +57,12 @@ public class BlackBoxLogger {
         }
     }
     
+    /**
+     * Method to be called to add the message to buffer of messages to log, and
+     * invoke the logger to do the logging
+     * 
+     * @param message the message to be logged
+     */
     public void loggMessage(String message) {
         messages.add(message);
         synchronized(logger){
@@ -58,6 +70,13 @@ public class BlackBoxLogger {
         }
     }
     
+    /**
+     * Method to be called to add the message to buffer of messages to log, set 
+     * the new timestamp and invoke the logger to do the logging
+     * 
+     * @param timeStamp the new timestamp
+     * @param message the message to be logged
+     */
     public void loggMessage(int timeStamp, String message) {
         currenttimestamp = timeStamp;
         messages.add(message);
@@ -66,6 +85,10 @@ public class BlackBoxLogger {
         }
     }
     
+    /**
+     * This class implements the threaded logger that does the storing of
+     * messages to the "Black Box" of raw CanBus messages
+     */    
     private class InternalLogger implements Runnable {
         @Override
         public void run() {

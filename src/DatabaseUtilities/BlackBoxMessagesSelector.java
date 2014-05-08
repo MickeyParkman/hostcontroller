@@ -16,8 +16,12 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
 /**
- *
- * @author Chris
+ * This class allows for UI interaction with the "Black Box" of raw CanBus 
+ * messages in the database by allowing the user to specify a start and end 
+ * timestamp for the range of messages to interact with and then either 
+ * saving those messages to a file, deleting them or both
+ * 
+ * @author Alex Williams
  */
 public class BlackBoxMessagesSelector extends javax.swing.JFrame {
 
@@ -168,6 +172,11 @@ public class BlackBoxMessagesSelector extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_filePathNameActionPerformed
 
+    /**
+     * Allows the User to select a file to save the messages to using a FileChooser
+     * 
+     * @param evt the ActionEvent fired by clicking the button
+     */
     private void browseFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseFilesButtonActionPerformed
         // TODO add your handling code here:
         int selectedValue = saveFileChooser.showSaveDialog(this);

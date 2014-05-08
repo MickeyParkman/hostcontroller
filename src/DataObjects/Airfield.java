@@ -7,7 +7,8 @@
 package DataObjects;
 
 /**
- *
+ * This class represents the relevant data about an Airfield
+ * 
  * @author garreola-gutierrez
  */
 public class Airfield {

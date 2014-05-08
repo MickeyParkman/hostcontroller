@@ -7,7 +7,8 @@
 package DataObjects;
 
 /**
- *
+ * This class stores the relevant data about a drum on the winch
+ * 
  * @author Alex
  */
 public class DrumParameters {

@@ -7,7 +7,8 @@
 package DataObjects;
 
 /**
- *
+ * This Class stores the data about a Runway
+ * 
  * @author garreola-gutierrez, matt dargen
  */
 public class Runway {

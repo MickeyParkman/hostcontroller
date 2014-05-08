@@ -16,14 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Alex
+ * Provides the means to add to and retrieve Launch messages from the database
+ * 
+ * @author Alex Williams
  */
 public class DatabaseLaunchMessageUtilities {
     private static final String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
     private static final String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
     
+    /**
+     * Retrieves the previous launches for the system
+     * 
+     * @return previous launches
+     * @throws ClassNotFoundException if the program could not load the Apache Derby drivers 
+     * @throws SQLException if the table in the database could not be accesses
+     */
     public static List<PreviousLaunch> getPreviousLaunches() throws ClassNotFoundException, SQLException {
         ArrayList<PreviousLaunch> previousLaunches = new ArrayList<PreviousLaunch>();        
                 
@@ -63,6 +71,13 @@ public class DatabaseLaunchMessageUtilities {
         }
     }
     
+    /**
+     * Retrieves the launch messages associated with a previous launch in the system
+     * 
+     * @return the launch messages associated with a previous launch
+     * @throws ClassNotFoundException if the program could not load the Apache Derby drivers 
+     * @throws SQLException if the table in the database could not be accesses
+     */
     public static List<InternalMessage> getMessagesForLaunch(PreviousLaunch launch) {
        ArrayList<InternalMessage> messages = new ArrayList<InternalMessage>(); 
        

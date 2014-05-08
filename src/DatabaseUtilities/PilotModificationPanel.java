@@ -19,8 +19,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Chris
+ * GUI for allowing a user to edit the data for  Pilot entry in the database
+ * 
+ * @author Alex Williams
  */
 public class PilotModificationPanel extends javax.swing.JPanel {
     private ArrayList<Pilot> names = new ArrayList<Pilot>();
@@ -281,18 +282,33 @@ public class PilotModificationPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fills out the display fields with data from the Pilot object when a Pilot is clicked on
+     * 
+     * @param evt the KeyReleased event that triggers this filtering
+     */
     private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pilotJListMouseClicked
         // TODO add your handling code here:
         Pilot pilot = (Pilot) pilotJList.getSelectedValue();
         pilotSelected(pilot);
     }//GEN-LAST:event_pilotJListMouseClicked
 
+    /**
+     * Fills out the display fields with data from the Pilot object when a Pilot is navigated to via the arrow keys
+     * 
+     * @param evt the KeyReleased event that triggers this filtering
+     */
     private void pilotJListKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pilotJListKeyReleased
         // TODO add your handling code here:
         Pilot pilot = (Pilot) pilotJList.getSelectedValue();
         pilotSelected(pilot);
     }//GEN-LAST:event_pilotJListKeyReleased
 
+    /**
+     * Filters the list of Pilots based on the text typed in the text field
+     * 
+     * @param evt the KeyReleased event that triggers this filtering
+     */
     private void pilotNameInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pilotNameInputKeyReleased
          // TODO add your handling code here:
         String matchstring = pilotNameInput.getText();
@@ -324,6 +340,11 @@ public class PilotModificationPanel extends javax.swing.JPanel {
         preferenceSlider.setValue(Preference.convertPreferenceStringToNum(pilot.getPreference()));
     }
     
+    /**
+     * Gets the updated values of the pilot object
+     * 
+     * @return the updated Pilot object
+     */
     public Pilot getUpdatedPilot() {
         int weight = 0;
         try {
@@ -343,6 +364,11 @@ public class PilotModificationPanel extends javax.swing.JPanel {
         
     }
     
+    /**
+     * Returns the pilot selected from the list
+     * 
+     * @return Pilot object selected in the list
+     */
     public Pilot getSelectedPilot() {
         if(pilotJList.getSelectedIndex() >= 0) {
             return (Pilot) pilotJList.getSelectedValue();

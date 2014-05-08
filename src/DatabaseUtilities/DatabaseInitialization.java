@@ -10,9 +10,16 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 /**
  *
- * @author awilliams5
+ * @author Alex Williams
  */
 public class DatabaseInitialization {
+    /**
+    *Initializes the database for this program using calls to the helper
+    *functions
+    *
+    * @throws ClassNotFoundException if the classes for the Apache Derby database can't be found
+    * @throws SQLException if an issue arises while creating the tables
+    */
     public static void initDatabase() throws ClassNotFoundException, SQLException {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
@@ -38,7 +45,7 @@ public class DatabaseInitialization {
             throw e;
         }
         
-        
+            
         //Build and fill Capability table
         try{
             createCapability(connection);
@@ -72,6 +79,27 @@ public class DatabaseInitialization {
             //JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }  
+        try{
+            createAirfield(connection);
+        }catch(SQLException e) {
+            //For debugging purposes:
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        try{
+            createRunway(connection);
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        try{
+            createPosition(connection);
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
         try{
              createDistanceUnits(connection);
         }catch(SQLException e) {
@@ -166,6 +194,12 @@ public class DatabaseInitialization {
         connection.close();
     }
     
+    /**
+     * Creates the table in the database for storing data associated with a Pilot object
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createPilot(Connection connect) throws SQLException {
         String createPilotString = "CREATE TABLE Pilot"
                 + "(name VARCHAR(30) NOT NULL,"
@@ -186,6 +220,12 @@ public class DatabaseInitialization {
         }        
     }
     
+    /**
+     * Creates the table in the database for storing data associated with a Sailplane object
+     * 
+     * @param connectthe connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createSailplane(Connection connect) throws SQLException {
         String createSailplaneString = "CREATE TABLE Sailplane"
                 + "(n_number VARCHAR(20),"
@@ -205,7 +245,13 @@ public class DatabaseInitialization {
             throw e;
         }
     }
-        
+      
+    /**
+     * Creates the table in the database for storing the possible Capabilities of a Pilot
+     * 
+     * @param connectthe connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createCapability(Connection connect) throws SQLException {
         String createCapablityString = "CREATE TABLE Capability"
                 + "(capability_id INT,"
@@ -227,6 +273,12 @@ public class DatabaseInitialization {
     }
     
     
+    /**
+     * Creates the table in the database for storing the possible Preferences of a Pilot
+     * 
+     * @param connectthe connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createPreference(Connection connect) throws SQLException {
         String createPreferenceString = "CREATE TABLE Preference"
                 + "(preference_id INT,"
@@ -246,13 +298,19 @@ public class DatabaseInitialization {
         }        
     }
     
+    /**
+     * Creates the table in the database for storing data associated with a Airfield object
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createAirfield(Connection connect) throws SQLException {
         String createAirfieldString = "CREATE TABLE Airfield"
-                + "( name VARCHAR(30),"
-                + "designator VARCHAR(20),"
-                + "location VARCHAR(20),"
-                + "altitude VARCHAR(20),"
-                + "magneticVariation VARCHAR(20),"
+                + "( name VARCHAR(30), "
+                + "designator VARCHAR(20), "
+                + "location VARCHAR(20), "
+                + "altitude VARCHAR(20), "
+                + "magneticVariation VARCHAR(20), "
                 + "PRIMARY KEY (name))";
         try (Statement createAirfieldTableStatement = connect.createStatement()) {
             createAirfieldTableStatement.execute(createAirfieldString);
@@ -261,6 +319,12 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table in the database for storing data associated with a Runway object
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createRunway(Connection connect) throws SQLException {
         String createRunwayString = "CREATE TABLE Runway"
                 + "( magnetic_heading VARCHAR(10), "
@@ -274,13 +338,20 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table in the database for storing data associated with a Position object
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createPosition(Connection connect) throws SQLException {
         String createRunwayString = "CREATE TABLE Position"
-                + "( max_length FLOAT(10,6), "
-                + " slope FLOAT(10,6),"
-                + " centerline_offset FLOAT(10,6), "
-                + "PRIMARY KEY (name), "
-                + "FOREIGN KEY (parent) REFERENCES Airfield (name))";
+                + "( max_length FLOAT, "
+                + " slope FLOAT,"
+                + " centerline_offset FLOAT, "
+                + " parent VARCHAR(10), "
+                + "PRIMARY KEY (centerline_offset), "
+                + "FOREIGN KEY (parent) REFERENCES Runway (magnetic_heading))";
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
         }catch(SQLException e) {
@@ -288,6 +359,12 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table to store the possible units of distance
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createDistanceUnits(Connection connect) throws SQLException {
         String createLengthUnitsString = "CREATE TABLE DistanceUnits"
                 + "( index INT, "
@@ -311,6 +388,12 @@ public class DatabaseInitialization {
         }
     }
     
+     /**
+     * Creates the table to store the possible units of tension
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createTensionUnits(Connection connect) throws SQLException {
         String createTensionUnitsString = "CREATE TABLE TensionUnits"
                 + "( index INT, "
@@ -329,6 +412,12 @@ public class DatabaseInitialization {
         }
     }
     
+     /**
+     * Creates the table to store the possible units of weight
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createWeightUnits(Connection connect) throws SQLException {
         String createWeightUnitsString = "CREATE TABLE WeightUnits"
                 + "( index INT, "
@@ -345,6 +434,12 @@ public class DatabaseInitialization {
         }
     }
     
+     /**
+     * Creates the table to store the possible units of velocity
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createVelocityUnits(Connection connect) throws SQLException {
         String createVelocityUnitsString = "CREATE TABLE VelocityUnits"
                 + "( index INT, "
@@ -365,6 +460,12 @@ public class DatabaseInitialization {
         }
     }
     
+     /**
+     * Creates the table to store the possible units of temperature
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createTemperatureUnits(Connection connect) throws SQLException {
         String createTemperatureUnitsString = "CREATE TABLE TemperatureUnits"
                 + "( index INT, "
@@ -381,6 +482,12 @@ public class DatabaseInitialization {
         }
     }
     
+     /**
+     * Creates the table to store the possible units of pressure
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createPressureUnits(Connection connect) throws SQLException {
         String createPressureUnitsString = "CREATE TABLE PressureUnits"
                 + "( index INT, "
@@ -399,6 +506,12 @@ public class DatabaseInitialization {
         }
     }
     
+     /**
+     * Creates the table to store the units for pilot data
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createPilotUnits(Connection connect) throws SQLException {
         String createPressureUnitsString = "CREATE TABLE PilotUnits"
                 + "( unit_set INT, "
@@ -415,6 +528,12 @@ public class DatabaseInitialization {
         }
     }
     
+     /**
+     * Creates the table to store the units for Sailplane data
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createSailplaneUnits(Connection connect) throws SQLException {
         String createPressureUnitsString = "CREATE TABLE SailplaneUnits"
                 + "( unit_set INT, "
@@ -435,6 +554,12 @@ public class DatabaseInitialization {
         }
     }
     
+     /**
+     * Creates the table to store the units for Airfield data
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createAirfieldUnits(Connection connect) throws SQLException {
         String createPressureUnitsString = "CREATE TABLE AirfieldUnits"
                 + "( unit_set INT, "
@@ -450,6 +575,12 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table to store the units for Position data
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createPositionUnits(Connection connect) throws SQLException {
         String createPressureUnitsString = "CREATE TABLE PositionUnits"
                 + "( unit_set INT, "
@@ -465,6 +596,12 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table to store the units for Dashboard display data
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createDashboardUnits(Connection connect) throws SQLException {
         String createPressureUnitsString = "CREATE TABLE DashboardUnits"
                 + "( unit_set INT, "
@@ -484,6 +621,12 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table to store the units for environmental data
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createEnvironmentalUnits(Connection connect) throws SQLException {
         String createPressureUnitsString = "CREATE TABLE EnvironmentalUnits"
                 + "( unit_set INT, "
@@ -501,6 +644,12 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table to store raw CanBus messages
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createMessageBlackBoxTable(Connection connect) throws SQLException {
         String createBlackBoxString = "CREATE TABLE BlackBoxMessages"
                 + "( timestamp BIGINT, "
@@ -512,6 +661,12 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table to store a list of previous launches
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createPreviousLaunchesTable(Connection connect) throws SQLException {
         String createPastLaunches = "CREATE TABLE PreviousLaunches"
                 + "( timestamp BIGINT, "
@@ -525,6 +680,12 @@ public class DatabaseInitialization {
         }
     }
     
+    /**
+     * Creates the table to store the messages associated with previous launches
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
     private static void createLaunchMessagesTable(Connection connect) throws SQLException {
         String createLaunchMessages = "CREATE TABLE LaunchMessages"
                 + "( id INT NOT NULL AUTO_INCREMENT, "

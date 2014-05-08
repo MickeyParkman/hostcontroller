@@ -10,7 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * This UI class is a framework in which to place the panels for interacting 
+ * with the system parameters
+ * <p>
+ * One such panel already exists for the Drum Parameters
+ * 
+ * 
  * @author Alex
  */
 public class SystemParametersPanel extends javax.swing.JPanel {

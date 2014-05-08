@@ -7,7 +7,8 @@
 package DataObjects;
 
 /**
- *
+ *  This Class stores the data about a Pilot
+ * 
  * @author awilliams5
  */
 public class Pilot {

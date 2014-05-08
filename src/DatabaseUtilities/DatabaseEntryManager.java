@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Chris
+ * @author Alex Williams
  */
 public class DatabaseEntryManager extends javax.swing.JFrame {
 

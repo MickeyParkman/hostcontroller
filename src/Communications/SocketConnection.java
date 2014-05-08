@@ -17,11 +17,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Implements the incoming and outgoing connection for our program over a Socket
  *
  * @author awilliams5
  */
 public class SocketConnection implements Connection{
+    //Listeners listening to this connection
     private ArrayList<FilterListener> filters = new ArrayList<FilterListener>();
+    //Ip adress of local host
     private String ipAddress = "127.0.0.1";
     private Socket socket;
     private BufferedReader in;
@@ -34,6 +37,9 @@ public class SocketConnection implements Connection{
         t.start();
     }
     
+    /**
+     * Connects the object up to the specified Socket
+     */
     private void initSocket() {
         try {
             socket = new Socket(ipAddress, 32123);
@@ -57,6 +63,12 @@ public class SocketConnection implements Connection{
         }
     }
     
+    /**
+     * Calls an update on all of the FilterListeners that are listening to 
+     * this connection
+     * 
+     * @param s 
+     */
     private void updateListeners(String s) {
             notify(s.getBytes());
     }
@@ -71,6 +83,10 @@ public class SocketConnection implements Connection{
 
     }
     
+    /**
+     * Implements the constant listening to the socket and passes on messages 
+     * when available
+     */
     private class SocketDataListener implements Runnable {
 
         @Override

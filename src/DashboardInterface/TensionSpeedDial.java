@@ -21,20 +21,23 @@ import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.ui.GradientPaintTransformType;
 import org.jfree.ui.StandardGradientPaintTransformer;
 
+/**
+ * This UI class implements the dial to display a live readout of tension and speed
+ * 
+ * @author Alex Williams
+ */
 
-
-public class TensionSpeedDial extends JPanel implements ChangeListener {
+public class TensionSpeedDial extends JPanel {
         DefaultValueDataset dataset1;
         DefaultValueDataset dataset2;
         JSlider slider1;
         JSlider slider2;
 
-        public void stateChanged(ChangeEvent changeevent)
-        {
-                dataset1.setValue(new Integer(slider1.getValue()));
-                dataset2.setValue(new Integer(slider2.getValue()));
-        }
-
+        /**
+         * Method to update the dial
+         * @param tension a new tension to display
+         * @param speed a new speed to display
+         */
         public void dialUpdate(double tension, double speed) {
             //System.out.println("2");
             dataset1.setValue(speed);
@@ -104,6 +107,8 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                         
                         dialplot.mapDatasetToScale(1, 1);
                         
+                        //Red "Danger" ranges for the dial 
+                        
                         /*StandardDialRange speedRangeOuter = new StandardDialRange(87.5D, 100D, Color.red);
                         speedRangeOuter.setScaleIndex(1);
                         speedRangeOuter.setInnerRadius(0.89999999999999997D);
@@ -139,32 +144,12 @@ public class TensionSpeedDial extends JPanel implements ChangeListener {
                         dialcap.setRadius(0.10000000000000001D);
                         dialplot.setCap(dialcap);
                         
-                        //ChartFactory.create
-                        
                         JFreeChart jfreechart = new JFreeChart(dialplot);
                         ChartPanel chartpanel = new ChartPanel(jfreechart);
                         chartpanel.setPreferredSize(new Dimension(400, 400));
                         JPanel jpanel = new JPanel(new GridLayout(2, 2));
-                        //jpanel.add(new JLabel("Speed:"));
-                        //jpanel.add(new JLabel("Tension:"));
-                        //slider1 = new JSlider(0, 80, 0);
-                        //slider1.setMajorTickSpacing(20);
-                        //slider1.setPaintTicks(true);
-                        //slider1.setPaintLabels(true);
-                        //slider1.addChangeListener(this);
-                        //jpanel.add(slider1);
-                        //jpanel.add(slider1);
-                        //slider2 = new JSlider(0, 100, 0);
-                        //slider2.setMajorTickSpacing(20);
-                        //slider2.setPaintTicks(true);
-                        //slider2.setPaintLabels(true);
-                        //slider2.addChangeListener(this);
-                        //jpanel.add(slider2);
                         add(chartpanel);
                         add(jpanel, "South");
-                        //DialUpdater update = new DialUpdater();
-                        //Thread t = new Thread(update);
-                        //t.start();
         }
         
         private void updateDial() {

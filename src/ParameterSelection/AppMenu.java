@@ -17,8 +17,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
- *
- * @author awilliams5
+ * This class implements a menu from which the user can a system configuration 
+ * page to open
+ * 
+ * @author Alex Williams
  */
 public class AppMenu extends JMenuBar{
     
@@ -27,6 +29,9 @@ public class AppMenu extends JMenuBar{
         initMenu();
     }
     
+    /**
+     * Sets up the menu with the options of system configuration pages to navigate to
+     */
     private void initMenu() {
         JMenu menu = new JMenu("System");
         JMenuItem paramMenuItem =  new JMenuItem("Parameters");

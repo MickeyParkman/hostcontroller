@@ -17,15 +17,23 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author awilliams5
+ * This class provides the methods that allow a user to add and retrieve Pilots,
+ * Sailplanes and Airfields from the database as well as update and delete Pilots
+ * 
+ * @author Alex Williams
  */
 public class DatabaseDataObjectUtilities {
     private static String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
     private static String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
     private static String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
 
-    
+    /**
+     * Adds the relevant data for a pilot to the database
+     * 
+     * @param thePilot the pilot to add to the database
+     * @throws SQLException if table cannot be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
+     */
     public static void addPilotToDB(Pilot thePilot) throws SQLException, ClassNotFoundException {
         //Check for DB drivers
         try{
@@ -55,6 +63,13 @@ public class DatabaseDataObjectUtilities {
         }
     }
     
+    /**
+     * Adds the relevant data for a sailplane to the database
+     * 
+     * @param theSailplane the sailplane to add to the database
+     * @throws SQLException if table cannot be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
+     */
     public static void addSailplaneToDB(Sailplane theSailplane) throws SQLException, ClassNotFoundException {
         //Check for DB drivers
         try{
@@ -88,6 +103,13 @@ public class DatabaseDataObjectUtilities {
         }
     }
     
+    /**
+     * Pulls the list of pilots (and relevant data) from the database
+     * 
+     * @return the list of pilots in the database
+     * @throws SQLException if the table in the database can't be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
+     */
     public static List<Pilot> getPilots() throws SQLException, ClassNotFoundException {        
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
@@ -131,6 +153,13 @@ public class DatabaseDataObjectUtilities {
         }
     }
     
+    /**
+     * Pulls the list of Sailplanes (and relevant data) from the database
+     * 
+     * @return the list of sailplanes in the database
+     * @throws SQLException if the table in the database can't be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
+     */
     public static List<Sailplane> getSailplanes() throws SQLException, ClassNotFoundException {        
         try{
             Class.forName(driverName);
@@ -184,6 +213,13 @@ public class DatabaseDataObjectUtilities {
         }
     }
     
+    /**
+     * Update the data for a given pilot in the database
+     * 
+     * @param pilot the pilot to update the data for
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
+     * @throws SQLException if the table in the database can't be accessed
+     */
     public static void updatePilotEntry(Pilot pilot) throws ClassNotFoundException, SQLException {
          try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
@@ -217,6 +253,13 @@ public class DatabaseDataObjectUtilities {
         }
     }
     
+    /**
+     * Delete the data for a given pilot from the database
+     * 
+     * @param pilot the pilot to delete from the database
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
+     * @throws SQLException if the table in the database can't be accessed
+     */
     public static void deletePilot(Pilot pilot) throws ClassNotFoundException {
        try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
@@ -239,6 +282,14 @@ public class DatabaseDataObjectUtilities {
         }
     }
     
+    /**
+     * Check to see that Pilot table exists
+     * 
+     * @param dbConnection the connection to the database
+     * @return true if Pilot table exists
+     * @return false if Pilot table doesn't exist
+     * @throws SQLException 
+     */
     public static boolean checkForTable(Connection dbConnection) throws SQLException {
         try {
             Statement s = dbConnection.createStatement();

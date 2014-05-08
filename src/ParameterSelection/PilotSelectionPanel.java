@@ -22,7 +22,9 @@ import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * This UI class allows the user to select a Pilot object with which to 
+ * parameterize a launch from a list of Pilots populated from the database
+ * 
  * @author Alex
  */
 public class PilotSelectionPanel extends javax.swing.JPanel {
@@ -257,7 +259,11 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JLabel pilotWeightLabel;
     // End of variables declaration                   
     
-    
+    /**
+     * Gets the selected Pilot from the list of Pilots in the database
+     * 
+     * @return the selected Pilot from the list of Pilots, as long as one has been selected
+     */
     public Pilot getSelectedPilot() {
         if(pilotJList.getSelectedIndex() < 0){
             return null;

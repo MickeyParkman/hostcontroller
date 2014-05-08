@@ -42,10 +42,12 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.Layer;
 
 /**
- *
+ * This UI class implements the graph of relevant data about a launch using the 
+ * JFreechart library
+ * 
  * @author Alex
  */
-public class LaunchGraph extends JPanel implements Runnable {
+public class LaunchGraph extends JPanel {
     private final long serialVersionUID = 1L;
     TimeSeriesCollection heightDataset = new TimeSeriesCollection();
     TimeSeriesCollection speedDataset = new TimeSeriesCollection();
@@ -144,6 +146,11 @@ public class LaunchGraph extends JPanel implements Runnable {
         return chart;
     }
     
+    /**
+     * Adds a new vertical blue marker to the graph at the change of states
+     * 
+     * @param state the new state the launch has transitioned into
+     */
     public void addStateMarker(int state) {
         plot.addDomainMarker(new ValueMarker(previousTime, Color.BLUE, new BasicStroke((float) 2.5)));
         switch(state) {
@@ -181,7 +188,7 @@ public class LaunchGraph extends JPanel implements Runnable {
     }
     
     /**
-     * Creates a dataset, consisting of two series of monthly data.
+     * Creates a dataset for height values 
      *
      * @return The dataset.
      */
@@ -193,12 +200,22 @@ public class LaunchGraph extends JPanel implements Runnable {
 
     }
     
+    /**
+     * Creates a dataset for speed values 
+     *
+     * @return The dataset.
+     */
     private XYDataset createDataset2() {
         speedDataset.addSeries(speedTimeSeries);
         return speedDataset;
 
     }
     
+    /**
+     * Creates a dataset for tension values 
+     *
+     * @return The dataset.
+     */
     private XYDataset createDataset3 () {
         tensionDataset.addSeries(tensionTimeSeries);
         return tensionDataset;
@@ -217,13 +234,32 @@ public class LaunchGraph extends JPanel implements Runnable {
 
     }
     
+    /**
+     * Adds a new height value to the height dataset
+     * 
+     * @param time the time associated with the value on the graph
+     * @param value the height value to be graphed
+     */
     public void addHeightValue(long time, float value) {
         heightTimeSeries.addOrUpdate(new Millisecond(new Date(previousTime)), value);
     }
+    
+    /**
+     * Adds a new tension value to the tension dataset
+     * 
+     * @param time the time associated with the value on the graph
+     * @param value the tension value to be graphed
+     */
     public void addTensionValue(long time, float value) {
         tensionTimeSeries.addOrUpdate(new Millisecond(new Date(previousTime)), value);
     }
     
+    /**
+     * Adds a new speed value to the height dataset
+     * 
+     * @param time the time associated with the value on the graph
+     * @param value the speed value to be graphed
+     */
     public void addSpeedValue(long time, float value) {
         try{
             previousTime += time;
@@ -248,25 +284,4 @@ public class LaunchGraph extends JPanel implements Runnable {
         panel.setFocusable(false);
         return panel;
     }
-
-    @Override
-    public void run() {
-        long time = 0L;
-       
-    }
-    
-    /**
-     * Starting point for the demonstration application.
-     *
-     * @param args  ignored.
-     */
-    /*public static void main(String[] args) {
-
-        TensionGraph demo = new TensionGraph(
-                "Time Series Chart Demo 1");
-        demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
-        demo.setVisible(true);
-
-    }*/
 }

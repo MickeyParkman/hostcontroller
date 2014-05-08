@@ -12,12 +12,13 @@ import DataObjects.Runway;
 import DataObjects.Sailplane;
 
 /**
- *
+ * This class provides the methods to generate an outgoing CanBus Message
+ * 
  * @author Alex
  */
 public class CANMessageGenerator
 {
-
+    //The pipeline that the message generator is connected to
     MessagePipeline pipeline;
 
     public CANMessageGenerator(MessagePipeline pipeline)

@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Chris
+ * @author Alex Williams
  */
 public class DatabaseBlackBoxMessageUtilities {
     private static String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";

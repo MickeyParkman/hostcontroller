@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This UI class allows the user to interact with the relevant data about 
+ * a drum attached to the winch system
  *
  * @author Alex
  */

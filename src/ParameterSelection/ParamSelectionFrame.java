@@ -20,7 +20,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * This UI class allow the user to select a Pilot, Sailplane and Airfield 
+ * with which to parameterize a launch
+ * 
  * @author awilliams5
  */
 public class ParamSelectionFrame extends javax.swing.JFrame {
