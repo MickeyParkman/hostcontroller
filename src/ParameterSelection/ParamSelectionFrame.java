@@ -193,7 +193,6 @@ public class ParamSelectionFrame extends javax.swing.JFrame {
         selectSailplaneTitle.setText("Select a Sailplane");
 
         sailplaneTabbedPane.addTab("Database", sailplaneSelectionPanel);
-        sailplaneTabbedPane.addTab("One Time Entry", oneTimeSailplanePanel1);
 
         sailplaneFromLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         sailplaneFromLabel.setText("From:");

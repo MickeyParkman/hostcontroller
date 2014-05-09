@@ -9,7 +9,8 @@ package Communications;
 import java.util.ArrayList;
 
 /**
- *
+ * For reading CanBus messages from a file for testing. NOT IMPLEMENTED YET!
+ * 
  * @author Alex
  */
 public class FileConnection implements Connection{

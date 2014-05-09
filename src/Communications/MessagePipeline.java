@@ -14,6 +14,8 @@ import DataObjects.Runway;
 import DataObjects.Sailplane;
 import DatabaseUtilities.BlackBoxLogger;
 import ParameterSelection.ParamSelectionFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The MessagePipeline is the entity that connects up a connection (Socket, CommPort,
@@ -143,7 +145,12 @@ public class MessagePipeline {
      * state change)
      */
     public void signalNewLaunchStarting() {
-        
+       /* paramSelection.dispose();
+       try {
+            startDashboard();
+        } catch (MessagePipelineException ex) {
+            Logger.getLogger(MessagePipeline.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }
     
     /**
