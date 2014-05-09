@@ -7,7 +7,9 @@ package Communications;
 import java.util.ArrayList;
 
 /**
- *
+ * This class serves as a means to pass around data about a launch
+ * from the Filter where it is generated to the display where is is used
+ * 
  * @author Matt
  */
 public class InternalMessage

@@ -7,6 +7,8 @@
 package Communications;
 
 /**
+ * Interface for connections to the pipeline where messages will be received 
+ * from the embedded system
  *
  * @author Alex
  */

@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Reads of lines of a pre-generated file to simulate the input of data from the
+ * embedded system.
  *
  * @author Alex
  */
@@ -69,6 +71,9 @@ public class FileDataGenerator {
         }
     }
     
+    /**
+     * Reads in a set of values from the data file to be used by the Filter 
+     */
     public void readLineOfValues() {
         if(reader.hasNext()){
             //reopenFile();

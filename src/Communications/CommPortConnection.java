@@ -25,14 +25,17 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * Connection to the embedded system over a CommPort in which the class listens 
+ * for messages on the CommPort and then sends them off to the filter
  *
  * @author Alex
  */
 public class CommPortConnection implements Connection{
+    //Items listening to this object
     private ArrayList<FilterListener> filters = new ArrayList<FilterListener>();
-    InputStream inputStream;
-    OutputStream outputStream;
-    SerialPort serialPort;
+    private InputStream inputStream;
+    private OutputStream outputStream;
+    private SerialPort serialPort;
     private byte[] readBuffer = new byte[64];
     
     public CommPortConnection() {
@@ -42,6 +45,9 @@ public class CommPortConnection implements Connection{
         t.start();        
     } 
     
+    /**
+     * Sets up connection to CommPort using RXTX library
+     */
     private void initConnection() {
         Enumeration ports = CommPortIdentifier.getPortIdentifiers();
         ArrayList portList = new ArrayList();
@@ -96,6 +102,9 @@ public class CommPortConnection implements Connection{
         }
     }
     
+    /**
+     * Reads a message off the CommPort using an InputStream
+     */
     private void readSerial() {
         try {
             int availableBytes = inputStream.available();
@@ -118,6 +127,9 @@ public class CommPortConnection implements Connection{
 
     }
     
+    /**
+     * Listens for incoming serial messages on the CommPort
+     */
     private class SerialEventHandler implements SerialPortEventListener {
         public void serialEvent(SerialPortEvent event) {
             switch (event.getEventType()) {
@@ -140,7 +152,10 @@ public class CommPortConnection implements Connection{
         }
         
     }
-    
+    /**
+     * Threaded class set up to throw messages out onto the ComPort to be routed
+     * right back and simulate incoming messages
+     */
     private class MessageThrower implements Runnable {
 
         @Override
