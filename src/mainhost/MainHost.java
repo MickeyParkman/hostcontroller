@@ -10,6 +10,7 @@ import Communications.CommPortConnection;
 import Communications.MessagePipeline;
 import Communications.MessagePipelineException;
 import Configuration.UnitSelectionFrame;
+import Configuration.UserProfileFrame;
 import DatabaseUtilities.BlackBoxMessagesSelector;
 import DatabaseUtilities.DatabaseBlackBoxMessageUtilities;
 import DatabaseUtilities.DatabaseEntryManager;
@@ -78,7 +79,7 @@ public class MainHost extends javax.swing.JFrame {
         UnitSelection.setLabel("Unit Selection");
         UnitSelection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UnitSelectionActionPerformed(evt);
+                UserProfileActionPerformed(evt);
             }
         });
 
@@ -172,12 +173,19 @@ public class MainHost extends javax.swing.JFrame {
         wiz.setVisible(true);
     }//GEN-LAST:event_EntryWizard1ActionPerformed
 
-    private void UnitSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnitSelectionActionPerformed
+    private void UserProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserProfileActionPerformed
         // TODO add your handling code here:
-        UnitSelectionFrame f = new UnitSelectionFrame();
+        UserProfileFrame f = new UserProfileFrame();
         f.pack();
         f.setVisible(true);
-    }//GEN-LAST:event_UnitSelectionActionPerformed
+    }//GEN-LAST:event_UserProfileActionPerformed
+    
+    private void UnitSelectionActionPerformed(java.awt.event.ActionEvent evt) {                                              
+            // TODO add your handling code here:
+            UnitSelectionFrame f = new UnitSelectionFrame();
+            f.pack();
+            f.setVisible(true);
+        }    
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:

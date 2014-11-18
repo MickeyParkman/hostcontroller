@@ -120,7 +120,7 @@
         <Property name="label" type="java.lang.String" value="Unit Selection"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UnitSelectionActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UserProfileActionPerformed"/>
       </Events>
     </Component>
     <Component class="java.awt.Button" name="button1">
