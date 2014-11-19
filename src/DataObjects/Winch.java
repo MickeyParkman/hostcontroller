@@ -9,7 +9,7 @@ package DataObjects;
 /**
  * This class stores the relevant data about a drum on the winch
  * 
- * @author  Johnny White
+ * @author  Johnny White, Noah Fujioka
  * @date    11/19/2014
  */
 public class Winch{
@@ -36,7 +36,7 @@ public class Winch{
         drum = newDrum;
     }
     
-    public int getDrum() {
+    public DrumParameters getDrum() {
         return drum;
     }
     
@@ -44,7 +44,7 @@ public class Winch{
         parachute = newParachute;
     }
     
-    public int getParachute() {
+    public Parachute getParachute() {
         return parachute;
     }
     
@@ -55,7 +55,7 @@ public class Winch{
     public float getBrakePressure() {
         return brakePressure;
     }
-    public void setParachute(float newBatteryVoltage) {
+    public void setBatteryVoltage(float newBatteryVoltage) {
         batteryVoltage = newBatteryVoltage;
     }
     
