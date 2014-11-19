@@ -10,7 +10,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 /**
  *
- * @author Alex Williams
+ * @author Alex Williams, Noah Fujioka
  */
 public class DatabaseInitialization {
     /**
@@ -71,7 +71,7 @@ public class DatabaseInitialization {
             //JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }  
-        //Build the Sailplane tabel
+        //Build the Sailplane table
         try{
              createSailplane(connection);
         }catch(SQLException e) {
@@ -79,13 +79,15 @@ public class DatabaseInitialization {
             //JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }  
+        //Build the Airfield table  
         try{
             createAirfield(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            //JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
+        //Build the Runway table
         try{
             createRunway(connection);
         }catch(SQLException e) {
@@ -93,8 +95,41 @@ public class DatabaseInitialization {
             //JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
+        //Build the Position table
         try{
             createPosition(connection);
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        //Build the Parachute table
+        try{
+            createParachute(connection);
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        //Build the RecentLaunches table
+        try{
+            createRecentLaunches(connection);
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        //Build the PreviousLaunchesInfo table
+        try{
+            createPreviousLaunchesInfo(connection);
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        //Build the Operator Profile table
+        try{
+            createProfile(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -354,6 +389,120 @@ public class DatabaseInitialization {
                 + "FOREIGN KEY (parent) REFERENCES Runway (magnetic_heading))";
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+        /**
+     * Creates the table in the database for storing data associated with a Parachute object
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
+    private static void createParachute(Connection connect) throws SQLException {
+        String createParachuteString = "CREATE TABLE Parachute"
+                + "(parachuteNumber INT, "
+                + "lift FLOAT, "
+                + "drag FLOAT, "
+                + "PRIMARY KEY (parachuteNumber))";
+        try (Statement createParachuteTableStatement = connect.createStatement()) {
+            createParachuteTableStatement.execute(createParachuteString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Creates the table in the database for storing data associated with a Recent Launch object
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
+    private static void createRecentLaunches(Connection connect) throws SQLException {
+        String createRecentLaunchesString = "CREATE TABLE RecentLaunches"
+                + "(timestamp DATETIME, "
+                + "pilotName VARCHAR(30), "
+                + "nNumber VARCHAR(30), "
+                + "PRIMARY KEY (timestamp), "
+                + "FOREIGN KEY (pilotName) REFERENCES Pilot (name))"; 
+        try (Statement createRecentLaunchesTableStatement = connect.createStatement()) {
+            createRecentLaunchesTableStatement.execute(createRecentLaunchesString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+        
+    /**
+     * Creates the table to store a list of previous launches with full information
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
+    private static void createPreviousLaunchesInfo(Connection connect) throws SQLException {
+        String createPastLaunchesInfo = "CREATE TABLE PreviousLaunchesInfo"
+                + "(startTimestamp BIGINT, "
+                + "endTimestamp BIGINT, "
+                + "profileId VARCHAR(30), "
+                + "unitSettings VARCHAR(1000), "
+                + "displayPrefs VARCHAR(1000), " //Guessing at min number of chars
+                + "pilotName VARCHAR(30), "
+                + "weight INT, "
+                + "capability INT, "
+                + "preference INT, "
+                + "emergency_contact_info VARCHAR(100), "
+                + "emergency_medical_info VARCHAR(150), "
+                + "n_number VARCHAR(20), "
+                + "type VARCHAR(30), "
+                + "owner VARCHAR(30), "
+                + "contact_info VARCHAR(60), "
+                + "max_gross_weight INT, "
+                + "empty_weight INT, "
+                + "indicated_stall_speed INT, "
+                + "max_winching_speed INT, "
+                + "max_weak_link_strength INT, "
+                + "max_tension INT, "
+                + "airfieldName VARCHAR(30), "
+                + "designator VARCHAR(20), "
+                + "location VARCHAR(20), "
+                + "altitude FLOAT, "
+                + "magneticVariation VARCHAR(20), "
+                + "runwayName VARCHAR(30),"          //Used in Runway Object 
+                + "magneticHeading VARCHAR(10),"     //Used in Runway Object 
+                + "positionName VARCHAR(30),"        //Used in Position Object 
+                + "positionMaximumLength FLOAT, "    //Used in Position Object
+                + "positionSlope FLOAT, "            //Used in Position Object
+                + "positionCenterlineOffset FLOAT, " //Used in Position Object
+                + "parachuteNumber INT, "
+                + "lift FLOAT, "
+                + "drag FLOAT, "                
+                + "FOREIGN KEY (capability) REFERENCES Capability (capability_id), "
+                + "FOREIGN KEY (preference) REFERENCES Preference (preference_id), "
+                + "FOREIGN KEY (startTimestamp, pilotName, n_number) "
+                + "REFERENCES PreviousLaunches (timestamp, pilot, sailplane), "
+                + "PRIMARY KEY (startTimestamp, pilotName, n_number))";
+        try (Statement createPastLaunchesInfoTableStatement = connect.createStatement()) {
+            createPastLaunchesInfoTableStatement.execute(createPastLaunchesInfo);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Creates the table in the database for storing data associated with a operator Profile object
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
+    private static void createProfile(Connection connect) throws SQLException {
+        String createProfileString = "CREATE TABLE Profile"
+                + "(id VARCHAR(30), "
+                + "unitSettings VARCHAR(1000), "
+                + "displayPrefs VARCHAR(1000), " //Guessing at the min num of chars
+                + "PRIMARY KEY (id))"; 
+        try (Statement createProfileTableStatement = connect.createStatement()) {
+            createProfileTableStatement.execute(createProfileString);
         }catch(SQLException e) {
             throw e;
         }
