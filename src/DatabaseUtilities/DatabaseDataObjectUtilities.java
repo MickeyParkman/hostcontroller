@@ -9,6 +9,7 @@ package DatabaseUtilities;
 import DataObjects.Pilot;
 import DataObjects.Position;
 import DataObjects.Sailplane;
+import DataObjects.Profile;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
 import java.sql.*;
@@ -58,6 +59,36 @@ public class DatabaseDataObjectUtilities {
             pilotInsertStatement.setString(6, thePilot.getMedInfo());
             pilotInsertStatement.executeUpdate();
             pilotInsertStatement.close();
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Adds the relevant data for a profile to the database
+     * 
+     * @param theProfile the profile to add to the database
+     * @throws SQLException if table cannot be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
+     */
+    public static void addProfileToDB(Profile theProfile) throws SQLException, ClassNotFoundException {
+        //Check for DB drivers
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            PreparedStatement profileInsertStatement = connect.prepareStatement(
+                "INSERT INTO Profile(id, unitSettings, dislayPrefs)"
+                        + "values (?,?,?)");
+            profileInsertStatement.setString(1, theProfile.getID());
+            profileInsertStatement.setString(5, theProfile.getUnitSettingsForStorage());
+            profileInsertStatement.setString(6, theProfile.getDisplayPrefsForStorage());
+            profileInsertStatement.executeUpdate();
+            profileInsertStatement.close();
         }catch(SQLException e) {
             throw e;
         }

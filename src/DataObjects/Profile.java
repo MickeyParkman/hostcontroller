@@ -102,6 +102,10 @@ public class Profile {
         result += "}";
         return result;  
     }
+    
+    public String getID() {
+        return id;
+    }
 
     @Override
     public String toString() { 
