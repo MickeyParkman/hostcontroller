@@ -17,6 +17,7 @@ public class DrumParameters {
     private int kFactor;
     private int endOffset;
     private int quadratureSensor;
+    private Winch winch;
     
     public DrumParameters() {
         coreRadius = 0;
@@ -24,15 +25,17 @@ public class DrumParameters {
         kFactor = 0;
         endOffset = 0;
         quadratureSensor = 64;
+        winch = null;
     }
     
     public DrumParameters(int coreRadius, int cableLength, int kFactor,
-            int endOffset, int quadratureSensor) {
+            int endOffset, int quadratureSensor, Winch winch) {
         this.coreRadius = coreRadius;
         this.cableLength = cableLength;
         this.kFactor = kFactor;
         this.endOffset = endOffset;
         this.quadratureSensor = quadratureSensor;
+        this.winch = winch;
     }
     
     public void setCoreRadius(int newCoreRadius) {
@@ -73,5 +76,13 @@ public class DrumParameters {
     
     public int getQuadratureSensor() {
         return quadratureSensor;
+    }
+    
+    public void setWinch(Winch newWinch) {
+        winch = newWinch;
+    }
+    
+    public int getWinch() {
+        return winch;
     }
 }
