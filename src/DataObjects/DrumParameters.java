@@ -9,7 +9,7 @@ package DataObjects;
 /**
  * This class stores the relevant data about a drum on the winch
  * 
- * @author Alex
+ * @author Alex, Johnny White
  */
 public class DrumParameters {
     private int coreRadius;
