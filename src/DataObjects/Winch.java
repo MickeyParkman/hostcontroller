@@ -12,20 +12,20 @@ package DataObjects;
  * @author  Johnny White
  * @date    11/19/2014
  */
-public class WinchParameters {
+public class Winch{
     private DrumParameters drum;
     private Parachute parachute;
     private float brakePressure;
     private float batteryVoltage;
 
-    public WinchParameters() {
+    public Winch() {
         drum = null;
         parachute = null;
         brakePressure = 0;
         batteryVoltage = 0;
     }
     
-    public WinchParameters(int coreRadius, int cableLength, int kFactor, int endOffset, int quadratureSensor) {
+    public Winch(int coreRadius, int cableLength, int kFactor, int endOffset, int quadratureSensor) {
         this.drum = coreRadius;
         this.parachute = cableLength;
         this.brakePressure = brakePressure;
