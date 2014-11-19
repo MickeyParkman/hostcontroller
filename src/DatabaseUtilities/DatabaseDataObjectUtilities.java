@@ -245,6 +245,48 @@ public class DatabaseDataObjectUtilities {
     }
     
     /**
+     * Pulls the list of Profiles (and relevant data) from the database
+     * 
+     * @return the list of profiles in the database
+     * @throws SQLException if the table in the database can't be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
+     */
+    
+    public static List<Profile> getProfiles() throws SQLException, ClassNotFoundException {        
+        try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Statement stmt = connect.createStatement();
+            ResultSet theProfiles = stmt.executeQuery("SELECT id, unitSettings,  "
+                    + "displayPrefs "
+                    + "FROM Profile ORDER BY id");
+            List profiles = new ArrayList<Profile>();
+            
+            while(theProfiles.next()) {
+                String profileName = theProfiles.getString(1);
+                String[] names = profileName.split("\\s+"); 
+                String unitSettings = theProfiles.getString(2);
+                String displayPrefs = theProfiles.getString(3);
+                Profile newProfile = new Profile(profileName, unitSettings, displayPrefs);
+                profiles.add(newProfile);
+            }
+            theProfiles.close();
+            stmt.close();
+            connect.close();
+            return profiles;
+        } catch (SQLException e) {
+            throw e;
+        }
+    }    
+    
+    /**
      * Update the data for a given pilot in the database
      * 
      * @param pilot the pilot to update the data for
