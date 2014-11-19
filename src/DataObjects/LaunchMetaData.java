@@ -11,7 +11,7 @@ package DataObjects;
  * @author Noah Fujioka
  */
 public class LaunchMetaData {
-    Profile currentOperatorProfile
+    Profile currentOperatorProfile;
     Pilot currentPilot;
     Sailplane currentSailplane;
     Airfield currentAirfield;
