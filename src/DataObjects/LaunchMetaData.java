@@ -29,7 +29,7 @@ public class LaunchMetaData {
     
     public LaunchMetaData(Profile newProfile, Pilot newPilot, Sailplane newSailplane,
             Airfield newAirfield, Runway newRunway, Position newPosition,
-            Parachute newParachute, DrumParameters newDrumParameters,
+            Parachute newParachute, DrumParameters newDrumParameters, Winch newWinch
             Environmental newEnvironmental, long newStartTimestamp,
             long newEndTimestamp){
         currentOperatorProfile = newProfile;
@@ -40,7 +40,7 @@ public class LaunchMetaData {
         currentPosition = newPosition;
         currentParachute = newParachute;
         currentDrumParameters = newDrumParameters;
-        currentWinch = newWinchParameters;
+        currentWinch = newWinch;
         currentEnvironmental = newEnvironmental;
         startTimestamp = newStartTimestamp;
         endTimestamp = newEndTimestamp;
@@ -84,8 +84,8 @@ public class LaunchMetaData {
         return currentDrumParameters;
     }
     
-    public Winch getWinchParameters(){
-        return currentWinchParameters;
+    public Winch getWinch(){
+        return currentWinch;
     }
     
     public Environmental getEnvironmental(){
