@@ -25,9 +25,9 @@ public class Winch{
         batteryVoltage = 0;
     }
     
-    public Winch(int coreRadius, int cableLength, int kFactor, int endOffset, int quadratureSensor) {
-        this.drum = coreRadius;
-        this.parachute = cableLength;
+    public Winch(DrumParameters drum, Parachute parachute, float brakePressure, float batteryVoltage) {
+        this.drum = drum;
+        this.parachute = parachute;
         this.brakePressure = brakePressure;
         this.batteryVoltage = batteryVoltage;
     }
