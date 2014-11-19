@@ -66,13 +66,41 @@ public class Profile {
     }
 
     public int getUnitSetting(String id) {
-        if (unitSettings.contains(id)) return unitSettings.get(id);
+        if (unitSettings.containsKey(id)) return unitSettings.get(id);
         else return -1;
     }
   
     public int getDisplayPref(String id) {
-        if (displayPrefs.contains(id)) return displayPrefs.get(id);
+        if (displayPrefs.containsKey(id)) return displayPrefs.get(id);
         else return -1;
+    }
+
+    public String getUnitSettingsForStorage() {
+        String result = "{";
+        for (int i = 0; i < unitSettings.size(); i++) {
+            String id = (String) unitSettings.keySet().toArray()[i];
+            result += "'" + id + "':";
+            result += Integer.toString(unitSettings.get(id));
+            if (i != unitSettings.size() - 1) {
+                result += ",";
+            }
+        }
+        result += "}";
+        return result;
+    }
+
+    public String getDisplayPrefsForStorage() {
+        String result = "{";
+        for (int i = 0; i < displayPrefs.size(); i++) {
+            String id = (String) displayPrefs.keySet().toArray()[i];
+            result += "'" + id + "':";
+            result += Integer.toString(displayPrefs.get(id));
+            if (i != displayPrefs.size() - 1) {
+                result += ",";
+            }
+        }
+        result += "}";
+        return result;  
     }
 
     @Override
