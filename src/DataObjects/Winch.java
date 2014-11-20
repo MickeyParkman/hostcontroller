@@ -14,34 +14,24 @@ package DataObjects;
  */
 public class Winch{
     private float brakePressure;
-    private float batteryVoltage;
 
     public Winch() {
         //drum = null;
         //parachute = null;
         brakePressure = 0;
-        batteryVoltage = 0;
     }
     
-    public Winch(float brakePressure, float batteryVoltage) {
+    public Winch(float brakePressure) {
 
         this.brakePressure = brakePressure;
-        this.batteryVoltage = batteryVoltage;
     }
 
     
-    public void setParachute(float newBrakePressure) {
+    public void setBrakePressure(float newBrakePressure) {
         brakePressure = newBrakePressure;
     }
     
     public float getBrakePressure() {
         return brakePressure;
     }
-    public void setBatteryVoltage(float newBatteryVoltage) {
-        batteryVoltage = newBatteryVoltage;
-    }
-    
-    public float getBatteryVoltage() {
-        return batteryVoltage;
-    }    
 }
