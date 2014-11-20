@@ -16,6 +16,8 @@ public class Pilot {
     String lastName;
     //Pilot's first name
     String firstName;
+    //Pilot's middle name
+    String middleName;
     //Pilot's weight
     int weight;
     //Pilot's capability
@@ -27,9 +29,10 @@ public class Pilot {
     //Pilot's Emergency Medical Info
     String medInfo;
     
-    public Pilot(String lastName, String firstName, int weight, String capability, String preference, String emergencyContact, String medInfo) {
+    public Pilot(String lastName, String firstName, String middleName, int weight, String capability, String preference, String emergencyContact, String medInfo) {
         this.lastName = lastName;
         this.firstName = firstName;
+        this.middleName = middleName;
         this.weight = weight;
         this.capability = capability;
         this.preference = preference;
@@ -43,6 +46,10 @@ public class Pilot {
     
     public String getFirstName() {
         return firstName;
+    }
+    
+    public String getMiddleName() {
+        return middleName;
     }
     
     public int getWeight() {
@@ -67,6 +74,6 @@ public class Pilot {
     
     @Override
     public String toString() { 
-        return (firstName + " " + lastName);
+        return (firstName + " " + middleName + " " + lastName);
     }
 }

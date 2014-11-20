@@ -330,6 +330,7 @@ public class PilotModificationPanel extends javax.swing.JPanel {
     private void pilotSelected(Pilot pilot) {
         firstNameDisplay.setText(pilot.getFirstName());
         lastNameDisplay.setText(pilot.getLastName());
+        middleNameDisplay.setText(pilot.getMiddleName());
         weightDisplay.setText(String.valueOf(pilot.getWeight()));
         weightDisplay.setEditable(true);
         emergencyContactDisplay.setText(pilot.getEmergencyContact());
@@ -355,6 +356,7 @@ public class PilotModificationPanel extends javax.swing.JPanel {
         }
         Pilot updatedPilot = new Pilot(lastNameDisplay.getText(),
                 firstNameDisplay.getText(),
+                middleNameDisplay.getText(),
                 weight, 
                 Capability.convertCapabilityNumToString(capabilitySlider.getValue()), 
                 Preference.convertPreferenceNumToString(preferenceSlider.getValue()), 
@@ -404,4 +406,5 @@ public class PilotModificationPanel extends javax.swing.JPanel {
     private javax.swing.JSlider preferenceSlider;
     private javax.swing.JTextField weightDisplay;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.JTextField middleNameDisplay;
 }

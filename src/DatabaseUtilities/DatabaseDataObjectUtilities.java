@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  * This class provides the methods that allow a user to add and retrieve Pilots,
  * Sailplanes and Airfields from the database as well as update and delete Pilots
  * 
- * @author Alex Williams, Noah Fujioka
+ * @author Alex Williams, Noah Fujioka, Derek Bennett
  */
 public class DatabaseDataObjectUtilities {
     private static String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
@@ -52,16 +52,17 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement pilotInsertStatement = connect.prepareStatement(
-                "INSERT INTO Pilot(name, weight, capability, preference,"
+                "INSERT INTO Pilot(firstName, lastName, middleName, weight, capability, preference,"
                         + " emergency_contact_info, emergency_medical_info)"
-                        + "values (?,?,?,?,?,?)");
-            pilotInsertStatement.setString(1, thePilot.getFirstName() + " " +
-                thePilot.getLastName());
-            pilotInsertStatement.setString(2, String.valueOf(thePilot.getWeight()));
-            pilotInsertStatement.setString(3, String.valueOf(Capability.convertCapabilityStringToNum(thePilot.getCapability())));
-            pilotInsertStatement.setString(4, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getPreference())));
-            pilotInsertStatement.setString(5, thePilot.getEmergencyContact());
-            pilotInsertStatement.setString(6, thePilot.getMedInfo());
+                        + "values (?,?,?,?,?,?,?,?)");
+            pilotInsertStatement.setString(1, thePilot.getFirstName());
+            pilotInsertStatement.setString(2, thePilot.getLastName());
+            pilotInsertStatement.setString(3, thePilot.getMiddleName());
+            pilotInsertStatement.setString(4, String.valueOf(thePilot.getWeight()));
+            pilotInsertStatement.setString(5, String.valueOf(Capability.convertCapabilityStringToNum(thePilot.getCapability())));
+            pilotInsertStatement.setString(6, String.valueOf(Preference.convertPreferenceStringToNum(thePilot.getPreference())));
+            pilotInsertStatement.setString(7, thePilot.getEmergencyContact());
+            pilotInsertStatement.setString(8, thePilot.getMedInfo());
             pilotInsertStatement.executeUpdate();
             pilotInsertStatement.close();
         }catch(SQLException e) {
@@ -227,8 +228,10 @@ public class DatabaseDataObjectUtilities {
             List pilots = new ArrayList<Pilot>();
             
             while(thePilots.next()) {
-                String pilotName = thePilots.getString(1);
-                String[] names = pilotName.split("\\s+");
+                String pilotFirstName = thePilots.getString(1);
+                String pilotLastName = thePilots.getString(2);
+                String pilotMiddleName = thePilots.getString(3);
+                
                 int weight = 0; 
                 int capability = 1;
                 int preference = 1;
@@ -240,7 +243,7 @@ public class DatabaseDataObjectUtilities {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
-                Pilot newPilot = new Pilot(names[1], names[0], weight , Capability.convertCapabilityNumToString(capability), Preference.convertPreferenceNumToString(preference), thePilots.getString(5), thePilots.getString(6));
+                Pilot newPilot = new Pilot(pilotFirstName, pilotLastName, pilotMiddleName, weight , Capability.convertCapabilityNumToString(capability), Preference.convertPreferenceNumToString(preference), thePilots.getString(5), thePilots.getString(6));
                 pilots.add(newPilot);
             }
             thePilots.close();
@@ -379,13 +382,15 @@ public class DatabaseDataObjectUtilities {
                                         + " preference = ?,"
                                         + " emergency_contact_info = ?, "
                                         + " emergency_medical_info = ? "
-                                        + "WHERE name = ?");
+                                        + "WHERE name = ? "
+                                        + "AND WHERE lastName = ?");
             pilotEditStatement.setString(1, String.valueOf(pilot.getWeight()));
             pilotEditStatement.setString(2, String.valueOf(Capability.convertCapabilityStringToNum(pilot.getCapability())));
             pilotEditStatement.setString(3, String.valueOf(Preference.convertPreferenceStringToNum(pilot.getPreference())));
             pilotEditStatement.setString(4, pilot.getEmergencyContact());
             pilotEditStatement.setString(5, pilot.getMedInfo());
-            pilotEditStatement.setString(6, pilot.getFirstName() + " " + pilot.getLastName());
+            pilotEditStatement.setString(6, pilot.getFirstName());
+            pilotEditStatement.setString(7, pilot.getLastName());
             pilotEditStatement.executeUpdate();
             pilotEditStatement.close();
             connect.close();
@@ -413,8 +418,10 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             PreparedStatement pilotEditStatement= connect.prepareStatement("DELETE FROM Pilot "
-                    + "WHERE name = ?");   
-            pilotEditStatement.setString(1, pilot.getFirstName() + " " + pilot.getLastName());
+                    + "WHERE name = ? "
+                    + "AND WHERE lastName = ?");   
+            pilotEditStatement.setString(1, pilot.getFirstName());
+            pilotEditStatement.setString(2, pilot.getLastName());
             pilotEditStatement.executeUpdate();
             pilotEditStatement.close();
             
@@ -434,7 +441,7 @@ public class DatabaseDataObjectUtilities {
     public static boolean checkForTable(Connection dbConnection) throws SQLException {
         try {
             Statement s = dbConnection.createStatement();
-            s.execute("UPDATE Pilot SET name = 'A Name', Weight = '000', capability='1', preference='1', emergency_contact_info='None', emergency_medical_info = 'None' where 1=3"); 
+            s.execute("UPDATE Pilot SET firstName = 'A Name', Weight = '000', capability='1', preference='1', emergency_contact_info='None', emergency_medical_info = 'None' where 1=3"); 
         }catch(SQLException sqle) {
             String theError = (sqle).getSQLState();
             if (theError.equals("42X05"))

@@ -38,7 +38,7 @@ public class PilotSelectionPanel extends javax.swing.JPanel {
                 names = new ArrayList<>();
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(pilotNameInput, e.getMessage());
-            names.add(new Pilot("Quartemain", "Alan", 160, Capability.ADVANCED, "Aggressive", null, null));
+            names.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Aggressive", null, null));
             //names.add(new Pilot("Williams", "Alex", 175, Capability.STUDENT, "Mild", null, null));
             //names.add(new Pilot("Costanzo", "Alexander", 165, Capability.PROFICIENT, "Nominal", null, null));
             //names.add(new Pilot("Hitchcock", "Alfred", 190, Capability.STUDENT, "Aggressive", null, null));

@@ -105,6 +105,7 @@ public class Wizard_Pilot extends Wizard {
     protected void submitData(){
         String firstName = pilotRequiredPanel2.getPilotFirstName();
         String lastName = pilotRequiredPanel2.getPilotLastName();
+        String middleName = pilotRequiredPanel2.getPilotMiddleName();
         int weight = 0;
         try {
             weight = (int) ((int) pilotRequiredPanel2.getWeight() * (1 / Configuration.UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUtilities.DatabaseUnitSelectionUtilities.getPilotWeightUnit())));
@@ -114,7 +115,7 @@ public class Wizard_Pilot extends Wizard {
         String capability = Capability.convertCapabilityNumToString(pilotRequiredPanel2.getCapability());
         String preference = Preference.convertPreferenceNumToString(pilotRequiredPanel2.getPreference());
         
-        Pilot newPilot = new Pilot(lastName, firstName, weight, capability, preference, "", "");
+        Pilot newPilot = new Pilot(lastName, firstName, middleName, weight, capability, preference, "", "");
         try{
             DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
             JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");

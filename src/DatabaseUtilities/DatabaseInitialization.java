@@ -45,7 +45,17 @@ public class DatabaseInitialization {
             throw e;
         }
         
-            
+        /*
+        //This is to drop all tables
+        try{
+            dropTables(connection);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        //*/
+        
+        
         //Build and fill Capability table
         try{
             createCapability(connection);
@@ -237,13 +247,16 @@ public class DatabaseInitialization {
      */
     private static void createPilot(Connection connect) throws SQLException {
         String createPilotString = "CREATE TABLE Pilot"
-                + "(name VARCHAR(30) NOT NULL,"
+                + "(pilot_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENDITY (START WITH 1, INCREMENT BY 1),"
+                + "firstName VARCHAR(30) NOT NULL,"
+                + "lastName VARCHAR(30) NOT NULL,"
+                + "middleName VARCHAR(30),"
                 + "weight INT,"
                 + "capability INT,"
                 + "preference INT,"
                 + "emergency_contact_info VARCHAR(100),"
                 + "emergency_medical_info VARCHAR(150),"
-                + "PRIMARY KEY (name),"
+                //+ "PRIMARY KEY (name),"
                 + "FOREIGN KEY (capability) REFERENCES Capability (capability_id),"
                 + "FOREIGN KEY (preference) REFERENCES Preference (preference_id))";
         
@@ -362,9 +375,10 @@ public class DatabaseInitialization {
      */
     private static void createRunway(Connection connect) throws SQLException {
         String createRunwayString = "CREATE TABLE Runway"
-                + "( magnetic_heading VARCHAR(10), "
+                + "(runway_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                + "magnetic_heading VARCHAR(10), "
                 + "parent VARCHAR(30), "
-                + "PRIMARY KEY (magnetic_heading), "
+                //+ "PRIMARY KEY (magnetic_heading), "
                 + "FOREIGN KEY (parent) REFERENCES Airfield (name))";
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
@@ -381,12 +395,13 @@ public class DatabaseInitialization {
      */
     private static void createPosition(Connection connect) throws SQLException {
         String createRunwayString = "CREATE TABLE Position"
-                + "( max_length FLOAT, "
+                + "(position_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                + " max_length FLOAT, "
                 + " slope FLOAT,"
                 + " centerline_offset FLOAT, "
-                + " parent VARCHAR(10), "
-                + "PRIMARY KEY (centerline_offset), "
-                + "FOREIGN KEY (parent) REFERENCES Runway (magnetic_heading))";
+                + " parent INTEGER, "
+                //+ "PRIMARY KEY (centerline_offset), "
+                + "FOREIGN KEY (parent) REFERENCES Runway (runway_id))";
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
         }catch(SQLException e) {
@@ -402,10 +417,10 @@ public class DatabaseInitialization {
      */
     private static void createParachute(Connection connect) throws SQLException {
         String createParachuteString = "CREATE TABLE Parachute"
-                + "(parachuteNumber INT, "
+                + "(parachute_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
                 + "lift FLOAT, "
-                + "drag FLOAT, "
-                + "PRIMARY KEY (parachuteNumber))";
+                + "drag FLOAT) ";
+                //+ "PRIMARY KEY (parachue_id))";
         try (Statement createParachuteTableStatement = connect.createStatement()) {
             createParachuteTableStatement.execute(createParachuteString);
         }catch(SQLException e) {
@@ -850,6 +865,117 @@ public class DatabaseInitialization {
         try (Statement createLaunchMessagesTableStatement = connect.createStatement()) {
             createLaunchMessagesTableStatement.execute(createLaunchMessages);
         }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Drops tables excluding the units tables
+     * 
+     */
+    private static void dropTables(Connection connect) throws SQLException {
+        String getTables = "SELECT tablename from SYS.SYSTABLES";
+        String dropTables;
+        ResultSet tableNames = null;
+        
+        
+                     
+        try(Statement stmt = connect.createStatement()){
+            
+            //dropTables = "SET FOREIGN_KEY_CHECKS = 0; ";
+            //stmt.executeQuery("SET FOREIGN_KEY_CHECKS = 0");
+            try 
+            {
+                stmt.execute("SELECT * FROM PILOT");
+                stmt.execute("DROP TABLE PILOT");
+                //System.out.println("Dropped pilot");
+            } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM CAPABILITY");
+                stmt.execute("DROP TABLE CAPABILITY");
+                //System.out.println("Dropped capability");
+            } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM PREFERENCE");
+                stmt.execute("DROP TABLE PREFERENCE");
+                //System.out.println("Dropped preference");
+            } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM SAILPLANE");
+                stmt.execute("DROP TABLE SAILPLANE");
+                //System.out.println("Dropped sailplane");
+            } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM POSITION");
+                stmt.execute("DROP TABLE POSITION");
+                //System.out.println("Dropped position");
+            } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM RUNWAY");
+                stmt.execute("DROP TABLE RUNWAY");
+                //System.out.println("Dropped runway");
+            } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM AIRFIELD");
+                stmt.execute("DROP TABLE AIRFIELD");
+                //System.out.println("Dropped airfield");
+            } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM PARACHUTE");
+                stmt.execute("DROP TABLE PARACHUTE");
+                System.out.println("Dropped parachute");
+            } catch(SQLException e) { System.out.println(e); }
+  
+            /*
+            try
+            {
+                tableNames = stmt.executeQuery(getTables);
+                //connect.setAutoCommit(false);
+                //System.out.println(connect.getAutoCommit());
+                while(tableNames.next())
+                {
+                    String name = tableNames.getString(1);
+                    //System.out.println(name);
+                    dropTables = " DROP TABLE " + name;
+/*
+                    try
+                    {
+                        stmt.execute(dropTables);
+                        System.out.println("Error in table " + name);
+                    }catch (SQLException e) {}
+                    //System.out.println(dropTables);
+                    //stmt.execute(dropTables); 
+                }
+            }catch (SQLException e)
+            {
+                //System.out.println(e);
+                throw e;
+            }finally
+            {
+                if(tableNames != null)
+                {
+                    try
+                    {
+                        tableNames.close();
+                    }catch (SQLException e) 
+                    {
+                        //System.out.println("Couldn't close");
+                    }
+                }
+            }
+            */
+         
+            
+        }catch(SQLException e) {
+            //System.out.println("ERROR IN DROP");
+            System.out.println(e);
             throw e;
         }
     }

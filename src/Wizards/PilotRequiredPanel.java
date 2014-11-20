@@ -38,6 +38,10 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
         return lastNameField.getText();
     }
     
+    public String getPilotMiddleName() {
+        return middleNameField.getText();
+    }
+    
     public int getCapability() {
         return xpSlider.getValue();
     }
@@ -53,6 +57,7 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
         {
             String firstName = firstNameField.getText();
             String lastName = lastNameField.getText();
+            String middleName = middleNameField.getText();
             String weightStr = weightField.getText();
             int weightInt;
             
@@ -100,8 +105,10 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         firstNameLabel = new javax.swing.JLabel();
         lastNameLabel = new javax.swing.JLabel();
+        middleNameLabel = new javax.swing.JLabel();
         firstNameField = new javax.swing.JTextField();
         lastNameField = new javax.swing.JTextField();
+        middleNameField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         weightUnits = new javax.swing.JLabel();
         launchPrefLabel = new javax.swing.JLabel();
@@ -135,6 +142,7 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
         
         firstNameLabel.setText("First Name:");
         lastNameLabel.setText("Last Name:");
+        middleNameLabel.setText("Middle Name: ");
         
         jLabel3.setText("Performance");
         
@@ -164,11 +172,13 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
                                                                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                                               .addComponent(firstNameLabel)
                                                                                               .addComponent(lastNameLabel)
+                                                                                              .addComponent(middleNameLabel)
                                                                                               .addComponent(weightLabel))
                                                                                     .addGap(30, 30, 30)
                                                                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                                               .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                               .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                              .addComponent(middleNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                               
                                                                                               .addGroup(layout.createSequentialGroup()
                                                                                                         .addComponent(weightField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,6 +218,9 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
                                           .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                     .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                          .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(middleNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(middleNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                           .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                     .addComponent(weightLabel)
@@ -253,8 +266,10 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
     private javax.swing.JLabel midXpLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JTextField lastNameField;
+    private javax.swing.JTextField middleNameField;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JLabel middleNameLabel;
     private javax.swing.JTextField weightField;
     private javax.swing.JLabel weightLabel;
     private javax.swing.JSlider xpSlider;
