@@ -82,7 +82,7 @@ public class DrumParameters {
         winch = newWinch;
     }
     
-    public int getWinch() {
+    public Winch getWinch() {
         return winch;
     }
 }

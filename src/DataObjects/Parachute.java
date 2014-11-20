@@ -14,7 +14,7 @@ public class Parachute {
     private int parachuteNumber;    //Parachute ID number
     private float lift;             //Parachute lift
     private float drag;             //Parachute drag
-    private Winch winch
+    private Winch winch;
     
     public Parachute() {
         //Parachute ID number
@@ -96,7 +96,7 @@ public class Parachute {
         winch = newWinch;
     }
     
-    public int getWinch() {
+    public Winch getWinch() {
         return winch;
     }
 }

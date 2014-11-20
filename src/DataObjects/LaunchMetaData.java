@@ -29,7 +29,7 @@ public class LaunchMetaData {
     
     public LaunchMetaData(Profile newProfile, Pilot newPilot, Sailplane newSailplane,
             Airfield newAirfield, Runway newRunway, Position newPosition,
-            Parachute newParachute, DrumParameters newDrumParameters, Winch newWinch
+            Parachute newParachute, DrumParameters newDrumParameters, Winch newWinch, 
             Environmental newEnvironmental, long newStartTimestamp,
             long newEndTimestamp){
         currentOperatorProfile = newProfile;

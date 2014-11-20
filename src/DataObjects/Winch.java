@@ -17,8 +17,8 @@ public class Winch{
     private float batteryVoltage;
 
     public Winch() {
-        drum = null;
-        parachute = null;
+        //drum = null;
+        //parachute = null;
         brakePressure = 0;
         batteryVoltage = 0;
     }
