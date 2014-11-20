@@ -5,6 +5,9 @@
  */
 package Configuration;
 
+import DataObjects.Profile;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Alec
@@ -93,9 +96,25 @@ public class UserProfileFrame extends javax.swing.JFrame {
 
     private void addProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProfileButtonActionPerformed
         String profileName = nameField.getText();
+        
+        Profile newProfile = new Profile(profileName, "", "");
+        try {
+            DatabaseUtilities.DatabaseDataObjectUtilities.addProfileToDB(newProfile);
+            JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+            //this.dispose();   
+        }catch(SQLException e1) {
+            //TODO Report error
+            if(e1.getErrorCode() == 30000) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(rootPane, "Sorry, but the profile " + profileName + " already exists in the database");
+            } 
+        }catch (ClassNotFoundException e2) {
+            //TODO Report error
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                    
+        }
         nameField.setText("");
-        userProfileList.append(profileName + "\n");
-        //Profile userProfile = new UserProfile(profileName, "", "");
+        //userProfileList.append(profileName + "\n");
     }//GEN-LAST:event_addProfileButtonActionPerformed
 
     /**
