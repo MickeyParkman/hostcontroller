@@ -59,6 +59,7 @@ public class DatabaseInitialization {
         //Build and fill Capability table
         try{
             createCapability(connection);
+            System.out.println("Build capability");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -68,6 +69,7 @@ public class DatabaseInitialization {
         //Build and fill Preference table
         try{
             createPreference(connection);
+            System.out.println("Built the preference table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -76,6 +78,7 @@ public class DatabaseInitialization {
         //Build the Pilot table
         try{
             createPilot(connection);
+            System.out.println("Built the pilot table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -84,6 +87,7 @@ public class DatabaseInitialization {
         //Build the Sailplane table
         try{
              createSailplane(connection);
+             System.out.println("Built the sailplane table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -92,6 +96,7 @@ public class DatabaseInitialization {
         //Build the Airfield table  
         try{
             createAirfield(connection);
+            System.out.println("Built the airfield table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -100,6 +105,7 @@ public class DatabaseInitialization {
         //Build the Runway table
         try{
             createRunway(connection);
+            System.out.println("Built the runway table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -108,30 +114,7 @@ public class DatabaseInitialization {
         //Build the Position table
         try{
             createPosition(connection);
-        }catch(SQLException e) {
-            //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
-        }
-        //Build the Parachute table
-        try{
-            createParachute(connection);
-        }catch(SQLException e) {
-            //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
-        }
-        //Build the RecentLaunches table
-        try{
-            createRecentLaunches(connection);
-        }catch(SQLException e) {
-            //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
-        }
-        //Build the PreviousLaunchesInfo table
-        try{
-            createPreviousLaunchesInfo(connection);
+            System.out.println("Built the position table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -140,11 +123,41 @@ public class DatabaseInitialization {
         //Build the Operator Profile table
         try{
             createProfile(connection);
+            System.out.println("Built the profile table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
+        //Build the Parachute table
+        try{
+            createParachute(connection);
+            System.out.println("Built the parachute table");
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        
+        //Build the RecentLaunches table
+        try{
+            createRecentLaunches(connection);
+            System.out.println("Built the recent launches table");
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        //Build the PreviousLaunchesInfo table
+        try{
+            createPreviousLaunchesInfo(connection);
+            System.out.println("Built the previous launches table");
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        
         try{
              createDistanceUnits(connection);
         }catch(SQLException e) {
@@ -247,9 +260,9 @@ public class DatabaseInitialization {
      */
     private static void createPilot(Connection connect) throws SQLException {
         String createPilotString = "CREATE TABLE Pilot"
-                + "(pilot_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENDITY (START WITH 1, INCREMENT BY 1),"
-                + "firstName VARCHAR(30) NOT NULL,"
-                + "lastName VARCHAR(30) NOT NULL,"
+                + "(pilot_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),  "
+                + "firstName VARCHAR(30) NOT NULL, "
+                + "lastName VARCHAR(30) NOT NULL, "
                 + "middleName VARCHAR(30),"
                 + "weight INT,"
                 + "capability INT,"
@@ -264,6 +277,7 @@ public class DatabaseInitialization {
         try (Statement createPilotTableStatement = connect.createStatement()) {
             createPilotTableStatement.execute(createPilotString);
         }catch(SQLException e) {
+            e.printStackTrace();
             throw e;
         }        
     }
@@ -888,51 +902,54 @@ public class DatabaseInitialization {
             {
                 stmt.execute("SELECT * FROM PILOT");
                 stmt.execute("DROP TABLE PILOT");
-                //System.out.println("Dropped pilot");
-            } catch(SQLException e) { }
+                System.out.println("Dropped pilot");
+            } catch(SQLException e) { System.out.println(e); }
             try 
             {
                 stmt.execute("SELECT * FROM CAPABILITY");
                 stmt.execute("DROP TABLE CAPABILITY");
-                //System.out.println("Dropped capability");
+                System.out.println("Dropped capability");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM PREFERENCE");
                 stmt.execute("DROP TABLE PREFERENCE");
-                //System.out.println("Dropped preference");
+                System.out.println("Dropped preference");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM SAILPLANE");
                 stmt.execute("DROP TABLE SAILPLANE");
-                //System.out.println("Dropped sailplane");
+                System.out.println("Dropped sailplane");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM POSITION");
                 stmt.execute("DROP TABLE POSITION");
-                //System.out.println("Dropped position");
+                System.out.println("Dropped position");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM RUNWAY");
                 stmt.execute("DROP TABLE RUNWAY");
-                //System.out.println("Dropped runway");
+                System.out.println("Dropped runway");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM AIRFIELD");
                 stmt.execute("DROP TABLE AIRFIELD");
-                //System.out.println("Dropped airfield");
+                System.out.println("Dropped airfield");
             } catch(SQLException e) { }
+            /*
             try 
             {
+                System.out.println("Dropping parachute");
                 stmt.execute("SELECT * FROM PARACHUTE");
+                System.out.println("Parachute exists");
                 stmt.execute("DROP TABLE PARACHUTE");
                 System.out.println("Dropped parachute");
-            } catch(SQLException e) { System.out.println(e); }
-  
+            } catch(SQLException e) { }
+  */
             /*
             try
             {

@@ -191,11 +191,11 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement profileInsertStatement = connect.prepareStatement(
-                "INSERT INTO Profile(id, unitSettings, dislayPrefs)"
+                "INSERT INTO Profile(id, unitSettings, displayPrefs)"
                         + "values (?,?,?)");
             profileInsertStatement.setString(1, theProfile.getID());
-            profileInsertStatement.setString(5, theProfile.getUnitSettingsForStorage());
-            profileInsertStatement.setString(6, theProfile.getDisplayPrefsForStorage());
+            profileInsertStatement.setString(2, theProfile.getUnitSettingsForStorage());
+            profileInsertStatement.setString(3, theProfile.getDisplayPrefsForStorage());
             profileInsertStatement.executeUpdate();
             profileInsertStatement.close();
         }catch(SQLException e) {
