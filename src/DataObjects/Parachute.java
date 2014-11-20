@@ -14,18 +14,21 @@ public class Parachute {
     private int parachuteNumber;    //Parachute ID number
     private float lift;             //Parachute lift
     private float drag;             //Parachute drag
+    private Winch winch
     
     public Parachute() {
         //Parachute ID number
         parachuteNumber = 0;
         lift = 0;
         drag = 0;
+        winch = null;
     }
     
-    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag) {
+    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, Winch winch) {
         parachuteNumber = initialParachuteNumber;
         lift = initialLift;
         drag = initialDrag;
+        winch = this.winch;
     }
     
     /**
@@ -87,5 +90,13 @@ public class Parachute {
     */
     public float getDrag() {
         return drag;
+    }
+    
+    public void setWinch(Winch newWinch) {
+        winch = newWinch;
+    }
+    
+    public int getWinch() {
+        return winch;
     }
 }
