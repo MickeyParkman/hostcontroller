@@ -7,8 +7,13 @@
 package DatabaseUtilities;
 
 import DataObjects.Pilot;
-import DataObjects.Position;
 import DataObjects.Sailplane;
+import DataObjects.Airfield;
+import DataObjects.Runway;
+import DataObjects.Position;
+import DataObjects.Winch;
+import DataObjects.DrumParameters;
+import DataObjects.Parachute;
 import DataObjects.Profile;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
@@ -21,7 +26,7 @@ import javax.swing.JOptionPane;
  * This class provides the methods that allow a user to add and retrieve Pilots,
  * Sailplanes and Airfields from the database as well as update and delete Pilots
  * 
- * @author Alex Williams
+ * @author Alex Williams, Noah Fujioka
  */
 public class DatabaseDataObjectUtilities {
     private static String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
@@ -65,36 +70,6 @@ public class DatabaseDataObjectUtilities {
     }
     
     /**
-     * Adds the relevant data for a profile to the database
-     * 
-     * @param theProfile the profile to add to the database
-     * @throws SQLException if table cannot be accessed
-     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
-     */
-    public static void addProfileToDB(Profile theProfile) throws SQLException, ClassNotFoundException {
-        //Check for DB drivers
-        try{
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            throw e;
-        }
-        
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
-            PreparedStatement profileInsertStatement = connect.prepareStatement(
-                "INSERT INTO Profile(id, unitSettings, dislayPrefs)"
-                        + "values (?,?,?)");
-            profileInsertStatement.setString(1, theProfile.getID());
-            profileInsertStatement.setString(5, theProfile.getUnitSettingsForStorage());
-            profileInsertStatement.setString(6, theProfile.getDisplayPrefsForStorage());
-            profileInsertStatement.executeUpdate();
-            profileInsertStatement.close();
-        }catch(SQLException e) {
-            throw e;
-        }
-    }
-    
-    /**
      * Adds the relevant data for a sailplane to the database
      * 
      * @param theSailplane the sailplane to add to the database
@@ -130,6 +105,99 @@ public class DatabaseDataObjectUtilities {
             pilotInsertStatement.close();
         }catch(SQLException e) {
             //System.out.println("Error adding sailplane to database");
+            throw e;
+        }
+    }
+    
+    /**
+     * Adds the relevant data for an airfield to the database
+     * 
+     * @param theAirfield the airfield to add to the database
+     * @throws SQLException if table cannot be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
+     */
+    public static void addAirfieldToDB(Airfield theAirfield) throws SQLException, ClassNotFoundException {
+        //Check for DB drivers
+        try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            PreparedStatement AirfieldInsertStatement = connect.prepareStatement(
+                "INSERT INTO Airfield(name, designator, location, altitude, "
+                + "magneticVariation) values (?,?,?,?,?)");
+            AirfieldInsertStatement.setString(1, theAirfield.getName());
+            AirfieldInsertStatement.setString(2, theAirfield.getDesignator());
+            AirfieldInsertStatement.setString(3, theAirfield.getLocation());
+            AirfieldInsertStatement.setString(4, String.valueOf(theAirfield.getAltitude()));
+            AirfieldInsertStatement.setString(5, String.valueOf(theAirfield.getMagneticVariation()));
+            AirfieldInsertStatement.executeUpdate();
+            AirfieldInsertStatement.close();
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Adds the relevant data for a runway to the database
+     * 
+     * @param theRunway the runway to add to the database
+     * @throws SQLException if table cannot be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
+     */
+    public static void addRunwayToDB(Runway theRunway) throws SQLException, ClassNotFoundException {
+        //Check for DB drivers
+        try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            PreparedStatement RunwayInsertStatement = connect.prepareStatement(
+                "INSERT INTO Runway(magnetic_heading, parent) "
+                        + "values (?,?)");
+            RunwayInsertStatement.setString(1, theRunway.getMagneticHeading());
+            RunwayInsertStatement.setString(2, theRunway.getParent().getName());
+            RunwayInsertStatement.executeUpdate();
+            RunwayInsertStatement.close();
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Adds the relevant data for a profile to the database
+     * 
+     * @param theProfile the profile to add to the database
+     * @throws SQLException if table cannot be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
+     */
+    public static void addProfileToDB(Profile theProfile) throws SQLException, ClassNotFoundException {
+        //Check for DB drivers
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            PreparedStatement profileInsertStatement = connect.prepareStatement(
+                "INSERT INTO Profile(id, unitSettings, dislayPrefs)"
+                        + "values (?,?,?)");
+            profileInsertStatement.setString(1, theProfile.getID());
+            profileInsertStatement.setString(5, theProfile.getUnitSettingsForStorage());
+            profileInsertStatement.setString(6, theProfile.getDisplayPrefsForStorage());
+            profileInsertStatement.executeUpdate();
+            profileInsertStatement.close();
+        }catch(SQLException e) {
             throw e;
         }
     }
