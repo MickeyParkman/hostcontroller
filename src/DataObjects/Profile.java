@@ -25,35 +25,39 @@ public class Profile {
     }
     
     private void initSettingsFromString(String settings, String prefs) {
-        /* settings could be "{'PILOT_WEIGHT':0,'SAILPLANE_WEIGHT':1}" */
-        settings = settings.replace("{","");
-        settings = settings.replace("}","");
-        String[] settingsArray = settings.split(","); //["'PILOT_WEIGHT':0"]
-        for (String setting : settingsArray) {
-            int hashValue = 0;
-            String[] settingArray = setting.split(":");
-            String hashId = settingArray[0].replace("'","");
-            try {
-                hashValue = Integer.parseInt(settingArray[1]);
-            } catch (NumberFormatException nfe) {
-                // for now, do nothing;
+        if(!settings.equals("")) {
+            /* settings could be "{'PILOT_WEIGHT':0,'SAILPLANE_WEIGHT':1}" */
+            settings = settings.replace("{","");
+            settings = settings.replace("}","");
+            String[] settingsArray = settings.split(","); //["'PILOT_WEIGHT':0"]
+            for (String setting : settingsArray) {
+                int hashValue = 0;
+                String[] settingArray = setting.split(":");
+                String hashId = settingArray[0].replace("'","");
+                try {
+                    hashValue = Integer.parseInt(settingArray[1]);
+                } catch (NumberFormatException nfe) {
+                    // for now, do nothing;
+                }
+                unitSettings.put(hashId.toUpperCase(), hashValue);
             }
-            unitSettings.put(hashId.toUpperCase(), hashValue);
         }
 
-        prefs = prefs.replace("{","");
-        prefs = prefs.replace("}","");
-        String[] prefsArray = prefs.split(","); //["'PILOT_WEIGHT':0"]
-        for (String pref : prefsArray) {
-            int hashValue = 0;
-            String[] prefArray = pref.split(":");
-            String hashId = prefArray[0].replace("'","");
-            try {
-                hashValue = Integer.parseInt(prefArray[1]);
-            } catch (NumberFormatException nfe) {
-                // for now, do nothing;
+        if(!prefs.equals("")) {
+            prefs = prefs.replace("{","");
+            prefs = prefs.replace("}","");
+            String[] prefsArray = prefs.split(","); //["'PILOT_WEIGHT':0"]
+            for (String pref : prefsArray) {
+                int hashValue = 0;
+                String[] prefArray = pref.split(":");
+                String hashId = prefArray[0].replace("'","");
+                try {
+                    hashValue = Integer.parseInt(prefArray[1]);
+                } catch (NumberFormatException nfe) {
+                    // for now, do nothing;
+                }
+                displayPrefs.put(hashId.toUpperCase(), hashValue);
             }
-            displayPrefs.put(hashId.toUpperCase(), hashValue);
         }
     }
 
