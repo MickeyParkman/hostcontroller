@@ -5,27 +5,52 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
 
 public class WindowTester extends JFrame {
 
 	private JMenuBar topMenu;
+	private JPanel mainWindow;
 
 	public WindowTester() {
+		topMenu = new JMenuBar();
+		mainWindow = new JPanel(new BorderLayout());
 		createAndShowGUI();
 	}
 
     private void createAndShowGUI() {
     	setTitle("HOST CONTROLLER MAIN VIEW ALPHA");
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        topMenu = new JMenuBar();
-
+        
         setUpMenus();
         setJMenuBar(topMenu);
-        
+
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.setPreferredSize(new Dimension(400, 600));
+		tabbedPane.addTab("Tab 1", makePanel("1"));
+		tabbedPane.addTab("Tab 2", makePanel("2"));
+		tabbedPane.addTab("Tab 3", makePanel("3"));
+		tabbedPane.addTab("Tab 4", makePanel("4"));
+		mainWindow.add(tabbedPane, BorderLayout.CENTER);
+
+
+		JPanel sidePanel = new JPanel();
+		sidePanel.setPreferredSize(new Dimension(200, 600));
+		mainWindow.add(sidePanel, BorderLayout.LINE_START);
+
+        add(mainWindow);
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);  
         setVisible(true);
+    }
+
+    private static JPanel makePanel(String text) {
+        JPanel p = new JPanel();
+        p.add(new JLabel());
+        p.setLayout(new GridLayout(1, 1));
+        return p;
     }
 
     private void setUpMenus() {
@@ -70,6 +95,8 @@ public class WindowTester extends JFrame {
         addNewEntryItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+            	//PreWizard wiz = new PreWizard();
+       			//wiz.setVisible(true);
             }
         });
 		editMenu.add(addNewEntryItem);
