@@ -13,10 +13,16 @@ public class WindowTester extends JFrame {
 
 	private JMenuBar topMenu;
 	private JPanel mainWindow;
+	private String currentProfile;
+	private JPanel sidePanel;
+	private JLabel statusLabel;
 
 	public WindowTester() {
 		topMenu = new JMenuBar();
 		mainWindow = new JPanel(new BorderLayout());
+		sidePanel = new JPanel();
+		statusLabel = new JLabel();
+		currentProfile = "NO PROFILE";
 		createAndShowGUI();
 	}
 
@@ -28,17 +34,17 @@ public class WindowTester extends JFrame {
         setJMenuBar(topMenu);
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.setPreferredSize(new Dimension(400, 600));
-		tabbedPane.addTab("Tab 1", makePanel("1"));
-		tabbedPane.addTab("Tab 2", makePanel("2"));
-		tabbedPane.addTab("Tab 3", makePanel("3"));
-		tabbedPane.addTab("Tab 4", makePanel("4"));
+        tabbedPane.setPreferredSize(new Dimension(800, 600));
+		tabbedPane.addTab("Scenario Selection", makePanel("1"));
+		tabbedPane.addTab("Flight Dashboard", makePanel("3"));
 		mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
 
-		JPanel sidePanel = new JPanel();
+
 		sidePanel.setPreferredSize(new Dimension(200, 600));
 		mainWindow.add(sidePanel, BorderLayout.LINE_START);
+		mainWindow.add(statusLabel, BorderLayout.PAGE_END);
+		statusLabel.setText("LOADED");
 
         add(mainWindow);
         pack();
@@ -54,9 +60,30 @@ public class WindowTester extends JFrame {
     }
 
     private void setUpMenus() {
-        JMenu fileMenu = new JMenu("File");
-        JMenu editMenu = new JMenu("Edit");
-        JMenu profileMenu = new JMenu("JTROXEL"); //this should change to show current login
+        final JMenu fileMenu = new JMenu("File");
+        final JMenu editMenu = new JMenu("Edit");
+        final JMenu profileMenu = new JMenu(currentProfile); //this should change to show current login
+
+    	JMenuItem newProfileItem = new JMenuItem("Add New...");
+    	newProfileItem.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent event) {
+        	}
+    	});
+		profileMenu.add(newProfileItem);
+
+        String[] profiles = {"JTROXEL", "AJACUZZI", "DBENNETT"};
+        for (final String profile : profiles) {
+        	JMenuItem profileItem = new JMenuItem(profile);
+        	profileItem.addActionListener(new ActionListener() {
+            	@Override
+            	public void actionPerformed(ActionEvent event) {
+            		currentProfile = profile;
+            		profileMenu.setText(currentProfile);
+            	}
+        	});
+			profileMenu.add(profileItem);
+        }
 
         JMenuItem setupDBItem = new JMenuItem("Setup Database");
         setupDBItem.addActionListener(new ActionListener() {
