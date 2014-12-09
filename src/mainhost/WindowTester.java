@@ -7,42 +7,58 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Color;
+import javax.swing.BoxLayout;
 
 
 public class WindowTester extends JFrame {
 
+	private String version = "2.0.1";
 	private JMenuBar topMenu;
 	private JPanel mainWindow;
 	private String currentProfile;
-	private JPanel sidePanel;
+	private JPanel leftSidePanel;
 	private JLabel statusLabel;
+	private JPanel rightSidePanel;
+	private JPanel upperLeftSidePanel;
+	private JPanel lowerLeftSidePanel;
+	private JTabbedPane tabbedPane;
 
 	public WindowTester() {
 		topMenu = new JMenuBar();
 		mainWindow = new JPanel(new BorderLayout());
-		sidePanel = new JPanel();
+		leftSidePanel = new JPanel();
+		rightSidePanel = new JPanel();
 		statusLabel = new JLabel();
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		currentProfile = "NO PROFILE";
 		createAndShowGUI();
 	}
 
     private void createAndShowGUI() {
-    	setTitle("HOST CONTROLLER MAIN VIEW ALPHA");
+    	setTitle("Winch Host Manager v" + version);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         setUpMenus();
         setJMenuBar(topMenu);
 
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.setPreferredSize(new Dimension(800, 600));
-		tabbedPane.addTab("Scenario Selection", makePanel("1"));
+		tabbedPane.addTab("Edit Scenario", makePanel("1"));
 		tabbedPane.addTab("Flight Dashboard", makePanel("3"));
 		mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
+		rightSidePanel.setPreferredSize(new Dimension(200, 600));
+		mainWindow.add(rightSidePanel, BorderLayout.LINE_END);
 
+		leftSidePanel.setPreferredSize(new Dimension(200, 600));
+		mainWindow.add(leftSidePanel, BorderLayout.LINE_START);
+		/*upperLeftSidePanel = new JPanel();
+		upperLeftSidePanel.setPreferredSize(new Dimension(200,300));
+		lowerLeftSidePanel = new JPanel();
+		lowerLeftSidePanel.setPreferredSize(new Dimension(200,300));
+		leftSidePanel.add(upperLeftSidePanel);
+		leftSidePanel.add(lowerLeftSidePanel);*/
 
-		sidePanel.setPreferredSize(new Dimension(200, 600));
-		mainWindow.add(sidePanel, BorderLayout.LINE_START);
 		mainWindow.add(statusLabel, BorderLayout.PAGE_END);
 		statusLabel.setText("LOADED");
 
@@ -52,7 +68,7 @@ public class WindowTester extends JFrame {
         setVisible(true);
     }
 
-    private static JPanel makePanel(String text) {
+    private JPanel makePanel(String text) {
         JPanel p = new JPanel();
         p.add(new JLabel());
         p.setLayout(new GridLayout(1, 1));
@@ -63,14 +79,6 @@ public class WindowTester extends JFrame {
         final JMenu fileMenu = new JMenu("File");
         final JMenu editMenu = new JMenu("Edit");
         final JMenu profileMenu = new JMenu(currentProfile); //this should change to show current login
-
-    	JMenuItem newProfileItem = new JMenuItem("Add New...");
-    	newProfileItem.addActionListener(new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent event) {
-        	}
-    	});
-		profileMenu.add(newProfileItem);
 
         String[] profiles = {"JTROXEL", "AJACUZZI", "DBENNETT"};
         for (final String profile : profiles) {
@@ -132,9 +140,18 @@ public class WindowTester extends JFrame {
         editScenarioItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+            	tabbedPane.setSelectedIndex(0);
             }
         });
 		editMenu.add(editScenarioItem);
+
+    	JMenuItem preferencesItem = new JMenuItem("Edit Preferences");
+    	preferencesItem.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent event) {
+        	}
+    	});
+		editMenu.add(preferencesItem);
 
         topMenu.add(fileMenu);
         topMenu.add(editMenu);
