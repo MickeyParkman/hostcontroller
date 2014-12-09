@@ -10,6 +10,7 @@ import Communications.CommPortConnection;
 import Communications.MessagePipeline;
 import Communications.MessagePipelineException;
 import Configuration.UnitSelectionFrame;
+import Configuration.SetupFrame;
 import Configuration.UserProfileFrame;
 import DatabaseUtilities.BlackBoxMessagesSelector;
 import DatabaseUtilities.DatabaseBlackBoxMessageUtilities;
@@ -175,17 +176,17 @@ public class MainHost extends javax.swing.JFrame {
 
     private void UserProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserProfileActionPerformed
         // TODO add your handling code here:
-        UserProfileFrame f = new UserProfileFrame();
+        SetupFrame f = new SetupFrame();
         f.pack();
         f.setVisible(true);
     }//GEN-LAST:event_UserProfileActionPerformed
     
     private void UnitSelectionActionPerformed(java.awt.event.ActionEvent evt) {                                              
             // TODO add your handling code here:
-            UnitSelectionFrame f = new UnitSelectionFrame();
+            SetupFrame f = new SetupFrame();
             f.pack();
             f.setVisible(true);
-        }    
+        }     
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
