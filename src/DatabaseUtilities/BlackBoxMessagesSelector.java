@@ -43,64 +43,45 @@ public class BlackBoxMessagesSelector extends javax.swing.JFrame {
 
         saveFileChooser = new javax.swing.JFileChooser();
         blackBoxManagerTitleLabel = new javax.swing.JLabel();
-        startTimeLabel = new javax.swing.JLabel();
-        endTimeLabel = new javax.swing.JLabel();
-        cancelButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
-        saveAndDeleteButton = new javax.swing.JButton();
-        startTimeSpinner = new javax.swing.JSpinner();
-        endTimeSpinner = new javax.swing.JSpinner();
-        filePathName = new javax.swing.JTextField();
-        browseFilesButton = new javax.swing.JButton();
-        saveToLabel = new javax.swing.JLabel();
+        PilotCheckbox = new javax.swing.JCheckBox();
+        SailplaneCheckbox = new javax.swing.JCheckBox();
+        AirfieldCheckbox = new javax.swing.JCheckBox();
+        RunwayCheckbox = new javax.swing.JCheckBox();
+        PositionCheckbox = new javax.swing.JCheckBox();
+        ParachuteCheckbox = new javax.swing.JCheckBox();
+        ProfileCheckbox = new javax.swing.JCheckBox();
+        SubmitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         blackBoxManagerTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        blackBoxManagerTitleLabel.setText("\"Black Box\" Manager");
+        blackBoxManagerTitleLabel.setText("Database Exporter");
 
-        startTimeLabel.setText("Start time and date:");
-
-        endTimeLabel.setText("End time and date:");
-
-        cancelButton.setText("Cancle");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+        PilotCheckbox.setText("Pilot");
+        PilotCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
+                PilotCheckboxActionPerformed(evt);
             }
         });
 
-        saveButton.setText("Save");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
+        SailplaneCheckbox.setText("Sailplane");
+
+        AirfieldCheckbox.setText("Airfield");
+
+        RunwayCheckbox.setText("Runway");
+
+        PositionCheckbox.setText("Position");
+
+        ParachuteCheckbox.setText("Parachute");
+
+        ProfileCheckbox.setText("Profile");
+
+        SubmitButton.setText("Submit");
+        SubmitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                submitButtonMousePressed(evt);
             }
         });
-
-        deleteButton.setText("Delete");
-
-        saveAndDeleteButton.setText("Save & Delete");
-
-        startTimeSpinner.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
-
-        endTimeSpinner.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.SECOND));
-
-        filePathName.setEditable(false);
-        filePathName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                filePathNameActionPerformed(evt);
-            }
-        });
-
-        browseFilesButton.setText("Browse");
-        browseFilesButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                browseFilesButtonActionPerformed(evt);
-            }
-        });
-
-        saveToLabel.setText("Save to:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,98 +94,50 @@ public class BlackBoxMessagesSelector extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(endTimeLabel)
-                            .addComponent(startTimeLabel)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cancelButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(saveButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(deleteButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(saveAndDeleteButton))
-                            .addComponent(saveToLabel)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(filePathName, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(startTimeSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                .addComponent(endTimeSpinner)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(browseFilesButton)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RunwayCheckbox)
+                            .addComponent(ParachuteCheckbox)
+                            .addComponent(PilotCheckbox)
+                            .addComponent(SailplaneCheckbox)
+                            .addComponent(PositionCheckbox)
+                            .addComponent(AirfieldCheckbox)
+                            .addComponent(ProfileCheckbox)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(SubmitButton)))
+                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(blackBoxManagerTitleLabel)
-                .addGap(18, 18, 18)
-                .addComponent(startTimeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(startTimeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(endTimeLabel)
-                .addGap(17, 17, 17)
-                .addComponent(endTimeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(saveToLabel)
+                .addGap(31, 31, 31)
+                .addComponent(PilotCheckbox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(filePathName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(browseFilesButton))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelButton)
-                    .addComponent(saveButton)
-                    .addComponent(deleteButton)
-                    .addComponent(saveAndDeleteButton))
-                .addContainerGap())
+                .addComponent(SailplaneCheckbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AirfieldCheckbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ProfileCheckbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RunwayCheckbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PositionCheckbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ParachuteCheckbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(SubmitButton)
+                .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void filePathNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filePathNameActionPerformed
+    private void PilotCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PilotCheckboxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_filePathNameActionPerformed
-
-    /**
-     * Allows the User to select a file to save the messages to using a FileChooser
-     * 
-     * @param evt the ActionEvent fired by clicking the button
-     */
-    private void browseFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseFilesButtonActionPerformed
-        // TODO add your handling code here:
-        int selectedValue = saveFileChooser.showSaveDialog(this);
-        if(selectedValue ==JFileChooser.APPROVE_OPTION) {
-            saveFile = saveFileChooser.getSelectedFile();
-            filePathName.setText(saveFile.getPath());
-        }
-    }//GEN-LAST:event_browseFilesButtonActionPerformed
-
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-        if(saveFile != null) {
-            try {
-                long startTimestamp = ((Date)startTimeSpinner.getValue()).getTime();
-                long endTimestamp = ((Date)endTimeSpinner.getValue()).getTime();
-                DatabaseBlackBoxMessageUtilities.getBlackBoxMessgaes(saveFile, startTimestamp, endTimestamp);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(BlackBoxMessagesSelector.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(BlackBoxMessagesSelector.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_cancelButtonActionPerformed
+    }//GEN-LAST:event_PilotCheckboxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,21 +173,104 @@ public class BlackBoxMessagesSelector extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void submitButtonMousePressed(java.awt.event.MouseEvent evt) 
+    {
+        exportData();     
+    }
+    
+    protected void exportData()
+    {
+        if(PilotCheckbox.isSelected())
+        {
+            try
+            {
+                DatabaseExporter.exportDatabase("PILOT");
+                System.out.println("Exported pilot");
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+        if(SailplaneCheckbox.isSelected())
+        {
+            try
+            {
+                DatabaseExporter.exportDatabase("SAILPLANE");
+                System.out.println("Exported sailplane");
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+        if(AirfieldCheckbox.isSelected())
+        {
+            try
+            {
+                DatabaseExporter.exportDatabase("AIRFIELD");
+                System.out.println("Exported airfield");
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+        if(ProfileCheckbox.isSelected())
+        {
+            try
+            {
+                DatabaseExporter.exportDatabase("PROFILE");
+                System.out.println("Exported profile");
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+        if(RunwayCheckbox.isSelected())
+        {
+            try
+            {
+                DatabaseExporter.exportDatabase("RUNWAY");
+                System.out.println("Exported runway");
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+        if(PositionCheckbox.isSelected())
+        {
+            try
+            {
+                DatabaseExporter.exportDatabase("POSITION");
+                System.out.println("Exported position");
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+        if(ParachuteCheckbox.isSelected())
+        {
+            try
+            {
+                DatabaseExporter.exportDatabase("PARACHUTE");
+                System.out.println("Exported parachute");
+            }catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox AirfieldCheckbox;
+    private javax.swing.JCheckBox ParachuteCheckbox;
+    private javax.swing.JCheckBox PilotCheckbox;
+    private javax.swing.JCheckBox PositionCheckbox;
+    private javax.swing.JCheckBox ProfileCheckbox;
+    private javax.swing.JCheckBox RunwayCheckbox;
+    private javax.swing.JCheckBox SailplaneCheckbox;
+    private javax.swing.JButton SubmitButton;
     private javax.swing.JLabel blackBoxManagerTitleLabel;
-    private javax.swing.JButton browseFilesButton;
-    private javax.swing.JButton cancelButton;
-    private javax.swing.JButton deleteButton;
-    private javax.swing.JLabel endTimeLabel;
-    private javax.swing.JSpinner endTimeSpinner;
-    private javax.swing.JTextField filePathName;
-    private javax.swing.JButton saveAndDeleteButton;
-    private javax.swing.JButton saveButton;
     private javax.swing.JFileChooser saveFileChooser;
-    private javax.swing.JLabel saveToLabel;
-    private javax.swing.JLabel startTimeLabel;
-    private javax.swing.JSpinner startTimeSpinner;
     // End of variables declaration//GEN-END:variables
 
     private File saveFile = null;

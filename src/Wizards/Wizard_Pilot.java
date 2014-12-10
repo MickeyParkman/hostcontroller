@@ -122,7 +122,7 @@ public class Wizard_Pilot extends Wizard {
             this.dispose();
         }catch(SQLException e1) {
             //TODO Report error
-            if(e1.getErrorCode() == 30000) 
+            if(e1.getErrorCode() == 30000)
                 JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + firstName + " " + lastName + " already exists in the database");
         }catch (ClassNotFoundException e2) {
             //TODO Report error

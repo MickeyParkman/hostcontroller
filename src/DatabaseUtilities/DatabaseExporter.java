@@ -61,7 +61,7 @@ public class DatabaseExporter {
         
         String timestamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
         System.out.println(name + " " + timestamp);
-        String fileName = "output_" + name + "_" + timestamp + ".csv";
+        String fileName = "ExportedTables/output_" + name + "_" + timestamp + ".csv";
         
         PreparedStatement ps = connect.prepareStatement(
                 "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");

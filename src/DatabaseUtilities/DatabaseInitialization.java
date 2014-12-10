@@ -45,7 +45,7 @@ public class DatabaseInitialization {
             throw e;
         }
         
-        /*
+        ///*
         //This is to drop all tables
         try{
             dropTables(connection);
