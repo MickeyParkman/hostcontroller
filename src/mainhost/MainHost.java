@@ -61,7 +61,7 @@ public class MainHost extends javax.swing.JFrame {
         label1.setText("Welcome!");
 
         ParameterSelection.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        ParameterSelection.setLabel("Parameter Selection");
+        ParameterSelection.setLabel("Launch ALPHA UI");
         ParameterSelection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ParameterSelectionActionPerformed(evt);
@@ -77,7 +77,7 @@ public class MainHost extends javax.swing.JFrame {
         });
 
         UnitSelection.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        UnitSelection.setLabel("Unit Selection");
+        UnitSelection.setLabel("Add Profile");
         UnitSelection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UserProfileActionPerformed(evt);
@@ -86,7 +86,7 @@ public class MainHost extends javax.swing.JFrame {
 
         button1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         button1.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        button1.setLabel("Save/Delete Raw Messages");
+        button1.setLabel("Export DB to CSV");
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button1ActionPerformed(evt);
@@ -101,8 +101,9 @@ public class MainHost extends javax.swing.JFrame {
             }
         });
 
+        button3.setActionCommand("Show Initial UI");
         button3.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        button3.setLabel("Set Up Database");
+        button3.setLabel("DEBUG - Rebuild DB");
         button3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button3ActionPerformed(evt);
@@ -122,7 +123,7 @@ public class MainHost extends javax.swing.JFrame {
                     .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(110, Short.MAX_VALUE)
+                .addContainerGap(123, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(ParameterSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(EntryWizard1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -159,12 +160,13 @@ public class MainHost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ParameterSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ParameterSelectionActionPerformed
-        try {
+        /*try {
             // TODO add your handling code here:
             pipeline.startParameterSelection();
         } catch (MessagePipelineException ex) {
             ex.displayError();
-        }
+        }*/
+        WindowTester.run();
         
     }//GEN-LAST:event_ParameterSelectionActionPerformed
 
@@ -176,8 +178,10 @@ public class MainHost extends javax.swing.JFrame {
 
     private void UserProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserProfileActionPerformed
         // TODO add your handling code here:
-        SetupFrame f = new SetupFrame();
-        f.pack();
+        //SetupFrame f = new SetupFrame();
+        //f.pack();
+        //f.setVisible(true);
+        UserProfileFrame f = new UserProfileFrame();
         f.setVisible(true);
     }//GEN-LAST:event_UserProfileActionPerformed
     
@@ -214,6 +218,10 @@ public class MainHost extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
             }
         }
+        //WindowTester.run();
+        //WindowTester wt = new WindowTester();
+        //wt.run();
+        //WindowTester.run();
     }//GEN-LAST:event_button3ActionPerformed
 
     /**
@@ -243,6 +251,18 @@ public class MainHost extends javax.swing.JFrame {
             public void run() {
                 CommPortConnection comm = new CommPortConnection();
                 MessagePipeline pipeline = new MessagePipeline(comm);
+                try {
+                    DatabaseUtilities.DatabaseInitialization.initDatabase();
+                }catch(ClassNotFoundException e1) {
+                    JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
+                }catch(SQLException e2) {
+                    if(e2.getErrorCode() == 30000) {
+                        JOptionPane.showMessageDialog(null, "Database Already Exists");
+                    }
+                    else { 
+                        JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
+                    }
+                }
                 MainHost frame = new MainHost(pipeline);
                 frame.setVisible(true);
             }

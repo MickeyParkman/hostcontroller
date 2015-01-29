@@ -36,7 +36,7 @@
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="110" max="32767" attributes="0"/>
+              <EmptySpace pref="123" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="ParameterSelection" max="32767" attributes="0"/>
                   <Component id="EntryWizard1" max="32767" attributes="0"/>
@@ -95,7 +95,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="13" style="1"/>
         </Property>
-        <Property name="label" type="java.lang.String" value="Parameter Selection"/>
+        <Property name="label" type="java.lang.String" value="Launch ALPHA UI"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ParameterSelectionActionPerformed"/>
@@ -117,7 +117,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="13" style="1"/>
         </Property>
-        <Property name="label" type="java.lang.String" value="Unit Selection"/>
+        <Property name="label" type="java.lang.String" value="Add Profile"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UserProfileActionPerformed"/>
@@ -131,7 +131,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="13" style="1"/>
         </Property>
-        <Property name="label" type="java.lang.String" value="Save/Delete Raw Messages"/>
+        <Property name="label" type="java.lang.String" value="Export DB to CSV"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
@@ -150,10 +150,11 @@
     </Component>
     <Component class="java.awt.Button" name="button3">
       <Properties>
+        <Property name="actionCommand" type="java.lang.String" value="Show Initial UI"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="13" style="1"/>
         </Property>
-        <Property name="label" type="java.lang.String" value="Set Up Database"/>
+        <Property name="label" type="java.lang.String" value="DEBUG - Rebuild DB"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button3ActionPerformed"/>

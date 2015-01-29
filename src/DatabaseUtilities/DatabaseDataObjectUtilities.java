@@ -222,9 +222,9 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet thePilots = stmt.executeQuery("SELECT name, weight, capability, "
+            ResultSet thePilots = stmt.executeQuery("SELECT firstName, lastName, middleName, weight, capability, "
                     + "preference, emergency_contact_info, emergency_medical_info "
-                    + "FROM Pilot ORDER BY name");
+                    + "FROM Pilot ORDER BY lastName");
             List pilots = new ArrayList<Pilot>();
             
             while(thePilots.next()) {
@@ -236,9 +236,9 @@ public class DatabaseDataObjectUtilities {
                 int capability = 1;
                 int preference = 1;
                 try {
-                    weight = Integer.parseInt(thePilots.getString(2));
-                    capability = Integer.parseInt(thePilots.getString(3));
-                    preference = Integer.parseInt(thePilots.getString(4));
+                    weight = Integer.parseInt(thePilots.getString(4));
+                    capability = Integer.parseInt(thePilots.getString(5));
+                    preference = Integer.parseInt(thePilots.getString(6));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -382,7 +382,7 @@ public class DatabaseDataObjectUtilities {
                                         + " preference = ?,"
                                         + " emergency_contact_info = ?, "
                                         + " emergency_medical_info = ? "
-                                        + "WHERE name = ? "
+                                        + "WHERE firstName = ? "
                                         + "AND WHERE lastName = ?");
             pilotEditStatement.setString(1, String.valueOf(pilot.getWeight()));
             pilotEditStatement.setString(2, String.valueOf(Capability.convertCapabilityStringToNum(pilot.getCapability())));
@@ -418,7 +418,7 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             PreparedStatement pilotEditStatement= connect.prepareStatement("DELETE FROM Pilot "
-                    + "WHERE name = ? "
+                    + "WHERE firstName = ? "
                     + "AND WHERE lastName = ?");   
             pilotEditStatement.setString(1, pilot.getFirstName());
             pilotEditStatement.setString(2, pilot.getLastName());

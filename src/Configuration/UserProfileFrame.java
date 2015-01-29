@@ -98,7 +98,7 @@ public class UserProfileFrame extends javax.swing.JFrame {
         String profileName = nameField.getText();
         
         Profile newProfile = new Profile(profileName, "", "");
-        try {
+        /*try {
             DatabaseUtilities.DatabaseDataObjectUtilities.addProfileToDB(newProfile);
             JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
             //this.dispose();   
@@ -112,9 +112,9 @@ public class UserProfileFrame extends javax.swing.JFrame {
             //TODO Report error
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
                     
-        }
+        }*/
         nameField.setText("");
-        //userProfileList.append(profileName + "\n");
+        userProfileList.append(profileName + "\n");
     }//GEN-LAST:event_addProfileButtonActionPerformed
 
     /**
