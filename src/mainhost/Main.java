@@ -40,7 +40,8 @@ public class Main {
         FileDummyConnection connection = new FileDummyConnection();
         
         MessagePipeline pipeline = new MessagePipeline(connection);
-        MainHost a = new MainHost(pipeline);
+       // MainHost a = new MainHost(pipeline);
+        MainWindow a = new MainWindow();
         a.setVisible(true);
                 
         /*try {
