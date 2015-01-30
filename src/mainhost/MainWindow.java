@@ -14,39 +14,47 @@ import java.awt.Color;
 import javax.swing.BoxLayout;
 
 public class MainWindow extends JFrame {
-	private String version = "2.0.1";
-	private JMenuBar topMenu;
-	private JPanel mainWindow;
-	private String currentProfile;
-	private JPanel leftSidePanelScenario;
-	private JPanel leftSidePanelDashboard;
-	private JLabel statusLabel;
-	private JPanel rightSidePanel;
-	private JPanel upperLeftSidePanel;
-	private JPanel lowerLeftSidePanel;
-	private JTabbedPane tabbedPane;
-        private ParameterSelectionPanel ParameterSelectionPanel_;
-        private ProfileManagementFrame ProfileManagementFrame;
+    private String version = "2.0.1";
+    private JMenuBar topMenu;
+    private JPanel mainWindow;
+    private String currentProfile;
+    private JPanel leftSidePanelScenario;
+    private JPanel leftSidePanelDashboard;
+    private JLabel statusLabel;
+    private JPanel rightSidePanel;
+    private JPanel upperLeftSidePanelScenario;
+    private JPanel lowerLeftSidePanelScenario;    
+    private JPanel upperLeftSidePanelDashboard;
+    private JPanel lowerLeftSidePanelDashboard;
+    private JTabbedPane tabbedPane;
+    private ParameterSelectionPanel ParameterSelectionPanel_;
+    private ProfileManagementFrame ProfileManagementFrame;
 
-	public MainWindow() {
-            topMenu = new JMenuBar();
-            mainWindow = new JPanel(new BorderLayout());
-            leftSidePanelScenario = new JPanel();
-            leftSidePanelDashboard = new JPanel();
-            rightSidePanel = new JPanel();
-            statusLabel = new JLabel();
-            tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-            currentProfile = "NO PROFILE";
-            ParameterSelectionPanel_ = new ParameterSelectionPanel();
-            createAndShowGUI();
-	}
+    public MainWindow() {
+        topMenu = new JMenuBar();
+        mainWindow = new JPanel(new BorderLayout());
+        leftSidePanelScenario = new JPanel();
+        leftSidePanelDashboard = new JPanel();
+        rightSidePanel = new JPanel();
+        statusLabel = new JLabel();
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        currentProfile = "NO PROFILE";
+        ParameterSelectionPanel_ = new ParameterSelectionPanel();
+        createAndShowGUI();
+    }
 
     private void createAndShowGUI() {
+        //setupMainWindow();
+        //setepMenu();
+        //setupLeftSideBar()
+        //setupTabbedPane();
+        //setupRightSideBar();
     	setTitle("Winch Host Manager v" + version);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         setUpMenus();
         setJMenuBar(topMenu);
+        
         leftSidePanelScenario.setPreferredSize(new Dimension(200, 600));
         leftSidePanelDashboard.setPreferredSize(new Dimension(200, 600));
         leftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -62,26 +70,43 @@ public class MainWindow extends JFrame {
         airfieldButton.setText("Select Airfield");
         airfieldButton.setPreferredSize(new Dimension(180,20));
         
-        leftSidePanelScenario.add(pilotButton);        
-        leftSidePanelScenario.add(gliderButton);   
-        leftSidePanelScenario.add(airfieldButton);
-        
         rightSidePanel.setPreferredSize(new Dimension(200, 600));
+        rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        //TODO (jtroxel) move all side panels into their respective panels, since they are tied to them
+        // RSP can stay with main window IF static.
+        upperLeftSidePanelScenario = new JPanel();
+        upperLeftSidePanelScenario.setPreferredSize(new Dimension(200,200));
+        upperLeftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
+        lowerLeftSidePanelScenario = new JPanel();
+        lowerLeftSidePanelScenario.setPreferredSize(new Dimension(200,300));
+        lowerLeftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
+        leftSidePanelScenario.add(upperLeftSidePanelScenario);
+        leftSidePanelScenario.add(lowerLeftSidePanelScenario);
+        
+        lowerLeftSidePanelScenario.add(new JLabel("CURRENT INFO HERE"));
+        
+        upperLeftSidePanelDashboard = new JPanel();
+        upperLeftSidePanelDashboard.setPreferredSize(new Dimension(200,200));
+        upperLeftSidePanelDashboard.setBorder(BorderFactory.createLineBorder(Color.black));
+        lowerLeftSidePanelDashboard = new JPanel();
+        lowerLeftSidePanelDashboard.setPreferredSize(new Dimension(200,300));
+        lowerLeftSidePanelDashboard.setBorder(BorderFactory.createLineBorder(Color.black));
+        leftSidePanelDashboard.add(upperLeftSidePanelDashboard);
+        leftSidePanelDashboard.add(lowerLeftSidePanelDashboard);
 
-        tabbedPane.setPreferredSize(new Dimension(800, 600));
+        upperLeftSidePanelDashboard.add(new JLabel("REPLAY LIST HERE"));
+        lowerLeftSidePanelDashboard.add(new JLabel("CURRENT INFO HERE"));
+        
+        upperLeftSidePanelScenario.add(pilotButton);        
+        upperLeftSidePanelScenario.add(gliderButton);   
+        upperLeftSidePanelScenario.add(airfieldButton);
+        
+        tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
         tabbedPane.addTab("Flight Dashboard", makePanel(new JPanel(),2));
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);
-
-        //mainWindow.add(leftSidePanel, BorderLayout.LINE_START);
-        /*upperLeftSidePanel = new JPanel();
-        upperLeftSidePanel.setPreferredSize(new Dimension(200,300));
-        lowerLeftSidePanel = new JPanel();
-        lowerLeftSidePanel.setPreferredSize(new Dimension(200,300));
-        leftSidePanel.add(upperLeftSidePanel);
-        leftSidePanel.add(lowerLeftSidePanel);*/
 
         mainWindow.add(statusLabel, BorderLayout.PAGE_END);
         statusLabel.setText("LOADED");
@@ -96,7 +121,6 @@ public class MainWindow extends JFrame {
         pilotButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                //ParameterSelectionPanel_.SetCard(0);
                 selectionLayout.first(ParameterSelectionPanel_);
             }
         });
@@ -104,8 +128,6 @@ public class MainWindow extends JFrame {
         gliderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                //selectionLayout.show(ParameterSelectionPanel_, "Glider");
-                //ParameterSelectionPanel_.SetCard(1);
                 selectionLayout.first(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
             }
@@ -114,7 +136,6 @@ public class MainWindow extends JFrame {
         airfieldButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                //ParameterSelectionPanel_.SetCard(2);
                 selectionLayout.first(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
@@ -125,7 +146,7 @@ public class MainWindow extends JFrame {
     private JPanel makePanel(JPanel innerPanel, int tab) {
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout(1, 1));
-        if(tab == 1) p.add(leftSidePanelScenario, BorderLayout.LINE_START);
+        if(tab==1)p.add(leftSidePanelScenario, BorderLayout.LINE_START);
         else p.add(leftSidePanelDashboard, BorderLayout.LINE_START);
         p.add(innerPanel, BorderLayout.CENTER);
         return p;
@@ -134,29 +155,15 @@ public class MainWindow extends JFrame {
     private void setUpMenus() {
         final JMenu fileMenu = new JMenu("File");
         final JMenu editMenu = new JMenu("Edit");
-        //final JMenu profileMenu = new JMenu(currentProfile); //this should change to show current login
-
-        //String[] profiles = {"JTROXEL", "AJACUZZI", "DBENNETT"};
-        /*for (final String profile : profiles) {
-        	JMenuItem profileItem = new JMenuItem(profile);
-        	profileItem.addActionListener(new ActionListener() {
-            	@Override
-            	public void actionPerformed(ActionEvent event) {
-            		currentProfile = profile;
-            		profileMenu.setText(currentProfile);
-            	}
-        	});
-			profileMenu.add(profileItem);
-        }*/
-        
-
+        final JMenu editAddMenu = new JMenu("Add New...");
+//FILE MENU
         JMenuItem setupDBItem = new JMenuItem("Setup Database");
         setupDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
             }
         });
-		fileMenu.add(setupDBItem);
+	fileMenu.add(setupDBItem);
 
         JMenuItem exportDBItem = new JMenuItem("Export From Database");
         exportDBItem.addActionListener(new ActionListener() {
@@ -164,15 +171,7 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent event) {
             }
         });
-		fileMenu.add(exportDBItem);
-
-		JMenuItem editDBItem = new JMenuItem("Edit Database Entry");
-        editDBItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-            }
-        });
-		editMenu.add(editDBItem);
+	fileMenu.add(exportDBItem);
 
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(new ActionListener() {
@@ -181,26 +180,25 @@ public class MainWindow extends JFrame {
                 System.exit(0);
             }
         });
-		fileMenu.add(exitMenuItem);
-
+	fileMenu.add(exitMenuItem);
+//EDIT MENU
+        //editMenu.add(editAddMenu);
+        
         JMenuItem addNewEntryItem = new JMenuItem("Add Database Entry");
         addNewEntryItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            	//PreWizard wiz = new PreWizard();
-       			//wiz.setVisible(true);
             }
-        });
-		editMenu.add(addNewEntryItem);
-
-		JMenuItem editScenarioItem = new JMenuItem("Edit Scenario");
-        editScenarioItem.addActionListener(new ActionListener() {
+        });        
+	editMenu.add(addNewEntryItem);
+        
+        JMenuItem editDBItem = new JMenuItem("Edit Database Entry");
+        editDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            	tabbedPane.setSelectedIndex(0);
             }
         });
-		editMenu.add(editScenarioItem);
+	editMenu.add(editDBItem);
 
     	JMenuItem preferencesItem = new JMenuItem("Manage Profiles");
     	preferencesItem.addActionListener(new ActionListener() {
@@ -210,28 +208,14 @@ public class MainWindow extends JFrame {
                     ProfileManagementFrame.setVisible(true);
         	}
     	});
-		editMenu.add(preferencesItem);
+	editMenu.add(preferencesItem);
 
         topMenu.add(fileMenu);
         topMenu.add(editMenu);
-        //topMenu.add(profileMenu);
     }
 
+    //TODO (jtroxel): remove this guy...necessary?
     public static void run() {
-        /*javax.swing.SwingUtilities.invokeLater(new Runnable() {
-        	@Override
-            public void run() {
-            	MainWindow wt = new MainWindow();
-            }
-        });*/
+
     }
-    
-    /*public static void main(String[] args) {
-       javax.swing.SwingUtilities.invokeLater(new Runnable() {
-        	@Override
-            public void run() {
-        		MainWindow wt = new MainWindow();
-            }
-        });
-    }*/
 }
