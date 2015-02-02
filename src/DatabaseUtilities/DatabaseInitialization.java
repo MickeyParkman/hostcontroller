@@ -885,113 +885,50 @@ public class DatabaseInitialization {
     
     /**
      * Drops tables excluding the units tables
+     * The order at which these tables are dropped is important because of table references
      * 
      */
     private static void dropTables(Connection connect) throws SQLException {
-        String getTables = "SELECT tablename from SYS.SYSTABLES";
-        String dropTables;
-        ResultSet tableNames = null;
-        
-        
-                     
+             
         try(Statement stmt = connect.createStatement()){
             
-            //dropTables = "SET FOREIGN_KEY_CHECKS = 0; ";
-            //stmt.executeQuery("SET FOREIGN_KEY_CHECKS = 0");
             try 
             {
                 stmt.execute("SELECT * FROM PILOT");
                 stmt.execute("DROP TABLE PILOT");
-                System.out.println("Dropped pilot");
-            } catch(SQLException e) { System.out.println(e); }
+            } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM CAPABILITY");
                 stmt.execute("DROP TABLE CAPABILITY");
-                System.out.println("Dropped capability");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM PREFERENCE");
                 stmt.execute("DROP TABLE PREFERENCE");
-                System.out.println("Dropped preference");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM SAILPLANE");
                 stmt.execute("DROP TABLE SAILPLANE");
-                System.out.println("Dropped sailplane");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM POSITION");
                 stmt.execute("DROP TABLE POSITION");
-                System.out.println("Dropped position");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM RUNWAY");
                 stmt.execute("DROP TABLE RUNWAY");
-                System.out.println("Dropped runway");
             } catch(SQLException e) { }
             try 
             {
                 stmt.execute("SELECT * FROM AIRFIELD");
                 stmt.execute("DROP TABLE AIRFIELD");
-                System.out.println("Dropped airfield");
             } catch(SQLException e) { }
-            /*
-            try 
-            {
-                System.out.println("Dropping parachute");
-                stmt.execute("SELECT * FROM PARACHUTE");
-                System.out.println("Parachute exists");
-                stmt.execute("DROP TABLE PARACHUTE");
-                System.out.println("Dropped parachute");
-            } catch(SQLException e) { }
-  */
-            /*
-            try
-            {
-                tableNames = stmt.executeQuery(getTables);
-                //connect.setAutoCommit(false);
-                //System.out.println(connect.getAutoCommit());
-                while(tableNames.next())
-                {
-                    String name = tableNames.getString(1);
-                    //System.out.println(name);
-                    dropTables = " DROP TABLE " + name;
-/*
-                    try
-                    {
-                        stmt.execute(dropTables);
-                        System.out.println("Error in table " + name);
-                    }catch (SQLException e) {}
-                    //System.out.println(dropTables);
-                    //stmt.execute(dropTables); 
-                }
-            }catch (SQLException e)
-            {
-                //System.out.println(e);
-                throw e;
-            }finally
-            {
-                if(tableNames != null)
-                {
-                    try
-                    {
-                        tableNames.close();
-                    }catch (SQLException e) 
-                    {
-                        //System.out.println("Couldn't close");
-                    }
-                }
-            }
-            */
-         
-            
+           
         }catch(SQLException e) {
-            //System.out.println("ERROR IN DROP");
             System.out.println(e);
             throw e;
         }
