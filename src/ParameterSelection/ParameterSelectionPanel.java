@@ -1,6 +1,17 @@
 package ParameterSelection;
 
+import Configuration.UnitConversionRate;
+import DataObjects.Pilot;
+import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,12 +25,80 @@ import java.awt.CardLayout;
 public class ParameterSelectionPanel extends javax.swing.JPanel {
 
     private final static String[] tabNames = {"PILOT","GLIDER","AIRFIELD"};
+    private List<Pilot> pilotNames = new ArrayList<Pilot>();
     
     public void SetCard(int index)
     {
         final CardLayout layout = (CardLayout)this.getLayout();
         layout.show(this, tabNames[index]);
     }
+    
+    private void initPilotList() {
+        try{
+            pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
+            if (pilotNames == null)
+                pilotNames = new ArrayList<>();
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(pilotNameInput, e.getMessage());
+            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Aggressive", null, null));
+
+        } catch (ClassNotFoundException ex) {
+            // TODO change exception case
+            Logger.getLogger(PilotSelectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /*private void pilotNameInputActionPerformed(java.awt.event.ActionEvent evt) {
+        //PilotMatchDisplay.add(PilotNameInput.getText(), this);
+        flightWeightField.setText(pilotNameInput.getText());
+    }
+    
+    
+    private void pilotNameInputKeyReleased(java.awt.event.KeyEvent evt) {
+        // TODO add your handling code here:
+        String matchstring = pilotNameInput.getText();
+        DefaultListModel pilotModel = new DefaultListModel();
+        
+        // TODO Change from String specific to type Pilot
+        for(Pilot plt : pilotNames){
+            if(plt.getFirstName().toUpperCase().startsWith(matchstring.toUpperCase())) {
+                pilotModel.addElement(plt);
+            }
+            else if(plt.getLastName().toUpperCase().startsWith(matchstring.toUpperCase())) {
+                pilotModel.addElement(plt);
+            }
+        }
+        
+        pilotJList.setModel(pilotModel);
+    }*/
+    
+    private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
+        if(pilotJList.getSelectedIndex() >= 0){
+            try{
+                firstNameField.setText((((Pilot)pilotJList.getSelectedValue()).getFirstName()));
+                firstNameField.setBackground(new Color(142, 250, 127));
+                
+                lastNameField.setText((((Pilot)pilotJList.getSelectedValue()).getLastName()));
+                lastNameField.setBackground(new Color(142, 250, 127));
+                
+                middleNameField.setText((((Pilot)pilotJList.getSelectedValue()).getMiddleName()));
+                middleNameField.setBackground(new Color(142, 250, 127));
+                
+                flightWeightField.setText(String.valueOf((int)(((Pilot)pilotJList.getSelectedValue()).getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
+                flightWeightField.setBackground(new Color(142, 250, 127));
+                
+
+                
+            } catch(ClassNotFoundException e1) {
+                //TODO respond to error
+            }
+        }
+    }
+    
+    private void pilotJListKeyReleased(java.awt.event.KeyEvent evt) {
+        pilotJListMouseClicked(null);
+    }
+    
     /**
      * Creates new form EditDatabase
      */
@@ -40,33 +119,33 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        firstNameField = new javax.swing.JTextField();
+        lastNameField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        flightWeightField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        middleNameField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jLabel6 = new javax.swing.JLabel();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        capabilityLabel = new javax.swing.JLabel();
+        studentRadioButton = new javax.swing.JRadioButton();
+        proficientRadioButton = new javax.swing.JRadioButton();
+        advancedRadioButton = new javax.swing.JRadioButton();
+        preferenceLabel = new javax.swing.JLabel();
+        mildRadioButton = new javax.swing.JRadioButton();
+        nominalRadioButton = new javax.swing.JRadioButton();
+        performanceRadioButton = new javax.swing.JRadioButton();
+        emergencyContactLabel = new javax.swing.JLabel();
+        emergencyContactNameField = new javax.swing.JTextField();
+        emergencyContactNameLabel = new javax.swing.JLabel();
+        emergencyContactPhoneLabel = new javax.swing.JLabel();
+        emergencyContactPhoneField = new javax.swing.JTextField();
+        primaryPhysicianLabel = new javax.swing.JLabel();
+        primaryPhysicianNameLabel = new javax.swing.JLabel();
+        primaryPhysicianPhoneLabel = new javax.swing.JLabel();
+        primaryPhysicianNameField = new javax.swing.JTextField();
+        primaryPhysicianPhoneField = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
+        pilotAdditionalInfoLabel = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -97,6 +176,7 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jTextArea4 = new javax.swing.JTextArea();
         jButton5 = new javax.swing.JButton();
+        pilotNameInput = new javax.swing.JTextField();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -105,65 +185,71 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
 
         jLabel1.setText("First Name");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        lastNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                lastNameFieldActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Last Name");
 
-        jLabel3.setText("Weight");
+        jLabel3.setText("Flight Weight");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        middleNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                middleNameFieldActionPerformed(evt);
+            }
+        });
+        
+        pilotJList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pilotJListMouseClicked(evt);
             }
         });
 
         jLabel4.setText("Middle Name");
 
-        jLabel5.setText("Capability");
+        capabilityLabel.setText("Capability");
 
-        jRadioButton1.setText("Student");
+        studentRadioButton.setText("Student");
 
-        jRadioButton2.setText("Proficient");
+        proficientRadioButton.setText("Proficient");
 
-        jRadioButton3.setText("Advanced");
+        advancedRadioButton.setText("Advanced");
 
-        jLabel6.setText("Preference");
+        preferenceLabel.setText("Preference");
 
-        jRadioButton4.setText("Mild");
+        mildRadioButton.setText("Mild");
 
-        jRadioButton5.setText("Nominal");
+        nominalRadioButton.setText("Nominal");
 
-        jRadioButton6.setText("Performance");
+        performanceRadioButton.setText("Performance");
 
-        jLabel7.setText("Emergency Contact:");
+        emergencyContactLabel.setText("Emergency Contact:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        emergencyContactNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                emergencyContactNameFieldActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("Name:");
+        emergencyContactNameLabel.setText("Name:");
 
-        jLabel9.setText("Phone:");
+        emergencyContactPhoneLabel.setText("Phone:");
 
-        jLabel10.setText("Primary Physician:");
+        primaryPhysicianLabel.setText("Primary Physician:");
 
-        jLabel11.setText("Name:");
+        primaryPhysicianNameLabel.setText("Name:");
 
-        jLabel12.setText("Phone:");
+        primaryPhysicianPhoneLabel.setText("Phone:");
 
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        primaryPhysicianNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                primaryPhysicianNameFieldActionPerformed(evt);
             }
         });
 
-        jLabel13.setText("Additional Info:");
+        pilotAdditionalInfoLabel.setText("Additional Info:");
 
         jLabel14.setText("*Units");
 
@@ -188,10 +274,10 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(firstNameField)
+                            .addComponent(lastNameField)
+                            .addComponent(middleNameField)
+                            .addComponent(flightWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
@@ -200,43 +286,43 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(20, 20, 20)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton3))
+                                        .addComponent(capabilityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(studentRadioButton)
+                                    .addComponent(proficientRadioButton)
+                                    .addComponent(advancedRadioButton))
                                 .addGap(62, 62, 62)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton6)
-                                    .addComponent(jRadioButton5)
-                                    .addComponent(jRadioButton4)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(performanceRadioButton)
+                                    .addComponent(nominalRadioButton)
+                                    .addComponent(mildRadioButton)
+                                    .addComponent(preferenceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(157, 157, 157))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
+                                    .addComponent(emergencyContactLabel)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
+                                        .addComponent(emergencyContactPhoneLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(emergencyContactPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
+                                        .addComponent(emergencyContactNameLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(emergencyContactNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
+                                    .addComponent(primaryPhysicianLabel)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
+                                        .addComponent(primaryPhysicianPhoneLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(primaryPhysicianPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
+                                        .addComponent(primaryPhysicianNameLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(primaryPhysicianNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(99, 99, 99))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
+                            .addComponent(pilotAdditionalInfoLabel)
                             .addComponent(jButton1))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -250,63 +336,63 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(middleNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(flightWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel14)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                                .addComponent(preferenceLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton4)
+                                .addComponent(mildRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton5)
+                                .addComponent(nominalRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton6))
+                                .addComponent(performanceRadioButton))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addComponent(capabilityLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton1)
+                                .addComponent(studentRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2)
+                                .addComponent(proficientRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton3)))
+                                .addComponent(advancedRadioButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(emergencyContactLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(emergencyContactNameLabel)
+                                    .addComponent(emergencyContactNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(emergencyContactPhoneLabel)
+                                    .addComponent(emergencyContactPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                .addComponent(primaryPhysicianLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(primaryPhysicianNameLabel)
+                                    .addComponent(primaryPhysicianNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(primaryPhysicianPhoneLabel)
+                                    .addComponent(primaryPhysicianPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jLabel13)
+                .addComponent(pilotAdditionalInfoLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
@@ -517,21 +603,21 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         this.add("Position", jPanel5);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void lastNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_lastNameFieldActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void middleNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_middleNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_middleNameFieldActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void emergencyContactNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emergencyContactNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_emergencyContactNameFieldActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void primaryPhysicianNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primaryPhysicianNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_primaryPhysicianNameFieldActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
@@ -547,10 +633,10 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel primaryPhysicianLabel;
+    private javax.swing.JLabel primaryPhysicianNameLabel;
+    private javax.swing.JLabel primaryPhysicianPhoneLabel;
+    private javax.swing.JLabel pilotAdditionalInfoLabel;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -562,22 +648,22 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel capabilityLabel;
+    private javax.swing.JLabel preferenceLabel;
+    private javax.swing.JLabel emergencyContactLabel;
+    private javax.swing.JLabel emergencyContactNameLabel;
+    private javax.swing.JLabel emergencyContactPhoneLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
+    private javax.swing.JRadioButton studentRadioButton;
+    private javax.swing.JRadioButton proficientRadioButton;
+    private javax.swing.JRadioButton advancedRadioButton;
+    private javax.swing.JRadioButton mildRadioButton;
+    private javax.swing.JRadioButton nominalRadioButton;
+    private javax.swing.JRadioButton performanceRadioButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -586,19 +672,22 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField emergencyContactNameField;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField firstNameField;
+    private javax.swing.JTextField lastNameField;
+    private javax.swing.JTextField flightWeightField;
+    private javax.swing.JTextField middleNameField;
+    private javax.swing.JTextField emergencyContactPhoneField;
+    private javax.swing.JTextField primaryPhysicianNameField;
+    private javax.swing.JTextField primaryPhysicianPhoneField;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField pilotNameInput;
+    private javax.swing.JList pilotJList;
+    private javax.swing.JScrollPane pilotScrollPane;
     // End of variables declaration//GEN-END:variables
 }

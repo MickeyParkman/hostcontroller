@@ -1,16 +1,15 @@
 package Configuration;
 
+import DataObjects.Profile;
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 
 
 public class ProfileManagementFrame extends JFrame {
@@ -22,11 +21,31 @@ public class ProfileManagementFrame extends JFrame {
 	private ProfileWinchPanel ProfileWinchPanel;
 	private ProfileOtherPanel ProfileOtherPanel;
         private SaveAsNewFrame SaveAsNewFrame;
+        private List<Profile> names = new ArrayList<Profile>();
+        private JScrollPane profileScrollPane;
+        private JList profileJList;
                 
+        private void initProfileList() 
+        {
+            try
+            {
+                names = DatabaseUtilities.DatabaseDataObjectUtilities.getProfiles();
+                System.out.println(names);
+            }
+            catch(SQLException e) 
+            {
+                
+            } 
+            catch (ClassNotFoundException ex) 
+            {
+                
+            }
+        }
+        
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -37,30 +56,37 @@ public class ProfileManagementFrame extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
-	/**
-	 * Create the frame.
-	 */
-	public ProfileManagementFrame() {
+
+        /**
+        * Creates new ProfileManagementFrame
+        */
+        public ProfileManagementFrame()
+        {
+           initProfileList();
+           initComponents();
+        }
+        
+	private void initComponents() {
 		setTitle("Profile Management");
 		ProfilePilotPanel = new ProfilePilotPanel();
 		ProfileGliderPanel = new ProfileGliderPanel();
 		ProfileAirfieldPanel = new ProfileAirfieldPanel();
 		ProfileWinchPanel = new ProfileWinchPanel();
 		ProfileOtherPanel = new ProfileOtherPanel();
+                profileScrollPane = new javax.swing.JScrollPane();
+                profileJList = new javax.swing.JList();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 525, 422);
+		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JTextArea txtrProfileList = new JTextArea();
-		txtrProfileList.setText("Profile List");
-		txtrProfileList.setColumns(12);
-		contentPane.add(txtrProfileList, BorderLayout.WEST);
+
+		contentPane.add(profileScrollPane, BorderLayout.WEST);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
@@ -74,6 +100,7 @@ public class ProfileManagementFrame extends JFrame {
 		
 		JButton btnNewButton_1 = new JButton("Save as new");
 		btnNewButton_1.addActionListener(new ActionListener() {
+                        @Override
 			public void actionPerformed(ActionEvent arg0) {
                             SaveAsNewFrame = new SaveAsNewFrame();
                             SaveAsNewFrame.setVisible(true);
@@ -81,10 +108,24 @@ public class ProfileManagementFrame extends JFrame {
 		});
 		panel.add(btnNewButton_1);
 		
+                
+                DefaultListModel profileModel = new DefaultListModel();
+                for(Object str: names){
+                    profileModel.addElement(str);
+                }
+                profileJList.setModel(profileModel);
+                profileScrollPane.setViewportView(profileJList);
+                
 		JButton btnNewButton_2 = new JButton("Reset to default");
 		panel.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Cancel");
+                btnNewButton_3.addActionListener(new ActionListener() {
+                        @Override
+			public void actionPerformed(ActionEvent arg0) {
+                            dispose();
+			}
+		});
 		panel.add(btnNewButton_3);
 		
 		tabbedPane.addTab("Pilot", ProfilePilotPanel);
