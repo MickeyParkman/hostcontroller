@@ -2,6 +2,7 @@ package ParameterSelection;
 
 import Configuration.UnitConversionRate;
 import DataObjects.Pilot;
+import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -26,6 +27,7 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
 
     private final static String[] tabNames = {"PILOT","GLIDER","AIRFIELD"};
     private List<Pilot> pilotNames = new ArrayList<Pilot>();
+    private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
     
     public void SetCard(int index)
     {
@@ -36,8 +38,7 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private void initPilotList() {
         try{
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
-            if (pilotNames == null)
-                pilotNames = new ArrayList<>();
+            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Aggressive", null, null));
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(pilotNameInput, e.getMessage());
             pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Aggressive", null, null));
@@ -45,6 +46,16 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         } catch (ClassNotFoundException ex) {
             // TODO change exception case
             Logger.getLogger(PilotSelectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initSailPlaneList() {
+        try{
+            sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
+        }catch(SQLException e) {
+
+        } catch (ClassNotFoundException ex) {
+
         }
     }
     
@@ -86,23 +97,31 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
                 
                 flightWeightField.setText(String.valueOf((int)(((Pilot)pilotJList.getSelectedValue()).getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
                 flightWeightField.setBackground(new Color(142, 250, 127));
-                
-
-                
+                  
             } catch(ClassNotFoundException e1) {
                 //TODO respond to error
             }
         }
     }
     
-    private void pilotJListKeyReleased(java.awt.event.KeyEvent evt) {
-        pilotJListMouseClicked(null);
+    private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) {
+        if(sailplaneJList.getSelectedIndex() >= 0){
+            try{
+                nNumberField.setText((((Sailplane)sailplaneJList.getSelectedValue()).getNumber()));
+                nNumberField.setBackground(new Color(142, 250, 127));
+                  
+            } catch(Exception e) {
+                //TODO respond to error
+            }
+        }
     }
     
     /**
      * Creates new form EditDatabase
      */
     public ParameterSelectionPanel() {
+        initPilotList();
+        initSailPlaneList();
         initComponents();
     }
 
@@ -116,16 +135,16 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private void initComponents() {
     	
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        pilotJList = new javax.swing.JList();
+        sailplaneJList = new javax.swing.JList();
+        firstNameLabel = new javax.swing.JLabel();
         firstNameField = new javax.swing.JTextField();
         lastNameField = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lastNameLabel = new javax.swing.JLabel();
         flightWeightField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        flightWeightLabel = new javax.swing.JLabel();
         middleNameField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        middleNameLabel = new javax.swing.JLabel();
         capabilityLabel = new javax.swing.JLabel();
         studentRadioButton = new javax.swing.JRadioButton();
         proficientRadioButton = new javax.swing.JRadioButton();
@@ -149,19 +168,19 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        sailplaneScrollPane = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        nNumberLabel = new javax.swing.JLabel();
+        nNumberField = new javax.swing.JTextField();
+        emptyWeightLabel = new javax.swing.JLabel();
+        emptyWeightField = new javax.swing.JTextField();
+        maxGrossWeightLabel = new javax.swing.JLabel();
+        maxGrossWeightField = new javax.swing.JTextField();
+        stallSpeedLabel = new javax.swing.JLabel();
+        stallSpeedField = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        maxWinchingSpeedLabel = new javax.swing.JLabel();
+        maxWinchingSpeedField = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
@@ -177,13 +196,9 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         jTextArea4 = new javax.swing.JTextArea();
         jButton5 = new javax.swing.JButton();
         pilotNameInput = new javax.swing.JTextField();
+        pilotScrollPane = new javax.swing.JScrollPane();
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Pilot List");
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jLabel1.setText("First Name");
+        firstNameLabel.setText("First Name");
 
         lastNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,9 +206,9 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setText("Last Name");
+        lastNameLabel.setText("Last Name");
 
-        jLabel3.setText("Flight Weight");
+        flightWeightLabel.setText("Flight Weight");
 
         middleNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,13 +216,21 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
             }
         });
         
+        DefaultListModel pilotModel = new DefaultListModel();
+        for(Object str: pilotNames){
+            pilotModel.addElement(str);
+        }
+        pilotJList.setModel(pilotModel);
+        
         pilotJList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pilotJListMouseClicked(evt);
             }
         });
 
-        jLabel4.setText("Middle Name");
+        pilotScrollPane.setViewportView(pilotJList);
+        
+        middleNameLabel.setText("Middle Name");
 
         capabilityLabel.setText("Capability");
 
@@ -265,15 +288,15 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1))
+                            .addComponent(pilotScrollPane))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
+                            .addComponent(firstNameLabel)
+                            .addComponent(lastNameLabel)
+                            .addComponent(middleNameLabel)
+                            .addComponent(flightWeightLabel)
                             .addComponent(firstNameField)
                             .addComponent(lastNameField)
                             .addComponent(middleNameField)
@@ -330,23 +353,23 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pilotScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(firstNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
+                        .addComponent(lastNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
-                        .addComponent(jLabel4)
+                        .addComponent(middleNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(middleNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(flightWeightLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(flightWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,22 +425,31 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
 
         this.add(tabNames[0], jPanel1);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setText("Sailplane List");
-        jScrollPane2.setViewportView(jTextArea2);
+        DefaultListModel sailplaneModel = new DefaultListModel();
+        for(Object str: sailplanes){
+            sailplaneModel.addElement(str);
+        }
+        sailplaneJList.setModel(sailplaneModel);
+        
+        sailplaneJList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sailplaneJListMouseClicked(evt);
+            }
+        });
 
-        jLabel15.setText("N-Number");
+        pilotScrollPane.setViewportView(sailplaneJList);
 
-        jLabel16.setText("Empty Weight");
+        nNumberLabel.setText("N-Number");
 
-        jLabel17.setText("Max Gross Weight");
+        emptyWeightLabel.setText("Empty Weight");
 
-        jLabel18.setText("Indicated Stall Speed");
+        maxGrossWeightLabel.setText("Max Gross Weight");
+
+        stallSpeedLabel.setText("Indicated Stall Speed");
 
         jLabel19.setText("*Units");
 
-        jLabel20.setText("Max Winching Speed");
+        maxWinchingSpeedLabel.setText("Max Winching Speed");
 
         jLabel21.setText("*Units");
 
@@ -441,28 +473,28 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+                        .addComponent(sailplaneScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField10)
-                            .addComponent(jTextField11)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(maxGrossWeightLabel)
+                            .addComponent(emptyWeightLabel)
+                            .addComponent(nNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nNumberField)
+                            .addComponent(emptyWeightField)
+                            .addComponent(maxGrossWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(stallSpeedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(stallSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel19))
-                            .addComponent(jLabel20)
+                            .addComponent(maxWinchingSpeedLabel)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(maxWinchingSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel21))
                             .addComponent(jCheckBox1)
@@ -476,32 +508,32 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sailplaneScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel18))
+                    .addComponent(nNumberLabel)
+                    .addComponent(stallSpeedLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stallSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel20))
+                    .addComponent(emptyWeightLabel)
+                    .addComponent(maxWinchingSpeedLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emptyWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maxWinchingSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
+                    .addComponent(maxGrossWeightLabel)
                     .addComponent(jCheckBox1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maxGrossWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addComponent(jButton2)
@@ -632,22 +664,22 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel firstNameLabel;
     private javax.swing.JLabel primaryPhysicianLabel;
     private javax.swing.JLabel primaryPhysicianNameLabel;
     private javax.swing.JLabel primaryPhysicianPhoneLabel;
     private javax.swing.JLabel pilotAdditionalInfoLabel;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel nNumberLabel;
+    private javax.swing.JLabel emptyWeightLabel;
+    private javax.swing.JLabel maxGrossWeightLabel;
+    private javax.swing.JLabel stallSpeedLabel;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JLabel maxWinchingSpeedLabel;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel flightWeightLabel;
+    private javax.swing.JLabel middleNameLabel;
     private javax.swing.JLabel capabilityLabel;
     private javax.swing.JLabel preferenceLabel;
     private javax.swing.JLabel emergencyContactLabel;
@@ -664,20 +696,20 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton mildRadioButton;
     private javax.swing.JRadioButton nominalRadioButton;
     private javax.swing.JRadioButton performanceRadioButton;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane sailplaneScrollPane;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JList pilotJList;
+    private javax.swing.JList sailplaneJList;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextField emergencyContactNameField;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
+    private javax.swing.JTextField nNumberField;
+    private javax.swing.JTextField emptyWeightField;
+    private javax.swing.JTextField maxGrossWeightField;
+    private javax.swing.JTextField stallSpeedField;
+    private javax.swing.JTextField maxWinchingSpeedField;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JTextField flightWeightField;
@@ -687,7 +719,6 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JTextField primaryPhysicianPhoneField;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField pilotNameInput;
-    private javax.swing.JList pilotJList;
     private javax.swing.JScrollPane pilotScrollPane;
     // End of variables declaration//GEN-END:variables
 }
