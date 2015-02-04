@@ -2,6 +2,7 @@ package mainhost;
 
 import Configuration.ProfileManagementFrame;
 import ParameterSelection.ParameterSelectionPanel;
+import DashboardInterface.FlightDashboard;
 import javax.swing.*;
 import java.awt.Dimension;   
 import java.awt.event.KeyEvent;
@@ -29,6 +30,7 @@ public class MainWindow extends JFrame {
     private JTabbedPane tabbedPane;
     private ParameterSelectionPanel ParameterSelectionPanel_;
     private ProfileManagementFrame ProfileManagementFrame;
+    private FlightDashboard FlightDashboard_;
 
     public MainWindow() {
         topMenu = new JMenuBar();
@@ -40,6 +42,7 @@ public class MainWindow extends JFrame {
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         currentProfile = "NO PROFILE";
         ParameterSelectionPanel_ = new ParameterSelectionPanel();
+        FlightDashboard_ = new FlightDashboard();
         createAndShowGUI();
     }
 
@@ -103,7 +106,7 @@ public class MainWindow extends JFrame {
         
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
-        tabbedPane.addTab("Flight Dashboard", makePanel(new JPanel(),2));
+        tabbedPane.addTab("Flight Dashboard", makePanel(FlightDashboard_, 2));
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);
