@@ -25,11 +25,13 @@ public class Profile {
     }
     
     private void initSettingsFromString(String settings, String prefs) {
-        if(!settings.equals("")) {
+        if(!settings.equals("{}")) {
             /* settings could be "{'PILOT_WEIGHT':0,'SAILPLANE_WEIGHT':1}" */
             settings = settings.replace("{","");
             settings = settings.replace("}","");
             String[] settingsArray = settings.split(","); //["'PILOT_WEIGHT':0"]
+            
+            System.out.println("asdfas" + settings + "asdfasfasdfs");
             for (String setting : settingsArray) {
                 int hashValue = 0;
                 String[] settingArray = setting.split(":");
@@ -43,7 +45,7 @@ public class Profile {
             }
         }
 
-        if(!prefs.equals("")) {
+        if(!prefs.equals("{}")) {
             prefs = prefs.replace("{","");
             prefs = prefs.replace("}","");
             String[] prefsArray = prefs.split(","); //["'PILOT_WEIGHT':0"]

@@ -2,6 +2,7 @@ package Configuration;
 
 import DataObjects.Profile;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -30,34 +31,14 @@ public class ProfileManagementFrame extends JFrame {
             try
             {
                 names = DatabaseUtilities.DatabaseDataObjectUtilities.getProfiles();
-                System.out.println(names);
             }
             catch(SQLException e) 
-            {
-                
+            {   
             } 
             catch (ClassNotFoundException ex) 
-            {
-                
+            {     
             }
         }
-        
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProfileManagementFrame frame = new ProfileManagementFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
 
         /**
         * Creates new ProfileManagementFrame
@@ -66,6 +47,22 @@ public class ProfileManagementFrame extends JFrame {
         {
            initProfileList();
            initComponents();
+        }
+        
+        private ProfileManagementFrame getCurrentProfileManagementFrame()
+        {
+            return this;
+        }
+        
+        public void Rebuild()
+        {
+            initProfileList();
+            DefaultListModel profileModel = new DefaultListModel();
+            for(Object str: names){
+                profileModel.addElement(str);
+            }
+            profileJList.setModel(profileModel);
+            profileScrollPane.setViewportView(profileJList);
         }
         
 	private void initComponents() {
@@ -103,12 +100,13 @@ public class ProfileManagementFrame extends JFrame {
                         @Override
 			public void actionPerformed(ActionEvent arg0) {
                             SaveAsNewFrame = new SaveAsNewFrame();
+                            SaveAsNewFrame.setParent(getCurrentProfileManagementFrame());
                             SaveAsNewFrame.setVisible(true);
 			}
 		});
 		panel.add(btnNewButton_1);
 		
-                
+                profileJList.setPreferredSize(new Dimension(200,100));
                 DefaultListModel profileModel = new DefaultListModel();
                 for(Object str: names){
                     profileModel.addElement(str);

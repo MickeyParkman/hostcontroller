@@ -38,10 +38,10 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private void initPilotList() {
         try{
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
-            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Aggressive", null, null));
+            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Performance", null, null));
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(pilotNameInput, e.getMessage());
-            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Aggressive", null, null));
+            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Performance", null, null));
 
         } catch (ClassNotFoundException ex) {
             // TODO change exception case
@@ -52,6 +52,7 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private void initSailPlaneList() {
         try{
             sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
+            sailplanes.add(new Sailplane("N32452345", "asdfas", "Bob", "no", 1000, 1000, 1000, 1000, 1000, 1000, false));
         }catch(SQLException e) {
 
         } catch (ClassNotFoundException ex) {
@@ -86,18 +87,28 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
         if(pilotJList.getSelectedIndex() >= 0){
             try{
-                firstNameField.setText((((Pilot)pilotJList.getSelectedValue()).getFirstName()));
+                Pilot thePilot = (Pilot)pilotJList.getSelectedValue();
+                firstNameField.setText((thePilot.getFirstName()));
                 firstNameField.setBackground(new Color(142, 250, 127));
                 
-                lastNameField.setText((((Pilot)pilotJList.getSelectedValue()).getLastName()));
+                lastNameField.setText((thePilot.getLastName()));
                 lastNameField.setBackground(new Color(142, 250, 127));
                 
-                middleNameField.setText((((Pilot)pilotJList.getSelectedValue()).getMiddleName()));
+                middleNameField.setText((thePilot.getMiddleName()));
                 middleNameField.setBackground(new Color(142, 250, 127));
                 
-                flightWeightField.setText(String.valueOf((int)(((Pilot)pilotJList.getSelectedValue()).getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
+                flightWeightField.setText(String.valueOf((int)(thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
                 flightWeightField.setBackground(new Color(142, 250, 127));
-                  
+                
+                studentRadioButton.setSelected(thePilot.getCapability().equals("Student"));
+                proficientRadioButton.setSelected(thePilot.getCapability().equals("Proficient"));
+                advancedRadioButton.setSelected(thePilot.getCapability().equals("Advanced"));
+                
+                System.out.println(thePilot.getPreference());
+                mildRadioButton.setSelected(thePilot.getPreference().equals("Mild"));
+                nominalRadioButton.setSelected(thePilot.getPreference().equals("Nominal"));
+                performanceRadioButton.setSelected(thePilot.getPreference().equals("Performance"));
+                
             } catch(ClassNotFoundException e1) {
                 //TODO respond to error
             }
@@ -221,14 +232,13 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
             pilotModel.addElement(str);
         }
         pilotJList.setModel(pilotModel);
+        pilotScrollPane.setViewportView(pilotJList);
         
         pilotJList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pilotJListMouseClicked(evt);
             }
-        });
-
-        pilotScrollPane.setViewportView(pilotJList);
+        });   
         
         middleNameLabel.setText("Middle Name");
 
@@ -437,7 +447,7 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
             }
         });
 
-        pilotScrollPane.setViewportView(sailplaneJList);
+        sailplaneScrollPane.setViewportView(sailplaneJList);
 
         nNumberLabel.setText("N-Number");
 

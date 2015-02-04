@@ -25,11 +25,12 @@ public class SaveAsNewFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
         private Profile Profile;
+        private ProfileManagementFrame parent;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -40,7 +41,7 @@ public class SaveAsNewFrame extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
@@ -64,7 +65,7 @@ public class SaveAsNewFrame extends JFrame {
 		SaveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String id = textField.getText();
-                                Profile newProfile = new Profile(id, "", "");		
+                                Profile newProfile = new Profile(id, "{}", "{}");		
                             try {
                                 DatabaseDataObjectUtilities.addProfileToDB(newProfile);
                             } catch (SQLException ex) {
@@ -72,7 +73,8 @@ public class SaveAsNewFrame extends JFrame {
                             } catch (ClassNotFoundException ex) {
                                 Logger.getLogger(SaveAsNewFrame.class.getName()).log(Level.SEVERE, null, ex);
                             }
-				dispose();
+                            parent.Rebuild();
+                            dispose();
 			}
 		});
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -89,5 +91,10 @@ public class SaveAsNewFrame extends JFrame {
 		JLabel lblProfileName = new JLabel("Profile Name:");
 		contentPane.add(lblProfileName, BorderLayout.WEST);
 	}
+        
+        public void setParent(ProfileManagementFrame Parent)
+        {
+            parent = Parent;
+        }
 
 }
