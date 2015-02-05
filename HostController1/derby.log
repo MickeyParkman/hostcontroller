@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Wed Apr 30 10:32:10 PDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0145-b3b1-9215-00000ae3b700 
-on database directory C:\Users\gsmoore\Documents\NetBeansProjects\HostManager\HostController1\WinchCommonsTest12DataBase  with class loader sun.misc.Launcher$AppClassLoader@714a8f44 
-Loaded from file:/C:/Users/gsmoore/Documents/NetBeansProjects/HostManager/lib/derby.jar
+Wed Feb 04 21:47:00 PST 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-014b-5846-f606-000007098030 
+on database directory S:\Users\Jacob\Documents\NetBeansProjects\hc\HostController1\WinchCommonsTest12DataBase  with class loader sun.misc.Launcher$AppClassLoader@5451c3a8 
+Loaded from file:/S:/Users/Jacob/Documents/NetBeansProjects/hc/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_51-b13
-user.dir=C:\Users\gsmoore\Documents\NetBeansProjects\HostManager\HostController1
+java.runtime.version=1.8.0_31-b13
+user.dir=S:\Users\Jacob\Documents\NetBeansProjects\hc\HostController1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

@@ -10,7 +10,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 /**
  *
- * @author Alex Williams, Noah Fujioka
+ * @author Alex Williams, Noah Fujioka, dbennett3
  */
 public class DatabaseInitialization {
     /**
@@ -63,40 +63,44 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
+            
             throw e;
         } 
         
         //Build and fill Preference table
         try{
             createPreference(connection);
-            System.out.println("Built the preference table");
+            System.out.println("Build preference");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
+            
             throw e;
         }
         //Build the Pilot table
         try{
             createPilot(connection);
-            System.out.println("Built the pilot table");
+            System.out.println("Build pilot");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
             throw e;
         }  
         //Build the Sailplane table
         try{
              createSailplane(connection);
-             System.out.println("Built the sailplane table");
+             System.out.println("Build sailplane");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
+            
             throw e;
         }  
         //Build the Airfield table  
         try{
             createAirfield(connection);
-            System.out.println("Built the airfield table");
+            System.out.println("Build airfield");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -105,16 +109,25 @@ public class DatabaseInitialization {
         //Build the Runway table
         try{
             createRunway(connection);
-            System.out.println("Built the runway table");
+            System.out.println("Build runway");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
             throw e;
         }
-        //Build the Position table
+        //Build the GliderPosition table
         try{
-            createPosition(connection);
-            System.out.println("Built the position table");
+            createGliderPosition(connection);
+            System.out.println("Build glider position");
+        }catch(SQLException e) {
+            //For debugging purposes:
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw e;
+        }
+        //Build the WinchPosition table
+        try{
+            createWinchPosition(connection);
+            System.out.println("Build winch position");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -123,7 +136,7 @@ public class DatabaseInitialization {
         //Build the Operator Profile table
         try{
             createProfile(connection);
-            System.out.println("Built the profile table");
+            System.out.println("Build profile");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -132,7 +145,7 @@ public class DatabaseInitialization {
         //Build the Parachute table
         try{
             createParachute(connection);
-            System.out.println("Built the parachute table");
+            System.out.println("Build parachute");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -142,7 +155,6 @@ public class DatabaseInitialization {
         //Build the RecentLaunches table
         try{
             createRecentLaunches(connection);
-            System.out.println("Built the recent launches table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -151,7 +163,6 @@ public class DatabaseInitialization {
         //Build the PreviousLaunchesInfo table
         try{
             createPreviousLaunchesInfo(connection);
-            System.out.println("Built the previous launches table");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -260,16 +271,17 @@ public class DatabaseInitialization {
      */
     private static void createPilot(Connection connect) throws SQLException {
         String createPilotString = "CREATE TABLE Pilot"
-                + "(pilot_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),  "
-                + "firstName VARCHAR(30) NOT NULL, "
-                + "lastName VARCHAR(30) NOT NULL, "
-                + "middleName VARCHAR(30),"
-                + "weight INT,"
-                + "capability INT,"
-                + "preference INT,"
-                + "emergency_contact_info VARCHAR(100),"
-                + "emergency_medical_info VARCHAR(150),"
-                //+ "PRIMARY KEY (name),"
+                + "(pilot_id VARCHAR(30) NOT NULL, "
+                + "first_name VARCHAR(30) NOT NULL, "
+                + "last_name VARCHAR(30) NOT NULL, "
+                + "middle_name VARCHAR(30), "
+                + "flight_weight INT, "
+                + "capability INT, "
+                + "preference INT, "
+                + "emergency_contact_info VARCHAR(100), "
+                + "emergency_medical_info VARCHAR(150), "
+                + "optional_info VARCHAR(150), "
+                + "PRIMARY KEY (pilot_id), "
                 + "FOREIGN KEY (capability) REFERENCES Capability (capability_id),"
                 + "FOREIGN KEY (preference) REFERENCES Preference (preference_id))";
         
@@ -277,7 +289,6 @@ public class DatabaseInitialization {
         try (Statement createPilotTableStatement = connect.createStatement()) {
             createPilotTableStatement.execute(createPilotString);
         }catch(SQLException e) {
-            e.printStackTrace();
             throw e;
         }        
     }
@@ -292,14 +303,15 @@ public class DatabaseInitialization {
         String createSailplaneString = "CREATE TABLE Sailplane"
                 + "(n_number VARCHAR(20),"
                 + "type VARCHAR(30),"
-                + "owner VARCHAR(30),"
-                + "contact_info VARCHAR(60),"
                 + "max_gross_weight INT,"
                 + "empty_weight INT,"
                 + "indicated_stall_speed INT,"
                 + "max_winching_speed INT,"
                 + "max_weak_link_strength INT,"
                 + "max_tension INT,"
+                + "cable_release_angle INT, "
+                + "carry_ballast INT, "
+                + "optional_info VARCHAR(150),"
                 + "PRIMARY KEY (n_number))";
         try (Statement createPilotTableStatement = connect.createStatement()) {
             createPilotTableStatement.execute(createSailplaneString);
@@ -368,11 +380,13 @@ public class DatabaseInitialization {
      */
     private static void createAirfield(Connection connect) throws SQLException {
         String createAirfieldString = "CREATE TABLE Airfield"
-                + "( name VARCHAR(30), "
+                + "(name VARCHAR(30), "
                 + "designator VARCHAR(20), "
-                + "location VARCHAR(20), "
                 + "altitude VARCHAR(20), "
                 + "magneticVariation VARCHAR(20), "
+                + "latitude INT, "
+                + "longitude INT, "
+                + "optional_info VARCHAR(150), "
                 + "PRIMARY KEY (name))";
         try (Statement createAirfieldTableStatement = connect.createStatement()) {
             createAirfieldTableStatement.execute(createAirfieldString);
@@ -389,10 +403,12 @@ public class DatabaseInitialization {
      */
     private static void createRunway(Connection connect) throws SQLException {
         String createRunwayString = "CREATE TABLE Runway"
-                + "(runway_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                + "(runway_id VARCHAR(30), "
                 + "magnetic_heading VARCHAR(10), "
                 + "parent VARCHAR(30), "
-                //+ "PRIMARY KEY (magnetic_heading), "
+                + "altitude INT, "
+                + "optional_info VARCHAR(150), "
+                + "PRIMARY KEY (runway_id), "
                 + "FOREIGN KEY (parent) REFERENCES Airfield (name))";
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
@@ -402,22 +418,46 @@ public class DatabaseInitialization {
     }
     
     /**
-     * Creates the table in the database for storing data associated with a Position object
+     * Creates the table in the database for storing data associated with a GliderPosition object
      * 
      * @param connect the connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createPosition(Connection connect) throws SQLException {
-        String createRunwayString = "CREATE TABLE Position"
-                + "(position_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                + " max_length FLOAT, "
-                + " slope FLOAT,"
-                + " centerline_offset FLOAT, "
-                + " parent INTEGER, "
-                //+ "PRIMARY KEY (centerline_offset), "
-                + "FOREIGN KEY (parent) REFERENCES Runway (runway_id))";
-        try (Statement createRunwayTableStatement = connect.createStatement()) {
-            createRunwayTableStatement.execute(createRunwayString);
+    private static void createGliderPosition(Connection connect) throws SQLException {
+        String createGliderPositionString = "CREATE TABLE GliderPosition"
+                + "(position_id VARCHAR(30), "
+                + "runway_parent VARCHAR(30), "
+                + "altitude INT, "
+                + "latitude INT, "
+                + "longitude INT, "
+                + "optional_info VARCHAR(150), "
+                + "PRIMARY KEY (position_id), "
+                + "FOREIGN KEY (runway_parent) REFERENCES Runway (runway_id))";
+        try (Statement createGliderPositionTableStatement = connect.createStatement()) {
+            createGliderPositionTableStatement.execute(createGliderPositionString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Creates the table in the database for storing data associated with a WinchPosition object
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
+    private static void createWinchPosition(Connection connect) throws SQLException {
+        String createWinchPositionString = "CREATE TABLE WinchPosition"
+                + "(name VARCHAR(30), "
+                + "runway_parent VARCHAR(30), "
+                + "altitude INT, "
+                + "latitude INT, "
+                + "longitude INT, "
+                + "optional_info VARCHAR(150), "
+                + "PRIMARY KEY (name), "
+                + "FOREIGN KEY (runway_parent) REFERENCES Runway (runway_id))";
+        try (Statement createWinchPositionTableStatement = connect.createStatement()) {
+            createWinchPositionTableStatement.execute(createWinchPositionString);
         }catch(SQLException e) {
             throw e;
         }
@@ -431,10 +471,11 @@ public class DatabaseInitialization {
      */
     private static void createParachute(Connection connect) throws SQLException {
         String createParachuteString = "CREATE TABLE Parachute"
-                + "(parachute_id INTEGER NOT NULL primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), "
+                + "(parachute_id INT, "
                 + "lift FLOAT, "
-                + "drag FLOAT) ";
-                //+ "PRIMARY KEY (parachue_id))";
+                + "drag FLOAT, "
+                + "weight INT, "
+                + "PRIMARY KEY (parachute_id))";
         try (Statement createParachuteTableStatement = connect.createStatement()) {
             createParachuteTableStatement.execute(createParachuteString);
         }catch(SQLException e) {
@@ -450,11 +491,11 @@ public class DatabaseInitialization {
      */
     private static void createRecentLaunches(Connection connect) throws SQLException {
         String createRecentLaunchesString = "CREATE TABLE RecentLaunches"
-                + "(timestamp DATETIME, "
-                + "pilotName VARCHAR(30), "
-                + "nNumber VARCHAR(30), "
-                + "PRIMARY KEY (timestamp), "
-                + "FOREIGN KEY (pilotName) REFERENCES Pilot (name))"; 
+                + "(timestamp BIGINT, "
+                + "pilot_id VARCHAR(30), "
+                + "n_number VARCHAR(30), "
+                + "PRIMARY KEY (timestamp, pilot_id, n_number), "
+                + "FOREIGN KEY (pilot_id) REFERENCES Pilot (pilot_id))"; 
         try (Statement createRecentLaunchesTableStatement = connect.createStatement()) {
             createRecentLaunchesTableStatement.execute(createRecentLaunchesString);
         }catch(SQLException e) {
@@ -471,18 +512,18 @@ public class DatabaseInitialization {
      */
     private static void createPreviousLaunchesInfo(Connection connect) throws SQLException {
         String createPastLaunchesInfo = "CREATE TABLE PreviousLaunchesInfo"
-                + "(startTimestamp BIGINT, "
-                + "endTimestamp BIGINT, "
-                + "profileId VARCHAR(30), "
-                + "unitSettings VARCHAR(1000), "
-                + "displayPrefs VARCHAR(1000), " //Guessing at min number of chars
-                + "pilotName VARCHAR(30), "
+                + "(start_timestamp BIGINT, "
+                + "end_timestamp BIGINT, "
+                + "profile_id VARCHAR(30), "
+                + "unit_settings VARCHAR(1000), "
+                + "display_prefs VARCHAR(1000), " //Guessing at min number of chars
+                + "pilot_name VARCHAR(30), "
                 + "weight INT, "
                 + "capability INT, "
                 + "preference INT, "
                 + "emergency_contact_info VARCHAR(100), "
                 + "emergency_medical_info VARCHAR(150), "
-                + "n_number VARCHAR(20), "
+                + "n_number VARCHAR(30), "
                 + "type VARCHAR(30), "
                 + "owner VARCHAR(30), "
                 + "contact_info VARCHAR(60), "
@@ -492,25 +533,25 @@ public class DatabaseInitialization {
                 + "max_winching_speed INT, "
                 + "max_weak_link_strength INT, "
                 + "max_tension INT, "
-                + "airfieldName VARCHAR(30), "
+                + "airfield_name VARCHAR(30), "
                 + "designator VARCHAR(20), "
                 + "location VARCHAR(20), "
                 + "altitude FLOAT, "
-                + "magneticVariation VARCHAR(20), "
-                + "runwayName VARCHAR(30),"          //Used in Runway Object 
-                + "magneticHeading VARCHAR(10),"     //Used in Runway Object 
-                + "positionName VARCHAR(30),"        //Used in Position Object 
-                + "positionMaximumLength FLOAT, "    //Used in Position Object
-                + "positionSlope FLOAT, "            //Used in Position Object
-                + "positionCenterlineOffset FLOAT, " //Used in Position Object
-                + "parachuteNumber INT, "
+                + "magnetic_variation VARCHAR(20), "
+                + "runway_name VARCHAR(30),"          //Used in Runway Object 
+                + "magnetic_heading VARCHAR(10),"     //Used in Runway Object 
+                + "position_name VARCHAR(30),"        //Used in Position Object 
+                + "position_maximumLength FLOAT, "    //Used in Position Object
+                + "position_slope FLOAT, "            //Used in Position Object
+                + "position_centerline_offset FLOAT, " //Used in Position Object
+                + "parachute_number INT, "
                 + "lift FLOAT, "
                 + "drag FLOAT, "                
                 + "FOREIGN KEY (capability) REFERENCES Capability (capability_id), "
                 + "FOREIGN KEY (preference) REFERENCES Preference (preference_id), "
-                + "FOREIGN KEY (startTimestamp, pilotName, n_number) "
-                + "REFERENCES PreviousLaunches (timestamp, pilot, sailplane), "
-                + "PRIMARY KEY (startTimestamp, pilotName, n_number))";
+                + "FOREIGN KEY (start_timestamp, pilot_name, n_number) "
+                + "REFERENCES RecentLaunches(timestamp, pilot_id, n_number), "
+                + "PRIMARY KEY (start_timestamp, pilot_name, n_number))";
         try (Statement createPastLaunchesInfoTableStatement = connect.createStatement()) {
             createPastLaunchesInfoTableStatement.execute(createPastLaunchesInfo);
         }catch(SQLException e) {
@@ -894,29 +935,34 @@ public class DatabaseInitialization {
             
             try 
             {
-                stmt.execute("SELECT * FROM PILOT");
-                stmt.execute("DROP TABLE PILOT");
+                stmt.execute("SELECT * FROM RECENTLAUNCHES");
+                stmt.execute("DROP TABLE RECENTLAUNCHES");
             } catch(SQLException e) { }
+            
             try 
             {
-                stmt.execute("SELECT * FROM CAPABILITY");
-                stmt.execute("DROP TABLE CAPABILITY");
+                stmt.execute("SELECT * FROM PARACHUTE");
+                stmt.execute("DROP TABLE PARACHUTE");
             } catch(SQLException e) { }
+            
             try 
             {
-                stmt.execute("SELECT * FROM PREFERENCE");
-                stmt.execute("DROP TABLE PREFERENCE");
+                stmt.execute("SELECT * FROM PROFILE");
+                stmt.execute("DROP TABLE PROFILE");
             } catch(SQLException e) { }
+            
             try 
             {
-                stmt.execute("SELECT * FROM SAILPLANE");
-                stmt.execute("DROP TABLE SAILPLANE");
+                stmt.execute("SELECT * FROM WINCHPOSITION");
+                stmt.execute("DROP TABLE WINCHPOSITION");
             } catch(SQLException e) { }
+            
             try 
             {
-                stmt.execute("SELECT * FROM POSITION");
-                stmt.execute("DROP TABLE POSITION");
+                stmt.execute("SELECT * FROM GLIDERPOSITION");
+                stmt.execute("DROP TABLE GLIDERPOSITION");
             } catch(SQLException e) { }
+            
             try 
             {
                 stmt.execute("SELECT * FROM RUNWAY");
@@ -927,9 +973,31 @@ public class DatabaseInitialization {
                 stmt.execute("SELECT * FROM AIRFIELD");
                 stmt.execute("DROP TABLE AIRFIELD");
             } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM SAILPLANE");
+                stmt.execute("DROP TABLE SAILPLANE");
+                System.out.println("Dropped sailplane");
+            } catch(SQLException e) { }
+            try 
+            {
+                stmt.execute("SELECT * FROM PILOT");
+                stmt.execute("DROP TABLE PILOT");
+            } catch(SQLException e) { e.printStackTrace(); }
+            try 
+            {
+                stmt.execute("SELECT * FROM PREFERENCE");
+                stmt.execute("DROP TABLE PREFERENCE");
+            } catch(SQLException e) { e.printStackTrace(); }
+            try 
+            {
+                stmt.execute("SELECT * FROM CAPABILITY");
+                stmt.execute("DROP TABLE CAPABILITY");
+                System.out.println("Dropped capability");
+            } catch(SQLException e) { e.printStackTrace(); }
            
         }catch(SQLException e) {
-            System.out.println(e);
+            //System.out.println(e);
             throw e;
         }
     }

@@ -354,14 +354,16 @@ public class PilotModificationPanel extends javax.swing.JPanel {
             weightDisplay.setBackground(new Color(255, 105, 105));
             return null;
         }
-        Pilot updatedPilot = new Pilot(lastNameDisplay.getText(),
+        Pilot updatedPilot = new Pilot("hello",
+                lastNameDisplay.getText(),
                 firstNameDisplay.getText(),
                 middleNameDisplay.getText(),
                 weight, 
                 Capability.convertCapabilityNumToString(capabilitySlider.getValue()), 
                 Preference.convertPreferenceNumToString(preferenceSlider.getValue()), 
                 emergencyContactDisplay.getText(), 
-                emergencyMedInfoDisplay.getText());
+                emergencyMedInfoDisplay.getText(),
+                "optional");
         return updatedPilot;
         
     }

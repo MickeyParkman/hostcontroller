@@ -8,9 +8,7 @@ package DatabaseUtilities;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-//import java.sql.Timestamp;
 
 /**
  *
@@ -19,7 +17,12 @@ import java.util.Date;
 public class DatabaseExporter {
     
     /**
-     *     NNNNNEEEEEEDDDD CCOOMMMMMMEEEENNNNNTTTTTSSSSS
+     * Exports tables to a csv file using a unique timestamp and the name of the name of the table
+     * The location of the files is its own folder in the final build 
+     * 
+     * @param tableName name of the table that is to be exported
+     * @throws ClassNotFoundException
+     * @throws SQLException 
      */
     public static void exportDatabase(String tableName) throws ClassNotFoundException, SQLException {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
@@ -48,20 +51,14 @@ public class DatabaseExporter {
             exportTable(connection, tableName);
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Couldn't export table");
-            System.out.println(e);
-            e.printStackTrace();
             throw e;
         }
     }
     
     private static void exportTable(Connection connect, String name) throws SQLException {
-        //Calendar calendar = Calendar.getInstance();
-        //Date now = calendar.getTime();
-        //Timestamp timestamp = new Timestamp(now.getTime());
         name = name.toUpperCase();
         
         String timestamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-        System.out.println(name + " " + timestamp);
         String fileName = "C:\\ExportedTables\\output_" + name + "_" + timestamp + ".csv";
         
         PreparedStatement ps = connect.prepareStatement(

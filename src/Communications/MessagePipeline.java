@@ -9,7 +9,7 @@ package Communications;
 import DashboardInterface.DashboardInterface;
 import DataObjects.Airfield;
 import DataObjects.Pilot;
-import DataObjects.Position;
+import DataObjects.GliderPosition;
 import DataObjects.Runway;
 import DataObjects.Sailplane;
 import DatabaseUtilities.BlackBoxLogger;
@@ -65,7 +65,7 @@ public class MessagePipeline {
      */
     public void startParameterSelection() throws MessagePipelineException {
         if(filter != null) {
-            paramSelection = new ParamSelectionFrame(this);
+            //paramSelection = new ParamSelectionFrame(this);
             paramSelection.setVisible(true);    
         }
         else{
@@ -135,8 +135,8 @@ public class MessagePipeline {
         Sailplane sailplane = null;
         Airfield airfield = null;
         Runway runway = null;
-        Position position = null;
-        paramSelection.getSelectedLaunchElements(pilot, sailplane, airfield, runway, position);
+        GliderPosition position = null;
+        //paramSelection.getSelectedLaunchElements(pilot, sailplane, airfield, runway, position);
         //msgGenerator.generateAndSendLaunchParameters(pilot, sailplane, airfield, runway, position);
     }
     

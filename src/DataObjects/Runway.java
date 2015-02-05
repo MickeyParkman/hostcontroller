@@ -9,56 +9,42 @@ package DataObjects;
 /**
  * This Class stores the data about a Runway
  * 
- * @author garreola-gutierrez, matt dargen
+ * @author garreola-gutierrez, matt dargen, dbennett3
  */
 public class Runway {
-    Airfield parent;
+    String runwayId;
     String magneticHeading;
-   
-    public Runway(){
-    }
-    @Override
-    public String toString(){
-        return magneticHeading;
-    }
+    String parent;
+    int altitude;
+    String optionalInfo;
     
-    public Runway(Airfield parent, String magneticHeading1){
+    public Runway(String runwayId, String magneticHeading, String parent, int altitude, String optional){
+       this.runwayId = runwayId;
+       this.magneticHeading = magneticHeading;
        this.parent = parent;
-       magneticHeading = magneticHeading1;
+       this.altitude = altitude;
+       this.optionalInfo = optional;
     }
     
-   /**
-    * This method can change the Airfield parent of a Runway object
-    * This method always works, only if Runway already
-    * exists.
-    *
-    * @param parent1  the Airfield this runway belongs to
-    */
-    public void setParent(Airfield parent1){
-        parent = parent1;
+    public String getId(){
+       return runwayId; 
     }
     
-   /**
-    * Returns the Airfield object this Runway belongs to. 
-    * This method always returns immediately, only if Runway exists. 
-    * @return      the parent of the Runway object
-    */
-    public Airfield getParent(){
-       return parent; 
-    }
-    
-    
-    
-    public void setMagneticHeading(String magneticHeading1){
-        magneticHeading= magneticHeading1;
-    }
-  /**
-    * Returns an Airfield object magnetic heading to be displayed. 
-    * This method always returns immediately,only if airfield exists. 
-    * @return      the magnetic heading of Airfield object
-    */
     public String getMagneticHeading(){
        return magneticHeading; 
     }
+    
+    public String getParent() {
+        return parent;
+    }
+    
+    public int getAltitude() {
+        return altitude;
+    }
+    
+    public String getOptionalInfo() {
+        return optionalInfo;
+    }
+    
       
 }
