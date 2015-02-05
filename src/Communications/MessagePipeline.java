@@ -65,7 +65,7 @@ public class MessagePipeline {
      */
     public void startParameterSelection() throws MessagePipelineException {
         if(filter != null) {
-            paramSelection = new ParamSelectionFrame(this);
+            //paramSelection = new ParamSelectionFrame(this);
             paramSelection.setVisible(true);    
         }
         else{
@@ -136,7 +136,7 @@ public class MessagePipeline {
         Airfield airfield = null;
         Runway runway = null;
         GliderPosition position = null;
-        paramSelection.getSelectedLaunchElements(pilot, sailplane, airfield, runway, position);
+        //paramSelection.getSelectedLaunchElements(pilot, sailplane, airfield, runway, position);
         //msgGenerator.generateAndSendLaunchParameters(pilot, sailplane, airfield, runway, position);
     }
     

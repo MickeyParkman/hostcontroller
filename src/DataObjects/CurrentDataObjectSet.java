@@ -11,8 +11,8 @@ public class CurrentDataObjectSet {
     private Sailplane currentSailplane;
     private Profile currentProfile;
     private Runway currentRunway;
-    private Position currentWinchPos;
-    private Position currentGliderPos;
+    //private Position currentWinchPos;
+    //private Position currentGliderPos;
     private Winch currentWinch;
     private Airfield currentAirfield;
     
@@ -68,7 +68,7 @@ public class CurrentDataObjectSet {
             instance.currentProfile = profile;
         }        
     }
-    public void setCurrentGliderPosition(Position pos)
+    /*public void setCurrentGliderPosition(Position pos)
     {
         if(instance != null)
         {
@@ -81,7 +81,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentWinchPos = pos;
         }        
-    }
+    }*/
     public void setCurrentWinch(Winch winch)
     {
         if(instance != null)
@@ -133,7 +133,7 @@ public class CurrentDataObjectSet {
             return instance.currentRunway;
         }        
     }
-    public Position getCurrentGliderPosition()
+    /*public Position getCurrentGliderPosition()
     {
         if(instance == null)
         {
@@ -154,7 +154,7 @@ public class CurrentDataObjectSet {
         {
             return instance.currentWinchPos;
         }        
-    }
+    }*/
     public Winch getCurrentWinch()
     {
         if(instance == null)
