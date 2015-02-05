@@ -14,6 +14,10 @@ import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import javax.swing.BoxLayout;
+import DatabaseUtilities.DatabaseInitialization;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainWindow extends JFrame {
     private String version = "2.0.1";
@@ -165,6 +169,13 @@ public class MainWindow extends JFrame {
         setupDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                try {
+                    DatabaseInitialization.initDatabase();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 	fileMenu.add(setupDBItem);

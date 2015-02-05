@@ -9,9 +9,11 @@ package DataObjects;
 /**
  *  This Class stores the data about a Pilot
  * 
- * @author awilliams5
+ * @author awilliams5, dbennett3
  */
 public class Pilot {
+    //Pilot's unique id
+    String pilotId;
     //Pilot's last name
     String lastName;
     //Pilot's first name
@@ -19,7 +21,7 @@ public class Pilot {
     //Pilot's middle name
     String middleName;
     //Pilot's weight
-    int weight;
+    int flightWeight;
     //Pilot's capability
     String capability;
     //Pilot's paunch preference
@@ -28,16 +30,24 @@ public class Pilot {
     String emergencyContact;
     //Pilot's Emergency Medical Info
     String medInfo;
+    //Pilot's optional_info
+    String optional_info;
     
-    public Pilot(String lastName, String firstName, String middleName, int weight, String capability, String preference, String emergencyContact, String medInfo) {
+    public Pilot(String pilotId, String lastName, String firstName, String middleName, int weight, String capability, String preference, String emergencyContact, String medInfo, String optional) {
+        this.pilotId = pilotId;
         this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
-        this.weight = weight;
+        this.flightWeight = weight;
         this.capability = capability;
         this.preference = preference;
         this.emergencyContact = emergencyContact;
         this.medInfo = medInfo;
+        this.optional_info = optional;
+    }
+    
+    public String getPilotId() {
+        return pilotId;
     }
     
     public String getLastName() {
@@ -53,7 +63,7 @@ public class Pilot {
     }
     
     public int getWeight() {
-        return weight;
+        return flightWeight;
     }
     
     public String getCapability() {
@@ -72,8 +82,21 @@ public class Pilot {
         return medInfo;
     }
     
+    public String getOptionalInfo() {
+        return optional_info;
+    }
+    
     @Override
     public String toString() { 
         return (firstName + " " + middleName + " " + lastName);
+    }
+    
+    /**
+     * 
+     * @param other Pilot being compared to this pilot
+     * @return true if the pilot id's are the same 
+     */
+    public boolean pilotEquals(Pilot other) {
+        return pilotId.equals(other.pilotId);
     }
 }

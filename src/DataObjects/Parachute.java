@@ -8,12 +8,13 @@ package DataObjects;
 /**
  *  This class stores data about the parachute
  * 
- * @author Alec Jacuzzi
+ * @author Alec Jacuzzi, dbennett3
  */
 public class Parachute {
     private int parachuteNumber;    //Parachute ID number
     private float lift;             //Parachute lift
     private float drag;             //Parachute drag
+    private int weight;
     private Winch winch;
     
     public Parachute() {
@@ -21,13 +22,22 @@ public class Parachute {
         parachuteNumber = 0;
         lift = 0;
         drag = 0;
+        weight = 0;
         winch = null;
     }
     
-    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, Winch winch) {
+    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, int initialWeight) {
         parachuteNumber = initialParachuteNumber;
         lift = initialLift;
         drag = initialDrag;
+        weight = initialWeight;
+    }
+    
+    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, int initialWeight, Winch winch) {
+        parachuteNumber = initialParachuteNumber;
+        lift = initialLift;
+        drag = initialDrag;
+        weight = initialWeight;
         winch = this.winch;
     }
     
@@ -90,6 +100,10 @@ public class Parachute {
     */
     public float getDrag() {
         return drag;
+    }
+    
+    public int getWeight() {
+        return weight;
     }
     
     public void setWinch(Winch newWinch) {
