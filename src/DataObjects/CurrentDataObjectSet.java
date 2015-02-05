@@ -11,8 +11,8 @@ public class CurrentDataObjectSet {
     private Sailplane currentSailplane;
     private Profile currentProfile;
     private Runway currentRunway;
-    //private Position currentWinchPos;
-    //private Position currentGliderPos;
+    private WinchPosition currentWinchPos;
+    private GliderPosition currentGliderPos;
     private Winch currentWinch;
     private Airfield currentAirfield;
     
@@ -30,6 +30,11 @@ public class CurrentDataObjectSet {
     public static void Clear()
     {
         instance = null;
+    }
+    
+    public static boolean IsInitialized()
+    {
+        return(instance != null);
     }
     
     //Ah yeah, getters and setters
@@ -68,20 +73,20 @@ public class CurrentDataObjectSet {
             instance.currentProfile = profile;
         }        
     }
-    /*public void setCurrentGliderPosition(Position pos)
+    public void setCurrentGliderPosition(GliderPosition pos)
     {
         if(instance != null)
         {
             instance.currentGliderPos = pos;
         }        
     }
-    public void setCurrentWinchPosition(Position pos)
+    public void setCurrentWinchPosition(WinchPosition pos)
     {
         if(instance != null)
         {
             instance.currentWinchPos = pos;
         }        
-    }*/
+    }
     public void setCurrentWinch(Winch winch)
     {
         if(instance != null)
@@ -133,7 +138,7 @@ public class CurrentDataObjectSet {
             return instance.currentRunway;
         }        
     }
-    /*public Position getCurrentGliderPosition()
+    public GliderPosition getCurrentGliderPosition()
     {
         if(instance == null)
         {
@@ -144,7 +149,7 @@ public class CurrentDataObjectSet {
             return instance.currentGliderPos;
         }        
     }
-    public Position getCurrentWinchPosition()
+    public WinchPosition getCurrentWinchPosition()
     {
         if(instance == null)
         {
@@ -154,7 +159,7 @@ public class CurrentDataObjectSet {
         {
             return instance.currentWinchPos;
         }        
-    }*/
+    }
     public Winch getCurrentWinch()
     {
         if(instance == null)
