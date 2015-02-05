@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
+import java.sql.SQLException;
 import javax.swing.BoxLayout;
 
 public class MainWindow extends JFrame {
@@ -161,6 +162,26 @@ public class MainWindow extends JFrame {
         setupDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                try 
+                {
+                    //DatabaseUtilities.DatabaseInitialization.deleteDB();
+                    DatabaseUtilities.DatabaseInitialization.initDatabase();
+                }
+                catch(ClassNotFoundException e1) 
+                {
+                    JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
+                }
+                catch(SQLException e2) 
+                {
+                    if(e2.getErrorCode() == 30000) 
+                    {
+                        JOptionPane.showMessageDialog(null, "Database Already Exists");
+                    }
+                    else 
+                    { 
+                        JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
+                    }
+                }
             }
         });
 	fileMenu.add(setupDBItem);

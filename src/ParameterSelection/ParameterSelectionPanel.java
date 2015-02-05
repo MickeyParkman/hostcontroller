@@ -1,6 +1,18 @@
 package ParameterSelection;
 
+import Configuration.UnitConversionRate;
+import DataObjects.Pilot;
+import DataObjects.Sailplane;
+import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,16 +26,113 @@ import java.awt.CardLayout;
 public class ParameterSelectionPanel extends javax.swing.JPanel {
 
     private final static String[] tabNames = {"PILOT","GLIDER","AIRFIELD"};
+    private List<Pilot> pilotNames = new ArrayList<Pilot>();
+    private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
     
     public void SetCard(int index)
     {
         final CardLayout layout = (CardLayout)this.getLayout();
         layout.show(this, tabNames[index]);
     }
+    
+    private void initPilotList() {
+        try{
+            pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
+            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Performance", null, null));
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(pilotNameInput, e.getMessage());
+            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Performance", null, null));
+
+        } catch (ClassNotFoundException ex) {
+            // TODO change exception case
+            Logger.getLogger(PilotSelectionPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initSailPlaneList() {
+        try{
+            sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
+            sailplanes.add(new Sailplane("N32452345", "asdfas", "Bob", "no", 1000, 1000, 1000, 1000, 1000, 1000, false));
+        }catch(SQLException e) {
+
+        } catch (ClassNotFoundException ex) {
+
+        }
+    }
+    
+    /*private void pilotNameInputActionPerformed(java.awt.event.ActionEvent evt) {
+        //PilotMatchDisplay.add(PilotNameInput.getText(), this);
+        flightWeightField.setText(pilotNameInput.getText());
+    }
+    
+    
+    private void pilotNameInputKeyReleased(java.awt.event.KeyEvent evt) {
+        // TODO add your handling code here:
+        String matchstring = pilotNameInput.getText();
+        DefaultListModel pilotModel = new DefaultListModel();
+        
+        // TODO Change from String specific to type Pilot
+        for(Pilot plt : pilotNames){
+            if(plt.getFirstName().toUpperCase().startsWith(matchstring.toUpperCase())) {
+                pilotModel.addElement(plt);
+            }
+            else if(plt.getLastName().toUpperCase().startsWith(matchstring.toUpperCase())) {
+                pilotModel.addElement(plt);
+            }
+        }
+        
+        pilotJList.setModel(pilotModel);
+    }*/
+    
+    private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
+        if(pilotJList.getSelectedIndex() >= 0){
+            try{
+                Pilot thePilot = (Pilot)pilotJList.getSelectedValue();
+                firstNameField.setText((thePilot.getFirstName()));
+                firstNameField.setBackground(new Color(142, 250, 127));
+                
+                lastNameField.setText((thePilot.getLastName()));
+                lastNameField.setBackground(new Color(142, 250, 127));
+                
+                middleNameField.setText((thePilot.getMiddleName()));
+                middleNameField.setBackground(new Color(142, 250, 127));
+                
+                flightWeightField.setText(String.valueOf((int)(thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
+                flightWeightField.setBackground(new Color(142, 250, 127));
+                
+                studentRadioButton.setSelected(thePilot.getCapability().equals("Student"));
+                proficientRadioButton.setSelected(thePilot.getCapability().equals("Proficient"));
+                advancedRadioButton.setSelected(thePilot.getCapability().equals("Advanced"));
+                
+                System.out.println(thePilot.getPreference());
+                mildRadioButton.setSelected(thePilot.getPreference().equals("Mild"));
+                nominalRadioButton.setSelected(thePilot.getPreference().equals("Nominal"));
+                performanceRadioButton.setSelected(thePilot.getPreference().equals("Performance"));
+                
+            } catch(ClassNotFoundException e1) {
+                //TODO respond to error
+            }
+        }
+    }
+    
+    private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) {
+        if(sailplaneJList.getSelectedIndex() >= 0){
+            try{
+                nNumberField.setText((((Sailplane)sailplaneJList.getSelectedValue()).getNumber()));
+                nNumberField.setBackground(new Color(142, 250, 127));
+                  
+            } catch(Exception e) {
+                //TODO respond to error
+            }
+        }
+    }
+    
     /**
      * Creates new form EditDatabase
      */
     public ParameterSelectionPanel() {
+        initPilotList();
+        initSailPlaneList();
         initComponents();
     }
 
@@ -36,277 +145,285 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
     	
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jLabel6 = new javax.swing.JLabel();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        pilotPanel = new javax.swing.JPanel();
+        pilotJList = new javax.swing.JList();
+        sailplaneJList = new javax.swing.JList();
+        firstNameLabel = new javax.swing.JLabel();
+        firstNameField = new javax.swing.JTextField();
+        lastNameField = new javax.swing.JTextField();
+        lastNameLabel = new javax.swing.JLabel();
+        flightWeightField = new javax.swing.JTextField();
+        flightWeightLabel = new javax.swing.JLabel();
+        middleNameField = new javax.swing.JTextField();
+        middleNameLabel = new javax.swing.JLabel();
+        capabilityLabel = new javax.swing.JLabel();
+        studentRadioButton = new javax.swing.JRadioButton();
+        proficientRadioButton = new javax.swing.JRadioButton();
+        advancedRadioButton = new javax.swing.JRadioButton();
+        preferenceLabel = new javax.swing.JLabel();
+        mildRadioButton = new javax.swing.JRadioButton();
+        nominalRadioButton = new javax.swing.JRadioButton();
+        performanceRadioButton = new javax.swing.JRadioButton();
+        emergencyContactLabel = new javax.swing.JLabel();
+        emergencyContactNameField = new javax.swing.JTextField();
+        emergencyContactNameLabel = new javax.swing.JLabel();
+        emergencyContactPhoneLabel = new javax.swing.JLabel();
+        emergencyContactPhoneField = new javax.swing.JTextField();
+        primaryPhysicianLabel = new javax.swing.JLabel();
+        primaryPhysicianNameLabel = new javax.swing.JLabel();
+        primaryPhysicianPhoneLabel = new javax.swing.JLabel();
+        primaryPhysicianNameField = new javax.swing.JTextField();
+        primaryPhysicianPhoneField = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
+        pilotAdditionalInfoLabel = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        sailplanePanel = new javax.swing.JPanel();
+        sailplaneScrollPane = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        nNumberLabel = new javax.swing.JLabel();
+        nNumberField = new javax.swing.JTextField();
+        emptyWeightLabel = new javax.swing.JLabel();
+        emptyWeightField = new javax.swing.JTextField();
+        maxGrossWeightLabel = new javax.swing.JLabel();
+        maxGrossWeightField = new javax.swing.JTextField();
+        stallSpeedLabel = new javax.swing.JLabel();
+        stallSpeedField = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        maxWinchingSpeedLabel = new javax.swing.JLabel();
+        maxWinchingSpeedField = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        airfieldPanel = new AirfieldPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
         jButton3 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jTextArea5 = new javax.swing.JTextArea();
-        jPanel5 = new javax.swing.JPanel();
         jTextArea4 = new javax.swing.JTextArea();
         jButton5 = new javax.swing.JButton();
+        pilotNameInput = new javax.swing.JTextField();
+        pilotScrollPane = new javax.swing.JScrollPane();
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Pilot List");
-        jScrollPane1.setViewportView(jTextArea1);
+        firstNameLabel.setText("First Name");
 
-        jLabel1.setText("First Name");
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        lastNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                lastNameFieldActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Last Name");
+        lastNameLabel.setText("Last Name");
 
-        jLabel3.setText("Weight");
+        flightWeightLabel.setText("Flight Weight");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        middleNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                middleNameFieldActionPerformed(evt);
+            }
+        });
+        
+        DefaultListModel pilotModel = new DefaultListModel();
+        for(Object str: pilotNames){
+            pilotModel.addElement(str);
+        }
+        pilotJList.setModel(pilotModel);
+        pilotScrollPane.setViewportView(pilotJList);
+        
+        pilotJList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pilotJListMouseClicked(evt);
+            }
+        });   
+        
+        middleNameLabel.setText("Middle Name");
+
+        capabilityLabel.setText("Capability");
+
+        studentRadioButton.setText("Student");
+
+        proficientRadioButton.setText("Proficient");
+
+        advancedRadioButton.setText("Advanced");
+
+        preferenceLabel.setText("Preference");
+
+        mildRadioButton.setText("Mild");
+
+        nominalRadioButton.setText("Nominal");
+
+        performanceRadioButton.setText("Performance");
+
+        emergencyContactLabel.setText("Emergency Contact:");
+
+        emergencyContactNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emergencyContactNameFieldActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Middle Name");
+        emergencyContactNameLabel.setText("Name:");
 
-        jLabel5.setText("Capability");
+        emergencyContactPhoneLabel.setText("Phone:");
 
-        jRadioButton1.setText("Student");
+        primaryPhysicianLabel.setText("Primary Physician:");
 
-        jRadioButton2.setText("Proficient");
+        primaryPhysicianNameLabel.setText("Name:");
 
-        jRadioButton3.setText("Advanced");
+        primaryPhysicianPhoneLabel.setText("Phone:");
 
-        jLabel6.setText("Preference");
-
-        jRadioButton4.setText("Mild");
-
-        jRadioButton5.setText("Nominal");
-
-        jRadioButton6.setText("Performance");
-
-        jLabel7.setText("Emergency Contact:");
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        primaryPhysicianNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                primaryPhysicianNameFieldActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("Name:");
-
-        jLabel9.setText("Phone:");
-
-        jLabel10.setText("Primary Physician:");
-
-        jLabel11.setText("Name:");
-
-        jLabel12.setText("Phone:");
-
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
-
-        jLabel13.setText("Additional Info:");
+        pilotAdditionalInfoLabel.setText("Additional Info:");
 
         jLabel14.setText("*Units");
 
         jButton1.setText("Submit");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pilotPanelLayout = new javax.swing.GroupLayout(pilotPanel);
+        pilotPanel.setLayout(pilotPanelLayout);
+        pilotPanelLayout.setHorizontalGroup(
+            pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pilotPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pilotPanelLayout.createSequentialGroup()
+                        .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1))
+                            .addComponent(pilotScrollPane))
                         .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(pilotPanelLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(firstNameLabel)
+                            .addComponent(lastNameLabel)
+                            .addComponent(middleNameLabel)
+                            .addComponent(flightWeightLabel)
+                            .addComponent(firstNameField)
+                            .addComponent(lastNameField)
+                            .addComponent(middleNameField)
+                            .addComponent(flightWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pilotPanelLayout.createSequentialGroup()
+                                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pilotPanelLayout.createSequentialGroup()
                                         .addGap(20, 20, 20)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton3))
+                                        .addComponent(capabilityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(studentRadioButton)
+                                    .addComponent(proficientRadioButton)
+                                    .addComponent(advancedRadioButton))
                                 .addGap(62, 62, 62)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton6)
-                                    .addComponent(jRadioButton5)
-                                    .addComponent(jRadioButton4)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(performanceRadioButton)
+                                    .addComponent(nominalRadioButton)
+                                    .addComponent(mildRadioButton)
+                                    .addComponent(preferenceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(157, 157, 157))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pilotPanelLayout.createSequentialGroup()
+                                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(emergencyContactLabel)
+                                    .addGroup(pilotPanelLayout.createSequentialGroup()
+                                        .addComponent(emergencyContactPhoneLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
+                                        .addComponent(emergencyContactPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pilotPanelLayout.createSequentialGroup()
+                                        .addComponent(emergencyContactNameLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(emergencyContactNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
+                                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(primaryPhysicianLabel)
+                                    .addGroup(pilotPanelLayout.createSequentialGroup()
+                                        .addComponent(primaryPhysicianPhoneLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
+                                        .addComponent(primaryPhysicianPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pilotPanelLayout.createSequentialGroup()
+                                        .addComponent(primaryPhysicianNameLabel)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(primaryPhysicianNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(99, 99, 99))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
+                    .addGroup(pilotPanelLayout.createSequentialGroup()
+                        .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pilotAdditionalInfoLabel)
                             .addComponent(jButton1))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pilotPanelLayout.setVerticalGroup(
+            pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pilotPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pilotScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pilotPanelLayout.createSequentialGroup()
+                        .addComponent(firstNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
+                        .addComponent(lastNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
-                        .addComponent(jLabel4)
+                        .addComponent(middleNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(middleNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(flightWeightLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(flightWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel14)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                    .addGroup(pilotPanelLayout.createSequentialGroup()
+                        .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pilotPanelLayout.createSequentialGroup()
+                                .addComponent(preferenceLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton4)
+                                .addComponent(mildRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton5)
+                                .addComponent(nominalRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton6))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addComponent(performanceRadioButton))
+                            .addGroup(pilotPanelLayout.createSequentialGroup()
+                                .addComponent(capabilityLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton1)
+                                .addComponent(studentRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2)
+                                .addComponent(proficientRadioButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton3)))
+                                .addComponent(advancedRadioButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                        .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pilotPanelLayout.createSequentialGroup()
+                                .addComponent(emergencyContactLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(emergencyContactNameLabel)
+                                    .addComponent(emergencyContactNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(emergencyContactPhoneLabel)
+                                    .addComponent(emergencyContactPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pilotPanelLayout.createSequentialGroup()
+                                .addComponent(primaryPhysicianLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(primaryPhysicianNameLabel)
+                                    .addComponent(primaryPhysicianNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addGroup(pilotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(primaryPhysicianPhoneLabel)
+                                    .addComponent(primaryPhysicianPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jLabel13)
+                .addComponent(pilotAdditionalInfoLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
@@ -314,24 +431,33 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        this.add(tabNames[0], jPanel1);
+        this.add(tabNames[0], pilotPanel);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setText("Sailplane List");
-        jScrollPane2.setViewportView(jTextArea2);
+        DefaultListModel sailplaneModel = new DefaultListModel();
+        for(Object str: sailplanes){
+            sailplaneModel.addElement(str);
+        }
+        sailplaneJList.setModel(sailplaneModel);
+        
+        sailplaneJList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sailplaneJListMouseClicked(evt);
+            }
+        });
 
-        jLabel15.setText("N-Number");
+        sailplaneScrollPane.setViewportView(sailplaneJList);
 
-        jLabel16.setText("Empty Weight");
+        nNumberLabel.setText("N-Number");
 
-        jLabel17.setText("Max Gross Weight");
+        emptyWeightLabel.setText("Empty Weight");
 
-        jLabel18.setText("Indicated Stall Speed");
+        maxGrossWeightLabel.setText("Max Gross Weight");
+
+        stallSpeedLabel.setText("Indicated Stall Speed");
 
         jLabel19.setText("*Units");
 
-        jLabel20.setText("Max Winching Speed");
+        maxWinchingSpeedLabel.setText("Max Winching Speed");
 
         jLabel21.setText("*Units");
 
@@ -347,191 +473,103 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
 
         jButton2.setText("Submit");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout sailplanePanelLayout = new javax.swing.GroupLayout(sailplanePanel);
+        sailplanePanel.setLayout(sailplanePanelLayout);
+        sailplanePanelLayout.setHorizontalGroup(
+            sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sailplanePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+                .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(sailplanePanelLayout.createSequentialGroup()
+                        .addComponent(sailplaneScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sailplanePanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField10)
-                            .addComponent(jTextField11)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(maxGrossWeightLabel)
+                            .addComponent(emptyWeightLabel)
+                            .addComponent(nNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nNumberField)
+                            .addComponent(emptyWeightField)
+                            .addComponent(maxGrossWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(sailplanePanelLayout.createSequentialGroup()
+                                .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(stallSpeedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(stallSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel19))
-                            .addComponent(jLabel20)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maxWinchingSpeedLabel)
+                            .addGroup(sailplanePanelLayout.createSequentialGroup()
+                                .addComponent(maxWinchingSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel21))
                             .addComponent(jCheckBox1)
                             .addComponent(jCheckBox2))
                         .addGap(178, 178, 178))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(sailplanePanelLayout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        sailplanePanelLayout.setVerticalGroup(
+            sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sailplanePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sailplaneScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel18))
+                .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nNumberLabel)
+                    .addComponent(stallSpeedLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stallSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel20))
+                .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emptyWeightLabel)
+                    .addComponent(maxWinchingSpeedLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emptyWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maxWinchingSpeedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
+                .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(maxGrossWeightLabel)
                     .addComponent(jCheckBox1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(sailplanePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(maxGrossWeightField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(19, 19, 19))
         );
 
-        this.add(tabNames[1], jPanel2);
+        this.add(tabNames[1], sailplanePanel);
+        
+        this.add(tabNames[2], airfieldPanel);
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jTextArea3.setText("Airfield List");
-        jScrollPane3.setViewportView(jTextArea3);
-
-        jButton3.setText("Submit");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addContainerGap())
-        );
-
-        this.add(tabNames[2], jPanel3);
-
-        jButton4.setText("Submit");
-
-        jTextArea5.setColumns(20);
-        jTextArea5.setRows(5);
-        jTextArea5.setText("Runway List");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(jTextArea5, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextArea5, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 337, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addContainerGap())
-        );
-
-        this.add("Runway", jPanel4);
-
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jTextArea4.setText("Position List");
-
-        jButton5.setText("Submit");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextArea4, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextArea4, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 337, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addContainerGap())
-        );
-
-        this.add("Position", jPanel5);
+        
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void lastNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_lastNameFieldActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void middleNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_middleNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_middleNameFieldActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void emergencyContactNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emergencyContactNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_emergencyContactNameFieldActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void primaryPhysicianNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primaryPhysicianNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_primaryPhysicianNameFieldActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
@@ -546,59 +584,59 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel firstNameLabel;
+    private javax.swing.JLabel primaryPhysicianLabel;
+    private javax.swing.JLabel primaryPhysicianNameLabel;
+    private javax.swing.JLabel primaryPhysicianPhoneLabel;
+    private javax.swing.JLabel pilotAdditionalInfoLabel;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel nNumberLabel;
+    private javax.swing.JLabel emptyWeightLabel;
+    private javax.swing.JLabel maxGrossWeightLabel;
+    private javax.swing.JLabel stallSpeedLabel;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JLabel maxWinchingSpeedLabel;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel flightWeightLabel;
+    private javax.swing.JLabel middleNameLabel;
+    private javax.swing.JLabel capabilityLabel;
+    private javax.swing.JLabel preferenceLabel;
+    private javax.swing.JLabel emergencyContactLabel;
+    private javax.swing.JLabel emergencyContactNameLabel;
+    private javax.swing.JLabel emergencyContactPhoneLabel;
+    private javax.swing.JPanel pilotPanel;
+    private javax.swing.JPanel sailplanePanel;
+    private javax.swing.JPanel airfieldPanel;
+    private javax.swing.JRadioButton studentRadioButton;
+    private javax.swing.JRadioButton proficientRadioButton;
+    private javax.swing.JRadioButton advancedRadioButton;
+    private javax.swing.JRadioButton mildRadioButton;
+    private javax.swing.JRadioButton nominalRadioButton;
+    private javax.swing.JRadioButton performanceRadioButton;
+    private javax.swing.JScrollPane sailplaneScrollPane;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JList pilotJList;
+    private javax.swing.JList sailplaneJList;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField emergencyContactNameField;
+    private javax.swing.JTextField nNumberField;
+    private javax.swing.JTextField emptyWeightField;
+    private javax.swing.JTextField maxGrossWeightField;
+    private javax.swing.JTextField stallSpeedField;
+    private javax.swing.JTextField maxWinchingSpeedField;
+    private javax.swing.JTextField firstNameField;
+    private javax.swing.JTextField lastNameField;
+    private javax.swing.JTextField flightWeightField;
+    private javax.swing.JTextField middleNameField;
+    private javax.swing.JTextField emergencyContactPhoneField;
+    private javax.swing.JTextField primaryPhysicianNameField;
+    private javax.swing.JTextField primaryPhysicianPhoneField;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField pilotNameInput;
+    private javax.swing.JScrollPane pilotScrollPane;
     // End of variables declaration//GEN-END:variables
 }
