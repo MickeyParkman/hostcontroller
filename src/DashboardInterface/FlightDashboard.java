@@ -22,7 +22,7 @@ public class FlightDashboard extends javax.swing.JPanel
         dial = new TensionSpeedDial();
         health = new SystemsStatus();
         
-        this.add(dial);
-        this.add(health);
+        //this.add(dial);
+        //this.add(health);
     }
 }

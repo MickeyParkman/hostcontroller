@@ -3,6 +3,7 @@ package mainhost;
 import Configuration.ProfileManagementFrame;
 import ParameterSelection.ParameterSelectionPanel;
 import DashboardInterface.FlightDashboard;
+import DataObjects.CurrentDataObjectSet;
 import javax.swing.*;
 import java.awt.Dimension;   
 import java.awt.event.KeyEvent;
