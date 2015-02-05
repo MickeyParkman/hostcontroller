@@ -25,8 +25,9 @@ public class CurrentDataObjectSet {
         return instance;
     }
     
-    //use with caution
-    public void Clear()
+    //use with caution!!!
+    //this will clear the current loaded objects.
+    public static void Clear()
     {
         instance = null;
     }
