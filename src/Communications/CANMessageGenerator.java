@@ -7,7 +7,7 @@ package Communications;
 
 import DataObjects.Airfield;
 import DataObjects.Pilot;
-import DataObjects.Position;
+import DataObjects.GliderPosition;
 import DataObjects.Runway;
 import DataObjects.Sailplane;
 
