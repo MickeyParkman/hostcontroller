@@ -38,10 +38,10 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private void initPilotList() {
         try{
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
-            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Performance", null, null));
+            //pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Performance", null, null));
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(pilotNameInput, e.getMessage());
-            pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Performance", null, null));
+            //pilotNames.add(new Pilot("Quartemain", "Alan", "Stephen", 160, Capability.ADVANCED, "Performance", null, null));
 
         } catch (ClassNotFoundException ex) {
             // TODO change exception case
@@ -52,7 +52,7 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private void initSailPlaneList() {
         try{
             sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
-            sailplanes.add(new Sailplane("N32452345", "asdfas", "Bob", "no", 1000, 1000, 1000, 1000, 1000, 1000, false));
+            //sailplanes.add(new Sailplane("N32452345", "asdfas", "Bob", "no", 1000, 1000, 1000, 1000, 1000, 1000, false));
         }catch(SQLException e) {
 
         } catch (ClassNotFoundException ex) {

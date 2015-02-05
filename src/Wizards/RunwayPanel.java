@@ -51,7 +51,7 @@ public class RunwayPanel extends JPanel {
         
     public boolean isComplete(Runway r)
     {   
-            r.setMagneticHeading(magHeadField.getText());
+            //r.setMagneticHeading(magHeadField.getText());
             if(r.getMagneticHeading().isEmpty()){
                 return false;
             }

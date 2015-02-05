@@ -47,7 +47,7 @@ public class AirfieldPanel extends JPanel {
                 for(Object str: airfields){
                     airfieldModel.addElement(str);
                 }
-                airfieldJList.setModel(airfieldModel);
+                //airfieldJList.setModel(airfieldModel);
                 //airfieldScrollPane.setViewportView(airfieldModel);
 		
 		JPanel gliderPostitionSubPanel = new JPanel();

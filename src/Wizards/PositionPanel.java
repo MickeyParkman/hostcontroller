@@ -1,6 +1,6 @@
 package Wizards;
 
-import DataObjects.Position;
+//import DataObjects.Position;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;

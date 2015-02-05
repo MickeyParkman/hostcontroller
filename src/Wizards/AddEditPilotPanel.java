@@ -87,7 +87,7 @@ public class AddEditPilotPanel extends JFrame {
         //String capability = Capability.convertCapabilityNumToString(pilotRequiredPanel.getCapability());
         //String preference = Preference.convertPreferenceNumToString(pilotRequiredPanel.getPreference());
         
-        Pilot newPilot = new Pilot(lastName, firstName, middleName, weight, "capability", "preference", "", "");
+        /*Pilot newPilot = new Pilot(lastName, firstName, middleName, weight, "capability", "preference", "", "");
         try{
             DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
             JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
@@ -97,6 +97,6 @@ public class AddEditPilotPanel extends JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + firstName + " " + lastName + " already exists in the database");
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
-        }   
+        }   */
     }
 }

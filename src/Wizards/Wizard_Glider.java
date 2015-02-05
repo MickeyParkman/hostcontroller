@@ -30,7 +30,7 @@ public class Wizard_Glider extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -43,7 +43,7 @@ public class Wizard_Glider extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
@@ -92,7 +92,7 @@ public class Wizard_Glider extends JFrame {
 		emptyWeightField.setBounds(180, 41, 100, 20);
 		contentPane.add(emptyWeightField);
 		
-		maxGrossWeightField = new JTextField(Integer.toString(sailplaneEdited.getMaximumGrossWeight()));
+		//maxGrossWeightField = new JTextField(Integer.toString(sailplaneEdited.getMaximumGrossWeight()));
 		maxGrossWeightField.setColumns(10);
 		maxGrossWeightField.setBounds(180, 72, 100, 20);
 		contentPane.add(maxGrossWeightField);
@@ -102,7 +102,7 @@ public class Wizard_Glider extends JFrame {
 		contentPane.add(indicatedStallSpeedField);
 		indicatedStallSpeedField.setColumns(10);
 		
-		maxWinchingSpeedField = new JTextField(Integer.toString(sailplaneEdited.getMaximumWinchingSpeed()));
+		//maxWinchingSpeedField = new JTextField(Integer.toString(sailplaneEdited.getMaximumWinchingSpeed()));
 		maxWinchingSpeedField.setColumns(10);
 		maxWinchingSpeedField.setBounds(180, 134, 100, 20);
 		contentPane.add(maxWinchingSpeedField);
@@ -123,7 +123,7 @@ public class Wizard_Glider extends JFrame {
 		label_2.setBounds(290, 137, 46, 14);
 		contentPane.add(label_2);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Singled Seated?", sailplaneEdited.gethasBallast());
+		/*JCheckBox chckbxNewCheckBox = new JCheckBox("Singled Seated?", sailplaneEdited.gethasBallast());
 		chckbxNewCheckBox.setHorizontalTextPosition(SwingConstants.LEADING);
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chckbxNewCheckBox.setBounds(10, 166, 144, 23);
@@ -133,7 +133,7 @@ public class Wizard_Glider extends JFrame {
 		chckbxCanCarryBallast.setHorizontalTextPosition(SwingConstants.LEADING);
 		chckbxCanCarryBallast.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chckbxCanCarryBallast.setBounds(10, 197, 144, 23);
-		contentPane.add(chckbxCanCarryBallast);
+		contentPane.add(chckbxCanCarryBallast);*/
 		
 		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.setBounds(0, 239, 89, 23);
