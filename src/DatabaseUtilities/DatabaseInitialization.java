@@ -384,8 +384,8 @@ public class DatabaseInitialization {
                 + "designator VARCHAR(20), "
                 + "altitude VARCHAR(20), "
                 + "magneticVariation VARCHAR(20), "
-                + "latitude INT, "
-                + "longitude INT, "
+                + "latitude FLOAT, "
+                + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
                 + "PRIMARY KEY (name))";
         try (Statement createAirfieldTableStatement = connect.createStatement()) {
@@ -428,8 +428,8 @@ public class DatabaseInitialization {
                 + "(position_id VARCHAR(30), "
                 + "runway_parent VARCHAR(30), "
                 + "altitude INT, "
-                + "latitude INT, "
-                + "longitude INT, "
+                + "latitude FLOAT, "
+                + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
                 + "PRIMARY KEY (position_id), "
                 + "FOREIGN KEY (runway_parent) REFERENCES Runway (runway_id))";
@@ -451,8 +451,8 @@ public class DatabaseInitialization {
                 + "(name VARCHAR(30), "
                 + "runway_parent VARCHAR(30), "
                 + "altitude INT, "
-                + "latitude INT, "
-                + "longitude INT, "
+                + "latitude FLOAT, "
+                + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
                 + "PRIMARY KEY (name), "
                 + "FOREIGN KEY (runway_parent) REFERENCES Runway (runway_id))";

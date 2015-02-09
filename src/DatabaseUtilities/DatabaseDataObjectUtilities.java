@@ -465,13 +465,13 @@ public class DatabaseDataObjectUtilities {
                 
                 int altitude = 0;
                 int magneticVariation = 0;
-                int latitude = 0;
-                int longitude = 0;
+                float latitude = 0;
+                float longitude = 0;
                 try {
                     altitude = Integer.parseInt(theAirfields.getString(3));
                     magneticVariation = Integer.parseInt(theAirfields.getString(4));
-                    latitude = Integer.parseInt(theAirfields.getString(5));
-                    longitude = Integer.parseInt(theAirfields.getString(6));
+                    latitude = Float.parseFloat(theAirfields.getString(5));
+                    longitude = Float.parseFloat(theAirfields.getString(6));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -571,12 +571,12 @@ public class DatabaseDataObjectUtilities {
                 String parent = theGliderPositions.getString(2);
                 
                 int altitude = 0;
-                int latitude = 0;
-                int longitude = 0;
+                float latitude = 0;
+                float longitude = 0;
                 try {
                     altitude = Integer.parseInt(theGliderPositions.getString(3));
-                    latitude = Integer.parseInt(theGliderPositions.getString(4));
-                    longitude = Integer.parseInt(theGliderPositions.getString(5));
+                    latitude = Float.parseFloat(theGliderPositions.getString(4));
+                    longitude = Float.parseFloat(theGliderPositions.getString(5));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -625,12 +625,12 @@ public class DatabaseDataObjectUtilities {
                 String parent = theWinchPositions.getString(2);
                 
                 int altitude = 0;
-                int latitude = 0;
-                int longitude = 0;
+                float latitude = 0;
+                float longitude = 0;
                 try {
                     altitude = Integer.parseInt(theWinchPositions.getString(3));
-                    latitude = Integer.parseInt(theWinchPositions.getString(4));
-                    longitude = Integer.parseInt(theWinchPositions.getString(5));
+                    latitude = Float.parseFloat(theWinchPositions.getString(4));
+                    longitude = Float.parseFloat(theWinchPositions.getString(5));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
