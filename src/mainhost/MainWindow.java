@@ -1,6 +1,7 @@
 package mainhost;
 
 import Configuration.ProfileManagementFrame;
+import Configuration.DatabaseExportFrame;
 import ParameterSelection.ParameterSelectionPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
@@ -37,6 +38,7 @@ public class MainWindow extends JFrame {
     private ParameterSelectionPanel ParameterSelectionPanel_;
     private ProfileManagementFrame ProfileManagementFrame;
     private FlightDashboard FlightDashboard_;
+    private DatabaseExportFrame DatabaseExportFrame;
 
     public MainWindow() {
         topMenu = new JMenuBar();
@@ -198,6 +200,8 @@ public class MainWindow extends JFrame {
         exportDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                DatabaseExportFrame = new DatabaseExportFrame();
+                DatabaseExportFrame.setVisible(true);
             }
         });
 	fileMenu.add(exportDBItem);

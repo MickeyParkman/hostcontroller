@@ -16,11 +16,11 @@ public class GliderPosition {
     String positionId;
     String runwayParent;
     int altitude;
-    int latitude;
-    int longitude;
+    float latitude;
+    float longitude;
     String optionalInfo;
     
-    public GliderPosition(String id, String parent, int altitude, int latitude, int longitude, String optional){
+    public GliderPosition(String id, String parent, int altitude, float latitude, float longitude, String optional){
        this.positionId = id;
        this.runwayParent = parent;
        this.altitude = altitude;
@@ -41,11 +41,11 @@ public class GliderPosition {
         return altitude;
     }
     
-    public int getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
     
-    public int getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
     

@@ -149,7 +149,7 @@ public class TensionSpeedDial extends JPanel {
                         chartpanel.setPreferredSize(new Dimension(400, 400));
                         JPanel jpanel = new JPanel(new GridLayout(2, 2));
                         add(chartpanel);
-                        add(jpanel, "South");
+                        //add(jpanel, "South");
         }
         
         private void updateDial() {
