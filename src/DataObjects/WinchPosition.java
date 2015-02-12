@@ -50,4 +50,8 @@ public class WinchPosition {
     public String getOptionalInfo() {
         return optionalInfo;
     }
+
+        public String toString() {
+        return name;
+    }
 }

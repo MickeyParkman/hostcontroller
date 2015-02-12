@@ -58,4 +58,8 @@ public class Airfield {
     public String getOptionalInfo() {
         return optionalInfo;
     }
+
+    public String toString() {
+        return name + "(" + designator + ")";
+    }
 }
