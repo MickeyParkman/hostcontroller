@@ -1,5 +1,6 @@
 package ParameterSelection;
 
+import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -18,18 +19,23 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
 
 public class SailplanePanel extends JPanel {
     private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
+    private CurrentDataObjectSet currentData;
     
     private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) 
     {
         if(sailplaneJList.getSelectedIndex() >= 0){
             try{
                 Sailplane theSailplane = (Sailplane)sailplaneJList.getSelectedValue();
+                currentData.setCurrentGlider(theSailplane);
+                
                 nNumberField.setText(theSailplane.getNumber());
                 nNumberField.setBackground(new Color(142, 250, 127));
 
@@ -77,6 +83,7 @@ public class SailplanePanel extends JPanel {
      * Creates new form sailplanePanel
      */
     public SailplanePanel() {
+        currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         initSailPlaneList();
         initComponents();
     }
@@ -146,10 +153,18 @@ public class SailplanePanel extends JPanel {
         nNumberField.setColumns(10);
         
         JCheckBox ballastCheckBox = new JCheckBox("Can Carry Ballast?");
-        ballastCheckBox.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		ballastField.setEnabled(true);
-        	}
+        ballastCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED)
+                {
+                    ballastField.setEnabled(true);
+                }
+                else
+                {
+                    ballastField.setEnabled(false);
+                }
+            }
         });
         ballastCheckBox.setBounds(10, 117, 154, 23);
         panel.add(ballastCheckBox);
@@ -181,10 +196,18 @@ public class SailplanePanel extends JPanel {
         panel.add(cableReleaseAngleLabel);
         
         JCheckBox multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
-        multipleSeatsCheckBox.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		passengerWeightField.setEnabled(true);
-        	}
+        ballastCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED)
+                {
+                    passengerWeightField.setEnabled(true);
+                }
+                else
+                {
+                    passengerWeightField.setEnabled(false);
+                }
+            }
         });
         multipleSeatsCheckBox.setBounds(320, 117, 159, 23);
         panel.add(multipleSeatsCheckBox);
@@ -220,10 +243,18 @@ public class SailplanePanel extends JPanel {
         winchingSpeedField.setColumns(10);
         
         JCheckBox baggageCheckBox = new JCheckBox("Baggage?");
-        baggageCheckBox.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		baggageField.setEnabled(true);
-        	}
+        ballastCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED)
+                {
+                    baggageField.setEnabled(true);
+                }
+                else
+                {
+                    baggageField.setEnabled(false);
+                }
+            }
         });
         baggageCheckBox.setBounds(10, 178, 97, 23);
         panel.add(baggageCheckBox);

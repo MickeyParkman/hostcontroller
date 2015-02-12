@@ -2,6 +2,7 @@ package ParameterSelection;
 
 import DataObjects.Airfield;
 import DataObjects.GliderPosition;
+import DataObjects.CurrentDataObjectSet;
 import DataObjects.Runway;
 import DataObjects.WinchPosition;
 import javax.swing.DefaultListModel;
@@ -61,6 +62,7 @@ public class AirfieldPanel extends JPanel {
     private JTextField winchPosLatitudeField;
     private JTextField winchPosParentAirfieldField;
     private JTextField winchPosParentRunwayField;
+    private CurrentDataObjectSet currentData;
 
     private void initAirfieldList() {
         try{
@@ -111,6 +113,7 @@ public class AirfieldPanel extends JPanel {
         if(airfieldJList.getSelectedIndex() >= 0){
             try{
                 Airfield theAirfield = (Airfield)airfieldJList.getSelectedValue();
+                currentData.setCurrentAirfield(theAirfield);
                 //select * in runways where parent = theAirfield;
                 airfieldNameField.setText(theAirfield.getName());
                 airfieldNameField.setBackground(new Color(142, 250, 127));
@@ -147,7 +150,17 @@ public class AirfieldPanel extends JPanel {
         if(runwaysJList.getSelectedIndex() >= 0){
             try{
                 Runway theRunway = (Runway)runwaysJList.getSelectedValue();
-
+                currentData.setCurrentRunway(theRunway);
+                
+                runwayNameField.setText(theRunway.getId());
+                runwayNameField.setBackground(new Color(142, 250, 127));
+                
+                runwayAltitudeField.setText(String.valueOf(theRunway.getAltitude()));
+                runwayAltitudeField.setBackground(new Color(142, 250, 127));
+                
+                magneticHeadingField.setText(String.valueOf(theRunway.getMagneticHeading()));
+                magneticHeadingField.setBackground(new Color(142, 250, 127));
+                
                 for(Object str: gliderPositions){
                         gliderPositionModel.addElement(str);
                 }
@@ -167,7 +180,19 @@ public class AirfieldPanel extends JPanel {
         if(gliderPositionsJList.getSelectedIndex() >= 0){
             try{
                 GliderPosition theGliderPosition = (GliderPosition)gliderPositionsJList.getSelectedValue();
-
+                currentData.setCurrentGliderPosition(theGliderPosition);
+                
+                gliderPosNameField.setText(theGliderPosition.getGliderPositionId());
+                gliderPosNameField.setBackground(new Color(142, 250, 127));
+                
+                gliderPosAltitudeField.setText(String.valueOf(theGliderPosition.getAltitude()));
+                gliderPosAltitudeField.setBackground(new Color(142, 250, 127));
+ 
+                gliderPosLongitudeField.setText(String.valueOf(theGliderPosition.getLongitude()));
+                gliderPosLongitudeField.setBackground(new Color(142, 250, 127));
+                
+                gliderPosLatitudeField.setText(String.valueOf(theGliderPosition.getLatitude()));
+                gliderPosLatitudeField.setBackground(new Color(142, 250, 127));
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -179,7 +204,20 @@ public class AirfieldPanel extends JPanel {
         if(winchPositionsJList.getSelectedIndex() >= 0){
             try{
                 WinchPosition theWinchPosition = (WinchPosition)winchPositionsJList.getSelectedValue();
-
+                currentData.setCurrentWinchPosition(theWinchPosition);
+                
+                winchPosNameField.setText(theWinchPosition.getName());
+                winchPosNameField.setBackground(new Color(142, 250, 127));
+                
+                winchPosAltitudeField.setText(String.valueOf(theWinchPosition.getAltitude()));
+                winchPosAltitudeField.setBackground(new Color(142, 250, 127));
+ 
+                winchPosLongitudeField.setText(String.valueOf(theWinchPosition.getLongitude()));
+                winchPosLongitudeField.setBackground(new Color(142, 250, 127));
+                
+                winchPosLatitudeField.setText(String.valueOf(theWinchPosition.getLatitude()));
+                winchPosLatitudeField.setBackground(new Color(142, 250, 127));
+                
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -190,6 +228,7 @@ public class AirfieldPanel extends JPanel {
      * Creates new form sailplanePanel
      */
     public AirfieldPanel() {
+        currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         initAirfieldList();
         initWinchPositionsList();
         initGliderPositionsList();
