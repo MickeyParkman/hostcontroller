@@ -113,6 +113,8 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
+            System.out.println("NOPE");
+            e.printStackTrace();
             throw e;
         }
         //Build the GliderPosition table
@@ -381,7 +383,7 @@ public class DatabaseInitialization {
     private static void createAirfield(Connection connect) throws SQLException {
         String createAirfieldString = "CREATE TABLE Airfield"
                 + "(name VARCHAR(30), "
-                + "designator VARCHAR(20), "
+                + "designator VARCHAR(30), "
                 + "altitude VARCHAR(20), "
                 + "magneticVariation VARCHAR(20), "
                 + "latitude FLOAT, "
