@@ -73,7 +73,7 @@ public class Sailplane {
         ballast = 0;
     }
     
-    public String getnNumber() {
+    public String getNumber() {
         return nNumber;
     }     
     

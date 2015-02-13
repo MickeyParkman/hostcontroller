@@ -60,6 +60,6 @@ public class Airfield {
     }
 
     public String toString() {
-        return name + "(" + designator + ")";
+        return name + " (" + designator + ")";
     }
 }
