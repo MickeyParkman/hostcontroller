@@ -70,6 +70,7 @@ public class AirfieldPanel extends JPanel {
             airfields.add(new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));   
         }catch(SQLException e) {
             airfields.add(new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));
+            airfields.add(new Airfield("Bob-land", "BOB", 1000, 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -80,7 +81,10 @@ public class AirfieldPanel extends JPanel {
             gliderPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getGliderPositions();
             gliderPositions.add(new GliderPosition("The glider position", "The Runway", 5, 5, 5, "sdfgsdgf"));
         }catch(SQLException e) {
-            gliderPositions.add(new GliderPosition("The glider position", "The Runway", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("Spokane Runway1 glider", "Spokane Runway1", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("Spokane Runway2 glider", "Spokane Runway2", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("Bob-land Runway1 glider", "Bob-land Runway1", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("Bob-land Runway2 glider", "Bob-land Runway2", 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,7 +95,10 @@ public class AirfieldPanel extends JPanel {
             winchPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getWinchPositions();
             winchPositions.add(new WinchPosition("The winch position", "The Runway", 5, 5, 5, "sdfgsdgf"));
         }catch(SQLException e) {
-            winchPositions.add(new WinchPosition("The winch position", "The Runway", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("Spokane Runway1 winch", "Spokane Runway1", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("Spokane Runway2 winch", "Spokane Runway2", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("Bob-land Runway1 winch", "Bob-land Runway1", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("Bob-land Runway2 winch", "Bob-land Runway2", 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -102,10 +109,10 @@ public class AirfieldPanel extends JPanel {
             runways = DatabaseUtilities.DatabaseDataObjectUtilities.getRunways();
             runways.add(new Runway("The Runway", "North", "Spokane", 5, "sdghsdg"));
         }catch(SQLException e) {
-            runways.add(new Runway("Spokane Runway", "North", "Spokane", 5, "sdghsdg"));
-            runways.add(new Runway("Spokane Runway", "North", "Spokane", 5, "sdghsdg"));
-            runways.add(new Runway("Bob-land Runway", "South", "Bob-land", 6, "asdfasdf"));
-            runways.add(new Runway("Bob-land Runway", "South", "Bob-land", 6, "asdfasdf"));
+            runways.add(new Runway("Spokane Runway1", "North", "GEG", 5, "sdghsdg"));
+            runways.add(new Runway("Spokane Runway2", "North", "GEG", 5, "sdghsdg"));
+            runways.add(new Runway("Bob-land Runway1", "South", "BOB", 6, "asdfasdf"));
+            runways.add(new Runway("Bob-land Runway2", "South", "BOB", 6, "asdfasdf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -136,7 +143,34 @@ public class AirfieldPanel extends JPanel {
                 airfieldLatitudeField.setText(String.valueOf(theAirfield.getLatitude()));
                 airfieldLatitudeField.setBackground(new Color(142, 250, 127));
                 
-                for(Object str: runways){
+                runwayNameField.setText("");
+                runwayNameField.setBackground(new Color(255, 255, 255));
+                runwayAltitudeField.setText("");
+                runwayAltitudeField.setBackground(new Color(255, 255, 255));
+                magneticHeadingField.setText("");
+                magneticHeadingField.setBackground(new Color(255, 255, 255));
+                gliderPosNameField.setText("");
+                gliderPosNameField.setBackground(new Color(255, 255, 255));
+                gliderPosAltitudeField.setText("");
+                gliderPosAltitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosLongitudeField.setText("");
+                gliderPosLongitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosLatitudeField.setText("");
+                gliderPosLatitudeField.setBackground(new Color(255, 255, 255));
+                winchPosNameField.setText("");
+                winchPosNameField.setBackground(new Color(255, 255, 255));
+                winchPosAltitudeField.setText("");
+                winchPosAltitudeField.setBackground(new Color(255, 255, 255));
+                winchPosLongitudeField.setText("");
+                winchPosLongitudeField.setBackground(new Color(255, 255, 255));
+                winchPosLatitudeField.setText("");
+                winchPosLatitudeField.setBackground(new Color(255, 255, 255));
+                
+                runwaysModel.removeAllElements();
+                winchPositionModel.removeAllElements();
+                gliderPositionModel.removeAllElements();
+                for(Runway str: runways){
+                    if(str.getParent().equals(theAirfield.getDesignator()))
                         runwaysModel.addElement(str);
                 }
                 runwaysJList.setModel(runwaysModel);
@@ -164,11 +198,32 @@ public class AirfieldPanel extends JPanel {
                 magneticHeadingField.setText(String.valueOf(theRunway.getMagneticHeading()));
                 magneticHeadingField.setBackground(new Color(142, 250, 127));
                 
-                for(Object str: gliderPositions){
+                gliderPosNameField.setText("");
+                gliderPosNameField.setBackground(new Color(255, 255, 255));
+                gliderPosAltitudeField.setText("");
+                gliderPosAltitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosLongitudeField.setText("");
+                gliderPosLongitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosLatitudeField.setText("");
+                gliderPosLatitudeField.setBackground(new Color(255, 255, 255));
+                winchPosNameField.setText("");
+                winchPosNameField.setBackground(new Color(255, 255, 255));
+                winchPosAltitudeField.setText("");
+                winchPosAltitudeField.setBackground(new Color(255, 255, 255));
+                winchPosLongitudeField.setText("");
+                winchPosLongitudeField.setBackground(new Color(255, 255, 255));
+                winchPosLatitudeField.setText("");
+                winchPosLatitudeField.setBackground(new Color(255, 255, 255));
+                
+                gliderPositionModel.removeAllElements();
+                for(GliderPosition str: gliderPositions){
+                    if(str.getParent().equals(theRunway.getId()))
                         gliderPositionModel.addElement(str);
                 }
                 
-                for(Object str: winchPositions){
+                winchPositionModel.removeAllElements();
+                for(WinchPosition str: winchPositions){
+                    if(str.getParent().equals(theRunway.getId()))
                         winchPositionModel.addElement(str);
                 }
 
