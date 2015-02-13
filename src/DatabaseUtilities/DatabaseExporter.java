@@ -51,6 +51,7 @@ public class DatabaseExporter {
             exportTable(connection, tableName);
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Couldn't export table");
+            e.printStackTrace();
             throw e;
         }
     }
@@ -59,7 +60,7 @@ public class DatabaseExporter {
         name = name.toUpperCase();
         
         String timestamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-        String fileName = "C:\\ExportedTables\\output_" + name + "_" + timestamp + ".csv";
+        String fileName = "..\\ExportedTables\\output_" + name + "_" + timestamp + ".csv";
         
         PreparedStatement ps = connect.prepareStatement(
                 "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");

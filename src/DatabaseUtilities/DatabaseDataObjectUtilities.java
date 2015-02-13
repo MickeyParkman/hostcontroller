@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * This class provides the methods that allow a user to add and retrieve Pilots,
  * Sailplanes and Airfields from the database as well as update and delete Pilots
  * 
- * @author Alex Williams, Noah Fujioka, Derek Bennett hello
+ * @author Alex Williams, Noah Fujioka, dbennett3
  */
 public class DatabaseDataObjectUtilities {
     private static String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
@@ -743,6 +743,34 @@ public class DatabaseDataObjectUtilities {
             connect.close();
             return profiles;
         } catch (SQLException e) {
+            throw e;
+        }
+    }    
+    
+    public static List<String> getTables() throws SQLException, ClassNotFoundException {        
+        try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Statement stmt = connect.createStatement();
+            ResultSet theTables = stmt.executeQuery("SELECT * FROM SYS.SYSTABLES");
+            List tables = new ArrayList<String>();
+            while(theTables.next()) {
+                
+                //CHECKS TO SEE IF IT IS A SYSTEM TABLE OR A UNITS TABLE, WHICH WILL BE EXCLUDED
+                if(!theTables.getString(2).contains("SYS") && !theTables.getString(2).contains("UNITS"))
+                    tables.add(theTables.getString(2));
+            }
+            
+            return tables;
+            
+        }catch(Exception e) {
             throw e;
         }
     }    

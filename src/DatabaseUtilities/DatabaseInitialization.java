@@ -387,7 +387,7 @@ public class DatabaseInitialization {
                 + "latitude FLOAT, "
                 + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
-                + "PRIMARY KEY (name))";
+                + "PRIMARY KEY (designator))";
         try (Statement createAirfieldTableStatement = connect.createStatement()) {
             createAirfieldTableStatement.execute(createAirfieldString);
         }catch(SQLException e) {
@@ -409,7 +409,7 @@ public class DatabaseInitialization {
                 + "altitude INT, "
                 + "optional_info VARCHAR(150), "
                 + "PRIMARY KEY (runway_id), "
-                + "FOREIGN KEY (parent) REFERENCES Airfield (name))";
+                + "FOREIGN KEY (parent) REFERENCES Airfield (designator))";
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
         }catch(SQLException e) {
@@ -935,10 +935,14 @@ public class DatabaseInitialization {
             
             try 
             {
+                stmt.execute("SELECT * FROM PREVIOUSLAUNCHESINFO");
+                stmt.execute("DROP TABLE PREVIOUSLAUNCHESINFO");
+            } catch(SQLException e) { }
+            try 
+            {
                 stmt.execute("SELECT * FROM RECENTLAUNCHES");
                 stmt.execute("DROP TABLE RECENTLAUNCHES");
             } catch(SQLException e) { }
-            
             try 
             {
                 stmt.execute("SELECT * FROM PARACHUTE");
