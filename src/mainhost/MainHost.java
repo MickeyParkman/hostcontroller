@@ -15,7 +15,7 @@ import Configuration.UserProfileFrame;
 import DatabaseUtilities.BlackBoxMessagesSelector;
 import DatabaseUtilities.DatabaseBlackBoxMessageUtilities;
 import DatabaseUtilities.DatabaseEntryManager;
-import Wizards.PreWizard;
+//import Wizards.PreWizard;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -172,8 +172,8 @@ public class MainHost extends javax.swing.JFrame {
 
     private void EntryWizard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntryWizard1ActionPerformed
         // TODO add your handling code here:
-        PreWizard wiz = new PreWizard();
-        wiz.setVisible(true);
+        //PreWizard wiz = new PreWizard();
+        //wiz.setVisible(true);
     }//GEN-LAST:event_EntryWizard1ActionPerformed
 
     private void UserProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserProfileActionPerformed

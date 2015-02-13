@@ -13,7 +13,7 @@ import DataObjects.GliderPosition;
 import DataObjects.Runway;
 import DataObjects.Sailplane;
 import DatabaseUtilities.BlackBoxLogger;
-import ParameterSelection.ParamSelectionFrame;
+//import ParameterSelection.ParamSelectionFrame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +36,7 @@ public class MessagePipeline {
     
     //Parameter Selection window for the pipeline for elsecting components
     //of a launch
-    ParamSelectionFrame paramSelection;
+    //ParamSelectionFrame paramSelection;
     
     //Dashboard for the pipeline
     DashboardInterface dashboard = null;
@@ -66,7 +66,7 @@ public class MessagePipeline {
     public void startParameterSelection() throws MessagePipelineException {
         if(filter != null) {
             //paramSelection = new ParamSelectionFrame(this);
-            paramSelection.setVisible(true);    
+            //paramSelection.setVisible(true);    
         }
         else{
             MessagePipelineException exception = new MessagePipelineException();

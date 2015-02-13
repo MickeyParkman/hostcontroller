@@ -1,4 +1,4 @@
-package Wizards;
+package AddEditPanels;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;

@@ -1,8 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * DEAD CLASS FOR REFERENCE
  */
-package Wizards;
+package AddEditPanels;
 
 import DataObjects.GliderPosition;
 import java.util.ArrayList;

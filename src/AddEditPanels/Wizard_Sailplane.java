@@ -1,8 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * DEAD CLASS USED FOR REFERENCE
  */
-package Wizards;
+package AddEditPanels;
 
 import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
@@ -17,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Matt
  */
-public class Wizard_Sailplane extends Wizard {
+public class Wizard_Sailplane{
     
     /*
     
