@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package mastercontroller;
+package Communications;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
