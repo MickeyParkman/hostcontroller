@@ -88,14 +88,12 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
                     public void actionPerformed(ActionEvent arg0) {
                         List<String> selectedTables = new ArrayList<String>();
                         selectedTables = TableList.getSelectedValuesList();
-                        for(String str : selectedTables)
-                        {
-                            try {
-                                DatabaseExporter.exportDatabase(str);
-                                getFrame().dispose();
-                            } catch(Exception e)
-                            { }
-                        }
+                        try{
+                            DatabaseExporter.exportDatabase(selectedTables, "MyZip.zip");
+                            getFrame().dispose();
+                        }catch(Exception e)
+                        { }
+                        
                     }                      
                 });
         panel.add(submitButton);

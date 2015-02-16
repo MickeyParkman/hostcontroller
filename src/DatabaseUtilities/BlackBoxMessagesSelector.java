@@ -181,6 +181,7 @@ public class BlackBoxMessagesSelector extends javax.swing.JFrame {
     
     protected void exportData()
     {
+        /*
         if(PilotCheckbox.isSelected())
         {
             try
@@ -258,6 +259,7 @@ public class BlackBoxMessagesSelector extends javax.swing.JFrame {
                 System.out.println(e);
             }
         }
+        */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
