@@ -5,10 +5,16 @@
  */
 package DatabaseUtilities;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  *
@@ -24,7 +30,7 @@ public class DatabaseExporter {
      * @throws ClassNotFoundException
      * @throws SQLException 
      */
-    public static void exportDatabase(String tableName) throws ClassNotFoundException, SQLException {
+    public static void exportDatabase(List<String> tableName, String zipName) throws ClassNotFoundException, SQLException {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
         String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
@@ -48,29 +54,61 @@ public class DatabaseExporter {
         }
         
         try {
-            exportTable(connection, tableName);
-        }catch(SQLException e) {
+            exportTable(connection, tableName, zipName);
+        }catch(Exception e) {
             JOptionPane.showMessageDialog(null, "Couldn't export table");
             e.printStackTrace();
-            throw e;
         }
     }
     
-    private static void exportTable(Connection connect, String name) throws SQLException {
-        name = name.toUpperCase();
+    private static void exportTable(Connection connect, List<String> names, String zipName) throws SQLException, FileNotFoundException, IOException {
         
-        String timestamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-        String fileName = "..\\ExportedTables\\output_" + name + "_" + timestamp + ".csv";
+        FileOutputStream fos = null;
+        ZipOutputStream zos = null;
+        ZipEntry ze = null;
         
-        PreparedStatement ps = connect.prepareStatement(
-                "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-        ps.setString(1, null);
-        ps.setString(2, name);
-        ps.setString(3, fileName);
-        ps.setString(4, null);
-        ps.setString(5, null);
-        ps.setString(6, null);   
-        ps.execute();
+        try {
+            fos = new FileOutputStream(zipName);
+            zos = new ZipOutputStream(fos);
+            
+            String timestamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+            
+            for(String str : names)
+            {
+                String resultString = "";
+                String fileName = "output_" + str + "_" + timestamp + ".csv";
+                
+                ze = new ZipEntry(fileName);
+                zos.putNextEntry(ze);
+                
+                PreparedStatement ps = connect.prepareStatement("SELECT * FROM " + str);
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
+                
+                int columnCount = rsmd.getColumnCount();
+                
+                while(rs.next())
+                {
+                    resultString = "";
+                    for(int i = 1; i <= columnCount; i++)
+                    {
+                        resultString += rs.getString(i) + ",";
+                    }
+                    resultString += "\n";
+                    
+                    byte[] buffer = resultString.getBytes();
+                    zos.write(buffer);
+                }
+                
+                zos.closeEntry();
+            }
+            
+        }catch(Exception e)
+        { e.printStackTrace(); }
+        finally{
+            zos.close();
+            fos.close();
+        }
     } 
 
     
