@@ -41,6 +41,7 @@ public class DatabaseInitialization {
             connection = DriverManager.getConnection(databaseConnectionName);
         }catch(SQLException e) {
             //TODO Fix error handling
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Loaded JavaDb ClientDriver, somethin else wrong");
             throw e;
         }
