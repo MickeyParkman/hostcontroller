@@ -46,5 +46,7 @@ public class Runway {
         return optionalInfo;
     }
     
-      
+    public String toString() {
+      return runwayId;
+    } 
 }

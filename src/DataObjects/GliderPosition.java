@@ -52,6 +52,10 @@ public class GliderPosition {
     public String getOptionalInfo() {
         return optionalInfo;
     }
+
+    public String toString() {
+        return positionId;
+    }
 }
 
     

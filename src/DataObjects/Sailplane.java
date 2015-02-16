@@ -14,7 +14,7 @@ package DataObjects;
 
 public class Sailplane {
     //n_number of the plane
-    String Number;
+    String nNumber;
     
     //type of the plane
     String type;
@@ -54,11 +54,11 @@ public class Sailplane {
     public Sailplane(){
     }
     
-    public Sailplane(String Number, String Type,
+    public Sailplane(String nNumber, String Type,
                      int maximumGrossWeight, int emptyWeight, int indicatedStallSpeed,
                      int maximumWinchingSpeed, int maximumAllowableWeakLinkStrength, int maxTension,
                      int cableReleaseAngle, boolean carryBallast, String optional){
-        this.Number = Number;
+        this.nNumber = nNumber;
         this.type = Type;
         this.maximumGrossWeight = maximumGrossWeight;
         this.emptyWeight= emptyWeight;
@@ -74,7 +74,7 @@ public class Sailplane {
     }
     
     public String getNumber() {
-        return Number;
+        return nNumber;
     }     
     
     public String getType() {
@@ -137,5 +137,9 @@ public class Sailplane {
     
     public void addBallast(int ballast) {
         this.ballast += ballast;
+    }
+
+    public String toString() {
+        return nNumber;
     }
 }

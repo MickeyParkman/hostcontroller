@@ -3,10 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Communications;
+
+package mastercontroller;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 import javax.xml.bind.DatatypeConverter;
-import java.lang.Math;
+//import java.lang.Math;
+//import java.lang.Float;
+
 
 /**
  * CAN message
@@ -16,15 +25,13 @@ import java.lang.Math;
  * @author deh
  */
 /*
- *   Decode methods for extracting data from payload extneded by 
+ *   Decode methods for extracting data from payload extneded by
  *   @author gsm
  *
  */
 public class CanCnvt
 {
-
     public int val; // Valid indicator (zero if valid)
-
     public int seq; // Sequence number (if used)
     /**
      * 32b word with CAN id (STM32 CAN format)
@@ -34,6 +41,23 @@ public class CanCnvt
 
     public byte[] pb;// Binary bytes as received and converted from ascii/hex input
     public int chk; // Byte checksum
+    
+    //  Constants for half-precision conversions
+    static final int SINGLE_MBITS = 23;
+    static final int SINGLE_EBITS = 8;
+    static final int SINGLE_EBIAS = 127;
+    
+    static final int HALF_MBITS = 10;
+    static final int HALF_EBITS = 5;
+    static final int HALF_EBIAS = 15;
+    static final float HALF_MXMAG = (float) 
+            (( 1.0 + ((double) ((1  << HALF_MBITS) - 1)) / (1 << HALF_MBITS))
+            *  (1 << (((1 << HALF_EBITS) - 1 - HALF_EBIAS))));
+    
+    static final float HALF_NOMRTRIG = ((float) ((1 << (HALF_MBITS + 1)) - 1)) 
+            /  ((float) (1 << (HALF_EBIAS + HALF_MBITS)));
+    static final float HALF_NORMFACTOR = (float) Math.pow(2.0, HALF_EBIAS - SINGLE_EBIAS );
+    
 
     /* *********************************************************************
      * Constructors
@@ -56,7 +80,6 @@ public class CanCnvt
         id = iid;
         dlc = idlc;
         pb = new byte[15];
-
     }
 
     public CanCnvt(int iseq, int iid, int idlc, byte[] px)
@@ -66,13 +89,12 @@ public class CanCnvt
         dlc = idlc;
         pb = new byte[15];
         pb = px;
-
     }
     /* *************************************************************************
      Compute CAN message checksum on binary array
      param   : byte[] b: Array of binary bytes in check sum computation\
      param   : int m: Number of bytes in array to use in computation
-     return  : computed checksum 
+     return  : computed checksum
      ************************************************************************ */
     private byte checksum(int m)
     {
@@ -85,7 +107,7 @@ public class CanCnvt
         chktot += (chktot >> 16); // Add carries from low half word
         chktot += (chktot >> 16); // Add carry from above addition
         chktot += (chktot >> 8);  // Add carries from low byte
-        chktot += (chktot >> 8);  // Add carry from above addition  
+        chktot += (chktot >> 8);  // Add carry from above addition
         return (byte) chktot;
     }
 
@@ -94,11 +116,11 @@ public class CanCnvt
      * array of bytes plus assemble the bytes comprising CAN ID into an int.
      * @param msg: String with CAN message
      * @return codes:
-     *  0 = OK; 
-     * -1 = message too short (less than 14) 
-     * -2 = message too long (greater than 30) 
-     * -3 = number of bytes not even 
-     * -4 = payload count is negative or greater than 8 
+     *  0 = OK;
+     * -1 = message too short (less than 14)
+     * -2 = message too long (greater than 30)
+     * -3 = number of bytes not even
+     * -4 = payload count is negative or greater than 8
      * -5 = checksum error
      * -6 = non-ascii/hex char in input
      */
@@ -129,13 +151,13 @@ public class CanCnvt
         byte chkx = checksum((m / 2) - 1);
         if (chkx != pb[((m / 2) - 1)])
         {
-            System.out.println(msg);    // Display for debugging
-            for (int j = 0; j < (m / 2); j++)
-            {
-                System.out.format("%02X ", pb[j]);
-            }
-            System.out.format("chkx: %02X" + " pb[((m/2) -1)]: %02X\n", chkx,
-                    pb[((m / 2) - 1)]);
+// System.out.println(msg);    // Display for debugging
+// for (int j = 0; j < (m / 2); j++)
+// {
+//     System.out.format("%02X ", pb[j]);
+// }
+// System.out.format("chkx: %02X" + " pb[((m/2) -1)]: %02X\n", chkx,
+//         pb[((m / 2) - 1)]);
             return -5; // Return error code
         }
 
@@ -153,7 +175,6 @@ public class CanCnvt
         dlc = (pb[5] & 0xff);     // Save payload ct in an easy to remember variable
         id = ((((((pb[4] << 8) | (pb[3] & 0xff)) << 8)
                 | (pb[2] & 0xff)) << 8) | (pb[1] & 0xff));
-        
         return 0;
     }
 
@@ -278,7 +299,6 @@ public class CanCnvt
         }
         val = 0;
         return st;
-
     }
 
     /**
@@ -347,18 +367,49 @@ public class CanCnvt
             return new int[0];
         } else
         {
-
             for (int i = 0; i < numb; i++)
             {
                 int i2o = i * 2 + offset;
                 ust[i] = ((pb[i2o + 7] & 0xff) << 8)
                         | (pb[i2o + 6] & 0xff);
-
             }
         }
         val = 0;
         return ust;
-
+    }   
+    
+    public float get_halffloat(int offset)
+    {
+        int signbit;
+        int mantissa;
+        int exp;
+        float result;
+        if(offset >= 0)
+                
+        if (pb[5] < (offset + 2))
+        {
+            val = -1;   // insufficient payload length
+            return 0;
+        } 
+        result = ((pb[offset + 7] & 0x80) != 0) ? (float) -1.0 : (float) 1.0;
+        mantissa = ((((int) pb[offset + 7]) & 0x3) << 8) | (((int) pb[offset + 6]) & 0xff);
+        exp = (pb[offset + 7] & 0x7c) >> 2;
+//System.out.println("pb[offset+7] pb[offset + 6]: " + pb[offset + 7] + " " + pb[offset +6]
+//              + "  exp:  " + exp + "  mantissa:  " + mantissa );
+        if (exp != 0)
+        {   //  non-zero exponent
+            //  subtracting 1 from exp is required so that left shift by 
+            //  exp == 31 does not produce negative result.  Compensated for in
+            //  exponent of scaling factor following if expression
+            result *= ((float) ((1 << HALF_MBITS) + mantissa)) 
+                    * ((float) ( 1 << exp - 1));
+        }
+        else
+        {   //  0 exponent
+            result *= mantissa;
+        }
+        result *= ((float) 1.0) / (float) (1 << (HALF_EBIAS + HALF_MBITS - 1));
+        return result;
     }
 
     /**
@@ -484,7 +535,7 @@ public class CanCnvt
     }
 
     /**
-     * Prepare CAN msg: Convert the array pb[] to hex and add checksum 
+     * Prepare CAN msg: Convert the array pb[] to hex and add checksum
      * The binary array pb[] is expected to have been set up.
      *
      * @return String with ascii/hex in ready to send
@@ -502,38 +553,30 @@ public class CanCnvt
         {
             return null;
         }
-        
-        //  insert sequence number
-        pb[0] = (byte) seq;        
+        pb[0] = (byte)(seq);    // Set sequence number
 
+        
         /* Setup Id bytes, little endian */
         pb[1] = (byte) (id);
         pb[2] = (byte) ((id >> 8));
         pb[3] = (byte) ((id >> 16));
         pb[4] = (byte) ((id >> 24));
 
-        pb[5] = (byte) dlc; //  Payload size                        
+        pb[5] = (byte) dlc;    // Payload size
 
         int msglength = (dlc + 6); // Length not including checksum
-        
-        dlc = 0;            //  Reset dlc to zero in case message size changes 
-                            //  on succeeding messages.
-                            //  This could pose an issue if the highest message
-                            //  field is not reloaded each time on repeated use
-                            //  because its value is fixed.  
 
         pb[(msglength)] = checksum(msglength); // Place checksum in array
-        
+
         /* Convert binary array to ascii/hex */
         StringBuilder x = new StringBuilder(DatatypeConverter.printHexBinary(pb));
-        x.delete((msglength + 1) * 2, 31);
+        x.delete( ((msglength + 1)*2), 31);
         x.append("\n"); // Line terminator
- 
-        return x.toString();   
+        return x.toString();
     }
-
+    
     /**
-     * Big endian int to be stored in byte array little endian 
+     * Big endian int to be stored in byte array little endian
      * Convert to payload byte array, little endian
      * @param n = int to be converted
      * @param offset = array index into payload (0 - 7)
@@ -554,9 +597,59 @@ public class CanCnvt
             return 0;
         }
     }
+    
+    public int set_halffloat(float fpin, int offset)
+    {   // converts float to half precision with proper rounding        
+        float absfpin, signfpin;        
+        int signbit, n, man,e, halfExponent;
+//System.out.println("conversion constants   " + HALF_MXMAG + "  " + HALF_NOMRTRIG + "  "  + HALF_NORMFACTOR);
+    if (offset > 6)
+        {
+            return -1;
+        }        
+        if(fpin == 0.0)
+        {
+            pb[6 + offset] = (byte) (0);
+            pb[7 + offset] = (byte) (0);
+            return 0;
+        }        
+        if (fpin >= 0)
+        {
+            absfpin = fpin;
+            signfpin = 1;
+            signbit = 0;
+        }
+        else
+        {
+            absfpin = - fpin;
+            signfpin = -1;
+            signbit = 0x80;
+        }        
+        fpin = (absfpin > HALF_MXMAG) ? HALF_MXMAG * signfpin : fpin;        
+//System.out.println("fpin:  " +fpin + "  " + HALF_MXMAG);
+        if (absfpin <= HALF_NOMRTRIG)
+        {   //  subnormal
+            n = Float.floatToIntBits(fpin * HALF_NORMFACTOR) + (1 << (SINGLE_MBITS - HALF_MBITS - 1));
+//System.out.println("here subnorm:  " + n + "  "  + HALF_NORMFACTOR + "  "+ fpin + "  " +  signbit);
+            pb[6 + offset] = (byte) (n >> (SINGLE_MBITS - HALF_MBITS));
+            pb[7 + offset] = (byte) ((n >> (SINGLE_MBITS - HALF_MBITS + 8))
+                    | signbit);  // note < smallest representable magnitude/2 codes as 0
+         }    
+        else
+        {   //  normal(ized) mantissa
+            n = Float.floatToIntBits(fpin) + (1 << (SINGLE_MBITS - HALF_MBITS - 1));
+//System.out.println("here norm:  " + n +  "  "+ fpin);
+//System.out.println("here norm after round operation:  " + n);
+            halfExponent = ((n & 0x7f800000) >> (SINGLE_MBITS - 2)) + ((HALF_EBIAS - SINGLE_EBIAS) * 4);
+            pb[6 + offset] = (byte) (n >> (SINGLE_MBITS - HALF_MBITS));                        
+            pb[7 + offset] = (byte) ((n >> (SINGLE_MBITS - HALF_MBITS + 8) & 0x3)
+                    | halfExponent | signbit);
+        }
+        return 0;
+    }
 
     /**
-     * Big endian ints  to be stored in byte array little endian 
+     * Big endian ints  to be stored in byte array little endian
      * Convert to payload byte array little endian offset
      * @param ns = int array to be converted
      * @param offset = array index into payload (0 - 7)
@@ -583,7 +676,7 @@ public class CanCnvt
     }
 
     /**
-     * Big endian long to be stored in byte array little endian 
+     * Big endian long to be stored in byte array little endian
      * Convert to payload byte array little endian offset
      * dlc is set to 8;
      * @param lng = long to be converted
@@ -663,7 +756,7 @@ public class CanCnvt
             return -1;
         } else
         {
-            pb[6 + offset] = (byte) n;
+            pb[6 + offset] = (byte) (n);
             dlc = Math.max(dlc, offset + 1);
             return 0;
         }
@@ -671,7 +764,7 @@ public class CanCnvt
 
     /**
      * Place bytes from an array into payload
-     * @param ns  Low order byte of each int in array 
+     * @param ns  Low order byte of each int in array
      * @param offset payload array offset (0 - 7)
      * @return 0 = OK; -1 = error;
      */
@@ -691,9 +784,7 @@ public class CanCnvt
             return 0;
         }
     }
-    
-    
-    
+
     /* Debugging code: calling routine calls this to check 'val' */
     public void valerr()
     {
@@ -702,5 +793,4 @@ public class CanCnvt
             System.out.format("CanCnvt val err: %d\n", val);
         }
     }
-
 }
