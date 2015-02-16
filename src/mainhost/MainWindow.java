@@ -17,6 +17,8 @@ import java.awt.Color;
 import java.sql.SQLException;
 import javax.swing.BoxLayout;
 import DatabaseUtilities.DatabaseInitialization;
+import ParameterSelection.CurrentScenario;
+import ParameterSelection.EnvironmentalWindow;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,18 +41,23 @@ public class MainWindow extends JFrame {
     private ProfileManagementFrame ProfileManagementFrame;
     private FlightDashboard FlightDashboard_;
     private DatabaseExportFrame DatabaseExportFrame;
+    private EnvironmentalWindow EnvironmentalWindow_;
+    private CurrentScenario CurrentScenario_;
 
     public MainWindow() {
         topMenu = new JMenuBar();
         mainWindow = new JPanel(new BorderLayout());
         leftSidePanelScenario = new JPanel();
         leftSidePanelDashboard = new JPanel();
-        rightSidePanel = new JPanel();
+        //rightSidePanel = new JPanel();
         statusLabel = new JLabel();
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         currentProfile = "NO PROFILE";
         ParameterSelectionPanel_ = new ParameterSelectionPanel();
         FlightDashboard_ = new FlightDashboard();
+        EnvironmentalWindow_ = new EnvironmentalWindow();
+        rightSidePanel = EnvironmentalWindow_;
+        //CurrentScenario_ = new CurrentScenario();
         createAndShowGUI();
     }
 
@@ -83,18 +90,19 @@ public class MainWindow extends JFrame {
         
         rightSidePanel.setPreferredSize(new Dimension(200, 600));
         rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        
         //TODO (jtroxel) move all side panels into their respective panels, since they are tied to them
         // RSP can stay with main window IF static.
         upperLeftSidePanelScenario = new JPanel();
         upperLeftSidePanelScenario.setPreferredSize(new Dimension(200,200));
         upperLeftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
-        lowerLeftSidePanelScenario = new JPanel();
+        lowerLeftSidePanelScenario = new CurrentScenario();
         lowerLeftSidePanelScenario.setPreferredSize(new Dimension(200,300));
         lowerLeftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
         leftSidePanelScenario.add(upperLeftSidePanelScenario);
         leftSidePanelScenario.add(lowerLeftSidePanelScenario);
         
-        lowerLeftSidePanelScenario.add(new JLabel("CURRENT INFO HERE"));
+        lowerLeftSidePanelScenario.add(new JLabel("Current Scenario"));
         
         upperLeftSidePanelDashboard = new JPanel();
         upperLeftSidePanelDashboard.setPreferredSize(new Dimension(200,200));
@@ -106,7 +114,7 @@ public class MainWindow extends JFrame {
         leftSidePanelDashboard.add(lowerLeftSidePanelDashboard);
 
         upperLeftSidePanelDashboard.add(new JLabel("REPLAY LIST HERE"));
-        lowerLeftSidePanelDashboard.add(new JLabel("CURRENT INFO HERE"));
+        lowerLeftSidePanelDashboard.add(new JLabel("Current Scenario"));
         
         upperLeftSidePanelScenario.add(pilotButton);        
         upperLeftSidePanelScenario.add(gliderButton);   
