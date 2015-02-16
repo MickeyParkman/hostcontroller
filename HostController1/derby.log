@@ -1,10 +1,96 @@
-----------------------------------------------------------------
-Tue Feb 10 23:26:48 PST 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-014b-7788-7b33-000007097c78 
-on database directory S:\Users\Jacob\Documents\NetBeansProjects\hc\HostController1\WinchCommonsTest12DataBase  with class loader sun.misc.Launcher$AppClassLoader@5451c3a8 
-Loaded from file:/S:/Users/Jacob/Documents/NetBeansProjects/hc/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_31-b13
-user.dir=S:\Users\Jacob\Documents\NetBeansProjects\hc\HostController1
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
+Mon Feb 16 15:04:14 PST 2015 Thread[main,5,main] Cleanup action starting
+java.sql.SQLException: Database 'WinchCommonsTest12DataBase' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at DatabaseUtilities.BlackBoxLogger.<init>(BlackBoxLogger.java:51)
+	at Communications.MessagePipeline.<init>(MessagePipeline.java:56)
+	at mainhost.Main.main(Main.java:42)
+Caused by: java.sql.SQLException: Database 'WinchCommonsTest12DataBase' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	... 17 more
+============= begin nested exception, level (1) ===========
+java.sql.SQLException: Database 'WinchCommonsTest12DataBase' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at DatabaseUtilities.BlackBoxLogger.<init>(BlackBoxLogger.java:51)
+	at Communications.MessagePipeline.<init>(MessagePipeline.java:56)
+	at mainhost.Main.main(Main.java:42)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Mon Feb 16 15:04:14 PST 2015 Thread[main,5,main] Cleanup action starting
+java.sql.SQLException: Database 'WinchCommonsTest12DataBase' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at DatabaseUtilities.DatabaseDataObjectUtilities.getPilots(DatabaseDataObjectUtilities.java:335)
+	at ParameterSelection.ParameterSelectionPanel.initPilotList(ParameterSelectionPanel.java:40)
+	at ParameterSelection.ParameterSelectionPanel.<init>(ParameterSelectionPanel.java:134)
+	at mainhost.MainWindow.<init>(MainWindow.java:56)
+	at mainhost.Main.main(Main.java:44)
+Caused by: java.sql.SQLException: Database 'WinchCommonsTest12DataBase' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	... 19 more
+============= begin nested exception, level (1) ===========
+java.sql.SQLException: Database 'WinchCommonsTest12DataBase' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:270)
+	at DatabaseUtilities.DatabaseDataObjectUtilities.getPilots(DatabaseDataObjectUtilities.java:335)
+	at ParameterSelection.ParameterSelectionPanel.initPilotList(ParameterSelectionPanel.java:40)
+	at ParameterSelection.ParameterSelectionPanel.<init>(ParameterSelectionPanel.java:134)
+	at mainhost.MainWindow.<init>(MainWindow.java:56)
+	at mainhost.Main.main(Main.java:44)
+============= end nested exception, level (1) ===========
+Cleanup action completed
