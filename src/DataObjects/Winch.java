@@ -6,6 +6,7 @@
 
 package DataObjects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,10 +56,11 @@ public class Winch {
     {
         for(Drive drive : driveList)
         {
-            if(driveName.equals(drive.getName())
+            if(driveName.equals(drive.getName()))
             {
                 return drive.getDrumList();
             }
         }
+        return null;
     }
 }

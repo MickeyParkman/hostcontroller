@@ -13,7 +13,7 @@ public class Wizard extends javax.swing.JFrame {
 
     // ew - Error Window used for broadcasting input error to user
     // instantiated in subclasses
-    ErrWindow ew;
+    //ErrWindow ew;
     
     
     /**

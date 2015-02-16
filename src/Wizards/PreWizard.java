@@ -107,16 +107,16 @@ public class PreWizard extends Wizard {
                 selectedWizard = new Wizard_Pilot();
             }else if(gliderButton.isSelected())
             {
-                selectedWizard = new Wizard_Sailplane();
+                //selectedWizard = new Wizard_Sailplane();
             }else if(airfieldButton.isSelected())
             {
-                selectedWizard = new Wizard_Airfield();
+                //selectedWizard = new Wizard_Airfield();
             }    
 
             selectedWizard.setVisible(true);
             this.dispose();
         }catch(NullPointerException e){
-            ew = new ErrWindow("Please select pilot, glider, or airfield before submitting.");
+            //ew = new ErrWindow("Please select pilot, glider, or airfield before submitting.");
         }
     }//GEN-LAST:event_submitButtonMouseClicked
 
