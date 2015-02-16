@@ -1,4 +1,6 @@
-package Wizards;
+//DEAD CLASS FOR REFERENCE
+
+package AddEditPanels;
 
 import DataObjects.Airfield;
 import Configuration.UnitLabelUtilities;

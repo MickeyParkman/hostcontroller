@@ -1,4 +1,4 @@
-package Wizards;
+package AddEditPanels;
 
 //import DataObjects.Position;
 import javax.swing.JPanel;

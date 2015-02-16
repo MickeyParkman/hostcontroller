@@ -1,8 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * DEAD CLASS USED FOR REFERENCE
  */
-package Wizards;
+package AddEditPanels;
 
 import DataObjects.Airfield;
 import DataObjects.GliderPosition;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Matt
  */
-public class Wizard_Airfield extends Wizard {
+public class Wizard_Airfield {
     
     /*
 

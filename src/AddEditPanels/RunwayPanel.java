@@ -1,4 +1,4 @@
-package Wizards;
+package AddEditPanels;
 
 import DataObjects.Runway;
 import javax.swing.JPanel;

@@ -107,7 +107,15 @@ public class Sailplane {
     
     public int getCableReleaseAngle() {
         return cableReleaseAngle;
-    } 
+    }
+    
+    public int getMaximumGrossWeight(){
+        return maximumGrossWeight;
+    }
+    
+    public int getMaximumWinchingSpeed(){
+        return maximumWinchingSpeed;
+    }
     
     public int storeCarryBallast() {
         if (carryBallast)
