@@ -1,3 +1,5 @@
+//Successful IF AIRFIELD EXISTS IN DB!
+
 package AddEditPanels;
 
 import DataObjects.CurrentDataObjectSet;
@@ -29,7 +31,7 @@ public class AddEditRunwayFrame extends JFrame {
     private JTextField magneticHeadingField;
     private JTextField nameField;
     private JTextField altitudeField;
-    private CurrentDataObjectSet ObjectSet;
+    private CurrentDataObjectSet objectSet;
     private Runway currentRunway;
     private boolean isEditEntry;
 
@@ -37,7 +39,8 @@ public class AddEditRunwayFrame extends JFrame {
      * Create the frame.
      */
     public AddEditRunwayFrame(Runway editRunway, boolean isEditEntry) {
-        ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+        
+        objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
         if (!isEditEntry){
             editRunway = new Runway("", "", "", 0, "");
@@ -133,8 +136,13 @@ public class AddEditRunwayFrame extends JFrame {
         JLabel requiredNoteLabel = new JLabel("All fields are required");
         requiredNoteLabel.setBounds(10, 210, 200, 14);
         panel.add(requiredNoteLabel);
-
-        JLabel parentAirfieldLabel = new JLabel("Parent Airfield: " + ObjectSet.getCurrentAirfield().getDesignator());
+        
+        JLabel parentAirfieldLabel = new JLabel();
+        try{
+            parentAirfieldLabel .setText("Parent Airfield: " + objectSet.getCurrentAirfield().getDesignator());
+        }catch (Exception e){
+            System.out.println("cur Airfield 404 " + e.getMessage());
+        }
         parentAirfieldLabel.setBounds(10, 100, 220, 14);
         panel.add(parentAirfieldLabel);
     }
@@ -143,7 +151,7 @@ public class AddEditRunwayFrame extends JFrame {
     {
         try{
             DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
-            ObjectSet.clearRunway();
+            objectSet.clearRunway();
             JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.");
             dispose();
         }catch (ClassNotFoundException e2) {
@@ -165,11 +173,22 @@ public class AddEditRunwayFrame extends JFrame {
     
     protected void submitData(){
         if (isComplete()){
-            String name = nameField.getText();
             String magneticHeading = magneticHeadingField.getText();
             int altitude = Integer.parseInt(altitudeField.getText());
+            
+            String name = currentRunway.getId();
+            if (!isEditEntry){
+                name = nameField.getText();
+            }
 
-            Runway newRunway = new Runway(name, magneticHeading, ObjectSet.getCurrentAirfield().getDesignator(), altitude, "");
+            String parent = "";
+            try{
+                parent = objectSet.getCurrentAirfield().getDesignator();
+            }catch (Exception e){
+                System.out.println("cur Airfield 404 " + e.getMessage());
+            }
+            
+            Runway newRunway = new Runway(name, magneticHeading, parent, altitude, "");
             try{
                 if (isEditEntry){
                     DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newRunway);
@@ -178,12 +197,14 @@ public class AddEditRunwayFrame extends JFrame {
                 {
                     DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
                 }
-                ObjectSet.setCurrentRunway(newRunway);
+                objectSet.setCurrentRunway(newRunway);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
                 dispose();
             }catch(SQLException e1) {
-                if(e1.getErrorCode() == 30000)
+                if(e1.getErrorCode() == 30000){
+                    System.out.println(e1.getMessage());
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the runway " + newRunway.toString() + " already exists in the database");
+                }
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
             } catch (Exception e3) {
