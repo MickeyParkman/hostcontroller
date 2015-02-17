@@ -5,6 +5,7 @@
  */
 package ParameterSelection;
 
+import Communications.MessagePipeline;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import Communications.Observer;
@@ -15,21 +16,52 @@ import Communications.Observer;
  */
 public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
 
-    /**
-     * Creates new form EnvironmentalWindow
-     */
+    private MessagePipeline pipe;
+    private final int HEARTBEAT_COUNT = 1;
+    private float curTick;
+    private float temp;
+    private float density;
+    private float pressure;
+    private float speed;
+    
     public EnvironmentalWindow() {
+        temp = 0;
+        density = 0;
+        pressure = 0;
+        speed = 0;
+        curTick = 0;
         initComponents();
-        loadEnvironmentalData();
+        pipe = MessagePipeline.getInstance();
+        pipe.attach(this);
+        loadEnvironmentalData("0 0 0 0");
+        updateDisplay();
     }
                
-    public void loadEnvironmentalData()
+    public void loadEnvironmentalData(String message)
     {
-        altdensityLabel.setText("100");
-        pressureLabel.setText("100");
-        temperatureLabel.setText("100");
-        windspeedLabel.setText("100");
+        String mParts[] = message.split(" ");
+        density += Integer.parseInt(mParts[0]);
+        temp += Integer.parseInt(mParts[1]);
+        speed += Integer.parseInt(mParts[2]);
+        pressure += Integer.parseInt(mParts[3]);
+
     }
+    
+    private void updateDisplay() {
+        temp /= HEARTBEAT_COUNT;
+        density /= HEARTBEAT_COUNT;
+        pressure /= HEARTBEAT_COUNT;
+        speed /= HEARTBEAT_COUNT;
+        altdensityLabel.setText(String.valueOf(density));
+        pressureLabel.setText(String.valueOf(pressure));
+        temperatureLabel.setText(String.valueOf(temp));
+        windspeedLabel.setText(String.valueOf(speed));
+        temp = 0;
+        density = 0;
+        pressure = 0;
+        speed = 0;
+    }     
+        
     
     private void initComponents() {
         this.setPreferredSize(new Dimension (200, 400));
@@ -79,8 +111,15 @@ public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
     // End of variables declaration                   
 
     public void update() {
-        loadEnvironmentalData();
+       // loadEnvironmentalData();
     }
     
-    public void update(String s){}
+    public void update(String message){
+        loadEnvironmentalData(message);
+        //++curTick;
+        //if(curTick == HEARTBEAT_COUNT) {
+        //    curTick = 0;
+            updateDisplay();
+        //}
+    }
 }

@@ -18,6 +18,17 @@ public class MessagePipeline extends Thread {
     private String currentMessage = "";
     private static MessagePipeline instance = null;
     private boolean running = false;
+    private String DEBUGMessageList[] = {"100 100 100 65"
+                                        ,"80 200 100 50"
+                                        ,"100 100 500 100"
+                                        ,"150 100 20 45"
+                                        ,"100 30 46 100"
+                                        ,"34 30 46 100"
+                                        ,"67 56 46 500"
+                                        ,"100 30 46 40"
+                                        ,"776 30 46 56"
+                                        ,"7 78 46 58"};
+    private int curMessageIndex = 0;
     
     public static MessagePipeline getInstance()
     {
@@ -56,7 +67,10 @@ public class MessagePipeline extends Thread {
     
     public void TEMPReadFromSocket()
     {
-        try {
+        currentMessage = DEBUGMessageList[curMessageIndex];
+        ++curMessageIndex;
+        curMessageIndex%=10;
+        /*try {
             String s = reader.readLine();
             currentMessage = s;
             if(!s.equals(""))
@@ -65,7 +79,7 @@ public class MessagePipeline extends Thread {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
     
     public void TEMPWriteToSocket(String s)
@@ -82,7 +96,14 @@ public class MessagePipeline extends Thread {
         running = true;
         while(running)
         {
-            TEMPReadFromSocket();
+            long startTime = System.currentTimeMillis();
+            long elapsed = 0;
+            while(elapsed < 100) {
+                TEMPReadFromSocket();
+                long endTime = System.currentTimeMillis();
+                elapsed = endTime - startTime;
+            }
+            notifyObservers();
         }
     }
     

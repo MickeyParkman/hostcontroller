@@ -6,6 +6,8 @@
 
 package DashboardInterface;
 
+import Communications.MessagePipeline;
+import Communications.Observer;
 import java.awt.Dimension;
 import java.awt.*;
 import java.util.logging.Level;
@@ -27,11 +29,12 @@ import org.jfree.ui.StandardGradientPaintTransformer;
  * @author Alex Williams
  */
 
-public class TensionSpeedDial extends JPanel {
+public class TensionSpeedDial extends JPanel implements Observer {
         DefaultValueDataset dataset1;
         DefaultValueDataset dataset2;
         JSlider slider1;
         JSlider slider2;
+        private MessagePipeline pipe;
 
         /**
          * Method to update the dial
@@ -49,6 +52,9 @@ public class TensionSpeedDial extends JPanel {
                 super(new BorderLayout());
                 dataset1 = new DefaultValueDataset(0D);
                 dataset2 = new DefaultValueDataset(0D);
+                
+                pipe = MessagePipeline.getInstance();
+                pipe.attach(this);
                         
                 DialPlot dialplot = new DialPlot();
                         
@@ -158,8 +164,17 @@ public class TensionSpeedDial extends JPanel {
             if(dataset2.getValue().intValue() < 100)
                 dataset2.setValue(dataset2.getValue().intValue() + 1);
         }
+
+    @Override
+    public void update() {}
+
+    @Override
+    public void update(String msg) {
+        String mParts[] = msg.split(" ");
+        dialUpdate(Double.parseDouble(mParts[0]), Double.parseDouble(mParts[1]));
+    }
         
-        private class DialUpdater implements Runnable {
+        /*private class DialUpdater implements Runnable {
 
             @Override
             public void run() {
@@ -173,5 +188,5 @@ public class TensionSpeedDial extends JPanel {
                 }
             }
             
-        }
+        }*/
 }

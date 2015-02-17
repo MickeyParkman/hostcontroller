@@ -40,8 +40,8 @@ public class FlightDashboard extends javax.swing.JPanel
         health = new SystemsStatus();
         graph = new LaunchGraph("title");
         
-        dial.dialUpdate(1125.0, 25.0);
-        //dial.setSize(20, 20);
+        //dial.dialUpdate(1125.0, 25.0);
+        dial.setSize(20, 20);
         
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
