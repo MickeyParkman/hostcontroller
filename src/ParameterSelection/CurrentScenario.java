@@ -152,4 +152,6 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
     public void update() {
        loadScenario();
     }
+    
+    public void update(String s){}
 }
