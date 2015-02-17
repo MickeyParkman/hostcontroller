@@ -1,6 +1,8 @@
 package ParameterSelection;
 
+import AddEditPanels.AddEditWinchPosFrame;
 import AddEditPanels.AddEditGliderPosFrame;
+import AddEditPanels.AddEditAirfieldFrame;
 import AddEditPanels.AddEditRunwayFrame;
 import DataObjects.Airfield;
 import DataObjects.GliderPosition;
@@ -443,6 +445,8 @@ public class AirfieldPanel extends JPanel {
         JButton airfieldAddNewButton = new JButton("Add New");
         airfieldAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
+                    AddEditAirfieldFrame AddEditAirfieldFrame_ = new AddEditAirfieldFrame(currentData.getCurrentAirfield(), false);
+                    AddEditAirfieldFrame_.setVisible(true);
         	}
         });
         airfieldAddNewButton.setBounds(200, 0, 89, 23);
@@ -451,6 +455,8 @@ public class AirfieldPanel extends JPanel {
         JButton airfieldEditButton = new JButton("Edit");
         airfieldEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditAirfieldFrame AddEditAirfieldFrame_ = new AddEditAirfieldFrame(currentData.getCurrentAirfield(), true);
+                    AddEditAirfieldFrame_.setVisible(true);
         	}
         });
         airfieldEditButton.setBounds(288, 0, 89, 23);
@@ -704,6 +710,8 @@ public class AirfieldPanel extends JPanel {
         JButton winchPosAddNewButton = new JButton("Add New");
         winchPosAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), true);
+                    AddEditWinchPosFrame_.setVisible(true);
         	}
         });
         winchPosAddNewButton.setBounds(200, 0, 89, 23);
@@ -712,6 +720,8 @@ public class AirfieldPanel extends JPanel {
         JButton winchPosEditButton = new JButton("Edit");
         winchPosEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), false);
+                    AddEditWinchPosFrame_.setVisible(true);
         	}
         });
         winchPosEditButton.setBounds(288, 0, 89, 23);

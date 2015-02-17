@@ -1,5 +1,6 @@
 package ParameterSelection;
 
+import AddEditPanels.AddEditPilotPanel;
 import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
@@ -311,6 +312,8 @@ public class PilotPanel extends JPanel {
         addNewButton = new JButton("Add New");
         addNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditPilotPanel AddEditPilotPanel_ = new AddEditPilotPanel(currentData.getCurrentPilot(), false);
+                    AddEditPilotPanel_.setVisible(true);
         	}
         });
         addNewButton.setBounds(200, 0, 89, 23);
@@ -319,6 +322,8 @@ public class PilotPanel extends JPanel {
         editButton = new JButton("Edit");
         editButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditPilotPanel AddEditPilotPanel_ = new AddEditPilotPanel(currentData.getCurrentPilot(), false);
+                    AddEditPilotPanel_.setVisible(true);
         	}
         });
         editButton.setBounds(288, 0, 89, 23);

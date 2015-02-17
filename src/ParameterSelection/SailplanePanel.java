@@ -1,5 +1,6 @@
 package ParameterSelection;
 
+import AddEditPanels.AddEditGlider;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
 import javax.swing.JPanel;
@@ -300,6 +301,8 @@ public class SailplanePanel extends JPanel {
         JButton addNewButton = new JButton("Add New");
         addNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditGlider AddEditGlider_ = new AddEditGlider(currentData.getCurrentSailplane(), false);
+                    AddEditGlider_.setVisible(true);
         	}
         });
         addNewButton.setBounds(201, 0, 89, 23);
@@ -308,6 +311,8 @@ public class SailplanePanel extends JPanel {
         JButton editButton = new JButton("Edit");
         editButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditGlider AddEditGlider_ = new AddEditGlider(currentData.getCurrentSailplane(), true);
+                    AddEditGlider_.setVisible(true);
         	}
         });
         editButton.setBounds(289, 0, 89, 23);
