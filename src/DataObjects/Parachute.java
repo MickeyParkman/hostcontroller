@@ -35,6 +35,13 @@ public class Parachute {
         name = n;
     }
     
+    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, int initialWeight) {
+        parachuteNumber = initialParachuteNumber;
+        lift = initialLift;
+        drag = initialDrag;
+        weight = initialWeight;
+    }
+    
     public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, int initialWeight, Winch winch) {
         parachuteNumber = initialParachuteNumber;
         lift = initialLift;
