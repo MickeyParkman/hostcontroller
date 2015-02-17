@@ -1,9 +1,12 @@
 package DataObjects;
-
 /**
  *
  * @author Jacob Troxel
  */
+
+import java.util.ArrayList;
+import Communications.Observer;
+
 public class CurrentDataObjectSet {
     
     private static CurrentDataObjectSet instance = null;
@@ -15,14 +18,29 @@ public class CurrentDataObjectSet {
     private GliderPosition currentGliderPos;
     private Winch currentWinch;
     private Airfield currentAirfield;
+    private ArrayList<Observer> observers;
     
     public static CurrentDataObjectSet getCurrentDataObjectSet()
     {
         if(instance == null)
         {
             instance = new CurrentDataObjectSet();
+            instance.observers = new ArrayList<Observer>();
         }
         return instance;
+    }
+    
+    public void attach(Observer ob)
+    {
+        observers.add(ob);
+    }
+    
+    private void notifyObservers()
+    {
+        for(Observer ob : observers)
+        {
+            ob.update();
+        }
     }
     
     //use with caution!!!
@@ -44,6 +62,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentPilot = pilot;
         }
+        instance.notifyObservers();
     }
     public void setCurrentGlider(Sailplane sailplane)
     {
@@ -51,6 +70,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentSailplane = sailplane;
         }       
+        instance.notifyObservers();
     }
     public void setCurrentRunway(Runway runway)
     {
@@ -58,6 +78,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentRunway = runway;
         }    
+        instance.notifyObservers();
     }
     public void setCurrentAirfield(Airfield airfield)
     {
@@ -65,6 +86,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentAirfield = airfield;
         }        
+        instance.notifyObservers();
     }
     public void setCurrentProfile(Profile profile)
     {
@@ -72,6 +94,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentProfile = profile;
         }        
+        instance.notifyObservers();
     }
     public void setCurrentGliderPosition(GliderPosition pos)
     {
@@ -79,6 +102,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentGliderPos = pos;
         }        
+        instance.notifyObservers();
     }
     public void setCurrentWinchPosition(WinchPosition pos)
     {
@@ -86,6 +110,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentWinchPos = pos;
         }        
+        instance.notifyObservers();
     }
     public void setCurrentWinch(Winch winch)
     {
@@ -93,6 +118,7 @@ public class CurrentDataObjectSet {
         {
             instance.currentWinch = winch;
         }        
+        instance.notifyObservers();
     }
     public Pilot getCurrentPilot()
     {
