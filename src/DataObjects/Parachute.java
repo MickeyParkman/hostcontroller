@@ -15,6 +15,7 @@ public class Parachute {
     private float lift;             //Parachute lift
     private float drag;             //Parachute drag
     private int weight;
+    private String name;
     private Winch winch;
     
     public Parachute() {
@@ -26,11 +27,12 @@ public class Parachute {
         winch = null;
     }
     
-    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, int initialWeight) {
+    public Parachute(String n, int initialParachuteNumber, float initialLift, float initialDrag, int initialWeight) {
         parachuteNumber = initialParachuteNumber;
         lift = initialLift;
         drag = initialDrag;
         weight = initialWeight;
+        name = n;
     }
     
     public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, int initialWeight, Winch winch) {
@@ -106,11 +108,23 @@ public class Parachute {
         return weight;
     }
     
+    public int getId() {
+        return parachuteNumber;
+    }
+    
     public void setWinch(Winch newWinch) {
         winch = newWinch;
     }
     
     public Winch getWinch() {
         return winch;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String toString() {
+        return name;
     }
 }

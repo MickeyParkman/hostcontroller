@@ -115,6 +115,11 @@ public class DatabaseDataObjectUtilities {
         }
     }
     
+    public static void addWinchToDB(Winch theWinch) throws SQLException, ClassNotFoundException 
+    {
+
+    }
+    
     /**
      * Adds the relevant data for an airfield to the database
      * 

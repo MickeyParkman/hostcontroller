@@ -19,6 +19,7 @@ import javax.swing.BoxLayout;
 import DatabaseUtilities.DatabaseInitialization;
 import ParameterSelection.CurrentScenario;
 import ParameterSelection.EnvironmentalWindow;
+import ParameterSelection.WinchEditPanel;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -137,7 +138,7 @@ public class MainWindow extends JFrame {
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
         tabbedPane.addTab("Flight Dashboard", makePanel(FlightDashboard_, 2));
-        tabbedPane.addTab("Edit Winch", makePanel(new JPanel(), 3));
+        tabbedPane.addTab("Edit Winch", makePanel(new WinchEditPanel(), 3));
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);

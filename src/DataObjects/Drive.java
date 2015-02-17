@@ -12,7 +12,16 @@ public class Drive {
 
     public Drive()
     {
-        drumList = new ArrayList<Drum>();
+        drumList = new ArrayList<>();
+    }
+    
+    public Drive(String nameIn) {
+        drumList = new ArrayList<>();        
+        name = nameIn;
+    }
+    
+    public void addDrum(Drum drum) {
+        drumList.add(drum);
     }
 
     public String getName()

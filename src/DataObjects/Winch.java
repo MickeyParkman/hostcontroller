@@ -20,14 +20,23 @@ public class Winch {
     private String name;
     private String optionalData;
     private List<Drive> driveList;
+    private List<Parachute> paraList;
 
     public Winch() {
-        driveList = new ArrayList<Drive>();
+        driveList = new ArrayList<>();
+        paraList = new ArrayList<>();
         name = "";
         optionalData = "";
         brakePressure = 0;
     }
-
+    
+    public Winch(String nameIn, String opt, float brake) {
+        driveList = new ArrayList<>();
+        paraList = new ArrayList<>();
+        name = nameIn;
+        optionalData = opt;
+        brakePressure = brake;
+    }
     
     public void setBrakePressure(float newBrakePressure) {
         brakePressure = newBrakePressure;
@@ -36,6 +45,14 @@ public class Winch {
     public void setName(String nameIn)
     {
         name = nameIn;
+    }
+    
+    public void addDrive(Drive drive) {
+        driveList.add(drive);
+    }
+    
+    public void addParachute(Parachute p) {
+        paraList.add(p);
     }
 
     public void setOptionalData(String opt)
@@ -46,10 +63,19 @@ public class Winch {
     public float getBrakePressure() {
         return brakePressure;
     }
+    
+    public String getOptionalData() {
+        return optionalData;
+    }
 
     public List<Drive> getDriveList()
     {
         return driveList;
+    }
+    
+    public List<Parachute> getParachuteList()
+    {
+        return paraList;
     }
 
     public List<Drum> getDrumsForDrive(String driveName)
@@ -62,5 +88,14 @@ public class Winch {
             }
         }
         return null;
+    }
+    
+    public String toString()
+    {
+        return name;
+    }
+    
+    public String getName() {
+        return name;
     }
 }
