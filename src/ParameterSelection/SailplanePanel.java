@@ -25,9 +25,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.Font;
 import javax.swing.JButton;
+import Communications.Observer;
 
 
-public class SailplanePanel extends JPanel {
+public class SailplanePanel extends JPanel implements Observer {
     private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
     private CurrentDataObjectSet currentData;
     
@@ -95,7 +96,6 @@ public class SailplanePanel extends JPanel {
         if(sailplaneJList.getSelectedIndex() >= 0){
             try{
                 currentData.setCurrentGlider((Sailplane)sailplaneJList.getSelectedValue());
-                System.out.println(currentData.getCurrentSailplane());
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -121,6 +121,7 @@ public class SailplanePanel extends JPanel {
      */
     public SailplanePanel() {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        currentData.attach(this);
         initSailPlaneList();
         initComponents();
     }
