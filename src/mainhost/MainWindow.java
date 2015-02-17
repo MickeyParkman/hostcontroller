@@ -123,6 +123,7 @@ public class MainWindow extends JFrame {
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
         tabbedPane.addTab("Flight Dashboard", makePanel(FlightDashboard_, 2));
+        tabbedPane.addTab("Edit Winch", makePanel(new JPanel(), 3));
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);
@@ -165,8 +166,8 @@ public class MainWindow extends JFrame {
     private JPanel makePanel(JPanel innerPanel, int tab) {
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout(1, 1));
-        if(tab==1)p.add(leftSidePanelScenario, BorderLayout.LINE_START);
-        else p.add(leftSidePanelDashboard, BorderLayout.LINE_START);
+        if(tab==1) p.add(leftSidePanelScenario, BorderLayout.LINE_START);
+        else if (tab==2) p.add(leftSidePanelDashboard, BorderLayout.LINE_START);
         p.add(innerPanel, BorderLayout.CENTER);
         return p;
     }
