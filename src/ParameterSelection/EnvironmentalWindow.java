@@ -78,8 +78,9 @@ public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
     private javax.swing.JLabel windspeedLabel;
     // End of variables declaration                   
 
-    @Override
     public void update() {
         loadEnvironmentalData();
     }
+    
+    public void update(String s){}
 }

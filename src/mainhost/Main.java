@@ -17,6 +17,8 @@ import ParameterSelection.Preference;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+import Communications.MessagePipeline;
+
 /**
  * The Main class is the launching point for this program where the UI and 
  * the MessagePipeline are started up.
@@ -27,6 +29,8 @@ public class Main {
     public static void main(String[] args) {
         MainWindow a = new MainWindow();
         a.setVisible(true);
+        MessagePipeline pipe = MessagePipeline.getInstance();
+        pipe.start();
     }
     
 }
