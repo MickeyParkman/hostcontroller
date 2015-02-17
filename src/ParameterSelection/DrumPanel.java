@@ -8,15 +8,12 @@ package ParameterSelection;
 import Communications.Observer;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Drum;
 import DataObjects.Winch;
-import java.awt.GridLayout;
-import java.util.Currency;
 import java.util.List;
 
 /**
