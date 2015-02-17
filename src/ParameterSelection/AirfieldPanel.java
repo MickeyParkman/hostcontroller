@@ -121,14 +121,60 @@ public class AirfieldPanel extends JPanel {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-	
+
+    public void clear()
+    {
+        airfieldJList.clearSelection();
+        airfieldNameField.setText("");
+        airfieldNameField.setBackground(new Color(255, 255, 255));
+        designatorField.setText("");
+        designatorField.setBackground(new Color(255, 255, 255));
+        airfieldAltitudeField.setText("");
+        airfieldAltitudeField.setBackground(new Color(255, 255, 255));
+        magneticVariationField.setText("");
+        magneticVariationField.setBackground(new Color(255, 255, 255));
+        airfieldLongitudeField.setText("");
+        airfieldLongitudeField.setBackground(new Color(255, 255, 255));
+        airfieldLatitudeField.setText("");
+        airfieldLatitudeField.setBackground(new Color(255, 255, 255));
+        runwayNameField.setText("");
+        runwayNameField.setBackground(new Color(255, 255, 255));
+        runwayAltitudeField.setText("");
+        runwayAltitudeField.setBackground(new Color(255, 255, 255));
+        magneticHeadingField.setText("");
+        magneticHeadingField.setBackground(new Color(255, 255, 255));
+        gliderPosNameField.setText("");
+        gliderPosNameField.setBackground(new Color(255, 255, 255));
+        gliderPosAltitudeField.setText("");
+        gliderPosAltitudeField.setBackground(new Color(255, 255, 255));
+        gliderPosLongitudeField.setText("");
+        gliderPosLongitudeField.setBackground(new Color(255, 255, 255));
+        gliderPosLatitudeField.setText("");
+        gliderPosLatitudeField.setBackground(new Color(255, 255, 255));
+        winchPosNameField.setText("");
+        winchPosNameField.setBackground(new Color(255, 255, 255));
+        winchPosAltitudeField.setText("");
+        winchPosAltitudeField.setBackground(new Color(255, 255, 255));
+        winchPosLongitudeField.setText("");
+        winchPosLongitudeField.setBackground(new Color(255, 255, 255));
+        winchPosLatitudeField.setText("");
+        winchPosLatitudeField.setBackground(new Color(255, 255, 255));
+
+        runwaysModel.removeAllElements();
+        winchPositionModel.removeAllElements();
+        gliderPositionModel.removeAllElements();
+    }
+            
     private void airfieldJListMouseClicked(java.awt.event.MouseEvent evt) 
     {
         if(airfieldJList.getSelectedIndex() >= 0){
             try{
                 Airfield theAirfield = (Airfield)airfieldJList.getSelectedValue();
                 currentData.setCurrentAirfield(theAirfield);
-                //select * in runways where parent = theAirfield;
+                currentData.cleafGliderPosition();
+                currentData.clearRunway();
+                currentData.clearWinchPosition();
+                
                 airfieldNameField.setText(theAirfield.getName());
                 airfieldNameField.setBackground(new Color(142, 250, 127));
                 
@@ -192,6 +238,8 @@ public class AirfieldPanel extends JPanel {
             try{
                 Runway theRunway = (Runway)runwaysJList.getSelectedValue();
                 currentData.setCurrentRunway(theRunway);
+                currentData.cleafGliderPosition();
+                currentData.clearWinchPosition();
                 
                 runwayNameField.setText(theRunway.getId());
                 runwayNameField.setBackground(new Color(142, 250, 127));

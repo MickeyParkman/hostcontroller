@@ -28,74 +28,60 @@ import javax.swing.JButton;
 import Communications.Observer;
 
 
-public class SailplanePanel extends JPanel implements Observer {
+public class SailplanePanel extends JPanel {
     private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
     private CurrentDataObjectSet currentData;
     
-    public void update()
+    public void clear()
     {
-        Sailplane theSailplane = currentData.getCurrentSailplane();
-        
-        if(theSailplane == null)
-        {
-            nNumberField.setText("");
-            nNumberField.setBackground(new Color(255, 255, 255));
-
-            weakLinkField.setText("");
-            weakLinkField.setBackground(new Color(255, 255, 255));
-
-            tensionField.setText("");
-            tensionField.setBackground(new Color(255, 255, 255));
-
-            releaseAngleField.setText("");
-            releaseAngleField.setBackground(new Color(255, 255, 255));
-
-            stallSpeedField.setText("");
-            stallSpeedField.setBackground(new Color(255, 255, 255));
-
-            grossWeightField.setText("");
-            grossWeightField.setBackground(new Color(255, 255, 255));
-
-            emptyWeightField.setText("");
-            emptyWeightField.setBackground(new Color(255, 255, 255));
-
-            winchingSpeedField.setText("");
-            winchingSpeedField.setBackground(new Color(255, 255, 255));
-        }
-        else
-        {
-            nNumberField.setText(theSailplane.getNumber());
-            nNumberField.setBackground(new Color(142, 250, 127));
-
-            weakLinkField.setText(String.valueOf(theSailplane.getMaxWeakLinkStrength()));
-            weakLinkField.setBackground(new Color(142, 250, 127));
-
-            tensionField.setText(String.valueOf(theSailplane.getMaxTension()));
-            tensionField.setBackground(new Color(142, 250, 127));
-
-            releaseAngleField.setText(String.valueOf(theSailplane.getCableReleaseAngle()));
-            releaseAngleField.setBackground(new Color(142, 250, 127));
-
-            stallSpeedField.setText(String.valueOf(theSailplane.getIndicatedStallSpeed()));
-            stallSpeedField.setBackground(new Color(142, 250, 127));
-
-            grossWeightField.setText(String.valueOf(theSailplane.getMaxGrossWeight()));
-            grossWeightField.setBackground(new Color(142, 250, 127));
-
-            emptyWeightField.setText(String.valueOf(theSailplane.getEmptyWeight()));
-            emptyWeightField.setBackground(new Color(142, 250, 127));
-
-            winchingSpeedField.setText(String.valueOf(theSailplane.getMaxWinchingSpeed()));
-            winchingSpeedField.setBackground(new Color(142, 250, 127));
-        }
-        
+        sailplaneJList.clearSelection();
+        nNumberField.setText("");
+        nNumberField.setBackground(new Color(255, 255, 255));
+        weakLinkField.setText("");
+        weakLinkField.setBackground(new Color(255, 255, 255));
+        tensionField.setText("");
+        tensionField.setBackground(new Color(255, 255, 255));
+        releaseAngleField.setText("");
+        releaseAngleField.setBackground(new Color(255, 255, 255));
+        stallSpeedField.setText("");
+        stallSpeedField.setBackground(new Color(255, 255, 255));
+        grossWeightField.setText("");
+        grossWeightField.setBackground(new Color(255, 255, 255));
+        emptyWeightField.setText("");
+        emptyWeightField.setBackground(new Color(255, 255, 255));
+        winchingSpeedField.setText("");
+        winchingSpeedField.setBackground(new Color(255, 255, 255));
     }
-    
     private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) 
     {
         if(sailplaneJList.getSelectedIndex() >= 0){
             try{
-                currentData.setCurrentGlider((Sailplane)sailplaneJList.getSelectedValue());
+                Sailplane theSailplane = (Sailplane)sailplaneJList.getSelectedValue();
+                currentData.setCurrentGlider(theSailplane);
+                
+                nNumberField.setText(theSailplane.getNumber());
+                nNumberField.setBackground(new Color(142, 250, 127));
+
+                weakLinkField.setText(String.valueOf(theSailplane.getMaxWeakLinkStrength()));
+                weakLinkField.setBackground(new Color(142, 250, 127));
+
+                tensionField.setText(String.valueOf(theSailplane.getMaxTension()));
+                tensionField.setBackground(new Color(142, 250, 127));
+
+                releaseAngleField.setText(String.valueOf(theSailplane.getCableReleaseAngle()));
+                releaseAngleField.setBackground(new Color(142, 250, 127));
+
+                stallSpeedField.setText(String.valueOf(theSailplane.getIndicatedStallSpeed()));
+                stallSpeedField.setBackground(new Color(142, 250, 127));
+
+                grossWeightField.setText(String.valueOf(theSailplane.getMaxGrossWeight()));
+                grossWeightField.setBackground(new Color(142, 250, 127));
+
+                emptyWeightField.setText(String.valueOf(theSailplane.getEmptyWeight()));
+                emptyWeightField.setBackground(new Color(142, 250, 127));
+
+                winchingSpeedField.setText(String.valueOf(theSailplane.getMaxWinchingSpeed()));
+                winchingSpeedField.setBackground(new Color(142, 250, 127));
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -121,7 +107,6 @@ public class SailplanePanel extends JPanel implements Observer {
      */
     public SailplanePanel() {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
-        currentData.attach(this);
         initSailPlaneList();
         initComponents();
     }

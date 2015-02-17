@@ -22,6 +22,12 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         layout.show(this, tabNames[index]);
     }
 
+    public void clear()
+    {
+        pilotPanel.clear();
+        sailplanePanel.clear();
+        airfieldPanel.clear();
+    }
     /**
      * Creates new form ParameterSelectionPanel
      */
@@ -53,8 +59,8 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel pilotPanel;
-    private javax.swing.JPanel sailplanePanel;
-    private javax.swing.JPanel airfieldPanel;
+    private PilotPanel pilotPanel;
+    private SailplanePanel sailplanePanel;
+    private AirfieldPanel airfieldPanel;
     // End of variables declaration//GEN-END:variables
 }

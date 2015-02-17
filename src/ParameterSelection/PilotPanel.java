@@ -33,88 +33,116 @@ public class PilotPanel extends JPanel {
     private List<Pilot> pilotNames = new ArrayList<Pilot>();
     private CurrentDataObjectSet currentData;
 
-       private void initPilotList() {
-           try{
-               pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
-               pilotNames.add(new Pilot("1", "Jacuzzi", "Alec", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
-           }catch(SQLException e) {
-               pilotNames.add(new Pilot("1", "Jacuzzi", "Alec", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
+    private void initPilotList() {
+        try{
+            pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
+            pilotNames.add(new Pilot("1", "Jacuzzi", "Alec", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
+            pilotNames.add(0, new Pilot("1", "", "Default", "", 0, "Student", "Mild", "", "", ""));
+        }catch(SQLException e) {
+            pilotNames.add(new Pilot("1", "Jacuzzi", "Alec", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
+            pilotNames.add(0, new Pilot("1", "", "Default", "", 0, "Student", "Mild", "", "", ""));
 
-           } catch (ClassNotFoundException ex) {
-               // TODO change exception case
-           }
-       }
-
-       private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
-           if(pilotJList.getSelectedIndex() >= 0){
-                try{
-                    Pilot thePilot = (Pilot)pilotJList.getSelectedValue();
-                    currentData.setCurrentPilot(thePilot);
-                    firstNameField.setText((thePilot.getFirstName()));
-                    firstNameField.setBackground(new Color(142, 250, 127));
-
-                    lastNameField.setText((thePilot.getLastName()));
-                    lastNameField.setBackground(new Color(142, 250, 127));
-
-                    middleNameField.setText((thePilot.getMiddleName()));
-                    middleNameField.setBackground(new Color(142, 250, 127));
-
-                    String emergencyContact = thePilot.getEmergencyContact();
-                    System.out.println(emergencyContact);
-                    String emergencyContactName;
-                    String emergencyContactPhone;
-                    int p = emergencyContact.indexOf('.');
-                    if (p >= 0) 
-                    {
-                        emergencyContactName = emergencyContact.substring(0, p);
-                        emergencyContactPhone = emergencyContact.substring(p + 1);
-                    }
-                    else
-                    {
-                        emergencyContactName = "";
-                        emergencyContactPhone = "";
-                    }
-                    emergencyContactNameField.setText(emergencyContactName);
-                    emergencyContactNameField.setBackground(new Color(142, 250, 127));
-                    emergencyContactPhoneField.setText(emergencyContactPhone);
-                    emergencyContactPhoneField.setBackground(new Color(142, 250, 127));
-
-                    String medInfo = thePilot.getEmergencyContact();
-                    System.out.println(emergencyContact);
-                    String medInfoName;
-                    String medInfoPhone;
-                    int t = medInfo.indexOf('.');
-                    if (t >= 0) 
-                    {
-                        medInfoName = emergencyContact.substring(0, t);
-                        medInfoPhone = emergencyContact.substring(t + 1);
-                    }
-                    else
-                    {
-                        medInfoName = "";
-                        medInfoPhone = "";
-                    }
-                    medInfoNameField.setText(medInfoName);
-                    medInfoNameField.setBackground(new Color(142, 250, 127));
-                    medInfoPhoneField.setText(medInfoPhone);
-                    medInfoPhoneField.setBackground(new Color(142, 250, 127));
-
-                    flightWeightField.setText(String.valueOf((int)(thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
-                    flightWeightField.setBackground(new Color(142, 250, 127));
-
-                    studentRadioButton.setSelected(thePilot.getCapability().equals("Student"));
-                    proficientRadioButton.setSelected(thePilot.getCapability().equals("Proficient"));
-                    advancedRadioButton.setSelected(thePilot.getCapability().equals("Advanced"));
-
-                    mildRadioButton.setSelected(thePilot.getPreference().equals("Mild"));
-                    nominalRadioButton.setSelected(thePilot.getPreference().equals("Nominal"));
-                    performanceRadioButton.setSelected(thePilot.getPreference().equals("Performance"));
-
-                    optionalInfoField.setText((thePilot.getOptionalInfo()));
-                } catch(Exception e) {
-                   //TODO respond to error
-                }
+        } catch (ClassNotFoundException ex) {
+            // TODO change exception case
         }
+    }
+
+    public void clear()
+    {
+        pilotJList.clearSelection();
+        firstNameField.setText("");
+        firstNameField.setBackground(new Color(255, 255, 255));
+        lastNameField.setText("");
+        lastNameField.setBackground(new Color(255, 255, 255));
+        middleNameField.setText("");
+        middleNameField.setBackground(new Color(255, 255, 255));
+        emergencyContactNameField.setText("");
+        emergencyContactNameField.setBackground(new Color(255, 255, 255));
+        emergencyContactPhoneField.setText("");
+        emergencyContactPhoneField.setBackground(new Color(255, 255, 255));
+        medInfoNameField.setText("");
+        medInfoNameField.setBackground(new Color(255, 255, 255));
+        medInfoPhoneField.setText("");
+        medInfoPhoneField.setBackground(new Color(255, 255, 255));
+        flightWeightField.setText("");
+        flightWeightField.setBackground(new Color(255, 255, 255));
+        studentRadioButton.setSelected(false);
+        proficientRadioButton.setSelected(false);
+        advancedRadioButton.setSelected(false);
+        mildRadioButton.setSelected(false);
+        nominalRadioButton.setSelected(false);
+        performanceRadioButton.setSelected(false);
+        optionalInfoField.setText("");
+}
+    
+    private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
+        if(pilotJList.getSelectedIndex() >= 0){
+            try{
+                Pilot thePilot = (Pilot)pilotJList.getSelectedValue();
+                currentData.setCurrentPilot(thePilot);
+                firstNameField.setText((thePilot.getFirstName()));
+                firstNameField.setBackground(new Color(142, 250, 127));
+
+                lastNameField.setText((thePilot.getLastName()));
+                lastNameField.setBackground(new Color(142, 250, 127));
+
+                middleNameField.setText((thePilot.getMiddleName()));
+                middleNameField.setBackground(new Color(142, 250, 127));
+
+                String emergencyContact = thePilot.getEmergencyContact();
+                String emergencyContactName;
+                String emergencyContactPhone;
+                int p = emergencyContact.indexOf('%');
+                if (p >= 0) 
+                {
+                    emergencyContactName = emergencyContact.substring(0, p);
+                    emergencyContactPhone = emergencyContact.substring(p + 1);
+                }
+                else
+                {
+                    emergencyContactName = "";
+                    emergencyContactPhone = "";
+                }
+                emergencyContactNameField.setText(emergencyContactName);
+                emergencyContactNameField.setBackground(new Color(142, 250, 127));
+                emergencyContactPhoneField.setText(emergencyContactPhone);
+                emergencyContactPhoneField.setBackground(new Color(142, 250, 127));
+
+                String medInfo = thePilot.getEmergencyContact();
+                String medInfoName;
+                String medInfoPhone;
+                int t = medInfo.indexOf('%');
+                if (t >= 0) 
+                {
+                    medInfoName = emergencyContact.substring(0, t);
+                    medInfoPhone = emergencyContact.substring(t + 1);
+                }
+                else
+                {
+                    medInfoName = "";
+                    medInfoPhone = "";
+                }
+                medInfoNameField.setText(medInfoName);
+                medInfoNameField.setBackground(new Color(142, 250, 127));
+                medInfoPhoneField.setText(medInfoPhone);
+                medInfoPhoneField.setBackground(new Color(142, 250, 127));
+
+                flightWeightField.setText(String.valueOf((int)(thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
+                flightWeightField.setBackground(new Color(142, 250, 127));
+
+                studentRadioButton.setSelected(thePilot.getCapability().equals("Student"));
+                proficientRadioButton.setSelected(thePilot.getCapability().equals("Proficient"));
+                advancedRadioButton.setSelected(thePilot.getCapability().equals("Advanced"));
+
+                mildRadioButton.setSelected(thePilot.getPreference().equals("Mild"));
+                nominalRadioButton.setSelected(thePilot.getPreference().equals("Nominal"));
+                performanceRadioButton.setSelected(thePilot.getPreference().equals("Performance"));
+
+                optionalInfoField.setText((thePilot.getOptionalInfo()));
+            } catch(Exception e) {
+                //TODO respond to error
+            }
+    }
     }
     
     /**

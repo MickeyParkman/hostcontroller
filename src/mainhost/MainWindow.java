@@ -43,8 +43,10 @@ public class MainWindow extends JFrame {
     private DatabaseExportFrame DatabaseExportFrame;
     private EnvironmentalWindow EnvironmentalWindow_;
     private CurrentScenario CurrentScenario_;
+    private CurrentDataObjectSet currentData;
 
     public MainWindow() {
+        currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         topMenu = new JMenuBar();
         mainWindow = new JPanel(new BorderLayout());
         leftSidePanelScenario = new JPanel();
@@ -87,6 +89,15 @@ public class MainWindow extends JFrame {
         JButton airfieldButton = new JButton();
         airfieldButton.setText("Select Airfield");
         airfieldButton.setPreferredSize(new Dimension(180,20));
+        JButton drumButton = new JButton();
+        drumButton.setText("Select Drum");
+        drumButton.setPreferredSize(new Dimension(180,20));
+        JButton clearButton = new JButton();
+        clearButton.setText("Clear");
+        clearButton.setPreferredSize(new Dimension(180,20));
+        JButton submitButton = new JButton();
+        submitButton.setText("Submit");
+        submitButton.setPreferredSize(new Dimension(180,20));
         
         rightSidePanel.setPreferredSize(new Dimension(200, 600));
         rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -119,6 +130,9 @@ public class MainWindow extends JFrame {
         upperLeftSidePanelScenario.add(pilotButton);        
         upperLeftSidePanelScenario.add(gliderButton);   
         upperLeftSidePanelScenario.add(airfieldButton);
+        upperLeftSidePanelScenario.add(drumButton);        
+        upperLeftSidePanelScenario.add(clearButton);   
+        upperLeftSidePanelScenario.add(submitButton);
         
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
@@ -159,6 +173,33 @@ public class MainWindow extends JFrame {
                 selectionLayout.first(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
+            }
+        });
+        
+        drumButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                
+            }
+        });
+        
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                currentData.cleafGliderPosition();
+                currentData.clearAirfield();
+                currentData.clearGlider();
+                currentData.clearPilot();
+                currentData.clearRunway();
+                currentData.clearWinchPosition();
+                ParameterSelectionPanel_.clear();
+            }
+        });
+        
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                
             }
         });
     }
