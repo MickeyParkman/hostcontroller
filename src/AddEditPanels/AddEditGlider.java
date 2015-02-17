@@ -181,6 +181,10 @@ public class AddEditGlider extends JFrame {
         winchingSpeedField.setBounds(487, 8, 120, 20);
         contentPane.add(winchingSpeedField);
         winchingSpeedField.setColumns(10);
+        
+        JLabel RequiredNoteLabel = new JLabel("All fields required");
+        RequiredNoteLabel.setBounds(10, 150, 200, 14);
+        contentPane.add(RequiredNoteLabel);
 
 /*
         JLabel lblUnits = new JLabel("Units*");
