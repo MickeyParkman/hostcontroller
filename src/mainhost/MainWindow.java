@@ -206,6 +206,7 @@ public class MainWindow extends JFrame {
                 currentData.clearPilot();
                 currentData.clearRunway();
                 currentData.clearWinchPosition();
+                currentData.clearDrum();
                 ParameterSelectionPanel_.clear();
             }
         });
