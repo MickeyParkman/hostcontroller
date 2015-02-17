@@ -323,6 +323,7 @@ public class PilotPanel extends JPanel {
         editButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditPilotPanel AddEditPilotPanel_ = new AddEditPilotPanel(currentData.getCurrentPilot(), false);
+                    //AddEditPilotPanel AddEditPilotPanel_ = new AddEditPilotPanel(currentData.getCurrentPilot(), true);
                     AddEditPilotPanel_.setVisible(true);
         	}
         });
