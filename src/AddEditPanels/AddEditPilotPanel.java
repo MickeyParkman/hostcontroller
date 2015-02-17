@@ -2,8 +2,6 @@ package AddEditPanels;
 
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
-import ParameterSelection.Capability;
-import ParameterSelection.Preference;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -201,7 +199,7 @@ public class AddEditPilotPanel extends JFrame {
         String emergencyContact = editPilot.getEmergencyContact();
         String emergencyContactName;
         String emergencyContactPhone;
-        int p = emergencyContact.indexOf('.');
+        int p = emergencyContact.indexOf('%');
         if (p >= 0) 
         {
             emergencyContactName = emergencyContact.substring(0, p);
@@ -234,7 +232,7 @@ public class AddEditPilotPanel extends JFrame {
         String medInfo = editPilot.getMedInfo();
         String medInfoName;
         String medInfoPhone;
-        int t = medInfo.indexOf('.');
+        int t = medInfo.indexOf('%');
         if (t >= 0) 
         {
             medInfoName = medInfo.substring(0, t);
@@ -363,11 +361,11 @@ public class AddEditPilotPanel extends JFrame {
             String lastName = lastNameField.getText();
             String middleName = middleNameField.getText();
             String emergencyContact = emergencyContactNameField.getText() +
-                    "." + emergencyContactPhoneField.getText();
+                    "%" + emergencyContactPhoneField.getText();
             String medicalInformation = medInfoNameField.getText() +
-                    "." + medInfoPhoneField.getText();
+                    "%" + medInfoPhoneField.getText();
             String optionalInformation = optionalInfoField.getText();
-            int weight = 0;
+            int weight;
             try {
                 weight = Integer.parseInt(flightWeightField.getText());
             }catch (NumberFormatException e) {
