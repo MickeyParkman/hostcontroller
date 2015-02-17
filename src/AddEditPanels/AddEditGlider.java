@@ -246,34 +246,19 @@ public class AddEditGlider extends JFrame {
     }
     
     public void deleteCommand(){
-        if (isComplete()){
-            String nNumber = nNumberField.getText();
-            int emptyWeight = Integer.parseInt(emptyWeightField.getText());
-            int grossWeight = Integer.parseInt(grossWeightField.getText());
-            int stallSpeed = Integer.parseInt(stallSpeedField.getText());
-            int weakLink = Integer.parseInt(weakLinkField.getText());
-            int tension = Integer.parseInt(tensionField.getText());
-            int releaseAngle = Integer.parseInt(releaseAngleField.getText());
-            int winchingSpeed = Integer.parseInt(winchingSpeedField.getText());
-            boolean carryBallast = ballastCheckBox.isSelected();
-            boolean multipleSeats = multipleSeatsCheckBox.isSelected();
-            Sailplane newGlider = new Sailplane(nNumber ,"", grossWeight,
-                    emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
-                    releaseAngle, carryBallast, "");
-            try{
-                DatabaseEntryDelete.DeleteEntry(currentGlider);
-                CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-                ObjectSet.setCurrentGlider(newGlider); //set new glider to null
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
-                this.dispose();
-            }catch(SQLException e1) {
-                if(e1.getErrorCode() == 30000)
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the glider " + newGlider.toString() + " already exists in the database");
-            }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
-            }catch (Exception e3){
-                System.out.println(e3.getMessage());
-            }
+        try{
+            DatabaseEntryDelete.DeleteEntry(currentGlider);
+            CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+            ObjectSet.setCurrentGlider(currentGlider); //set new glider to null
+            JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+            this.dispose();
+        }catch(SQLException e1) {
+            if(e1.getErrorCode() == 30000)
+                JOptionPane.showMessageDialog(rootPane, "Sorry, but the glider " + currentGlider.toString() + " already exists in the database");
+        }catch (ClassNotFoundException e2) {
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+        }catch (Exception e3){
+            System.out.println(e3.getMessage());
         }
     }
     
