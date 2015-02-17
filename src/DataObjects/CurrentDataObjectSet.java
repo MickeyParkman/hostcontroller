@@ -55,6 +55,13 @@ public class CurrentDataObjectSet {
         return(instance != null);
     }
     
+    public void clearPilot()
+    {
+        
+    }
+    
+    
+    
     //Ah yeah, getters and setters
     public void setCurrentPilot(Pilot pilot)
     {
