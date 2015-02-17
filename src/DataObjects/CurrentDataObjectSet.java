@@ -57,10 +57,44 @@ public class CurrentDataObjectSet {
     
     public void clearPilot()
     {
-        
+        if(instance != null) instance.currentPilot = null;
+        notifyObservers();
+    }    
+    public void clearGlider()
+    {
+        if(instance != null) instance.currentPilot = null;
+        notifyObservers();        
     }
-    
-    
+    public void clearAirfield()
+    {
+        if(instance != null) instance.currentAirfield = null;
+        notifyObservers();        
+    }
+    public void clearRunway()
+    {
+        if(instance != null) instance.currentRunway = null;
+        notifyObservers();        
+    }
+    public void clearWinchPosition()
+    {
+        if(instance != null) instance.currentWinchPos = null;
+        notifyObservers();        
+    }
+    public void cleafGliderPosition()
+    {
+        if(instance != null) instance.currentGliderPos = null;
+        notifyObservers();        
+    }
+    public void clearWinch()
+    {
+        if(instance != null) instance.currentWinch = null;
+        notifyObservers();        
+    }
+    public void clearProfile()
+    {
+        if(instance != null) instance.currentProfile = null;
+        notifyObservers();        
+    }   
     
     //Ah yeah, getters and setters
     public void setCurrentPilot(Pilot pilot)
