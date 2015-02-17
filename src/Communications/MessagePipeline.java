@@ -1,6 +1,5 @@
 package Communications;
 
-import Communications.Observer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MessagePipeline {
+public class MessagePipeline extends Thread {
     
     private ArrayList<Observer> observers;
     private Socket socket;
@@ -18,13 +17,15 @@ public class MessagePipeline {
     private OutputStreamWriter writer;
     private String currentMessage = "";
     private static MessagePipeline instance = null;
+    private boolean running = false;
     
     public static MessagePipeline getInstance()
     {
         if(instance == null)
         {
             instance = new MessagePipeline();
-            instance.observers = new ArrayList<Observer>();
+            instance.observers = new ArrayList<>();
+            instance.init();
         }
         return instance;
     }
@@ -73,6 +74,26 @@ public class MessagePipeline {
             writer.write(s);
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    public void run()
+    {
+        running = true;
+        while(running)
+        {
+            TEMPReadFromSocket();
+        }
+    }
+    
+    public void close()
+    {
+        running = false;
+        try {
+            socket.close();
+            writer.close();
+            reader.close();
+        } catch (IOException ex) {
         }
     }
 }

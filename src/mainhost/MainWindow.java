@@ -22,6 +22,7 @@ import ParameterSelection.EnvironmentalWindow;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Communications.DEBUGViewer;
 
 public class MainWindow extends JFrame {
     private String version = "2.0.1";
@@ -43,6 +44,7 @@ public class MainWindow extends JFrame {
     private DatabaseExportFrame DatabaseExportFrame;
     private EnvironmentalWindow EnvironmentalWindow_;
     private CurrentScenario CurrentScenario_;
+    private DEBUGViewer debugger;
 
     public MainWindow() {
         topMenu = new JMenuBar();
@@ -58,6 +60,7 @@ public class MainWindow extends JFrame {
         EnvironmentalWindow_ = new EnvironmentalWindow();
         rightSidePanel = EnvironmentalWindow_;
         //CurrentScenario_ = new CurrentScenario();
+        //debugger = new DEBUGViewer();
         createAndShowGUI();
     }
 
@@ -123,7 +126,7 @@ public class MainWindow extends JFrame {
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
         tabbedPane.addTab("Flight Dashboard", makePanel(FlightDashboard_, 2));
-        tabbedPane.addTab("Edit Winch", makePanel(new JPanel(), 3));
+        tabbedPane.addTab("Edit Winch", makePanel(new DEBUGViewer(), 3));
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);

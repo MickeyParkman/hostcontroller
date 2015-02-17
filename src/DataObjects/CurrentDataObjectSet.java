@@ -62,7 +62,7 @@ public class CurrentDataObjectSet {
     }    
     public void clearGlider()
     {
-        if(instance != null) instance.currentPilot = null;
+        if(instance != null) instance.currentSailplane = null;
         notifyObservers();        
     }
     public void clearAirfield()
