@@ -52,7 +52,7 @@ public class AddEditGlider extends JFrame {
                             try {
                                     Sailplane sample = new Sailplane("N-num", "The type",
                                             100, 200, 300, 400, 500, 600, 700, true, "Optional");
-                                    AddEditGlider frame = new AddEditGlider(sample, false);
+                                    AddEditGlider frame = new AddEditGlider(sample, true);
                                     frame.setVisible(true);
                             } catch (Exception e) {
                                     e.printStackTrace();
@@ -71,7 +71,7 @@ public class AddEditGlider extends JFrame {
         currentGlider = sailplaneEdited;
         this.isEditEntry = isEditEntry;
         setTitle("Glider");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 650, 242);
         
         contentPane = new JPanel();
@@ -248,24 +248,20 @@ public class AddEditGlider extends JFrame {
     public void deleteCommand(){
         try{
             DatabaseEntryDelete.DeleteEntry(currentGlider);
-            CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-            ObjectSet.setCurrentGlider(currentGlider); //set new glider to null
-            JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+            CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+            objectSet.clearGlider();
+            JOptionPane.showMessageDialog(rootPane, currentGlider.toString() + " successfully deleted.");
             this.dispose();
-        }catch(SQLException e1) {
-            if(e1.getErrorCode() == 30000)
-                JOptionPane.showMessageDialog(rootPane, "Sorry, but the glider " + currentGlider.toString() + " already exists in the database");
-        }catch (ClassNotFoundException e2) {
+        }catch (ClassNotFoundException e1) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
-        }catch (Exception e3){
-            System.out.println(e3.getMessage());
+        }catch (Exception e2){
+            System.out.println(e2.getMessage());
         }
     }
     
     public void submitData(){
         if (isComplete()){
             Sailplane oldGlider = currentGlider;
-            String nNumber = nNumberField.getText();
             int emptyWeight = Integer.parseInt(emptyWeightField.getText());
             int grossWeight = Integer.parseInt(grossWeightField.getText());
             int stallSpeed = Integer.parseInt(stallSpeedField.getText());
@@ -275,6 +271,11 @@ public class AddEditGlider extends JFrame {
             int winchingSpeed = Integer.parseInt(winchingSpeedField.getText());
             boolean carryBallast = ballastCheckBox.isSelected();
             boolean multipleSeats = multipleSeatsCheckBox.isSelected();
+            
+            String nNumber = currentGlider.getNumber();
+            if (!isEditEntry){
+                nNumber = nNumberField.getText();
+            }
             Sailplane newGlider = new Sailplane(nNumber ,"", grossWeight,
                     emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
                     releaseAngle, carryBallast, "");

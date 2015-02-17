@@ -49,7 +49,7 @@ public class AddEditPilotPanel extends JFrame {
             EventQueue.invokeLater(new Runnable() {
                     public void run() {
                             try {
-                                    AddEditPilotPanel frame = new AddEditPilotPanel(new Pilot("12ew3", "last", "first", "middle", 200, "Advanced", "Performance","Jane Doe.200-432-5432","John Doe.200-234-2345","Optional"), false);
+                                    AddEditPilotPanel frame = new AddEditPilotPanel(new Pilot("", "last", "first", "middle", 200, "Advanced", "Performance","Jane Doe.200-432-5432","John Doe.200-234-2345","Optional"), true);
                                     frame.setVisible(true);
                             } catch (Exception e) {
                                     e.printStackTrace();
@@ -63,7 +63,7 @@ public class AddEditPilotPanel extends JFrame {
      */
     public AddEditPilotPanel(Pilot editPilot, boolean isEditEntry) {
         if (!isEditEntry){
-            editPilot = new Pilot("RANDOM ID", "", "", "", -1, "", "", "", "", "");
+            editPilot = new Pilot("", "", "", "", 0, "", "", "", "", "");
         }
         this.isEditEntry = isEditEntry;
         currentPilot = editPilot;
@@ -71,7 +71,7 @@ public class AddEditPilotPanel extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         setTitle("Pilot");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 500);
         
         JPanel panel = new JPanel();
@@ -345,10 +345,9 @@ public class AddEditPilotPanel extends JFrame {
                     medicalInformation, optionalInformation);
             try{
                 if (isEditEntry){
-                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newPilot);
+                    DatabaseEntryEdit.UpdateEntry(newPilot);
                 }
                 else{
-                    
                     DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
                 }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
@@ -370,13 +369,10 @@ public class AddEditPilotPanel extends JFrame {
     public void deleteCommand(){
         try{
             DatabaseEntryDelete.DeleteEntry(currentPilot);
-            CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-            ObjectSet.setCurrentPilot(currentPilot); //set cur to null not new
+            CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+            objectSet.clearPilot();
             JOptionPane.showMessageDialog(rootPane, currentPilot.toString() + " successfully deleted.");
             this.dispose();
-//            }catch(SQLException e1) {
-//                if(e1.getErrorCode() == 30000)
-//                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e3) {
