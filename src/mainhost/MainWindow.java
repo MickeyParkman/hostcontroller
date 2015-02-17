@@ -22,8 +22,6 @@ import ParameterSelection.EnvironmentalWindow;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Communications.DEBUGViewer;
-import ParameterSelection.WinchEditPanel;
 
 public class MainWindow extends JFrame {
     private String version = "2.0.1";
@@ -45,9 +43,10 @@ public class MainWindow extends JFrame {
     private DatabaseExportFrame DatabaseExportFrame;
     private EnvironmentalWindow EnvironmentalWindow_;
     private CurrentScenario CurrentScenario_;
-    private DEBUGViewer debugger;
+    private CurrentDataObjectSet currentData;
 
     public MainWindow() {
+        currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         topMenu = new JMenuBar();
         mainWindow = new JPanel(new BorderLayout());
         leftSidePanelScenario = new JPanel();
@@ -61,7 +60,6 @@ public class MainWindow extends JFrame {
         EnvironmentalWindow_ = new EnvironmentalWindow();
         rightSidePanel = EnvironmentalWindow_;
         //CurrentScenario_ = new CurrentScenario();
-        //debugger = new DEBUGViewer();
         createAndShowGUI();
     }
 
@@ -91,6 +89,15 @@ public class MainWindow extends JFrame {
         JButton airfieldButton = new JButton();
         airfieldButton.setText("Select Airfield");
         airfieldButton.setPreferredSize(new Dimension(180,20));
+        JButton drumButton = new JButton();
+        drumButton.setText("Select Drum");
+        drumButton.setPreferredSize(new Dimension(180,20));
+        JButton clearButton = new JButton();
+        clearButton.setText("Clear");
+        clearButton.setPreferredSize(new Dimension(180,20));
+        JButton submitButton = new JButton();
+        submitButton.setText("Submit");
+        submitButton.setPreferredSize(new Dimension(180,20));
         
         rightSidePanel.setPreferredSize(new Dimension(200, 600));
         rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -123,11 +130,14 @@ public class MainWindow extends JFrame {
         upperLeftSidePanelScenario.add(pilotButton);        
         upperLeftSidePanelScenario.add(gliderButton);   
         upperLeftSidePanelScenario.add(airfieldButton);
+        upperLeftSidePanelScenario.add(drumButton);        
+        upperLeftSidePanelScenario.add(clearButton);   
+        upperLeftSidePanelScenario.add(submitButton);
         
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
         tabbedPane.addTab("Flight Dashboard", makePanel(FlightDashboard_, 2));
-        tabbedPane.addTab("Edit Winch", makePanel(new WinchEditPanel(), 3));
+        tabbedPane.addTab("Edit Winch", makePanel(new JPanel(), 3));
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);
@@ -163,6 +173,33 @@ public class MainWindow extends JFrame {
                 selectionLayout.first(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
+            }
+        });
+        
+        drumButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                
+            }
+        });
+        
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                currentData.cleafGliderPosition();
+                currentData.clearAirfield();
+                currentData.clearGlider();
+                currentData.clearPilot();
+                currentData.clearRunway();
+                currentData.clearWinchPosition();
+                ParameterSelectionPanel_.clear();
+            }
+        });
+        
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                
             }
         });
     }
