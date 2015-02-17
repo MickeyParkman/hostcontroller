@@ -62,7 +62,7 @@ public class AddEditPilotPanel extends JFrame {
      */
     public AddEditPilotPanel(Pilot editPilot, boolean isEditEntry) {
         if (!isEditEntry){
-            editPilot = new Pilot("", "", "", "", 0, "", "", "", "", "");
+            editPilot = new Pilot("", "", "", "", -1, "", "", "", "", "");
         }
         this.isEditEntry = isEditEntry;
         currentPilot = editPilot;
@@ -77,7 +77,7 @@ public class AddEditPilotPanel extends JFrame {
         add(panel, BorderLayout.CENTER);
         panel.setLayout(null);
 
-        JLabel firstNameLabel = new JLabel("First Name:");
+        JLabel firstNameLabel = new JLabel("First Name: *");
         firstNameLabel.setBounds(10, 11, 86, 14);
         panel.add(firstNameLabel);
         
@@ -85,15 +85,18 @@ public class AddEditPilotPanel extends JFrame {
         middleNameLabel.setBounds(10, 36, 86, 14);
         panel.add(middleNameLabel);
         
-        JLabel lastNameLabel = new JLabel("Last Name:");
+        JLabel lastNameLabel = new JLabel("Last Name: *");
         lastNameLabel.setBounds(10, 61, 117, 14);
         panel.add(lastNameLabel);
         
-        JLabel flightWeightLabel = new JLabel("Flight Weight:");
+        JLabel flightWeightLabel = new JLabel("Flight Weight: *");
         flightWeightLabel.setBounds(10, 86, 140, 14);
         panel.add(flightWeightLabel);
         
-        flightWeightField = new JTextField(Integer.toString(editPilot.getWeight()));
+        flightWeightField = new JTextField();
+        if (isEditEntry){
+            flightWeightField.setText(Integer.toString(editPilot.getWeight()));
+        }
         flightWeightField.setBounds(160, 83, 110, 20);
         panel.add(flightWeightField);
         flightWeightField.setColumns(10);
@@ -113,7 +116,7 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(firstNameField);
         firstNameField.setColumns(10);
         
-        JLabel CapabilityLabel = new JLabel("Capability:");
+        JLabel CapabilityLabel = new JLabel("Capability: *");
         CapabilityLabel.setBounds(10, 132, 69, 14);
         panel.add(CapabilityLabel);
         
@@ -148,23 +151,23 @@ public class AddEditPilotPanel extends JFrame {
                 break;
         }
         
-        JLabel preferenceLabel = new JLabel("Preference:");
-        preferenceLabel.setBounds(245, 132, 69, 14);
+        JLabel preferenceLabel = new JLabel("Preference: *");
+        preferenceLabel.setBounds(245, 132, 75, 14);
         panel.add(preferenceLabel);
         
         JRadioButton mildRadioButton = new JRadioButton("Mild");
         mildRadioButton.setActionCommand("Mild");
-        mildRadioButton.setBounds(320, 128, 109, 23);
+        mildRadioButton.setBounds(326, 128, 109, 23);
         panel.add(mildRadioButton);
         
         JRadioButton nominalRadioButton = new JRadioButton("Nominal");
         nominalRadioButton.setActionCommand("Nominal");
-        nominalRadioButton.setBounds(320, 153, 109, 23);
+        nominalRadioButton.setBounds(326, 153, 109, 23);
         panel.add(nominalRadioButton);
         
         JRadioButton performanceRadioButton = new JRadioButton("Performance");
         performanceRadioButton.setActionCommand("Performance");
-        performanceRadioButton.setBounds(320, 178, 109, 23);
+        performanceRadioButton.setBounds(326, 178, 109, 23);
         panel.add(performanceRadioButton);
         
         pilotLaunchPref = new ButtonGroup();
@@ -262,9 +265,13 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(lblAdditionalInformation);
         
         optionalInfoField = new JTextArea(editPilot.getOptionalInfo());
-        optionalInfoField.setBounds(10, 325, 734, 88);
+        optionalInfoField.setBounds(10, 325, 450, 88);
         panel.add(optionalInfoField);
         optionalInfoField.setColumns(10);
+        
+        JLabel lblRequiredNote = new JLabel("* Indicates required field");
+        lblRequiredNote.setBounds(10, 419, 200, 14);
+        panel.add(lblRequiredNote);
         
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 438, 89, 23);
@@ -276,8 +283,18 @@ public class AddEditPilotPanel extends JFrame {
             }
         });
 
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.setBounds(90, 438, 89, 23);
+        panel.add(deleteButton);
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                deleteCommand();
+            }
+        });
+        
         JButton clearButton = new JButton("Clear");
-        clearButton.setBounds(90, 438, 89, 23);
+        clearButton.setBounds(180, 438, 89, 23);
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -287,7 +304,7 @@ public class AddEditPilotPanel extends JFrame {
         });
 
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.setBounds(180, 438, 89, 23);
+        cancelButton.setBounds(270, 438, 89, 23);
         panel.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -333,6 +350,43 @@ public class AddEditPilotPanel extends JFrame {
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
+            }catch (ClassNotFoundException e2) {
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            }
+        }
+    }
+    
+    public void deleteCommand(){
+        if (isComplete()){
+            String firstName = firstNameField.getText();
+            String lastName = lastNameField.getText();
+            String middleName = middleNameField.getText();
+            String emergencyContact = emergencyContactNameField.getText() +
+                    "." + emergencyContactPhoneField.getText();
+            String medicalInformation = medInfoNameField.getText() +
+                    "." + medInfoPhoneField.getText();
+            String optionalInformation = optionalInfoField.getText();
+            int weight = 0;
+            try {
+                weight = Integer.parseInt(flightWeightField.getText());
+            }catch (NumberFormatException e) {
+                weight = -1;
+            }
+            String capability = pilotCapability.getSelection().getActionCommand();
+            String preference = pilotLaunchPref.getSelection().getActionCommand();
+
+            Pilot newPilot = new Pilot("" ,lastName, firstName, middleName, 
+                    weight, capability, preference, emergencyContact,
+                    medicalInformation, optionalInformation);
+            try{
+                DatabaseUtilities.DatabaseDataObjectUtilities.deletePilot(newPilot);
+                CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                ObjectSet.setCurrentPilot(newPilot); //set cur to null not new
+                JOptionPane.showMessageDialog(rootPane, newPilot.toString() + " successfully deleted.");
+                this.dispose();
+//            }catch(SQLException e1) {
+//                if(e1.getErrorCode() == 30000)
+//                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
             }
@@ -388,7 +442,6 @@ public class AddEditPilotPanel extends JFrame {
             }
             
             if (!weightStr.isEmpty()){
-                System.out.println(weightStr);
                 Integer.parseInt(weightStr);
             }
             
