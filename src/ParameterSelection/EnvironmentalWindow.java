@@ -6,20 +6,31 @@
 package ParameterSelection;
 
 import java.awt.Dimension;
+import javax.swing.BoxLayout;
+import Communications.Observer;
 
 /**
  *
  * @author Johnny White
  */
-public class EnvironmentalWindow extends javax.swing.JPanel {
+public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
 
     /**
      * Creates new form EnvironmentalWindow
      */
     public EnvironmentalWindow() {
         initComponents();
+        loadEnvironmentalData();
     }
-                  
+               
+    public void loadEnvironmentalData()
+    {
+        altdensityLabel.setText("100");
+        pressureLabel.setText("100");
+        temperatureLabel.setText("100");
+        windspeedLabel.setText("100");
+    }
+    
     private void initComponents() {
         this.setPreferredSize(new Dimension (200, 400));
         EnvLabel = new javax.swing.JLabel();
@@ -32,76 +43,27 @@ public class EnvironmentalWindow extends javax.swing.JPanel {
         pressureLabel = new javax.swing.JLabel();
         altdensityLabel = new javax.swing.JLabel();
 
-        EnvLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         EnvLabel.setText("Environmental Data");
 
-        WNDSPDLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         WNDSPDLabel.setText("Wind Speed");
 
-        TEMPLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         TEMPLabel.setText("Temperature");
 
-        PRSSRLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         PRSSRLabel.setText("Pressure");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Altitude Density");
-
-        windspeedLabel.setText("jLabel2");
-
-        temperatureLabel.setText("jLabel3");
-
-        pressureLabel.setText("jLabel4");
-
-        altdensityLabel.setText("jLabel5");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TEMPLabel)
-                    .addComponent(PRSSRLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(altdensityLabel))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(temperatureLabel)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(WNDSPDLabel)
-                            .addGap(45, 45, 45)
-                            .addComponent(windspeedLabel))
-                        .addComponent(pressureLabel)
-                        .addComponent(EnvLabel)))
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(EnvLabel)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(WNDSPDLabel)
-                    .addComponent(windspeedLabel))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TEMPLabel)
-                    .addComponent(temperatureLabel))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PRSSRLabel)
-                    .addComponent(pressureLabel))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(altdensityLabel))
-                .addContainerGap(103, Short.MAX_VALUE))
-        );
-    }// </editor-fold>                        
+        
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        this.add(EnvLabel);
+        this.add(WNDSPDLabel);
+        this.add(windspeedLabel);
+        this.add(PRSSRLabel);
+        this.add(pressureLabel);
+        this.add(TEMPLabel);
+        this.add(temperatureLabel);
+        this.add(jLabel1);
+        this.add(altdensityLabel);
+    }                      
 
 
     // Variables declaration - do not modify                     
@@ -115,4 +77,9 @@ public class EnvironmentalWindow extends javax.swing.JPanel {
     private javax.swing.JLabel temperatureLabel;
     private javax.swing.JLabel windspeedLabel;
     // End of variables declaration                   
+
+    @Override
+    public void update() {
+        loadEnvironmentalData();
+    }
 }

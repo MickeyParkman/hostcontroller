@@ -102,10 +102,10 @@ public class MainWindow extends JFrame {
         leftSidePanelScenario.add(upperLeftSidePanelScenario);
         leftSidePanelScenario.add(lowerLeftSidePanelScenario);
         
-        lowerLeftSidePanelScenario.add(new JLabel("Current Scenario"));
+        //lowerLeftSidePanelScenario.add(new JLabel("Current Scenario"));
         
-        upperLeftSidePanelDashboard = new JPanel();
-        upperLeftSidePanelDashboard.setPreferredSize(new Dimension(200,200));
+        upperLeftSidePanelDashboard = new CurrentScenario();
+        upperLeftSidePanelDashboard.setPreferredSize(new Dimension(200,300));
         upperLeftSidePanelDashboard.setBorder(BorderFactory.createLineBorder(Color.black));
         lowerLeftSidePanelDashboard = new JPanel();
         lowerLeftSidePanelDashboard.setPreferredSize(new Dimension(200,300));
@@ -113,8 +113,8 @@ public class MainWindow extends JFrame {
         leftSidePanelDashboard.add(upperLeftSidePanelDashboard);
         leftSidePanelDashboard.add(lowerLeftSidePanelDashboard);
 
-        upperLeftSidePanelDashboard.add(new JLabel("REPLAY LIST HERE"));
-        lowerLeftSidePanelDashboard.add(new JLabel("Current Scenario"));
+        //upperLeftSidePanelDashboard.add(new JLabel("REPLAY LIST HERE"));
+        //lowerLeftSidePanelDashboard.add(new JLabel("Current Scenario"));
         
         upperLeftSidePanelScenario.add(pilotButton);        
         upperLeftSidePanelScenario.add(gliderButton);   
