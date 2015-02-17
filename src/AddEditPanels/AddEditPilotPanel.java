@@ -2,6 +2,9 @@ package AddEditPanels;
 
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
+import DatabaseUtilities.DatabaseEntryDelete;
+import DatabaseUtilities.DatabaseEntryEdit;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -258,18 +261,18 @@ public class AddEditPilotPanel extends JFrame {
         medInfoPhoneLabel.setBounds(267, 255, 46, 14);
         panel.add(medInfoPhoneLabel);
         
-        JLabel lblAdditionalInformation = new JLabel("Additional Information:");
-        lblAdditionalInformation.setBounds(10, 300, 152, 14);
-        panel.add(lblAdditionalInformation);
+        JLabel additionalInformationLabel = new JLabel("Additional Information:");
+        additionalInformationLabel.setBounds(10, 300, 152, 14);
+        panel.add(additionalInformationLabel);
         
         optionalInfoField = new JTextArea(editPilot.getOptionalInfo());
         optionalInfoField.setBounds(10, 325, 450, 88);
         panel.add(optionalInfoField);
         optionalInfoField.setColumns(10);
         
-        JLabel lblRequiredNote = new JLabel("* Indicates required field");
-        lblRequiredNote.setBounds(10, 419, 200, 14);
-        panel.add(lblRequiredNote);
+        JLabel RequiredNoteLabel = new JLabel("* Indicates required field");
+        RequiredNoteLabel.setBounds(10, 419, 200, 14);
+        panel.add(RequiredNoteLabel);
         
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 438, 89, 23);
@@ -351,6 +354,8 @@ public class AddEditPilotPanel extends JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            }catch (Exception e3) {
+                System.out.println(e3.getMessage());
             }
         }
     }
@@ -378,7 +383,7 @@ public class AddEditPilotPanel extends JFrame {
                     weight, capability, preference, emergencyContact,
                     medicalInformation, optionalInformation);
             try{
-                DatabaseUtilities.DatabaseDataObjectUtilities.deletePilot(newPilot);
+                DatabaseEntryDelete.DeleteEntry(newPilot);
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentPilot(newPilot); //set cur to null not new
                 JOptionPane.showMessageDialog(rootPane, newPilot.toString() + " successfully deleted.");
@@ -388,7 +393,9 @@ public class AddEditPilotPanel extends JFrame {
 //                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
-            }
+            }catch (Exception e3) {
+                System.out.println(e3.getMessage());
+            }            
         }
     }
     
