@@ -710,7 +710,7 @@ public class AirfieldPanel extends JPanel {
         JButton winchPosAddNewButton = new JButton("Add New");
         winchPosAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                    AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), true);
+                    AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), false);
                     AddEditWinchPosFrame_.setVisible(true);
         	}
         });
@@ -720,7 +720,7 @@ public class AirfieldPanel extends JPanel {
         JButton winchPosEditButton = new JButton("Edit");
         winchPosEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                    AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), false);
+                    AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), true);
                     AddEditWinchPosFrame_.setVisible(true);
         	}
         });
