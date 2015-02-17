@@ -25,6 +25,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
+import java.awt.Font;
+import javax.swing.JButton;
 
 
 public class PilotPanel extends JPanel {
@@ -153,125 +155,146 @@ public class PilotPanel extends JPanel {
         panel.setLayout(null);
         
         JLabel firstNameLabel = new JLabel("First Name:");
-        firstNameLabel.setBounds(10, 11, 86, 14);
+        firstNameLabel.setBounds(10, 53, 86, 14);
         panel.add(firstNameLabel);
         
         JLabel middleNameLabel = new JLabel("Middle Name:");
-        middleNameLabel.setBounds(10, 36, 86, 14);
+        middleNameLabel.setBounds(10, 78, 86, 14);
         panel.add(middleNameLabel);
         
         JLabel lastNameLabel = new JLabel("Last Name:");
-        lastNameLabel.setBounds(10, 61, 117, 14);
+        lastNameLabel.setBounds(10, 103, 117, 14);
         panel.add(lastNameLabel);
         
         JLabel flightWeightLabel = new JLabel("Flight Weight:");
-        flightWeightLabel.setBounds(10, 86, 140, 14);
+        flightWeightLabel.setBounds(10, 128, 140, 14);
         panel.add(flightWeightLabel);
         
         flightWeightField = new JTextField();
-        flightWeightField.setBounds(160, 83, 110, 20);
+        flightWeightField.setBounds(160, 125, 110, 20);
         panel.add(flightWeightField);
         flightWeightField.setColumns(10);
         
         lastNameField = new JTextField();
-        lastNameField.setBounds(160, 58, 110, 20);
+        lastNameField.setBounds(160, 100, 110, 20);
         panel.add(lastNameField);
         lastNameField.setColumns(10);
         
         middleNameField = new JTextField();
-        middleNameField.setBounds(160, 33, 110, 20);
+        middleNameField.setBounds(160, 75, 110, 20);
         panel.add(middleNameField);
         middleNameField.setColumns(10);
         
         firstNameField = new JTextField();
-        firstNameField.setBounds(160, 8, 110, 20);
+        firstNameField.setBounds(160, 50, 110, 20);
         panel.add(firstNameField);
         firstNameField.setColumns(10);
         
         JLabel CapabilityLabel = new JLabel("Capability:");
-        CapabilityLabel.setBounds(10, 132, 69, 14);
+        CapabilityLabel.setBounds(10, 174, 69, 14);
         panel.add(CapabilityLabel);
         
         studentRadioButton = new JRadioButton("Student");
-        studentRadioButton.setBounds(85, 128, 109, 23);
+        studentRadioButton.setBounds(85, 170, 109, 23);
         panel.add(studentRadioButton);
         
         proficientRadioButton = new JRadioButton("Proficient");
-        proficientRadioButton.setBounds(85, 153, 109, 23);
+        proficientRadioButton.setBounds(85, 195, 109, 23);
         panel.add(proficientRadioButton);
         
         advancedRadioButton = new JRadioButton("Advanced");
-        advancedRadioButton.setBounds(85, 178, 109, 23);
+        advancedRadioButton.setBounds(85, 220, 109, 23);
         panel.add(advancedRadioButton);
         
         JLabel preferenceLabel = new JLabel("Preference:");
-        preferenceLabel.setBounds(245, 132, 69, 14);
+        preferenceLabel.setBounds(245, 174, 69, 14);
         panel.add(preferenceLabel);
         
         mildRadioButton = new JRadioButton("Mild");
-        mildRadioButton.setBounds(320, 128, 109, 23);
+        mildRadioButton.setBounds(320, 170, 109, 23);
         panel.add(mildRadioButton);
         
         nominalRadioButton = new JRadioButton("Nominal");
-        nominalRadioButton.setBounds(320, 153, 109, 23);
+        nominalRadioButton.setBounds(320, 195, 109, 23);
         panel.add(nominalRadioButton);
         
         performanceRadioButton = new JRadioButton("Performance");
-        performanceRadioButton.setBounds(320, 178, 109, 23);
+        performanceRadioButton.setBounds(320, 220, 109, 23);
         panel.add(performanceRadioButton);
         
         JLabel emergencyContactLabel = new JLabel("Emergency Contact:");
-        emergencyContactLabel.setBounds(10, 208, 117, 14);
+        emergencyContactLabel.setBounds(10, 250, 117, 14);
         panel.add(emergencyContactLabel);
         
         JLabel emergencyContactNameLabel = new JLabel("Name:");
-        emergencyContactNameLabel.setBounds(33, 233, 46, 14);
+        emergencyContactNameLabel.setBounds(33, 275, 46, 14);
         panel.add(emergencyContactNameLabel);
         
         JLabel emergencyContactPhoneLabel = new JLabel("Phone:");
-        emergencyContactPhoneLabel.setBounds(33, 258, 46, 14);
+        emergencyContactPhoneLabel.setBounds(33, 300, 46, 14);
         panel.add(emergencyContactPhoneLabel);
         
         emergencyContactNameField = new JTextField();
-        emergencyContactNameField.setBounds(85, 230, 110, 20);
+        emergencyContactNameField.setBounds(85, 272, 110, 20);
         panel.add(emergencyContactNameField);
         emergencyContactNameField.setColumns(10);
         
         emergencyContactPhoneField = new JTextField();
-        emergencyContactPhoneField.setBounds(85, 255, 109, 20);
+        emergencyContactPhoneField.setBounds(85, 297, 109, 20);
         panel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
         
         JLabel medInfoLabel = new JLabel("Primary Physician:");
-        medInfoLabel.setBounds(244, 205, 117, 14);
+        medInfoLabel.setBounds(244, 247, 117, 14);
         panel.add(medInfoLabel);
         
         JLabel medInfoNameLabel = new JLabel("Name:");
-        medInfoNameLabel.setBounds(267, 230, 46, 14);
+        medInfoNameLabel.setBounds(267, 272, 46, 14);
         panel.add(medInfoNameLabel);
         
         medInfoNameField = new JTextField();
         medInfoNameField.setColumns(10);
-        medInfoNameField.setBounds(319, 227, 110, 20);
+        medInfoNameField.setBounds(319, 269, 110, 20);
         panel.add(medInfoNameField);
         
         medInfoPhoneField = new JTextField();
         medInfoPhoneField.setColumns(10);
-        medInfoPhoneField.setBounds(319, 252, 109, 20);
+        medInfoPhoneField.setBounds(319, 294, 109, 20);
         panel.add(medInfoPhoneField);
         
         JLabel medInfoPhoneLabel = new JLabel("Phone:");
-        medInfoPhoneLabel.setBounds(267, 255, 46, 14);
+        medInfoPhoneLabel.setBounds(267, 297, 46, 14);
         panel.add(medInfoPhoneLabel);
         
         JLabel lblAdditionalInformation = new JLabel("Additional Information:");
-        lblAdditionalInformation.setBounds(10, 300, 152, 14);
+        lblAdditionalInformation.setBounds(10, 342, 152, 14);
         panel.add(lblAdditionalInformation);
         
         optionalInfoField = new JTextArea();
-        optionalInfoField.setBounds(10, 325, 734, 88);
+        optionalInfoField.setBounds(10, 367, 734, 88);
         panel.add(optionalInfoField);
         optionalInfoField.setColumns(10);
+        
+        lblPilot = new JLabel("Pilot");
+        lblPilot.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        lblPilot.setBounds(10, 20, 86, 31);
+        panel.add(lblPilot);
+        
+        addNewButton = new JButton("Add New");
+        addNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        addNewButton.setBounds(200, 0, 89, 23);
+        panel.add(addNewButton);
+        
+        editButton = new JButton("Edit");
+        editButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        editButton.setBounds(288, 0, 89, 23);
+        panel.add(editButton);
     }
         
     private javax.swing.JList pilotJList;
@@ -290,4 +313,7 @@ public class PilotPanel extends JPanel {
     private JRadioButton nominalRadioButton;
     private JRadioButton performanceRadioButton;
     private JTextArea optionalInfoField;
+    private JLabel lblPilot;
+    private JButton addNewButton;
+    private JButton editButton;
 }

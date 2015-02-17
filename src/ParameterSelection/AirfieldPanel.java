@@ -20,6 +20,10 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 
 public class AirfieldPanel extends JPanel {
@@ -67,7 +71,7 @@ public class AirfieldPanel extends JPanel {
     private void initAirfieldList() {
         try{
             airfields = DatabaseUtilities.DatabaseDataObjectUtilities.getAirfields();
-            airfields.add(new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));   
+            airfields.add(0, new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));   
         }catch(SQLException e) {
             airfields.add(new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));
             airfields.add(new Airfield("Bob-land", "BOB", 1000, 5, 5, 5, "sdfgsdgf"));
@@ -333,58 +337,79 @@ public class AirfieldPanel extends JPanel {
         airfieldAttributesPanel.setLayout(null);
         
         JLabel designatorLabel = new JLabel("Designator:");
-        designatorLabel.setBounds(10, 36, 84, 14);
+        designatorLabel.setBounds(10, 78, 84, 14);
         airfieldAttributesPanel.add(designatorLabel);
         
         JLabel airfieldAltitudeLabel = new JLabel("Altitude:");
-        airfieldAltitudeLabel.setBounds(10, 62, 84, 14);
+        airfieldAltitudeLabel.setBounds(10, 104, 84, 14);
         airfieldAttributesPanel.add(airfieldAltitudeLabel);
         
         JLabel magneticVariationLabel = new JLabel("Magnetic Variation:");
-        magneticVariationLabel.setBounds(10, 87, 120, 14);
+        magneticVariationLabel.setBounds(10, 129, 200, 14);
         airfieldAttributesPanel.add(magneticVariationLabel);
         
         JLabel airfieldLongitudeLabel = new JLabel("Longitude:");
-        airfieldLongitudeLabel.setBounds(10, 112, 84, 14);
+        airfieldLongitudeLabel.setBounds(10, 154, 84, 14);
         airfieldAttributesPanel.add(airfieldLongitudeLabel);
         
         JLabel airfieldLatitudeLabel = new JLabel("Latitude:");
-        airfieldLatitudeLabel.setBounds(10, 137, 84, 14);
+        airfieldLatitudeLabel.setBounds(10, 179, 84, 14);
         airfieldAttributesPanel.add(airfieldLatitudeLabel);
         
         airfieldAltitudeField = new JTextField();
-        airfieldAltitudeField.setBounds(140, 58, 120, 20);
+        airfieldAltitudeField.setBounds(140, 100, 200, 20);
         airfieldAttributesPanel.add(airfieldAltitudeField);
         airfieldAltitudeField.setColumns(10);
         
         designatorField = new JTextField();
-        designatorField.setBounds(140, 33, 120, 20);
+        designatorField.setBounds(140, 75, 200, 20);
         airfieldAttributesPanel.add(designatorField);
         designatorField.setColumns(10);
         
         airfieldNameField = new JTextField();
-        airfieldNameField.setBounds(140, 8, 120, 20);
+        airfieldNameField.setBounds(140, 50, 200, 20);
         airfieldAttributesPanel.add(airfieldNameField);
         airfieldNameField.setColumns(10);
         
         magneticVariationField = new JTextField();
-        magneticVariationField.setBounds(140, 83, 120, 20);
+        magneticVariationField.setBounds(140, 125, 200, 20);
         airfieldAttributesPanel.add(magneticVariationField);
         magneticVariationField.setColumns(10);
         
         JLabel airfieldNameLabel = new JLabel("Name:");
-        airfieldNameLabel.setBounds(10, 11, 46, 14);
+        airfieldNameLabel.setBounds(10, 53, 46, 14);
         airfieldAttributesPanel.add(airfieldNameLabel);
         
         airfieldLongitudeField = new JTextField();
-        airfieldLongitudeField.setBounds(140, 109, 120, 20);
+        airfieldLongitudeField.setBounds(140, 151, 200, 20);
         airfieldAttributesPanel.add(airfieldLongitudeField);
         airfieldLongitudeField.setColumns(10);
         
         airfieldLatitudeField = new JTextField();
-        airfieldLatitudeField.setBounds(140, 134, 120, 20);
+        airfieldLatitudeField.setBounds(140, 176, 200, 20);
         airfieldAttributesPanel.add(airfieldLatitudeField);
         airfieldLatitudeField.setColumns(10);
+        
+        JButton airfieldAddNewButton = new JButton("Add New");
+        airfieldAddNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        	}
+        });
+        airfieldAddNewButton.setBounds(200, 0, 89, 23);
+        airfieldAttributesPanel.add(airfieldAddNewButton);
+        
+        JButton airfieldEditButton = new JButton("Edit");
+        airfieldEditButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        airfieldEditButton.setBounds(288, 0, 89, 23);
+        airfieldAttributesPanel.add(airfieldEditButton);
+        
+        JLabel airfieldLabel = new JLabel("Airfield");
+        airfieldLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        airfieldLabel.setBounds(10, 20, 100, 22);
+        airfieldAttributesPanel.add(airfieldLabel);
 
         JPanel gliderPostitionSubPanel = new JPanel();
         panel.add(gliderPostitionSubPanel);
@@ -399,19 +424,19 @@ public class AirfieldPanel extends JPanel {
         gliderPositionAttributesPanel.setLayout(null);
         
         JLabel gliderPosNameLabel = new JLabel("Name:");
-        gliderPosNameLabel.setBounds(10, 11, 46, 14);
+        gliderPosNameLabel.setBounds(10, 53, 46, 14);
         gliderPositionAttributesPanel.add(gliderPosNameLabel);
         
         JLabel gliderPosAltitudeLabel = new JLabel("Altitude:");
-        gliderPosAltitudeLabel.setBounds(10, 36, 46, 14);
+        gliderPosAltitudeLabel.setBounds(10, 78, 46, 14);
         gliderPositionAttributesPanel.add(gliderPosAltitudeLabel);
         
         JLabel gliderPosLongitudeLabel = new JLabel("Longitude:");
-        gliderPosLongitudeLabel.setBounds(10, 61, 80, 14);
+        gliderPosLongitudeLabel.setBounds(10, 103, 80, 14);
         gliderPositionAttributesPanel.add(gliderPosLongitudeLabel);
         
         JLabel gliderPosLatitudeLabel = new JLabel("Latitude:");
-        gliderPosLatitudeLabel.setBounds(10, 86, 80, 14);
+        gliderPosLatitudeLabel.setBounds(10, 128, 80, 14);
         gliderPositionAttributesPanel.add(gliderPosLatitudeLabel);
         
         /*JLabel gliderPosParentAirfieldLabel = new JLabel("Parent Airfield:");
@@ -433,24 +458,45 @@ public class AirfieldPanel extends JPanel {
         gliderPosParentAirfieldField.setColumns(10);*/
         
         gliderPosLatitudeField = new JTextField();
-        gliderPosLatitudeField.setBounds(135, 83, 120, 20);
+        gliderPosLatitudeField.setBounds(135, 125, 200, 20);
         gliderPositionAttributesPanel.add(gliderPosLatitudeField);
         gliderPosLatitudeField.setColumns(10);
         
         gliderPosLongitudeField = new JTextField();
-        gliderPosLongitudeField.setBounds(135, 58, 120, 20);
+        gliderPosLongitudeField.setBounds(135, 100, 200, 20);
         gliderPositionAttributesPanel.add(gliderPosLongitudeField);
         gliderPosLongitudeField.setColumns(10);
         
         gliderPosAltitudeField = new JTextField();
-        gliderPosAltitudeField.setBounds(135, 33, 120, 20);
+        gliderPosAltitudeField.setBounds(135, 75, 200, 20);
         gliderPositionAttributesPanel.add(gliderPosAltitudeField);
         gliderPosAltitudeField.setColumns(10);
         
         gliderPosNameField = new JTextField();
-        gliderPosNameField.setBounds(135, 8, 120, 20);
+        gliderPosNameField.setBounds(135, 50, 200, 20);
         gliderPositionAttributesPanel.add(gliderPosNameField);
         gliderPosNameField.setColumns(10);
+        
+        JButton gliderPosAddNewButton = new JButton("Add New");
+        gliderPosAddNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        gliderPosAddNewButton.setBounds(200, 0, 89, 23);
+        gliderPositionAttributesPanel.add(gliderPosAddNewButton);
+        
+        JButton gliderPosEditButton = new JButton("Edit");
+        gliderPosEditButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        gliderPosEditButton.setBounds(288, 0, 89, 23);
+        gliderPositionAttributesPanel.add(gliderPosEditButton);
+        
+        JLabel gliderPositionLabel = new JLabel("Glider Position");
+        gliderPositionLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        gliderPositionLabel.setBounds(10, 20, 180, 31);
+        gliderPositionAttributesPanel.add(gliderPositionLabel);
         
         gliderPositionsJList.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -477,15 +523,15 @@ public class AirfieldPanel extends JPanel {
         runwayAttributesPanel.setLayout(null);
         
         JLabel runwayNameLabel = new JLabel("Name:");
-        runwayNameLabel.setBounds(10, 11, 106, 14);
+        runwayNameLabel.setBounds(10, 53, 106, 14);
         runwayAttributesPanel.add(runwayNameLabel);
         
         JLabel magneticHeadingLabel = new JLabel("Magnetic Heading:");
-        magneticHeadingLabel.setBounds(10, 36, 106, 14);
+        magneticHeadingLabel.setBounds(10, 78, 106, 14);
         runwayAttributesPanel.add(magneticHeadingLabel);
         
         JLabel runwayAltitudeLabel = new JLabel("Altitude:");
-        runwayAltitudeLabel.setBounds(10, 61, 106, 14);
+        runwayAltitudeLabel.setBounds(10, 103, 106, 14);
         runwayAttributesPanel.add(runwayAltitudeLabel);
         
         /*JLabel runwayParentAirfieldLabel = new JLabel("Parent Airfield:");
@@ -493,17 +539,17 @@ public class AirfieldPanel extends JPanel {
         runwayAttributesPanel.add(runwayParentAirfieldLabel);*/
         
         magneticHeadingField = new JTextField();
-        magneticHeadingField.setBounds(140, 33, 120, 20);
+        magneticHeadingField.setBounds(140, 75, 200, 20);
         runwayAttributesPanel.add(magneticHeadingField);
         magneticHeadingField.setColumns(10);
         
         runwayNameField = new JTextField();
-        runwayNameField.setBounds(140, 8, 120, 20);
+        runwayNameField.setBounds(140, 50, 200, 20);
         runwayAttributesPanel.add(runwayNameField);
         runwayNameField.setColumns(10);
         
         runwayAltitudeField = new JTextField();
-        runwayAltitudeField.setBounds(140, 58, 120, 20);
+        runwayAltitudeField.setBounds(140, 100, 200, 20);
         runwayAttributesPanel.add(runwayAltitudeField);
         runwayAltitudeField.setColumns(10);
         
@@ -513,13 +559,34 @@ public class AirfieldPanel extends JPanel {
         runwayParentAirfieldField.setColumns(10);*/
         
         JLabel runwaySlopeLabel = new JLabel("Slope:");
-        runwaySlopeLabel.setBounds(10, 86, 81, 14);
+        runwaySlopeLabel.setBounds(10, 128, 81, 14);
         runwayAttributesPanel.add(runwaySlopeLabel);
         
         runwaySlopeField = new JTextField();
-        runwaySlopeField.setBounds(140, 83, 120, 20);
+        runwaySlopeField.setBounds(140, 125, 200, 20);
         runwayAttributesPanel.add(runwaySlopeField);
         runwaySlopeField.setColumns(10);
+        
+        JButton runwayEditButton = new JButton("Edit");
+        runwayEditButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        runwayEditButton.setBounds(288, 0, 89, 23);
+        runwayAttributesPanel.add(runwayEditButton);
+        
+        JButton runwayAddNewButton = new JButton("Add New");
+        runwayAddNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        runwayAddNewButton.setBounds(200, 0, 89, 23);
+        runwayAttributesPanel.add(runwayAddNewButton);
+        
+        JLabel runwayLabel = new JLabel("Runway");
+        runwayLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        runwayLabel.setBounds(10, 20, 140, 31);
+        runwayAttributesPanel.add(runwayLabel);
         
         runwaysJList.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -541,40 +608,61 @@ public class AirfieldPanel extends JPanel {
         winchPositionAttributesPanel.setLayout(null);
         
         JLabel winchPosNameLabel = new JLabel("Name:");
-        winchPosNameLabel.setBounds(10, 11, 46, 14);
+        winchPosNameLabel.setBounds(10, 53, 46, 14);
         winchPositionAttributesPanel.add(winchPosNameLabel);
         
         winchPosNameField = new JTextField();
         winchPosNameField.setColumns(10);
-        winchPosNameField.setBounds(135, 8, 120, 20);
+        winchPosNameField.setBounds(135, 50, 200, 20);
         winchPositionAttributesPanel.add(winchPosNameField);
         
         JLabel winchPosAltitudeLabel = new JLabel("Altitude:");
-        winchPosAltitudeLabel.setBounds(10, 36, 46, 14);
+        winchPosAltitudeLabel.setBounds(10, 78, 46, 14);
         winchPositionAttributesPanel.add(winchPosAltitudeLabel);
         
         winchPosAltitudeField = new JTextField();
         winchPosAltitudeField.setColumns(10);
-        winchPosAltitudeField.setBounds(135, 33, 120, 20);
+        winchPosAltitudeField.setBounds(135, 75, 200, 20);
         winchPositionAttributesPanel.add(winchPosAltitudeField);
         
         JLabel winchPosLongitudeLabel = new JLabel("Longitude:");
-        winchPosLongitudeLabel.setBounds(10, 61, 80, 14);
+        winchPosLongitudeLabel.setBounds(10, 103, 80, 14);
         winchPositionAttributesPanel.add(winchPosLongitudeLabel);
         
         winchPosLongitudeField = new JTextField();
         winchPosLongitudeField.setColumns(10);
-        winchPosLongitudeField.setBounds(135, 58, 120, 20);
+        winchPosLongitudeField.setBounds(135, 100, 200, 20);
         winchPositionAttributesPanel.add(winchPosLongitudeField);
         
         JLabel winchPosLatitudeLabel = new JLabel("Latitude:");
-        winchPosLatitudeLabel.setBounds(10, 86, 80, 14);
+        winchPosLatitudeLabel.setBounds(10, 128, 80, 14);
         winchPositionAttributesPanel.add(winchPosLatitudeLabel);
         
         winchPosLatitudeField = new JTextField();
         winchPosLatitudeField.setColumns(10);
-        winchPosLatitudeField.setBounds(135, 83, 120, 20);
+        winchPosLatitudeField.setBounds(135, 125, 200, 20);
         winchPositionAttributesPanel.add(winchPosLatitudeField);
+        
+        JButton winchPosAddNewButton = new JButton("Add New");
+        winchPosAddNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        winchPosAddNewButton.setBounds(200, 0, 89, 23);
+        winchPositionAttributesPanel.add(winchPosAddNewButton);
+        
+        JButton winchPosEditButton = new JButton("Edit");
+        winchPosEditButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        winchPosEditButton.setBounds(288, 0, 89, 23);
+        winchPositionAttributesPanel.add(winchPosEditButton);
+        
+        JLabel winchPositionLabel = new JLabel("Winch Position");
+        winchPositionLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        winchPositionLabel.setBounds(10, 20, 180, 31);
+        winchPositionAttributesPanel.add(winchPositionLabel);
         
         /*JLabel winchPosParentAirfieldLabel = new JLabel("Parent Airfield:");
         winchPosParentAirfieldLabel.setBounds(10, 111, 103, 14);
