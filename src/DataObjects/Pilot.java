@@ -33,7 +33,7 @@ public class Pilot {
     //Pilot's optional_info
     String optional_info;
     
-    public Pilot(String pilotId, String lastName, String firstName, String middleName, int weight, String capability, String preference, String emergencyContact, String medInfo, String optional) {
+    public Pilot(String pilotId, String firstName, String lastName, String middleName, int weight, String capability, String preference, String emergencyContact, String medInfo, String optional) {
         this.pilotId = pilotId;
         this.lastName = lastName;
         this.firstName = firstName;

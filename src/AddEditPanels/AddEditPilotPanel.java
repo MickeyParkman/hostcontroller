@@ -41,23 +41,7 @@ public class AddEditPilotPanel extends JFrame {
     private JTextArea optionalInfoField;
     private Pilot currentPilot;
     private boolean isEditEntry;
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-            EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                            try {
-                                    AddEditPilotPanel frame = new AddEditPilotPanel(new Pilot("", "last", "first", "middle", 200, "Advanced", "Performance","Jane Doe.200-432-5432","John Doe.200-234-2345","Optional"), true);
-                                    frame.setVisible(true);
-                            } catch (Exception e) {
-                                    e.printStackTrace();
-                            }
-                    }
-            });
-    }
-
+    
     /**
      * Create the frame.
      */
@@ -340,7 +324,7 @@ public class AddEditPilotPanel extends JFrame {
                 newPilotId = firstName+middleName+lastName;
             }
 
-            Pilot newPilot = new Pilot(newPilotId ,lastName, firstName, middleName, 
+            Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
                     weight, capability, preference, emergencyContact,
                     medicalInformation, optionalInformation);
             try{

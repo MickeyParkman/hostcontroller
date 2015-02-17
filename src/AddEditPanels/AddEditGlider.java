@@ -44,24 +44,6 @@ public class AddEditGlider extends JFrame {
     private boolean isEditEntry;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-            EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                            try {
-                                    Sailplane sample = new Sailplane("N-num", "The type",
-                                            100, 200, 300, 400, 500, 600, 700, true, "Optional");
-                                    AddEditGlider frame = new AddEditGlider(sample, true);
-                                    frame.setVisible(true);
-                            } catch (Exception e) {
-                                    e.printStackTrace();
-                            }
-                    }
-            });
-    }
-
-    /**
      * Create the frame.
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
@@ -70,6 +52,7 @@ public class AddEditGlider extends JFrame {
         }
         currentGlider = sailplaneEdited;
         this.isEditEntry = isEditEntry;
+        
         setTitle("Glider");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 650, 242);

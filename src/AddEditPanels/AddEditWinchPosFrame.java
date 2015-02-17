@@ -21,19 +21,6 @@ import javax.swing.JOptionPane;
 
 
 public class AddEditWinchPosFrame extends JFrame {
-    
-    public static void main(String[] args) {
-            EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                            try {
-                                    AddEditWinchPosFrame frame = new AddEditWinchPosFrame(new WinchPosition("ID", "rents", 100, 200, 300, "optional"), true);
-                                    frame.setVisible(true);
-                            } catch (Exception e) {
-                                    e.printStackTrace();
-                            }
-                    }
-            });
-    }
 
     private JPanel contentPane;
     private JTextField latitudeField;
@@ -56,6 +43,7 @@ public class AddEditWinchPosFrame extends JFrame {
         this.isEditEntry = isEditEntry;
         currentWinchPos = editWinchPos;
 
+        setTitle("Winch Position");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
