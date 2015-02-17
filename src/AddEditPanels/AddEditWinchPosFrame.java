@@ -2,7 +2,7 @@
 package AddEditPanels;
 
 import DataObjects.CurrentDataObjectSet;
-import DataObjects.GliderPosition;
+import DataObjects.WinchPosition;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -20,13 +20,13 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 
-public class AddEditGliderPosFrame extends JFrame {
+public class AddEditWinchPosFrame extends JFrame {
     
     public static void main(String[] args) {
             EventQueue.invokeLater(new Runnable() {
                     public void run() {
                             try {
-                                    AddEditGliderPosFrame frame = new AddEditGliderPosFrame(new GliderPosition("ID", "rents", 100, 200, 300, "optional"), true);
+                                    AddEditWinchPosFrame frame = new AddEditWinchPosFrame(new WinchPosition("ID", "rents", 100, 200, 300, "optional"), true);
                                     frame.setVisible(true);
                             } catch (Exception e) {
                                     e.printStackTrace();
@@ -41,20 +41,20 @@ public class AddEditGliderPosFrame extends JFrame {
     private JTextField altitudeField;
     private JTextField nameField;
     private CurrentDataObjectSet objectSet;
-    private GliderPosition currentGliderPos;
+    private WinchPosition currentWinchPos;
     private boolean isEditEntry;
 
     /**
      * Create the frame.
      */
-    public AddEditGliderPosFrame(GliderPosition editGliderPos, boolean isEditEntry) {
+    public AddEditWinchPosFrame(WinchPosition editWinchPos, boolean isEditEntry) {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
         if (!isEditEntry){
-            editGliderPos = new GliderPosition("", "", 0, 0, 0, "");
+            editWinchPos = new WinchPosition("", "", 0, 0, 0, "");
         }
         this.isEditEntry = isEditEntry;
-        currentGliderPos = editGliderPos;
+        currentWinchPos = editWinchPos;
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 450, 300);
@@ -85,7 +85,7 @@ public class AddEditGliderPosFrame extends JFrame {
 
         latitudeField = new JTextField();
         if (isEditEntry){
-            latitudeField.setText(String.valueOf(currentGliderPos.getLatitude()));
+            latitudeField.setText(String.valueOf(currentWinchPos.getLatitude()));
         }
         latitudeField.setColumns(10);
         latitudeField.setBounds(135, 86, 200, 20);
@@ -93,7 +93,7 @@ public class AddEditGliderPosFrame extends JFrame {
 
         longitudeField = new JTextField();
         if (isEditEntry){
-            longitudeField.setText(String.valueOf(currentGliderPos.getLongitude()));
+            longitudeField.setText(String.valueOf(currentWinchPos.getLongitude()));
         }
         longitudeField.setColumns(10);
         longitudeField.setBounds(135, 61, 200, 20);
@@ -101,13 +101,13 @@ public class AddEditGliderPosFrame extends JFrame {
 
         altitudeField = new JTextField();
         if (isEditEntry){
-            altitudeField.setText(String.valueOf(currentGliderPos.getAltitude()));
+            altitudeField.setText(String.valueOf(currentWinchPos.getAltitude()));
         }
         altitudeField.setColumns(10);
         altitudeField.setBounds(135, 36, 200, 20);
         panel.add(altitudeField);
 
-        nameField = new JTextField(currentGliderPos.getGliderPositionId());
+        nameField = new JTextField(currentWinchPos.getName());
         nameField.setColumns(10);
         nameField.setBounds(135, 11, 200, 20);
         panel.add(nameField);
@@ -184,9 +184,9 @@ public class AddEditGliderPosFrame extends JFrame {
 	
     public void deleteCommand(){
         try{
-            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
+            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentWinchPos);
             objectSet.cleafGliderPosition();
-            JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.");
+            JOptionPane.showMessageDialog(rootPane, currentWinchPos.toString() + " successfully deleted.");
             dispose();
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
@@ -212,9 +212,9 @@ public class AddEditGliderPosFrame extends JFrame {
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             
-            String gliderPosId = currentGliderPos.getGliderPositionId();
+            String winchPosId = currentWinchPos.getName();
             if (!isEditEntry){
-                gliderPosId = nameField.getText();
+                winchPosId = nameField.getText();
             }
             
             String parent = "";
@@ -224,23 +224,23 @@ public class AddEditGliderPosFrame extends JFrame {
                 System.out.println("cur runway 404 " + e.getMessage());
             }
             
-            GliderPosition newGliderPos = new GliderPosition(gliderPosId, parent,
+            WinchPosition newWinchPos = new WinchPosition(winchPosId, parent,
                     altitude, latitude, longitude, "");
             try{
                 if (isEditEntry){
-                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newGliderPos);
+                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newWinchPos);
                 }
                 else
                 {
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
+                    DatabaseUtilities.DatabaseDataObjectUtilities.addWinchPositionToDB(newWinchPos);
                 }
-                objectSet.setCurrentGliderPosition(newGliderPos);
+                objectSet.setCurrentWinchPosition(newWinchPos);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the Glider Position " + newGliderPos.toString() + " already exists in the database");
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the Winch Position " + newWinchPos.toString() + " already exists in the database");
                 }
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
