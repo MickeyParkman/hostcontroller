@@ -141,7 +141,7 @@ public class DatabaseDataObjectUtilities {
             PreparedStatement AirfieldInsertStatement = connect.prepareStatement(
                 "INSERT INTO Airfield(name, designator, altitude, "
                 + "magnetic_variation, latitude, longitude, optional_info) "
-                + "+values (?,?,?,?,?,?,?)");
+                + "values (?,?,?,?,?,?,?)");
             AirfieldInsertStatement.setString(1, theAirfield.getName());
             AirfieldInsertStatement.setString(2, theAirfield.getDesignator());
             AirfieldInsertStatement.setString(3, String.valueOf(theAirfield.getAltitude()));

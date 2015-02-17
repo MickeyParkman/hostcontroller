@@ -386,7 +386,7 @@ public class DatabaseInitialization {
                 + "(name VARCHAR(30), "
                 + "designator VARCHAR(30), "
                 + "altitude VARCHAR(20), "
-                + "magneticVariation VARCHAR(20), "
+                + "magnetic_variation VARCHAR(20), "
                 + "latitude FLOAT, "
                 + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
