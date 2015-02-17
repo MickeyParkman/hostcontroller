@@ -48,7 +48,7 @@ public class AddEditPilotPanel extends JFrame {
             EventQueue.invokeLater(new Runnable() {
                     public void run() {
                             try {
-                                    AddEditPilotPanel frame = new AddEditPilotPanel(new Pilot("123", "last", "first", "middle", 200, "Advanced", "Performance","Jane Doe.200-432-5432","John Doe.200-234-2345","Optional"), true);
+                                    AddEditPilotPanel frame = new AddEditPilotPanel(new Pilot("123", "last", "first", "middle", 200, "Advanced", "Performance","Jane Doe.200-432-5432","John Doe.200-234-2345","Optional"), false);
                                     frame.setVisible(true);
                             } catch (Exception e) {
                                     e.printStackTrace();
@@ -284,6 +284,7 @@ public class AddEditPilotPanel extends JFrame {
         });
 
         JButton deleteButton = new JButton("Delete");
+        deleteButton.setEnabled(isEditEntry);
         deleteButton.setBounds(90, 438, 89, 23);
         panel.add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
