@@ -20,6 +20,7 @@ import DatabaseUtilities.DatabaseInitialization;
 import ParameterSelection.CurrentScenario;
 import ParameterSelection.EnvironmentalWindow;
 import ParameterSelection.WinchEditPanel;
+import ParameterSelection.DEBUGWinchEditPanel;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ public class MainWindow extends JFrame {
     private String currentProfile;
     private JPanel leftSidePanelScenario;
     private JPanel leftSidePanelDashboard;
+    private JPanel leftSidePanelWinch;
     private JLabel statusLabel;
     private JPanel rightSidePanel;
     private JPanel upperLeftSidePanelScenario;
@@ -52,6 +54,7 @@ public class MainWindow extends JFrame {
         mainWindow = new JPanel(new BorderLayout());
         leftSidePanelScenario = new JPanel();
         leftSidePanelDashboard = new JPanel();
+        leftSidePanelWinch = new JPanel();
         //rightSidePanel = new JPanel();
         statusLabel = new JLabel();
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -80,6 +83,8 @@ public class MainWindow extends JFrame {
         leftSidePanelDashboard.setPreferredSize(new Dimension(200, 600));
         leftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
         leftSidePanelDashboard.setBorder(BorderFactory.createLineBorder(Color.black));
+        leftSidePanelWinch.setPreferredSize(new Dimension(200, 600));
+        leftSidePanelWinch.setBorder(BorderFactory.createLineBorder(Color.black));
         
         JButton pilotButton = new JButton();
         pilotButton.setText("Select Pilot");
@@ -114,6 +119,11 @@ public class MainWindow extends JFrame {
         leftSidePanelScenario.add(upperLeftSidePanelScenario);
         leftSidePanelScenario.add(lowerLeftSidePanelScenario);
         
+        JPanel upperLeftSidePanelWinch = new CurrentScenario();
+        upperLeftSidePanelWinch.setPreferredSize(new Dimension(200,300));
+        upperLeftSidePanelWinch.setBorder(BorderFactory.createLineBorder(Color.black));
+        leftSidePanelWinch.add(upperLeftSidePanelWinch);
+        
         //lowerLeftSidePanelScenario.add(new JLabel("Current Scenario"));
         
         upperLeftSidePanelDashboard = new CurrentScenario();
@@ -138,7 +148,7 @@ public class MainWindow extends JFrame {
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
         tabbedPane.addTab("Flight Dashboard", makePanel(FlightDashboard_, 2));
-        tabbedPane.addTab("Edit Winch", makePanel(new WinchEditPanel(), 3));
+        tabbedPane.addTab("Edit Winch", makePanel(new DEBUGWinchEditPanel(), 3));
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);
@@ -180,7 +190,10 @@ public class MainWindow extends JFrame {
         drumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                
+                selectionLayout.first(ParameterSelectionPanel_);
+                selectionLayout.next(ParameterSelectionPanel_);
+                selectionLayout.next(ParameterSelectionPanel_);
+                selectionLayout.next(ParameterSelectionPanel_);
             }
         });
         
@@ -210,6 +223,7 @@ public class MainWindow extends JFrame {
         p.setLayout(new BorderLayout(1, 1));
         if(tab==1) p.add(leftSidePanelScenario, BorderLayout.LINE_START);
         else if (tab==2) p.add(leftSidePanelDashboard, BorderLayout.LINE_START);
+        else p.add(leftSidePanelWinch, BorderLayout.LINE_START);
         p.add(innerPanel, BorderLayout.CENTER);
         return p;
     }

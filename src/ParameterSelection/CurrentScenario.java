@@ -33,6 +33,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         GliderPosition position = data.getCurrentGliderPosition();
         Runway runway = data.getCurrentRunway();
         WinchPosition winch = data.getCurrentWinchPosition();   
+        Drum drum = data.getCurrentDrum();
         
         if(pilot == null) {
             pilotNameLabel.setText("NO PILOT");
@@ -81,6 +82,14 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             winchposLabel.setText(winch.toString());    
             winchposLabel.setForeground(Color.BLACK); 
         }
+        
+        if(drum == null) {
+            drumLabel.setText("NO DRUM"); 
+            drumLabel.setForeground(Color.RED);
+        } else {
+            drumLabel.setText(drum.toString());    
+            drumLabel.setForeground(Color.BLACK);  
+        }
     }
     
     
@@ -93,6 +102,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         positionLabel = new JLabel();
         winchposLabel = new JLabel();
         pilotNameLabel = new JLabel();
+        drumLabel = new JLabel();
         TitleLabel = new JLabel("Current Scenario");
         //TitleLabel.setFon
         
@@ -104,6 +114,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         this.add(runwayLabel);
         this.add(positionLabel);
         this.add(winchposLabel);
+        this.add(drumLabel);
     }                      
 
     /**
@@ -148,6 +159,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
     private JLabel winchposLabel;
     private JLabel pilotNameLabel;
     private JLabel TitleLabel;
+    private JLabel drumLabel;
 
     public void update() {
        loadScenario();

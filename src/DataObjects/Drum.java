@@ -7,6 +7,7 @@ public class Drum {
     private float cableLength;
     private int numLaunches;
     private String name;
+    private Parachute para;
 
 
     public Drum()
@@ -22,7 +23,8 @@ public class Drum {
     }
     
     public String toString() {
-        return name;
+        if(para == null) return name + "; NO PARACHUTE";
+        else return name + "; " + para.getName();
     }
     
     public String getName() {
@@ -43,5 +45,9 @@ public class Drum {
     
     public int getNumLaunches() {
         return numLaunches;
+    }
+    
+    public void setParachute(Parachute parachute) {
+        para = parachute;
     }
 }

@@ -14,7 +14,7 @@ import java.awt.CardLayout;
  */
 public class ParameterSelectionPanel extends javax.swing.JPanel {
 
-    private final static String[] tabNames = {"PILOT","GLIDER","AIRFIELD"};
+    private final static String[] tabNames = {"PILOT","GLIDER","AIRFIELD","DRUM"};
     
     public void SetCard(int index)
     {
@@ -46,6 +46,7 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         pilotPanel = new PilotPanel();
         sailplanePanel = new SailplanePanel();
         airfieldPanel = new AirfieldPanel();
+        drumPanel = new DrumPanel();
         
         setLayout(new CardLayout(0, 0));
 
@@ -54,6 +55,8 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
         this.add(tabNames[1], sailplanePanel);
         
         this.add(tabNames[2], airfieldPanel);
+        
+        this.add(tabNames[3], drumPanel);
 
         
     }// </editor-fold>//GEN-END:initComponents
@@ -62,5 +65,6 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
     private PilotPanel pilotPanel;
     private SailplanePanel sailplanePanel;
     private AirfieldPanel airfieldPanel;
+    private DrumPanel drumPanel;
     // End of variables declaration//GEN-END:variables
 }

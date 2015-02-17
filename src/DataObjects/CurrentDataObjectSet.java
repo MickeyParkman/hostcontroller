@@ -19,6 +19,7 @@ public class CurrentDataObjectSet {
     private Winch currentWinch;
     private Airfield currentAirfield;
     private ArrayList<Observer> observers;
+    private Drum currentDrum;
     
     public static CurrentDataObjectSet getCurrentDataObjectSet()
     {
@@ -94,7 +95,12 @@ public class CurrentDataObjectSet {
     {
         if(instance != null) instance.currentProfile = null;
         notifyObservers();        
-    }   
+    }    
+    public void clearDrum()
+    {
+        if(instance != null) instance.currentDrum = null;
+        notifyObservers();        
+    }
     
     //Ah yeah, getters and setters
     public void setCurrentPilot(Pilot pilot)
@@ -161,6 +167,16 @@ public class CurrentDataObjectSet {
         }        
         instance.notifyObservers();
     }
+    public void setCurrentDrum(Drum drum)
+    {
+        if(instance != null)
+        {
+            instance.currentDrum = drum;
+        }        
+        instance.notifyObservers();
+    }    
+    
+    
     public Pilot getCurrentPilot()
     {
         if(instance == null)
@@ -248,5 +264,16 @@ public class CurrentDataObjectSet {
         {
             return instance.currentProfile;
         }        
+    }
+    public Drum getCurrentDrum()
+    {
+        if(instance == null)
+        {
+            return null;
+        }
+        else
+        {
+            return instance.currentDrum;
+        }
     }
 }
