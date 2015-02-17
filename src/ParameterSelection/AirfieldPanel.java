@@ -1,5 +1,7 @@
 package ParameterSelection;
 
+import AddEditPanels.AddEditGliderPosFrame;
+import AddEditPanels.AddEditRunwayFrame;
 import DataObjects.Airfield;
 import DataObjects.GliderPosition;
 import DataObjects.CurrentDataObjectSet;
@@ -528,6 +530,8 @@ public class AirfieldPanel extends JPanel {
         JButton gliderPosAddNewButton = new JButton("Add New");
         gliderPosAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditGliderPosFrame AddEditGliderPosFrame_ = new AddEditGliderPosFrame(currentData.getCurrentGliderPosition(), false);
+                    AddEditGliderPosFrame_.setVisible(true);
         	}
         });
         gliderPosAddNewButton.setBounds(200, 0, 89, 23);
@@ -536,6 +540,8 @@ public class AirfieldPanel extends JPanel {
         JButton gliderPosEditButton = new JButton("Edit");
         gliderPosEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditGliderPosFrame AddEditGliderPosFrame_ = new AddEditGliderPosFrame(currentData.getCurrentGliderPosition(), true);
+                    AddEditGliderPosFrame_.setVisible(true);
         	}
         });
         gliderPosEditButton.setBounds(288, 0, 89, 23);
@@ -618,6 +624,8 @@ public class AirfieldPanel extends JPanel {
         JButton runwayEditButton = new JButton("Edit");
         runwayEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditRunwayFrame AddEditRunwayFrame_ = new AddEditRunwayFrame(currentData.getCurrentRunway(), true);
+                    AddEditRunwayFrame_.setVisible(true);
         	}
         });
         runwayEditButton.setBounds(288, 0, 89, 23);
@@ -626,6 +634,8 @@ public class AirfieldPanel extends JPanel {
         JButton runwayAddNewButton = new JButton("Add New");
         runwayAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                    AddEditRunwayFrame AddEditRunwayFrame_ = new AddEditRunwayFrame(currentData.getCurrentRunway(), false);
+                    AddEditRunwayFrame_.setVisible(true);
         	}
         });
         runwayAddNewButton.setBounds(200, 0, 89, 23);

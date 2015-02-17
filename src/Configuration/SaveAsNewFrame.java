@@ -24,7 +24,6 @@ public class SaveAsNewFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-        private Profile Profile;
         private ProfileManagementFrame parent;
 
 	/**
