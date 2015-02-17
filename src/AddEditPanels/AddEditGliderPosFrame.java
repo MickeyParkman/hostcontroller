@@ -216,12 +216,11 @@ public class AddEditGliderPosFrame extends JFrame {
                 gliderPosId = nameField.getText();
             }
             
-            String parent;
-            if (objectSet.getCurrentRunway() != null){
+            String parent = "";
+            try{
                 parent = objectSet.getCurrentRunway().getId();
-            }
-            else{
-                parent = "";
+            }catch (Exception e){
+                System.out.println("cur runway 404 " + e.getMessage());
             }
             
             GliderPosition newGliderPos = new GliderPosition(gliderPosId, parent,
@@ -238,9 +237,10 @@ public class AddEditGliderPosFrame extends JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
                 dispose();
             }catch(SQLException e1) {
-                if(e1.getErrorCode() == 30000)
+                if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the Glider Position " + newGliderPos.toString() + " already exists in the database");
+                }
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
             } catch (Exception e3) {
