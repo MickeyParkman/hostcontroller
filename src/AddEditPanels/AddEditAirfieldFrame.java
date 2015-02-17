@@ -1,3 +1,4 @@
+//Successful
 package AddEditPanels;
 
 import DataObjects.CurrentDataObjectSet;
@@ -100,12 +101,12 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldAttributesPanel.add(airfieldAltitudeField);
         airfieldAltitudeField.setColumns(10);
         
-        designatorField = new JTextField();
+        designatorField = new JTextField(currentAirfield.getDesignator());
         designatorField.setBounds(140, 33, 120, 20);
         airfieldAttributesPanel.add(designatorField);
         designatorField.setColumns(10);
         
-        airfieldNameField = new JTextField();
+        airfieldNameField = new JTextField(currentAirfield.getName());
         airfieldNameField.setBounds(140, 8, 120, 20);
         airfieldAttributesPanel.add(airfieldNameField);
         airfieldNameField.setColumns(10);
