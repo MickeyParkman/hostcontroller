@@ -250,7 +250,7 @@ public class MainHost extends javax.swing.JFrame {
             @Override
             public void run() {
                 CommPortConnection comm = new CommPortConnection();
-                MessagePipeline pipeline = new MessagePipeline(comm);
+                //MessagePipeline pipeline = new MessagePipeline(comm);
                 try {
                     DatabaseUtilities.DatabaseInitialization.initDatabase();
                 }catch(ClassNotFoundException e1) {
@@ -263,8 +263,8 @@ public class MainHost extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
                     }
                 }
-                MainHost frame = new MainHost(pipeline);
-                frame.setVisible(true);
+                //MainHost frame = new MainHost(pipeline);
+                //frame.setVisible(true);
             }
         });
     }

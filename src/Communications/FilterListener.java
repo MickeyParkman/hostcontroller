@@ -156,13 +156,13 @@ public class FilterListener extends MessageListener
                 currentTime = intTime + fracTime
                         * (1.0d / 64);
 
-                pipeline.logMessage(message);
+                //pipeline.logMessage(message);
 
             } else if (msgin.dlc == 4)
             {
                 //  intergral second
 
-                pipeline.logMessage(intTime = msgin.get_int(0), message);
+                //pipeline.logMessage(intTime = msgin.get_int(0), message);
                 fracTime = 0;
                 currentTime = intTime;
                 //System.out.println(currentTime);
@@ -256,7 +256,7 @@ public class FilterListener extends MessageListener
 
                 if (launchActive)
                 {
-                    pipeline.signalNewLaunchdataAvaialbe(intData);
+                    //pipeline.signalNewLaunchdataAvaialbe(intData);
                 }
 
             }
@@ -323,9 +323,9 @@ public class FilterListener extends MessageListener
                             intData.setStartTime(lastTime);
                             intData.setElaspedTime(-(groupDelay
                                     + timeTick));
-                            pipeline.signalNewLaunchStarting();                            
+                            //pipeline.signalNewLaunchStarting();                            
                            //System.out.println("New Launch Signaled");
-                            pipeline.signalNewLaunchdataAvaialbe(intData);
+                            //pipeline.signalNewLaunchdataAvaialbe(intData);
                         } else
                         {
                             //System.out.println("Entry into Profile State with Launch Active");
@@ -339,7 +339,7 @@ public class FilterListener extends MessageListener
                     case 1:
                         //  should I call a method to signal?
                         intData.setLauchStatus(launchActive = false);
-                        pipeline.signalLaunchEnded();
+                        //pipeline.signalLaunchEnded();
                         break;
                 }
             }

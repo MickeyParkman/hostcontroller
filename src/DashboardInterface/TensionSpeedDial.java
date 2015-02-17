@@ -146,7 +146,7 @@ public class TensionSpeedDial extends JPanel {
                         
                         JFreeChart jfreechart = new JFreeChart(dialplot);
                         ChartPanel chartpanel = new ChartPanel(jfreechart);
-                        chartpanel.setPreferredSize(new Dimension(400, 400));
+                        chartpanel.setPreferredSize(new Dimension(300, 300));
                         JPanel jpanel = new JPanel(new GridLayout(2, 2));
                         add(chartpanel);
                         //add(jpanel, "South");
