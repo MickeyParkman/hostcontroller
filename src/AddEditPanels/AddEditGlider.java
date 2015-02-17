@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
@@ -25,13 +27,16 @@ import javax.swing.JOptionPane;
 public class AddEditGlider extends JFrame {
 
     private JPanel contentPane;
-    private JTextField nNumField;
+    private JTextField nNumberField;
     private JTextField emptyWeightField;
-    private JTextField maxGrossWeightField;
-    private JTextField indicatedStallSpeedField;
-    private JTextField maxWinchingSpeedField;
-    private JCheckBox chckbxCanCarryBallast;
-    private JCheckBox chckbxSecondSeat;
+    private JTextField grossWeightField;
+    private JTextField stallSpeedField;
+    private JTextField weakLinkField;
+    private JTextField tensionField;
+    private JTextField releaseAngleField;
+    private JTextField winchingSpeedField;
+    private JCheckBox ballastCheckBox;
+    private JCheckBox multipleSeatsCheckBox;
     private Sailplane sailplaneEdited;
     private boolean isEditEntry;
 
@@ -44,7 +49,7 @@ public class AddEditGlider extends JFrame {
                             try {
                                     Sailplane sample = new Sailplane("N-num", "The type",
                                             100, 200, 300, 400, 500, 600, 700, true, "Optional");
-                                    AddEditGlider frame = new AddEditGlider(sample, true);
+                                    AddEditGlider frame = new AddEditGlider(sample, false);
                                     frame.setVisible(true);
                             } catch (Exception e) {
                                     e.printStackTrace();
@@ -57,121 +62,141 @@ public class AddEditGlider extends JFrame {
      * Create the frame.
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
-            setTitle("Glider");
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setBounds(100, 100, 450, 300);
-            contentPane = new JPanel();
-            contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-            setContentPane(contentPane);
-            contentPane.setLayout(null);
+        setTitle("Glider");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 650, 242);
+        
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
 
-            JLabel lblNnumber = new JLabel("N-Number:");
-            lblNnumber.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            lblNnumber.setBounds(10, 11, 85, 14);
-            contentPane.add(lblNnumber);
+        JLabel nNumberLabel = new JLabel("N Number:");
+        nNumberLabel.setBounds(10, 11, 86, 14);
+        contentPane.add(nNumberLabel);
+        
+        JLabel emptyWeightLabel = new JLabel("Empty Weight:");
+        emptyWeightLabel.setBounds(10, 36, 86, 14);
+        contentPane.add(emptyWeightLabel);
+        
+        JLabel maxGrossWeightLabel = new JLabel("Max Gross Weight:");
+        maxGrossWeightLabel.setBounds(10, 61, 117, 14);
+        contentPane.add(maxGrossWeightLabel);
+        
+        JLabel lblIndicatedStallSpeed = new JLabel("Indicated Stall Speed:");
+        lblIndicatedStallSpeed.setBounds(10, 86, 140, 14);
+        contentPane.add(lblIndicatedStallSpeed);
+        
+        stallSpeedField = new JTextField();
+        stallSpeedField.setBounds(160, 83, 110, 20);
+        contentPane.add(stallSpeedField);
+        stallSpeedField.setColumns(10);
+        
+        grossWeightField = new JTextField();
+        grossWeightField.setBounds(160, 58, 110, 20);
+        contentPane.add(grossWeightField);
+        grossWeightField.setColumns(10);
+        
+        emptyWeightField = new JTextField();
+        emptyWeightField.setBounds(160, 33, 110, 20);
+        contentPane.add(emptyWeightField);
+        emptyWeightField.setColumns(10);
+        
+        nNumberField = new JTextField();
+        nNumberField.setBounds(160, 8, 110, 20);
+        contentPane.add(nNumberField);
+        nNumberField.setColumns(10);
+        
+        ballastCheckBox = new JCheckBox("Can Carry Ballast?");
+        ballastCheckBox.setBounds(10, 117, 154, 23);
+        contentPane.add(ballastCheckBox);
+        
+        JLabel maxWinchingSpeedLabel = new JLabel("Max Winching Speed:");
+        maxWinchingSpeedLabel.setBounds(320, 11, 140, 14);
+        contentPane.add(maxWinchingSpeedLabel);
+        
+        JLabel maxWeakLinkLabel = new JLabel("Max Weak Link Strength:");
+        maxWeakLinkLabel.setBounds(320, 36, 159, 14);
+        contentPane.add(maxWeakLinkLabel);
+        
+        JLabel maxTensionLabel = new JLabel("Max Tension:");
+        maxTensionLabel.setBounds(320, 61, 140, 14);
+        contentPane.add(maxTensionLabel);
+        
+        JLabel cableReleaseAngleLabel = new JLabel("Cable Release Angle:");
+        cableReleaseAngleLabel.setBounds(320, 86, 140, 14);
+        contentPane.add(cableReleaseAngleLabel);
+        
+        multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
+        multipleSeatsCheckBox.setBounds(320, 117, 159, 23);
+        contentPane.add(multipleSeatsCheckBox);
+        
+        weakLinkField = new JTextField();
+        weakLinkField.setBounds(487, 33, 120, 20);
+        contentPane.add(weakLinkField);
+        weakLinkField.setColumns(10);
+        
+        tensionField = new JTextField();
+        tensionField.setBounds(487, 58, 120, 20);
+        contentPane.add(tensionField);
+        tensionField.setColumns(10);
+        
+        releaseAngleField = new JTextField();
+        releaseAngleField.setBounds(487, 83, 120, 20);
+        contentPane.add(releaseAngleField);
+        releaseAngleField.setColumns(10);
+        
+        winchingSpeedField = new JTextField();
+        winchingSpeedField.setBounds(487, 8, 120, 20);
+        contentPane.add(winchingSpeedField);
+        winchingSpeedField.setColumns(10);
 
-            JLabel lblNewLabel = new JLabel("Empty Weight:");
-            lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            lblNewLabel.setBounds(10, 42, 105, 14);
-            contentPane.add(lblNewLabel);
+/*
+        JLabel lblUnits = new JLabel("Units*");
+        lblUnits.setBounds(290, 44, 46, 14);
+        contentPane.add(lblUnits);
 
-            JLabel lblMaxGrossWeight = new JLabel("Max Gross Weight:");
-            lblMaxGrossWeight.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            lblMaxGrossWeight.setBounds(10, 73, 131, 14);
-            contentPane.add(lblMaxGrossWeight);
+        JLabel label = new JLabel("Units*");
+        label.setBounds(290, 75, 46, 14);
+        contentPane.add(label);
 
-            JLabel lblIndicatedStallSpeed = new JLabel("Indicated Stall Speed:");
-            lblIndicatedStallSpeed.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            lblIndicatedStallSpeed.setBounds(10, 104, 144, 14);
-            contentPane.add(lblIndicatedStallSpeed);
+        JLabel label_1 = new JLabel("Units*");
+        label_1.setBounds(290, 106, 46, 14);
+        contentPane.add(label_1);
 
-            JLabel lblMaxWinchingSpeed = new JLabel("Max Winching Speed:");
-            lblMaxWinchingSpeed.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            lblMaxWinchingSpeed.setBounds(10, 135, 144, 14);
-            contentPane.add(lblMaxWinchingSpeed);
+        JLabel label_2 = new JLabel("Units*");
+        label_2.setBounds(290, 137, 46, 14);
+        contentPane.add(label_2);*/
 
-            nNumField = new JTextField(sailplaneEdited.getNumber());
-            nNumField.setColumns(10);
-            nNumField.setBounds(180, 10, 100, 20);
-            contentPane.add(nNumField);
+        JButton submitButton = new JButton("Submit");
+        submitButton.setBounds(0, 180, 89, 23);
+        contentPane.add(submitButton);
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                //submitData();
+            }
+        });
 
-            emptyWeightField = new JTextField(Integer.toString(sailplaneEdited.getEmptyWeight()));
-            emptyWeightField.setColumns(10);
-            emptyWeightField.setBounds(180, 41, 100, 20);
-            contentPane.add(emptyWeightField);
+        JButton clearButton = new JButton("Clear");
+        clearButton.setBounds(90, 180, 89, 23);
+        contentPane.add(clearButton);
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                clearData();
+            }
+        });
 
-            maxGrossWeightField = new JTextField(Integer.toString(sailplaneEdited.getMaximumGrossWeight()));
-            maxGrossWeightField.setColumns(10);
-            maxGrossWeightField.setBounds(180, 72, 100, 20);
-            contentPane.add(maxGrossWeightField);
-
-            indicatedStallSpeedField = new JTextField(Integer.toString(sailplaneEdited.getIndicatedStallSpeed()));
-            indicatedStallSpeedField.setBounds(180, 103, 100, 20);
-            contentPane.add(indicatedStallSpeedField);
-            indicatedStallSpeedField.setColumns(10);
-
-            maxWinchingSpeedField = new JTextField(Integer.toString(sailplaneEdited.getMaximumWinchingSpeed()));
-            maxWinchingSpeedField.setColumns(10);
-            maxWinchingSpeedField.setBounds(180, 134, 100, 20);
-            contentPane.add(maxWinchingSpeedField);
-
-            JLabel lblUnits = new JLabel("Units*");
-            lblUnits.setBounds(290, 44, 46, 14);
-            contentPane.add(lblUnits);
-
-            JLabel label = new JLabel("Units*");
-            label.setBounds(290, 75, 46, 14);
-            contentPane.add(label);
-
-            JLabel label_1 = new JLabel("Units*");
-            label_1.setBounds(290, 106, 46, 14);
-            contentPane.add(label_1);
-
-            JLabel label_2 = new JLabel("Units*");
-            label_2.setBounds(290, 137, 46, 14);
-            contentPane.add(label_2);
-
-            chckbxSecondSeat = new JCheckBox("Singled Seated?", sailplaneEdited.getCarryBallast());
-            chckbxSecondSeat.setHorizontalTextPosition(SwingConstants.LEADING);
-            chckbxSecondSeat.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            chckbxSecondSeat.setBounds(10, 166, 144, 23);
-            contentPane.add(chckbxSecondSeat);
-
-            chckbxCanCarryBallast = new JCheckBox("Can carry ballast?", sailplaneEdited.getCarryBallast());
-            chckbxCanCarryBallast.setHorizontalTextPosition(SwingConstants.LEADING);
-            chckbxCanCarryBallast.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            chckbxCanCarryBallast.setBounds(10, 197, 144, 23);
-            contentPane.add(chckbxCanCarryBallast);
-
-            JButton submitButton = new JButton("Submit");
-            submitButton.setBounds(0, 239, 89, 23);
-            contentPane.add(submitButton);
-            submitButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    //submitData();
-                }
-            });
-
-            JButton clearButton = new JButton("Clear");
-            clearButton.setBounds(90, 239, 89, 23);
-            contentPane.add(clearButton);
-            clearButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    clearData();
-                }
-            });
-
-            JButton cancelButton = new JButton("Cancel");
-            cancelButton.setBounds(180, 239, 89, 23);
-            contentPane.add(cancelButton);
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    cancelCommand();
-                }
-            });
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.setBounds(180, 180, 89, 23);
+        contentPane.add(cancelButton);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                cancelCommand();
+            }
+        });
     }
     
     /*public void submitData(){
@@ -218,13 +243,16 @@ public class AddEditGlider extends JFrame {
     }
     
     public void clearData(){
-        nNumField.setText("");
+        nNumberField.setText("");
         emptyWeightField.setText("");
-        maxGrossWeightField.setText("");
-        indicatedStallSpeedField.setText("");
-        maxWinchingSpeedField.setText("");
-        chckbxCanCarryBallast.setSelected(false);
-        chckbxSecondSeat.setSelected(false);
+        grossWeightField.setText("");
+        stallSpeedField.setText("");
+        winchingSpeedField.setText("");
+        weakLinkField.setText("");
+        tensionField.setText("");
+        releaseAngleField.setText("");
+        ballastCheckBox.setSelected(false);
+        multipleSeatsCheckBox.setSelected(false);
     }
     
     public void cancelCommand(){
