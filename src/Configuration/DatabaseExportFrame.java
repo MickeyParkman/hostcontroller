@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,18 +82,39 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
         
         JPanel panel = new JPanel();
         contentPane.add(panel, BorderLayout.SOUTH);
-        JButton submitButton = new JButton("Export");
+        JButton submitButton = new JButton("Save to .zip");
         submitButton.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {
-                        List<String> selectedTables = new ArrayList<String>();
-                        selectedTables = TableList.getSelectedValuesList();
-                        try{
-                            DatabaseExporter.exportDatabase(selectedTables, "MyZip.zip");
+                        JFileChooser chooser = new JFileChooser();
+                        chooser.setDialogTitle("Save");
+                        chooser.setApproveButtonText("Save");
+                        String filePath = "";
+                        String fileName = "";
+                        String zipLocation = "";
+                        int option = chooser.showOpenDialog(DatabaseExportFrame.this);
+                        if(option == JFileChooser.APPROVE_OPTION) {
+                            List<String> selectedTables = new ArrayList<String>();
+                            selectedTables = TableList.getSelectedValuesList();
+                            File file = chooser.getSelectedFile();
+                            File chosen = chooser.getCurrentDirectory();
+                            filePath = chosen.getPath();
+                            fileName = file.getName();
+                            zipLocation = filePath + "\\" + fileName;
+                            if(!fileName.contains(".zip"))
+                                zipLocation += ".zip";
+                            try{
+                            DatabaseExporter.exportDatabase(selectedTables, zipLocation);
                             getFrame().dispose();
-                        }catch(Exception e)
-                        { }
+                            }catch(Exception e)
+                            { }
+                        }
+                        System.out.println(zipLocation);
+                        
+                        
+                        
+                        
                         
                     }                      
                 });
