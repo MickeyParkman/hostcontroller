@@ -360,7 +360,9 @@ public class AddEditPilotPanel extends JFrame {
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e3) {
-            System.out.println(e3.getMessage());
+            System.out.println("NNNNNNN");
+            e3.printStackTrace();
+            //System.out.println(e3.getMessage());
         }   
     }
     

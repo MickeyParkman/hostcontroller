@@ -18,16 +18,16 @@ public class MessagePipeline extends Thread {
     private String currentMessage = "";
     private static MessagePipeline instance = null;
     private boolean running = false;
-    private String DEBUGMessageList[] = {"100 100 100 65"
-                                        ,"80 200 100 50"
-                                        ,"100 100 500 100"
-                                        ,"150 100 20 45"
-                                        ,"100 30 46 100"
-                                        ,"34 30 46 100"
-                                        ,"67 56 46 500"
-                                        ,"100 30 46 40"
-                                        ,"776 30 46 56"
-                                        ,"7 78 46 58"};
+    private String DEBUGMessageList[] = {"5 100 100 65"
+                                        ,"5.1 200 100 50"
+                                        ,"5.2 100 500 100"
+                                        ,"5.3 100 20 45"
+                                        ,"5.4 30 46 100"
+                                        ,"5.5 30 46 100"
+                                        ,"5.6 56 46 500"
+                                        ,"5.7 30 46 40"
+                                        ,"5.8 30 46 56"
+                                        ,"5.9 78 46 58"};
     private int curMessageIndex = 0;
     
     public static MessagePipeline getInstance()

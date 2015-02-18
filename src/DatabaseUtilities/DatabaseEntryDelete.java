@@ -45,20 +45,20 @@ public class DatabaseEntryDelete {
         try {
             ps = connection.prepareStatement(deleteString);
             ps.execute();
+            ps.close();
         }catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, "Error executing");
             throw e;
         }finally
-        {
-            ps.close();
+        { 
         }
     }
     
     public static void DeleteEntry(Pilot pilot) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM PILOT WHERE pilot_id = " + pilot.getPilotId();
+        deleteString = "DELETE FROM PILOT WHERE pilot_id = '" + pilot.getPilotId() + "'";
         
         Delete(deleteString);
     }
@@ -66,7 +66,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(Sailplane sailplane) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM SAILPLANE WHERE n_number = " + sailplane.getNumber();
+        deleteString = "DELETE FROM SAILPLANE WHERE n_number = '" + sailplane.getNumber() + "'";
         
         Delete(deleteString);
     }
@@ -74,7 +74,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(Airfield airfield) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM AIRFIELD WHERE name = " + airfield.getName();
+        deleteString = "DELETE FROM AIRFIELD WHERE name = '" + airfield.getName() + "'";
         
         Delete(deleteString);
     }
@@ -82,7 +82,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(Runway runway) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM RUNWAY WHERE runway_id = " + runway.getId();
+        deleteString = "DELETE FROM RUNWAY WHERE runway_id = '" + runway.getId() + "'";
         
         Delete(deleteString);
     }
@@ -90,7 +90,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(GliderPosition position) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM GLIDERPOSITION WHERE position_id = " + position.getGliderPositionId();
+        deleteString = "DELETE FROM GLIDERPOSITION WHERE position_id = '" + position.getGliderPositionId() + "'";
         
         Delete(deleteString);
     }
@@ -98,7 +98,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(WinchPosition position) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM WINCHPOSITION WHERE name = " + position.getName();
+        deleteString = "DELETE FROM WINCHPOSITION WHERE name = '" + position.getName() + "'";
         
         Delete(deleteString);
     }
@@ -106,7 +106,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(Parachute parachute) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM PARACHUTE WHERE parachute_id = " + parachute.getParachuteNumber();
+        deleteString = "DELETE FROM PARACHUTE WHERE parachute_id = '" + parachute.getParachuteNumber() + "'";
         
         Delete(deleteString);
     }
