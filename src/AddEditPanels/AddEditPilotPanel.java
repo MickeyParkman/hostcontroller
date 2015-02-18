@@ -1,9 +1,11 @@
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
 import DatabaseUtilities.DatabaseEntryDelete;
 import DatabaseUtilities.DatabaseEntryEdit;
+import ParameterSelection.PilotPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -41,6 +43,12 @@ public class AddEditPilotPanel extends JFrame {
     private JTextArea optionalInfoField;
     private Pilot currentPilot;
     private boolean isEditEntry;
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
     
     /**
      * Create the frame.
@@ -337,6 +345,7 @@ public class AddEditPilotPanel extends JFrame {
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentPilot(newPilot);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                parent.update();
                 this.dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
@@ -356,6 +365,7 @@ public class AddEditPilotPanel extends JFrame {
             CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             objectSet.clearPilot();
             JOptionPane.showMessageDialog(rootPane, currentPilot.toString() + " successfully deleted.");
+            parent.update();
             this.dispose();
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");

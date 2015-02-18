@@ -1,6 +1,7 @@
 package ParameterSelection;
 
 import AddEditPanels.AddEditPilotPanel;
+import Communications.Observer;
 import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
@@ -30,10 +31,29 @@ import java.awt.Font;
 import javax.swing.JButton;
 
 
-public class PilotPanel extends JPanel {
+public class PilotPanel extends JPanel implements Observer{
     private List<Pilot> pilotNames = new ArrayList<Pilot>();
     private CurrentDataObjectSet currentData;
+    private JScrollPane sailplaneScrollPane = new JScrollPane();
 
+    @Override
+    public void update()
+    {
+        initPilotList();
+        DefaultListModel sailplaneModel = new DefaultListModel();
+        sailplaneModel.clear();
+        for(Object str: pilotNames){
+            sailplaneModel.addElement(str);
+        }
+        pilotJList.setModel(sailplaneModel);
+
+        sailplaneScrollPane.setViewportView(pilotJList);
+    }
+    
+    private Observer getObserver() {
+        return this;
+    }
+    
     private void initPilotList() {
         try{
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
@@ -163,7 +183,6 @@ public class PilotPanel extends JPanel {
         
         setLayout(new BorderLayout(0, 0));
 
-        JScrollPane sailplaneScrollPane = new JScrollPane();
         add(sailplaneScrollPane, BorderLayout.NORTH);
         DefaultListModel sailplaneModel = new DefaultListModel();
         for(Object str: pilotNames){
@@ -314,6 +333,7 @@ public class PilotPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditPilotPanel AddEditPilotPanel_ = new AddEditPilotPanel(currentData.getCurrentPilot(), false);
                     AddEditPilotPanel_.setVisible(true);
+                    AddEditPilotPanel_.attach(getObserver());
         	}
         });
         addNewButton.setBounds(200, 0, 89, 23);
@@ -324,6 +344,7 @@ public class PilotPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditPilotPanel AddEditPilotPanel_ = new AddEditPilotPanel(currentData.getCurrentPilot(), true);
                     AddEditPilotPanel_.setVisible(true);
+                    AddEditPilotPanel_.attach(getObserver());
         	}
         });
         editButton.setBounds(288, 0, 89, 23);
@@ -349,4 +370,9 @@ public class PilotPanel extends JPanel {
     private JLabel lblPilot;
     private JButton addNewButton;
     private JButton editButton;
+
+    @Override
+    public void update(String msg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
