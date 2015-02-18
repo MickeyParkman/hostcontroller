@@ -40,10 +40,10 @@ public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
     public void loadEnvironmentalData(String message)
     {
         String mParts[] = message.split(" ");
-        density += Integer.parseInt(mParts[0]);
-        temp += Integer.parseInt(mParts[1]);
-        speed += Integer.parseInt(mParts[2]);
-        pressure += Integer.parseInt(mParts[3]);
+        density += Float.parseFloat(mParts[0]);
+        temp += Float.parseFloat(mParts[1]);
+        speed += Float.parseFloat(mParts[2]);
+        pressure += Float.parseFloat(mParts[3]);
 
     }
     
@@ -52,10 +52,10 @@ public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
         density /= HEARTBEAT_COUNT;
         pressure /= HEARTBEAT_COUNT;
         speed /= HEARTBEAT_COUNT;
-        altdensityLabel.setText(String.valueOf(density));
-        pressureLabel.setText(String.valueOf(pressure));
-        temperatureLabel.setText(String.valueOf(temp));
-        windspeedLabel.setText(String.valueOf(speed));
+        altdensityLabel.setText(String.valueOf(density) + " kg/m^3");
+        pressureLabel.setText(String.valueOf(pressure) + " N/m^2");
+        temperatureLabel.setText(String.valueOf(temp) + " ° C");
+        windspeedLabel.setText(String.valueOf(speed) + " mph");
         temp = 0;
         density = 0;
         pressure = 0;
