@@ -9,6 +9,8 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 import DataObjects.*;
+import ParameterSelection.Capability;
+import ParameterSelection.Preference;
 /**
  *
  * @author dbennett3
@@ -52,13 +54,14 @@ public class DatabaseEntryEdit
         try {
             ps = connection.prepareStatement(updateString);
             ps.execute();
+            ps.close();
         }catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, "Error executing");
             throw e;
         }finally
         {
-            ps.close();
+
         }
     }
     
@@ -73,14 +76,14 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE PILOT SET "
-                + "first_name = '" + pilot.getFirstName() + "'"
-                + "middle_name = '" + pilot.getMiddleName() + "'"
-                + "last_name = '" + pilot.getLastName() + "'"
-                + "flight_weight = '" + String.valueOf(pilot.getWeight()) + "'"
-                + "capability = '" + pilot.getCapability() + "'"
-                + "preference = '" + pilot.getPreference() + "'"
-                + "emergency_contact_info = '" + pilot.getEmergencyContact() + "'"
-                + "emergency_medical_info = '" + pilot.getMedInfo() + "'"
+                + "first_name = '" + pilot.getFirstName() + "',"
+                + "middle_name = '" + pilot.getMiddleName() + "',"
+                + "last_name = '" + pilot.getLastName() + "',"
+                + "flight_weight = " + String.valueOf(pilot.getWeight()) + ","
+                + "capability = " + Capability.convertCapabilityStringToNum(pilot.getCapability()) + ","
+                + "preference = " + Preference.convertPreferenceStringToNum(pilot.getPreference()) + ","
+                + "emergency_contact_info = '" + pilot.getEmergencyContact() + "',"
+                + "emergency_medical_info = '" + pilot.getMedInfo() + "',"
                 + "optional_info = '" + pilot.getOptionalInfo() + "'"
                 + "WHERE pilot_id = '" + pilot.getPilotId() + "'";
         
