@@ -90,25 +90,26 @@ public class DatabaseDataObjectUtilities {
         }
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)){
-            PreparedStatement pilotInsertStatement = connect.prepareStatement(
+            PreparedStatement sailplaneInsertStatement = connect.prepareStatement(
                     "INSERT INTO Sailplane(n_number, type,"
                             + "max_gross_weight, empty_weight, indicated_stall_speed,"
                             + "max_winching_speed, max_weak_link_strength, max_tension,"
                             + "cable_release_angle, carry_ballast, optional_info)"
                             + "values (?,?,?,?,?,?,?,?,?,?,?)");
-            pilotInsertStatement.setString(1, theSailplane.getNumber());
-            pilotInsertStatement.setString(2, theSailplane.getType());
-            pilotInsertStatement.setString(3, String.valueOf(theSailplane.getMaxGrossWeight()));
-            pilotInsertStatement.setString(4, String.valueOf(theSailplane.getEmptyWeight()));
-            pilotInsertStatement.setString(5, String.valueOf(theSailplane.getIndicatedStallSpeed()));
-            pilotInsertStatement.setString(6, String.valueOf(theSailplane.getMaxWinchingSpeed()));
-            pilotInsertStatement.setString(7, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
-            pilotInsertStatement.setString(8, String.valueOf(theSailplane.getMaxTension()));
-            pilotInsertStatement.setString(9, String.valueOf(theSailplane.getCableReleaseAngle()));
-            pilotInsertStatement.setString(10, String.valueOf(theSailplane.storeCarryBallast()));
-            pilotInsertStatement.setString(11, theSailplane.getOptionalInfo());
-            pilotInsertStatement.executeUpdate();
-            pilotInsertStatement.close();
+            sailplaneInsertStatement.setString(1, theSailplane.getNumber());
+            sailplaneInsertStatement.setString(2, theSailplane.getType());
+            sailplaneInsertStatement.setString(3, String.valueOf(theSailplane.getMaxGrossWeight()));
+            sailplaneInsertStatement.setString(4, String.valueOf(theSailplane.getEmptyWeight()));
+            sailplaneInsertStatement.setString(5, String.valueOf(theSailplane.getIndicatedStallSpeed()));
+            sailplaneInsertStatement.setString(6, String.valueOf(theSailplane.getMaxWinchingSpeed()));
+            sailplaneInsertStatement.setString(7, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
+            sailplaneInsertStatement.setString(8, String.valueOf(theSailplane.getMaxTension()));
+            sailplaneInsertStatement.setString(9, String.valueOf(theSailplane.getCableReleaseAngle()));
+            System.out.println(theSailplane.storeCarryBallast());
+            sailplaneInsertStatement.setString(10, String.valueOf(theSailplane.storeCarryBallast()));
+            sailplaneInsertStatement.setString(11, theSailplane.getOptionalInfo());
+            sailplaneInsertStatement.executeUpdate();
+            sailplaneInsertStatement.close();
         }catch(SQLException e) {
             //System.out.println("Error adding sailplane to database");
             throw e;
@@ -395,8 +396,8 @@ public class DatabaseDataObjectUtilities {
             Statement stmt = connect.createStatement();
             ResultSet theSailplanes = stmt.executeQuery("SELECT n_number, type, "
                     + "max_gross_weight, empty_weight, indicated_stall_speed,"
-                    + "max_winching_speed, max_weak_link_strength, max_tension "
-                    + "cable_release_angle, carry_ballast, optional_info"
+                    + "max_winching_speed, max_weak_link_strength, max_tension, "
+                    + "cable_release_angle, carry_ballast, optional_info "
                     + "FROM Sailplane ORDER BY n_number");
             List sailplanes = new ArrayList<Sailplane>();
             
@@ -422,8 +423,12 @@ public class DatabaseDataObjectUtilities {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
-                
-                boolean ballast = Sailplane.returnCarryBallast(Integer.parseInt(theSailplanes.getString(10)));
+                boolean ballast = false;
+                try{
+                    ballast = Sailplane.returnCarryBallast(Integer.parseInt(theSailplanes.getString(10)));
+                }catch(NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Error reading ballast in reading from DB");
+                }
                 
                 Sailplane newSailplane = new Sailplane(nNumber, type,
                         maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, 
