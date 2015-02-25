@@ -43,6 +43,9 @@ public class Sailplane {
     //boolean on whether or not the plane can carry ballast
     boolean carryBallast;
     
+    //boolean on whether or not the plane can carry passengers
+    boolean multipleSeats;
+    
     //optional info on the plane
     String optionalInfo;
     
@@ -57,7 +60,7 @@ public class Sailplane {
     public Sailplane(String nNumber, String Type,
                      int maximumGrossWeight, int emptyWeight, int indicatedStallSpeed,
                      int maximumWinchingSpeed, int maximumAllowableWeakLinkStrength, int maxTension,
-                     int cableReleaseAngle, boolean carryBallast, String optional){
+                     int cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
         this.nNumber = nNumber;
         this.type = Type;
         this.maximumGrossWeight = maximumGrossWeight;
@@ -68,6 +71,7 @@ public class Sailplane {
         this.maximumTension = maxTension;
         this.cableReleaseAngle = cableReleaseAngle;
         this.carryBallast = carryBallast;
+        this.multipleSeats = multipleSeats;
         this.optionalInfo = optional;
         
         ballast = 0;
@@ -133,6 +137,24 @@ public class Sailplane {
     
     public boolean getCarryBallast() {
         return carryBallast;
+    }
+    
+    public int storeMultipleSeats() {
+        if (multipleSeats)
+            return 1;
+        return 0;
+    }
+    
+    public static boolean returnMultipleSeats(int cMultipleSeats) {
+        if(cMultipleSeats == 0)
+            return false;
+        else if(cMultipleSeats == 1)
+            return true;
+        return false;
+    }
+    
+    public boolean getMultipleSeats() {
+        return multipleSeats;
     }
     
     public String getOptionalInfo() {
