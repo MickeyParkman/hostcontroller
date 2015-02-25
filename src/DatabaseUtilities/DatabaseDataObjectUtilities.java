@@ -94,7 +94,8 @@ public class DatabaseDataObjectUtilities {
                     "INSERT INTO Sailplane(n_number, type,"
                             + "max_gross_weight, empty_weight, indicated_stall_speed,"
                             + "max_winching_speed, max_weak_link_strength, max_tension,"
-                            + "cable_release_angle, carry_ballast, optional_info)"
+                            + "cable_release_angle, carry_ballast, multiple_seats, "
+                            + "optional_info)"
                             + "values (?,?,?,?,?,?,?,?,?,?,?)");
             sailplaneInsertStatement.setString(1, theSailplane.getNumber());
             sailplaneInsertStatement.setString(2, theSailplane.getType());
@@ -105,9 +106,9 @@ public class DatabaseDataObjectUtilities {
             sailplaneInsertStatement.setString(7, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
             sailplaneInsertStatement.setString(8, String.valueOf(theSailplane.getMaxTension()));
             sailplaneInsertStatement.setString(9, String.valueOf(theSailplane.getCableReleaseAngle()));
-            System.out.println(theSailplane.storeCarryBallast());
             sailplaneInsertStatement.setString(10, String.valueOf(theSailplane.storeCarryBallast()));
-            sailplaneInsertStatement.setString(11, theSailplane.getOptionalInfo());
+            sailplaneInsertStatement.setString(11, String.valueOf(theSailplane.storeMultipleSeats()));
+            sailplaneInsertStatement.setString(12, theSailplane.getOptionalInfo());
             sailplaneInsertStatement.executeUpdate();
             sailplaneInsertStatement.close();
         }catch(SQLException e) {
@@ -397,7 +398,8 @@ public class DatabaseDataObjectUtilities {
             ResultSet theSailplanes = stmt.executeQuery("SELECT n_number, type, "
                     + "max_gross_weight, empty_weight, indicated_stall_speed,"
                     + "max_winching_speed, max_weak_link_strength, max_tension, "
-                    + "cable_release_angle, carry_ballast, optional_info "
+                    + "cable_release_angle, carry_ballast, multiple_seats, "
+                    + "optional_info "
                     + "FROM Sailplane ORDER BY n_number");
             List sailplanes = new ArrayList<Sailplane>();
             
@@ -424,15 +426,17 @@ public class DatabaseDataObjectUtilities {
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 boolean ballast = false;
+                boolean multipleSeats = false;
                 try{
                     ballast = Sailplane.returnCarryBallast(Integer.parseInt(theSailplanes.getString(10)));
+                    multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theSailplanes.getString(11)));
                 }catch(NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Error reading ballast in reading from DB");
                 }
                 
                 Sailplane newSailplane = new Sailplane(nNumber, type,
                         maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, 
-                        maxWeakLinkStrength, maxTension, cableAngle, ballast, theSailplanes.getString(11));
+                        maxWeakLinkStrength, maxTension, cableAngle, ballast, multipleSeats, theSailplanes.getString(12));
                 sailplanes.add(newSailplane);
                 
             }
@@ -471,7 +475,6 @@ public class DatabaseDataObjectUtilities {
             while(theAirfields.next()) {
                 String name = theAirfields.getString(1);
                 String designator = theAirfields.getString(2);
-                
                 
                 int altitude = 0;
                 int magneticVariation = 0;

@@ -191,7 +191,7 @@ public class AddEditAirfieldFrame extends JFrame {
         }catch (ClassNotFoundException e1) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e2){
-            System.out.println(e2.getMessage());
+            e2.printStackTrace();
         }
     }
     
@@ -207,7 +207,6 @@ public class AddEditAirfieldFrame extends JFrame {
             if (!isEditEntry){
                 designator = designatorField.getText();
             }
-            System.out.println(designator);
             Airfield newAirfield = new Airfield(airfieldName, designator, airfieldAltitude,
                     magneticVariation, airfieldLatitude, airfieldLongitude, "");
             try{
@@ -223,12 +222,12 @@ public class AddEditAirfieldFrame extends JFrame {
                 this.dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
-                    System.out.println(e1.getMessage());
+                    e1.printStackTrace();
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the airfield " + newAirfield.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
             }catch (Exception e3){
-                System.out.println(e3.getMessage());
+                e3.printStackTrace();
             }
         }
     }
