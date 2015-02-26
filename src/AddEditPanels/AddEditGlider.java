@@ -48,7 +48,7 @@ public class AddEditGlider extends JFrame {
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
         if (!isEditEntry){
-            sailplaneEdited = new Sailplane("", "", 0, 0, 0, 0, 0, 0, 0, false, "");
+            sailplaneEdited = new Sailplane("", "", 0, 0, 0, 0, 0, 0, 0, false, false, "");
         }
         currentGlider = sailplaneEdited;
         this.isEditEntry = isEditEntry;
@@ -129,7 +129,7 @@ public class AddEditGlider extends JFrame {
         contentPane.add(cableReleaseAngleLabel);
         
         multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
-        multipleSeatsCheckBox.setSelected(false);//Needs to change to curGlider.getSeats
+        multipleSeatsCheckBox.setSelected(currentGlider.getMultipleSeats());
         multipleSeatsCheckBox.setBounds(320, 117, 159, 23);
         contentPane.add(multipleSeatsCheckBox);
         
@@ -261,7 +261,7 @@ public class AddEditGlider extends JFrame {
             }
             Sailplane newGlider = new Sailplane(nNumber ,"", grossWeight,
                     emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
-                    releaseAngle, carryBallast, "");
+                    releaseAngle, carryBallast, multipleSeats, "");
             try{
                 if (isEditEntry){
                     DatabaseEntryDelete.DeleteEntry(oldGlider);

@@ -314,6 +314,7 @@ public class DatabaseInitialization {
                 + "max_tension INT,"
                 + "cable_release_angle INT, "
                 + "carry_ballast INT, "
+                + "multiple_seats INT, "
                 + "optional_info VARCHAR(150),"
                 + "PRIMARY KEY (n_number))";
         try (Statement createPilotTableStatement = connect.createStatement()) {

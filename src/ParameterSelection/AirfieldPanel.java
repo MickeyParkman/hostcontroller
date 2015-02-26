@@ -83,6 +83,7 @@ public class AirfieldPanel extends JPanel {
             airfields = DatabaseUtilities.DatabaseDataObjectUtilities.getAirfields();
             airfields.add(0, new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));   
         }catch(SQLException e) {
+            e.printStackTrace();
             airfields.add(new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));
             airfields.add(new Airfield("Bob-land", "BOB", 1000, 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
