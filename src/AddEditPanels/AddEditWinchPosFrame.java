@@ -38,7 +38,7 @@ public class AddEditWinchPosFrame extends JFrame {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
         if (!isEditEntry){
-            editWinchPos = new WinchPosition("", "", 0, 0, 0, "");
+            editWinchPos = new WinchPosition("", "", "", 0, 0, 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentWinchPos = editWinchPos;
@@ -205,15 +205,18 @@ public class AddEditWinchPosFrame extends JFrame {
                 winchPosId = nameField.getText();
             }
             
-            String parent = "";
+            String runwayParent = "";
+            String airfieldParent = "";
             try{
-                parent = objectSet.getCurrentRunway().getId();
+                runwayParent = objectSet.getCurrentRunway().getId();
+                airfieldParent = objectSet.getCurrentAirfield().getDesignator();
             }catch (Exception e){
-                System.out.println("cur runway 404 " + e.getMessage());
+                System.out.println("cur runway or airfield 404 " + e.getMessage());
             }
             
-            WinchPosition newWinchPos = new WinchPosition(winchPosId, parent,
-                    altitude, latitude, longitude, "");
+            WinchPosition newWinchPos = new WinchPosition(winchPosId, 
+                    runwayParent, airfieldParent, altitude,
+                    latitude, longitude, "");
             try{
                 if (isEditEntry){
                     DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newWinchPos);

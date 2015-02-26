@@ -210,14 +210,15 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement GliderPositionInsertStatement = connect.prepareStatement(
-                "INSERT INTO GliderPosition(position_id, runway_parent, altitude, latitude, longitude, optional_info) "
-                        + "values (?,?,?,?,?,?)");
+                "INSERT INTO GliderPosition(position_id, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info) "
+                        + "values (?,?,?,?,?,?,?)");
             GliderPositionInsertStatement.setString(1, theGliderPosition.getGliderPositionId());
-            GliderPositionInsertStatement.setString(2, theGliderPosition.getParent());
-            GliderPositionInsertStatement.setString(3, String.valueOf(theGliderPosition.getAltitude()));
-            GliderPositionInsertStatement.setString(4, String.valueOf(theGliderPosition.getLatitude()));
-            GliderPositionInsertStatement.setString(5, String.valueOf(theGliderPosition.getLongitude()));
-            GliderPositionInsertStatement.setString(6, theGliderPosition.getOptionalInfo());
+            GliderPositionInsertStatement.setString(2, theGliderPosition.getRunwayParent());
+            GliderPositionInsertStatement.setString(3, theGliderPosition.getAirfieldParent());
+            GliderPositionInsertStatement.setString(4, String.valueOf(theGliderPosition.getAltitude()));
+            GliderPositionInsertStatement.setString(5, String.valueOf(theGliderPosition.getLatitude()));
+            GliderPositionInsertStatement.setString(6, String.valueOf(theGliderPosition.getLongitude()));
+            GliderPositionInsertStatement.setString(7, theGliderPosition.getOptionalInfo());
             GliderPositionInsertStatement.executeUpdate();
             GliderPositionInsertStatement.close();
         }catch(SQLException e) {
@@ -244,14 +245,15 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement WinchPositionInsertStatement = connect.prepareStatement(
-                "INSERT INTO WinchPosition(name, runway_parent, altitude, latitude, longitude, optional_info) "
-                        + "values (?,?,?,?,?,?)");
+                "INSERT INTO WinchPosition(name, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info) "
+                        + "values (?,?,?,?,?,?,?)");
             WinchPositionInsertStatement.setString(1, theWinchPosition.getName());
-            WinchPositionInsertStatement.setString(2, theWinchPosition.getParent());
-            WinchPositionInsertStatement.setString(3, String.valueOf(theWinchPosition.getAltitude()));
-            WinchPositionInsertStatement.setString(4, String.valueOf(theWinchPosition.getLatitude()));
-            WinchPositionInsertStatement.setString(5, String.valueOf(theWinchPosition.getLongitude()));
-            WinchPositionInsertStatement.setString(6, theWinchPosition.getOptionalInfo());
+            WinchPositionInsertStatement.setString(2, theWinchPosition.getRunwayParent());
+            WinchPositionInsertStatement.setString(3, theWinchPosition.getAirfieldParent());
+            WinchPositionInsertStatement.setString(4, String.valueOf(theWinchPosition.getAltitude()));
+            WinchPositionInsertStatement.setString(5, String.valueOf(theWinchPosition.getLatitude()));
+            WinchPositionInsertStatement.setString(6, String.valueOf(theWinchPosition.getLongitude()));
+            WinchPositionInsertStatement.setString(7, theWinchPosition.getOptionalInfo());
             WinchPositionInsertStatement.executeUpdate();
             WinchPositionInsertStatement.close();
         }catch(SQLException e) {
@@ -467,8 +469,8 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theAirfields = stmt.executeQuery("name, designator, altitude, "
-                + "magnetic_variation, latitude, longitude, optional_info"
+            ResultSet theAirfields = stmt.executeQuery("SELECT name, designator, altitude, "
+                + "magnetic_variation, latitude, longitude, optional_info "
                 + "FROM Airfield ORDER BY name");
             List airfields = new ArrayList<Airfield>();
             
@@ -524,7 +526,7 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theRunways = stmt.executeQuery("runway_id, magnetic_heading, parent, altitude, optional_info"
+            ResultSet theRunways = stmt.executeQuery("runway_id, magnetic_heading, parent, altitude, optional_info "
                 + "FROM Runway ORDER BY runway_id");
             List runways = new ArrayList<Runway>();
             
@@ -575,29 +577,30 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theGliderPositions = stmt.executeQuery("position_id, runway_parent, altitude, latitude, longitude, optional_info"
+            ResultSet theGliderPositions = stmt.executeQuery("position_id, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info "
                 + "FROM GliderPosition ORDER BY position_id");
             List positions = new ArrayList<GliderPosition>();
             
             while(theGliderPositions.next()) {
                 String id = theGliderPositions.getString(1);
-                String parent = theGliderPositions.getString(2);
+                String runwayParent = theGliderPositions.getString(2);
+                String airfieldParent = theGliderPositions.getString(3);
                 
                 int altitude = 0;
                 float latitude = 0;
                 float longitude = 0;
                 try {
-                    altitude = Integer.parseInt(theGliderPositions.getString(3));
-                    latitude = Float.parseFloat(theGliderPositions.getString(4));
-                    longitude = Float.parseFloat(theGliderPositions.getString(5));
+                    altitude = Integer.parseInt(theGliderPositions.getString(4));
+                    latitude = Float.parseFloat(theGliderPositions.getString(5));
+                    longitude = Float.parseFloat(theGliderPositions.getString(6));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String optional = theGliderPositions.getString(6);
+                String optional = theGliderPositions.getString(7);
                           
-                GliderPosition newGliderPosition = new GliderPosition(id, parent, altitude, latitude, longitude, optional);
+                GliderPosition newGliderPosition = new GliderPosition(id, runwayParent, airfieldParent, altitude, latitude, longitude, optional);
                         
                 positions.add(newGliderPosition);
                 
@@ -629,29 +632,30 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theWinchPositions = stmt.executeQuery("name, runway_parent, altitude, latitude, longitude, optional_info"
+            ResultSet theWinchPositions = stmt.executeQuery("name, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info "
                 + "FROM WinchPosition ORDER BY name");
             List positions = new ArrayList<WinchPosition>();
             
             while(theWinchPositions.next()) {
                 String name = theWinchPositions.getString(1);
-                String parent = theWinchPositions.getString(2);
+                String runwayParent = theWinchPositions.getString(2);
+                String airfieldParent = theWinchPositions.getString(3);
                 
                 int altitude = 0;
                 float latitude = 0;
                 float longitude = 0;
                 try {
-                    altitude = Integer.parseInt(theWinchPositions.getString(3));
-                    latitude = Float.parseFloat(theWinchPositions.getString(4));
-                    longitude = Float.parseFloat(theWinchPositions.getString(5));
+                    altitude = Integer.parseInt(theWinchPositions.getString(4));
+                    latitude = Float.parseFloat(theWinchPositions.getString(5));
+                    longitude = Float.parseFloat(theWinchPositions.getString(6));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String optional = theWinchPositions.getString(6);
+                String optional = theWinchPositions.getString(7);
                           
-                WinchPosition newWinchPosition = new WinchPosition(name, parent, altitude, latitude, longitude, optional);
+                WinchPosition newWinchPosition = new WinchPosition(name, runwayParent, airfieldParent, altitude, latitude, longitude, optional);
                         
                 positions.add(newWinchPosition);
                 

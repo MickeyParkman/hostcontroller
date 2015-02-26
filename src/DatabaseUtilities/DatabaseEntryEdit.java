@@ -164,7 +164,8 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE GLIDERPOSITION SET "
-                + "runway_parent = '" + position.getParent() + "'"
+                + "runway_parent = '" + position.getRunwayParent() + "'"
+                + "airfield_parent = '" + position.getAirfieldParent() +"'"
                 + "altitude = '" + String.valueOf(position.getAltitude()) + "'"
                 + "latitude = '" + String.valueOf(position.getLatitude()) + "'"
                 + "longitude = '" + String.valueOf(position.getLongitude()) + "'"
@@ -184,7 +185,8 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE GLIDERPOSITION SET "
-                + "runway_parent = '" + position.getParent() + "'"
+                + "runway_parent = '" + position.getRunwayParent() + "'"
+                + "airfield_parent = '" + position.getAirfieldParent() +"'"                
                 + "altitude = '" + String.valueOf(position.getAltitude()) + "'"
                 + "latitude = '" + String.valueOf(position.getLatitude()) + "'"
                 + "longitude = '" + String.valueOf(position.getLongitude()) + "'"

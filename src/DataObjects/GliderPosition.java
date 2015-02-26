@@ -9,20 +9,22 @@ package DataObjects;
 /**
  * This Class stores the data about a Position
  * 
- * @author garreola-gutierrez, mtdargen, dbennett3
+ * @author garreola-gutierrez, mtdargen, dbennett3, Noah Fujioka
  */
 public class GliderPosition {
     
     String positionId;
     String runwayParent;
+    String airfieldParent;
     int altitude;
     float latitude;
     float longitude;
     String optionalInfo;
     
-    public GliderPosition(String id, String parent, int altitude, float latitude, float longitude, String optional){
+    public GliderPosition(String id, String runwayParent, String airfieldParent, int altitude, float latitude, float longitude, String optional){
        this.positionId = id;
-       this.runwayParent = parent;
+       this.runwayParent = runwayParent;
+       this.airfieldParent = airfieldParent;
        this.altitude = altitude;
        this.latitude = latitude;
        this.longitude = longitude;
@@ -33,8 +35,12 @@ public class GliderPosition {
         return positionId;
     }
         
-    public String getParent(){
+    public String getRunwayParent(){
        return runwayParent; 
+    }
+    
+    public String getAirfieldParent(){
+       return airfieldParent; 
     }
     
     public int getAltitude() {

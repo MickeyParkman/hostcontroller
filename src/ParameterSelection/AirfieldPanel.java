@@ -88,12 +88,12 @@ public class AirfieldPanel extends JPanel {
     private void initGliderPositionsList() {
         try{
             gliderPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getGliderPositions();
-            gliderPositions.add(new GliderPosition("The glider position", "The Runway", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("The glider position", "The Runway","The Airfield", 5, 5, 5, "sdfgsdgf"));
         }catch(SQLException e) {
-            gliderPositions.add(new GliderPosition("Spokane Runway1 glider", "Spokane Runway1", 5, 5, 5, "sdfgsdgf"));
-            gliderPositions.add(new GliderPosition("Spokane Runway2 glider", "Spokane Runway2", 5, 5, 5, "sdfgsdgf"));
-            gliderPositions.add(new GliderPosition("Bob-land Runway1 glider", "Bob-land Runway1", 5, 5, 5, "sdfgsdgf"));
-            gliderPositions.add(new GliderPosition("Bob-land Runway2 glider", "Bob-land Runway2", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("Spokane Runway1 glider", "Spokane Runway1","GEG", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("Spokane Runway2 glider", "Spokane Runway2","GEG", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("Bob-land Runway1 glider", "Bob-land Runway1","BOB", 5, 5, 5, "sdfgsdgf"));
+            gliderPositions.add(new GliderPosition("Bob-land Runway2 glider", "Bob-land Runway2","BOB", 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -102,12 +102,12 @@ public class AirfieldPanel extends JPanel {
     private void initWinchPositionsList() {
         try{
             winchPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getWinchPositions();
-            winchPositions.add(new WinchPosition("The winch position", "The Runway", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("The winch position", "The Runway","The Airfield", 5, 5, 5, "sdfgsdgf"));
         }catch(SQLException e) {
-            winchPositions.add(new WinchPosition("Spokane Runway1 winch", "Spokane Runway1", 5, 5, 5, "sdfgsdgf"));
-            winchPositions.add(new WinchPosition("Spokane Runway2 winch", "Spokane Runway2", 5, 5, 5, "sdfgsdgf"));
-            winchPositions.add(new WinchPosition("Bob-land Runway1 winch", "Bob-land Runway1", 5, 5, 5, "sdfgsdgf"));
-            winchPositions.add(new WinchPosition("Bob-land Runway2 winch", "Bob-land Runway2", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("Spokane Runway1 winch", "Spokane Runway1","GEG", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("Spokane Runway2 winch", "Spokane Runway2","GEG", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("Bob-land Runway1 winch", "Bob-land Runway1","BOB", 5, 5, 5, "sdfgsdgf"));
+            winchPositions.add(new WinchPosition("Bob-land Runway2 winch", "Bob-land Runway2","BOB", 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -274,13 +274,13 @@ public class AirfieldPanel extends JPanel {
                 
                 gliderPositionModel.removeAllElements();
                 for(GliderPosition str: gliderPositions){
-                    if(str.getParent().equals(theRunway.getId()))
+                    if(str.getRunwayParent().equals(theRunway.getId()))
                         gliderPositionModel.addElement(str);
                 }
                 
                 winchPositionModel.removeAllElements();
                 for(WinchPosition str: winchPositions){
-                    if(str.getParent().equals(theRunway.getId()))
+                    if(str.getRunwayParent().equals(theRunway.getId()))
                         winchPositionModel.addElement(str);
                 }
 

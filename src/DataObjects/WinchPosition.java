@@ -8,19 +8,21 @@ package DataObjects;
 /**
  * This class stores info on the position of the winch
  *
- * @author dbennett3
+ * @author dbennett3, Noah Fujioka
  */
 public class WinchPosition {
     String name;
     String runwayParent;
+    String airfieldParent;
     int altitude;
     float latitude;
     float longitude;
     String optionalInfo;
     
-    public WinchPosition(String name, String parent, int altitude, float latitude, float longitude, String optional) {
+    public WinchPosition(String name, String runwayParent, String airfieldParent, int altitude, float latitude, float longitude, String optional) {
         this.name = name;
-        this.runwayParent = parent;
+        this.runwayParent = runwayParent;
+        this.airfieldParent = airfieldParent;
         this.altitude = altitude;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -31,8 +33,12 @@ public class WinchPosition {
         return name;
     }
     
-    public String getParent() {
+    public String getRunwayParent() {
         return runwayParent;
+    }
+
+    public String getAirfieldParent() {
+        return airfieldParent;
     }
     
     public int getAltitude() {
