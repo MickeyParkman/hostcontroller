@@ -218,42 +218,42 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
         
-        JLabel medInfoLabel = new JLabel("Primary Physician:");
-        medInfoLabel.setBounds(244, 205, 117, 14);
-        panel.add(medInfoLabel);
-        
-        JLabel medInfoNameLabel = new JLabel("Name:");
-        medInfoNameLabel.setBounds(267, 230, 46, 14);
-        panel.add(medInfoNameLabel);
-        
-        String medInfo = editPilot.getMedInfo();
-        String medInfoName;
-        String medInfoPhone;
-        int t = medInfo.indexOf('%');
-        if (t >= 0) 
-        {
-            medInfoName = medInfo.substring(0, t);
-            medInfoPhone = medInfo.substring(t + 1);
-        }
-        else
-        {
-            medInfoName = "";
-            medInfoPhone = "";
-        }
-        
-        medInfoNameField = new JTextField(medInfoName);
-        medInfoNameField.setColumns(10);
-        medInfoNameField.setBounds(319, 227, 110, 20);
-        panel.add(medInfoNameField);
-        
-        medInfoPhoneField = new JTextField(medInfoPhone);
-        medInfoPhoneField.setColumns(10);
-        medInfoPhoneField.setBounds(319, 252, 109, 20);
-        panel.add(medInfoPhoneField);
-        
-        JLabel medInfoPhoneLabel = new JLabel("Phone:");
-        medInfoPhoneLabel.setBounds(267, 255, 46, 14);
-        panel.add(medInfoPhoneLabel);
+//        JLabel medInfoLabel = new JLabel("Primary Physician:");
+//        medInfoLabel.setBounds(244, 205, 117, 14);
+//        panel.add(medInfoLabel);
+//        
+//        JLabel medInfoNameLabel = new JLabel("Name:");
+//        medInfoNameLabel.setBounds(267, 230, 46, 14);
+//        panel.add(medInfoNameLabel);
+//        
+//        String medInfo = editPilot.getMedInfo();
+//        String medInfoName;
+//        String medInfoPhone;
+//        int t = medInfo.indexOf('%');
+//        if (t >= 0) 
+//        {
+//            medInfoName = medInfo.substring(0, t);
+//            medInfoPhone = medInfo.substring(t + 1);
+//        }
+//        else
+//        {
+//            medInfoName = "";
+//            medInfoPhone = "";
+//        }
+//        
+//        medInfoNameField = new JTextField(medInfoName);
+//        medInfoNameField.setColumns(10);
+//        medInfoNameField.setBounds(319, 227, 110, 20);
+//        panel.add(medInfoNameField);
+//        
+//        medInfoPhoneField = new JTextField(medInfoPhone);
+//        medInfoPhoneField.setColumns(10);
+//        medInfoPhoneField.setBounds(319, 252, 109, 20);
+//        panel.add(medInfoPhoneField);
+//        
+//        JLabel medInfoPhoneLabel = new JLabel("Phone:");
+//        medInfoPhoneLabel.setBounds(267, 255, 46, 14);
+//        panel.add(medInfoPhoneLabel);
         
         JLabel additionalInformationLabel = new JLabel("Additional Information:");
         additionalInformationLabel.setBounds(10, 300, 152, 14);
@@ -318,8 +318,8 @@ public class AddEditPilotPanel extends JFrame {
             String middleName = middleNameField.getText();
             String emergencyContact = emergencyContactNameField.getText() +
                     "%" + emergencyContactPhoneField.getText();
-            String medicalInformation = medInfoNameField.getText() +
-                    "%" + medInfoPhoneField.getText();
+            String medicalInformation = ""; //medInfoNameField.getText() +
+                    //"%" + medInfoPhoneField.getText();
             String optionalInformation = optionalInfoField.getText();
             int weight = 0;
             try {
