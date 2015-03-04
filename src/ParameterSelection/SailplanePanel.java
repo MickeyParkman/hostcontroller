@@ -3,29 +3,40 @@ package ParameterSelection;
 import AddEditPanels.AddEditGlider;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
+
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
+
 import Communications.Observer;
 
 
@@ -136,44 +147,47 @@ public class SailplanePanel extends JPanel {
 
         sailplaneScrollPane.setViewportView(sailplaneJList);
 
-        JPanel panel = new JPanel();
-        add(panel, BorderLayout.CENTER);
-        panel.setLayout(null);
+        JPanel attributesPanel = new JPanel();
+        JScrollPane attributesPanelScrollPane = new JScrollPane();
+        add(attributesPanelScrollPane, BorderLayout.CENTER);
+        attributesPanel.setPreferredSize(new Dimension(700,400));
+        attributesPanelScrollPane.setViewportView(attributesPanel);
+        attributesPanel.setLayout(null);
         
         JLabel nNumberLabel = new JLabel("N Number:");
         nNumberLabel.setBounds(10, 53, 86, 14);
-        panel.add(nNumberLabel);
+        attributesPanel.add(nNumberLabel);
         
         JLabel emptyWeightLabel = new JLabel("Empty Weight:");
         emptyWeightLabel.setBounds(10, 78, 86, 14);
-        panel.add(emptyWeightLabel);
+        attributesPanel.add(emptyWeightLabel);
         
         JLabel maxGrossWeightLabel = new JLabel("Max Gross Weight:");
         maxGrossWeightLabel.setBounds(10, 103, 117, 14);
-        panel.add(maxGrossWeightLabel);
+        attributesPanel.add(maxGrossWeightLabel);
         
         JLabel lblIndicatedStallSpeed = new JLabel("Indicated Stall Speed:");
         lblIndicatedStallSpeed.setBounds(10, 128, 140, 14);
-        panel.add(lblIndicatedStallSpeed);
+        attributesPanel.add(lblIndicatedStallSpeed);
         
         stallSpeedField = new JTextField();
         stallSpeedField.setBounds(160, 125, 110, 20);
-        panel.add(stallSpeedField);
+        attributesPanel.add(stallSpeedField);
         stallSpeedField.setColumns(10);
         
         grossWeightField = new JTextField();
         grossWeightField.setBounds(160, 100, 110, 20);
-        panel.add(grossWeightField);
+        attributesPanel.add(grossWeightField);
         grossWeightField.setColumns(10);
         
         emptyWeightField = new JTextField();
         emptyWeightField.setBounds(160, 75, 110, 20);
-        panel.add(emptyWeightField);
+        attributesPanel.add(emptyWeightField);
         emptyWeightField.setColumns(10);
         
         nNumberField = new JTextField();
         nNumberField.setBounds(160, 50, 110, 20);
-        panel.add(nNumberField);
+        attributesPanel.add(nNumberField);
         nNumberField.setColumns(10);
         
         JCheckBox ballastCheckBox = new JCheckBox("Can Carry Ballast?");
@@ -191,36 +205,36 @@ public class SailplanePanel extends JPanel {
             }
         });
         ballastCheckBox.setBounds(10, 159, 154, 23);
-        panel.add(ballastCheckBox);
+        attributesPanel.add(ballastCheckBox);
         
         JLabel ballastLabel = new JLabel("Ballast Weight:");
         ballastLabel.setBounds(10, 189, 117, 14);
-        panel.add(ballastLabel);
+        attributesPanel.add(ballastLabel);
         
         ballastField = new JTextField();
         ballastField.setEnabled(false);
         ballastField.setBounds(160, 186, 110, 20);
-        panel.add(ballastField);
+        attributesPanel.add(ballastField);
         ballastField.setColumns(10);
         
         JLabel maxWinchingSpeedLabel = new JLabel("Max Winching Speed:");
         maxWinchingSpeedLabel.setBounds(320, 53, 140, 14);
-        panel.add(maxWinchingSpeedLabel);
+        attributesPanel.add(maxWinchingSpeedLabel);
         
         JLabel maxWeakLinkLabel = new JLabel("Max Weak Link Strength:");
         maxWeakLinkLabel.setBounds(320, 78, 159, 14);
-        panel.add(maxWeakLinkLabel);
+        attributesPanel.add(maxWeakLinkLabel);
         
         JLabel maxTensionLabel = new JLabel("Max Tension:");
         maxTensionLabel.setBounds(320, 103, 140, 14);
-        panel.add(maxTensionLabel);
+        attributesPanel.add(maxTensionLabel);
         
         JLabel cableReleaseAngleLabel = new JLabel("Cable Release Angle:");
         cableReleaseAngleLabel.setBounds(320, 128, 140, 14);
-        panel.add(cableReleaseAngleLabel);
+        attributesPanel.add(cableReleaseAngleLabel);
         
         JCheckBox multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
-        ballastCheckBox.addItemListener(new ItemListener() {
+        multipleSeatsCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED)
@@ -234,40 +248,40 @@ public class SailplanePanel extends JPanel {
             }
         });
         multipleSeatsCheckBox.setBounds(320, 159, 159, 23);
-        panel.add(multipleSeatsCheckBox);
+        attributesPanel.add(multipleSeatsCheckBox);
         
         JLabel passengerWeightLabel = new JLabel("Total Passenger Weight:");
         passengerWeightLabel.setBounds(320, 189, 140, 14);
-        panel.add(passengerWeightLabel);
+        attributesPanel.add(passengerWeightLabel);
         
         weakLinkField = new JTextField();
         weakLinkField.setBounds(487, 75, 120, 20);
-        panel.add(weakLinkField);
+        attributesPanel.add(weakLinkField);
         weakLinkField.setColumns(10);
         
         tensionField = new JTextField();
         tensionField.setBounds(487, 100, 120, 20);
-        panel.add(tensionField);
+        attributesPanel.add(tensionField);
         tensionField.setColumns(10);
         
         releaseAngleField = new JTextField();
         releaseAngleField.setBounds(487, 125, 120, 20);
-        panel.add(releaseAngleField);
+        attributesPanel.add(releaseAngleField);
         releaseAngleField.setColumns(10);
         
         passengerWeightField = new JTextField();
         passengerWeightField.setEnabled(false);
         passengerWeightField.setBounds(487, 186, 120, 20);
-        panel.add(passengerWeightField);
+        attributesPanel.add(passengerWeightField);
         passengerWeightField.setColumns(10);
         
         winchingSpeedField = new JTextField();
         winchingSpeedField.setBounds(487, 50, 120, 20);
-        panel.add(winchingSpeedField);
+        attributesPanel.add(winchingSpeedField);
         winchingSpeedField.setColumns(10);
         
         JCheckBox baggageCheckBox = new JCheckBox("Baggage?");
-        ballastCheckBox.addItemListener(new ItemListener() {
+        baggageCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED)
@@ -281,22 +295,22 @@ public class SailplanePanel extends JPanel {
             }
         });
         baggageCheckBox.setBounds(10, 220, 97, 23);
-        panel.add(baggageCheckBox);
+        attributesPanel.add(baggageCheckBox);
         
         JLabel lblBaggageWeight = new JLabel("Baggage Weight:");
         lblBaggageWeight.setBounds(10, 250, 97, 14);
-        panel.add(lblBaggageWeight);
+        attributesPanel.add(lblBaggageWeight);
         
         baggageField = new JTextField();
         baggageField.setEnabled(false);
         baggageField.setBounds(160, 247, 110, 20);
-        panel.add(baggageField);
+        attributesPanel.add(baggageField);
         baggageField.setColumns(10);
         
         JLabel lblGlider = new JLabel("Glider");
         lblGlider.setFont(new Font("Tahoma", Font.PLAIN, 24));
         lblGlider.setBounds(10, 20, 140, 31);
-        panel.add(lblGlider);
+        attributesPanel.add(lblGlider);
         
         JButton addNewButton = new JButton("Add New");
         addNewButton.addActionListener(new ActionListener() {
@@ -306,7 +320,7 @@ public class SailplanePanel extends JPanel {
         	}
         });
         addNewButton.setBounds(201, 0, 89, 23);
-        panel.add(addNewButton);
+        attributesPanel.add(addNewButton);
         
         JButton editButton = new JButton("Edit");
         editButton.addActionListener(new ActionListener() {
@@ -316,7 +330,7 @@ public class SailplanePanel extends JPanel {
         	}
         });
         editButton.setBounds(289, 0, 89, 23);
-        panel.add(editButton);
+        attributesPanel.add(editButton);
     }
         
     private javax.swing.JList sailplaneJList;

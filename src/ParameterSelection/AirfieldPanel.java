@@ -9,11 +9,13 @@ import DataObjects.GliderPosition;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Runway;
 import DataObjects.WinchPosition;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,9 +27,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 
 public class AirfieldPanel extends JPanel {
@@ -385,9 +391,12 @@ public class AirfieldPanel extends JPanel {
         
         airfieldScrollPane.setViewportView(airfieldJList);
         
+        JScrollPane airfieldAttributesPanelScrollPane = new JScrollPane();
+        airfieldSubPanel.add(airfieldAttributesPanelScrollPane, BorderLayout.CENTER);
         JPanel airfieldAttributesPanel = new JPanel();
-        airfieldSubPanel.add(airfieldAttributesPanel, BorderLayout.CENTER);
+        airfieldAttributesPanel.setPreferredSize(new Dimension(500,300));
         airfieldAttributesPanel.setLayout(null);
+        airfieldAttributesPanelScrollPane.setViewportView(airfieldAttributesPanel);
         
         JLabel designatorLabel = new JLabel("Designator:");
         designatorLabel.setBounds(10, 78, 84, 14);
@@ -476,8 +485,11 @@ public class AirfieldPanel extends JPanel {
         gliderPositionsJList.setModel(gliderPositionModel);
         gliderPositionsScrollPane.setViewportView(gliderPositionsJList);
         
+        JScrollPane gliderPosAttributesPanelScrollPane = new JScrollPane();
         JPanel gliderPositionAttributesPanel = new JPanel();
-        gliderPostitionSubPanel.add(gliderPositionAttributesPanel, BorderLayout.CENTER);
+        gliderPostitionSubPanel.add(gliderPosAttributesPanelScrollPane, BorderLayout.CENTER);
+        gliderPositionAttributesPanel.setPreferredSize(new Dimension(500,300));
+        gliderPosAttributesPanelScrollPane.setViewportView(gliderPositionAttributesPanel);
         gliderPositionAttributesPanel.setLayout(null);
         
         JLabel gliderPosNameLabel = new JLabel("Name:");
@@ -580,8 +592,11 @@ public class AirfieldPanel extends JPanel {
         runwaysScrollPane.setViewportView(runwaysJList);
         
         JPanel runwayAttributesPanel = new JPanel();
-        runwaySubPanel.add(runwayAttributesPanel, BorderLayout.CENTER);
+        JScrollPane runwayAttributesPanelScrollPane = new JScrollPane();
+        runwaySubPanel.add(runwayAttributesPanelScrollPane, BorderLayout.CENTER);
         runwayAttributesPanel.setLayout(null);
+        runwayAttributesPanel.setPreferredSize(new Dimension(500,300));
+        runwayAttributesPanelScrollPane.setViewportView(runwayAttributesPanel);
         
         JLabel runwayNameLabel = new JLabel("Name:");
         runwayNameLabel.setBounds(10, 53, 106, 14);
@@ -669,8 +684,11 @@ public class AirfieldPanel extends JPanel {
         winchPositionsScrollPane.setViewportView(winchPositionsJList);
         
         JPanel winchPositionAttributesPanel = new JPanel();
-        winchPostitionSubPanel.add(winchPositionAttributesPanel, BorderLayout.CENTER);
+        JScrollPane winchPositionAttributesPanelScrollPane = new JScrollPane();
+        winchPostitionSubPanel.add(winchPositionAttributesPanelScrollPane, BorderLayout.CENTER);
         winchPositionAttributesPanel.setLayout(null);
+        winchPositionAttributesPanel.setPreferredSize(new Dimension(500,300));
+        winchPositionAttributesPanelScrollPane.setViewportView(winchPositionAttributesPanel);
         
         JLabel winchPosNameLabel = new JLabel("Name:");
         winchPosNameLabel.setBounds(10, 53, 46, 14);
