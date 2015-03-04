@@ -158,7 +158,7 @@ public class AddEditRunwayFrame extends JFrame {
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e3) {
-
+            //e3.printStackTrace();
         }
     }
 

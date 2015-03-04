@@ -7,6 +7,7 @@ package DatabaseUtilities;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
+import java.util.List;
 
 import DataObjects.*;
 
@@ -73,6 +74,7 @@ public class DatabaseEntryDelete {
     
     public static void DeleteEntry(Airfield airfield) throws Exception
     {
+        DeleteRunways(airfield.getDesignator());
         String deleteString;
         deleteString = "DELETE FROM AIRFIELD WHERE name = '" + airfield.getName() + "'";
         
@@ -81,8 +83,11 @@ public class DatabaseEntryDelete {
     
     public static void DeleteEntry(Runway runway) throws Exception
     {
+        DeleteGliderPositions(runway.getId(), runway.getParent());
+        DeleteWinchPositions(runway.getId(), runway.getParent());
         String deleteString;
-        deleteString = "DELETE FROM RUNWAY WHERE runway_id = '" + runway.getId() + "'";
+        deleteString = "DELETE FROM RUNWAY WHERE runway_id = '" + runway.getId() + "' "
+                + "AND parent = '" + runway.getParent() + "'";
         
         Delete(deleteString);
     }
@@ -90,7 +95,9 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(GliderPosition position) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM GLIDERPOSITION WHERE position_id = '" + position.getGliderPositionId() + "'";
+        deleteString = "DELETE FROM GLIDERPOSITION WHERE position_id = '" + position.getGliderPositionId() + "' "
+                + "AND runway_parent = '" + position.getRunwayParent() + "' "
+                + "AND airfield_parent = '" + position.getAirfieldParent() + "'";
         
         Delete(deleteString);
     }
@@ -98,7 +105,9 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(WinchPosition position) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM WINCHPOSITION WHERE name = '" + position.getName() + "'";
+        deleteString = "DELETE FROM WINCHPOSITION WHERE name = '" + position.getName() + "' "
+                + "AND runway_parent = '" + position.getRunwayParent() + "' "
+                + "AND airfield_parent = '" + position.getAirfieldParent() + "'";
         
         Delete(deleteString);
     }
@@ -111,4 +120,30 @@ public class DatabaseEntryDelete {
         Delete(deleteString);
     }
     
+    private static void DeleteRunways(String airfieldParent) throws Exception
+    {
+        List<Runway> runways = DatabaseDataObjectUtilities.getRunways();
+        for(Runway str: runways){
+            if(str.getParent().equals(airfieldParent))
+                DeleteEntry(str);
+        }
+    }
+    
+    private static void DeleteGliderPositions(String runwayParent, String airfieldParent) throws Exception
+    {
+        String deleteString;
+        deleteString = "DELETE FROM GLIDERPOSITION WHERE runway_parent = '" + runwayParent + "' "
+                + "AND airfield_parent = '" + airfieldParent + "'";
+        
+        Delete(deleteString);
+    }
+    
+    private static void DeleteWinchPositions(String runwayParent, String airfieldParent) throws Exception
+    {
+        String deleteString;
+        deleteString = "DELETE FROM WINCHPOSITION WHERE runway_parent = '" + runwayParent + "' "
+                + "AND airfield_parent = '" + airfieldParent + "'";
+        
+        Delete(deleteString);
+    }
 }
