@@ -5,6 +5,7 @@ import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
 import DatabaseUtilities.DatabaseEntryDelete;
 import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
 import ParameterSelection.PilotPanel;
 
 import java.awt.BorderLayout;
@@ -13,6 +14,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -327,15 +329,21 @@ public class AddEditPilotPanel extends JFrame {
             }
             String capability = pilotCapability.getSelection().getActionCommand();
             String preference = pilotLaunchPref.getSelection().getActionCommand();
-            String newPilotId = currentPilot.getPilotId();
-            if (!isEditEntry){
-                newPilotId = firstName+middleName+lastName;
-            }
-
-            Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
-                    weight, capability, preference, emergencyContact,
-                    medicalInformation, optionalInformation);
+            
             try{
+                String newPilotId = currentPilot.getPilotId();
+                if (!isEditEntry){
+                    Random randomId = new Random();
+                    newPilotId = String.valueOf(randomId.nextInt(100000000));
+                    while (DatabaseDataObjectUtilities.checkForPilotId(newPilotId)){
+                        newPilotId = String.valueOf(randomId.nextInt(100000000));
+                    }
+                }
+
+                Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
+                        weight, capability, preference, emergencyContact,
+                        medicalInformation, optionalInformation);
+
                 if (isEditEntry){
                     DatabaseEntryEdit.UpdateEntry(newPilot);
                 }

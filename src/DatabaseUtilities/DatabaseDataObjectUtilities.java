@@ -790,7 +790,25 @@ public class DatabaseDataObjectUtilities {
         }catch(Exception e) {
             throw e;
         }
-    }    
+    }
+    
+    public static boolean checkForPilotId(String pilot_id) throws SQLException, ClassNotFoundException {        
+        try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            Statement stmt = connect.createStatement();
+            ResultSet theIds = stmt.executeQuery("SELECT * FROM PILOT WHERE pilot_id = '" + pilot_id + "'");
+            return theIds.next();
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
     
     /**
      * Update the data for a given pilot in the database
