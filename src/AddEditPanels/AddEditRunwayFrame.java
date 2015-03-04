@@ -79,6 +79,7 @@ public class AddEditRunwayFrame extends JFrame {
         panel.add(magneticHeadingField);
 
         nameField = new JTextField(currentRunway.getId());
+        nameField.setEditable(!isEditEntry);
         nameField.setColumns(10);
         nameField.setBounds(140, 11, 200, 20);
         panel.add(nameField);

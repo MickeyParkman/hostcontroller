@@ -96,6 +96,7 @@ public class AddEditWinchPosFrame extends JFrame {
         panel.add(altitudeField);
 
         nameField = new JTextField(currentWinchPos.getName());
+        nameField.setEditable(!isEditEntry);
         nameField.setColumns(10);
         nameField.setBounds(135, 11, 200, 20);
         panel.add(nameField);

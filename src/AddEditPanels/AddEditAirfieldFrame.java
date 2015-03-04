@@ -103,6 +103,7 @@ public class AddEditAirfieldFrame extends JFrame {
         
         designatorField = new JTextField(currentAirfield.getDesignator());
         designatorField.setBounds(140, 33, 120, 20);
+        designatorField.setEditable(!isEditEntry);
         airfieldAttributesPanel.add(designatorField);
         designatorField.setColumns(10);
         

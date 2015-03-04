@@ -104,6 +104,7 @@ public class AddEditGlider extends JFrame {
         
         nNumberField = new JTextField(currentGlider.getNumber());
         nNumberField.setBounds(160, 8, 110, 20);
+        nNumberField.setEditable(!isEditEntry);
         contentPane.add(nNumberField);
         nNumberField.setColumns(10);
         
