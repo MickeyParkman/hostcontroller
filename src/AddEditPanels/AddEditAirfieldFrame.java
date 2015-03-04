@@ -139,8 +139,12 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldLatitudeField.setBounds(140, 134, 120, 20);
         airfieldAttributesPanel.add(airfieldLatitudeField);
         airfieldLatitudeField.setColumns(10);
+        
+        JLabel requiredNoteLabel = new JLabel("All fields are required");
+        requiredNoteLabel.setBounds(10, 160, 200, 14);
+        airfieldAttributesPanel.add(requiredNoteLabel);
     
-    JButton submitButton = new JButton("Submit");
+        JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 180, 89, 23);
         airfieldAttributesPanel.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
