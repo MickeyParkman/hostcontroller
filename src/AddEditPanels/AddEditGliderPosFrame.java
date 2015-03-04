@@ -230,7 +230,7 @@ public class AddEditGliderPosFrame extends JFrame {
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
-                    System.out.println(e1.getMessage());
+                    e1.printStackTrace();
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the Glider Position " + newGliderPos.toString() + " already exists in the database");
                 }
             }catch (ClassNotFoundException e2) {

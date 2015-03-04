@@ -91,12 +91,12 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)){
             PreparedStatement sailplaneInsertStatement = connect.prepareStatement(
-                    "INSERT INTO Sailplane(n_number, type,"
-                            + "max_gross_weight, empty_weight, indicated_stall_speed,"
-                            + "max_winching_speed, max_weak_link_strength, max_tension,"
+                    "INSERT INTO Sailplane(n_number, type, "
+                            + "max_gross_weight, empty_weight, indicated_stall_speed, "
+                            + "max_winching_speed, max_weak_link_strength, max_tension, "
                             + "cable_release_angle, carry_ballast, multiple_seats, "
                             + "optional_info)"
-                            + "values (?,?,?,?,?,?,?,?,?,?,?)");
+                            + "values (?,?,?,?,?,?,?,?,?,?,?,?)");
             sailplaneInsertStatement.setString(1, theSailplane.getNumber());
             sailplaneInsertStatement.setString(2, theSailplane.getType());
             sailplaneInsertStatement.setString(3, String.valueOf(theSailplane.getMaxGrossWeight()));
@@ -526,7 +526,7 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theRunways = stmt.executeQuery("runway_id, magnetic_heading, parent, altitude, optional_info "
+            ResultSet theRunways = stmt.executeQuery("SELECT runway_id, magnetic_heading, parent, altitude, optional_info "
                 + "FROM Runway ORDER BY runway_id");
             List runways = new ArrayList<Runway>();
             
@@ -577,7 +577,7 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theGliderPositions = stmt.executeQuery("position_id, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info "
+            ResultSet theGliderPositions = stmt.executeQuery("SELECT position_id, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info "
                 + "FROM GliderPosition ORDER BY position_id");
             List positions = new ArrayList<GliderPosition>();
             
@@ -632,7 +632,7 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theWinchPositions = stmt.executeQuery("name, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info "
+            ResultSet theWinchPositions = stmt.executeQuery("SELECT name, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info "
                 + "FROM WinchPosition ORDER BY name");
             List positions = new ArrayList<WinchPosition>();
             
@@ -687,7 +687,7 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theParachutes = stmt.executeQuery("parachute_id, lift, drag, weight"
+            ResultSet theParachutes = stmt.executeQuery("SELECT parachute_id, lift, drag, weight "
                 + "FROM Parachute ORDER BY parachute_id");
             List parachutes = new ArrayList<Parachute>();
             

@@ -273,6 +273,7 @@ public class AddEditGlider extends JFrame {
                 this.dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
+                    e1.printStackTrace();
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the glider " + newGlider.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
