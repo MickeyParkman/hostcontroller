@@ -1,6 +1,7 @@
 package DashboardInterface;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Rectangle;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -46,6 +47,7 @@ public class FlightDashboard extends javax.swing.JPanel
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         
+        contentPane.setBackground(Color.WHITE);
         graphPane = new javax.swing.JPanel();
         dialPane = new JPanel();
         

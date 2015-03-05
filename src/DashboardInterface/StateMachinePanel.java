@@ -86,7 +86,8 @@ public class StateMachinePanel extends javax.swing.JPanel {
                 jToggleButton1MouseClicked(evt);
             }
         });
-
+        
+        this.setBackground(Color.WHITE);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(

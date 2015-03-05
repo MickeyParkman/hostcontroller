@@ -27,6 +27,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditPilotPanel extends JFrame {
@@ -67,7 +68,8 @@ public class AddEditPilotPanel extends JFrame {
         setBounds(100, 100, 500, 500);
         
         JPanel panel = new JPanel();
-        add(panel, BorderLayout.CENTER);
+        panel.setBackground(Color.WHITE);
+        getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(null);
 
         JLabel firstNameLabel = new JLabel("First Name: *");
@@ -87,6 +89,7 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(flightWeightLabel);
         
         flightWeightField = new JTextField();
+        flightWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             flightWeightField.setText(Integer.toString(editPilot.getWeight()));
         }
@@ -95,16 +98,19 @@ public class AddEditPilotPanel extends JFrame {
         flightWeightField.setColumns(10);
         
         lastNameField = new JTextField(editPilot.getLastName());
+        lastNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         lastNameField.setBounds(160, 58, 110, 20);
         panel.add(lastNameField);
         lastNameField.setColumns(10);
         
         middleNameField = new JTextField(editPilot.getMiddleName());
+        middleNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         middleNameField.setBounds(160, 33, 110, 20);
         panel.add(middleNameField);
         middleNameField.setColumns(10);
         
         firstNameField = new JTextField(editPilot.getFirstName());
+        firstNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         firstNameField.setBounds(160, 8, 110, 20);
         panel.add(firstNameField);
         firstNameField.setColumns(10);
@@ -114,16 +120,19 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(CapabilityLabel);
         
         JRadioButton studentRadioButton = new JRadioButton("Student");
+        studentRadioButton.setBackground(Color.WHITE);
         studentRadioButton.setActionCommand("Student");
         studentRadioButton.setBounds(85, 128, 109, 23);
         panel.add(studentRadioButton);
         
         JRadioButton proficientRadioButton = new JRadioButton("Proficient");
+        proficientRadioButton.setBackground(Color.WHITE);
         proficientRadioButton.setActionCommand("Proficient");
         proficientRadioButton.setBounds(85, 153, 109, 23);
         panel.add(proficientRadioButton);
         
         JRadioButton advancedRadioButton = new JRadioButton("Advanced");
+        advancedRadioButton.setBackground(Color.WHITE);
         advancedRadioButton.setActionCommand("Advanced");
         advancedRadioButton.setBounds(85, 178, 109, 23);
         panel.add(advancedRadioButton);
@@ -149,16 +158,19 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(preferenceLabel);
         
         JRadioButton mildRadioButton = new JRadioButton("Mild");
+        mildRadioButton.setBackground(Color.WHITE);
         mildRadioButton.setActionCommand("Mild");
         mildRadioButton.setBounds(326, 128, 109, 23);
         panel.add(mildRadioButton);
         
         JRadioButton nominalRadioButton = new JRadioButton("Nominal");
+        nominalRadioButton.setBackground(Color.WHITE);
         nominalRadioButton.setActionCommand("Nominal");
         nominalRadioButton.setBounds(326, 153, 109, 23);
         panel.add(nominalRadioButton);
         
         JRadioButton performanceRadioButton = new JRadioButton("Performance");
+        performanceRadioButton.setBackground(Color.WHITE);
         performanceRadioButton.setActionCommand("Performance");
         performanceRadioButton.setBounds(326, 178, 109, 23);
         panel.add(performanceRadioButton);
@@ -207,11 +219,13 @@ public class AddEditPilotPanel extends JFrame {
         }
 
         emergencyContactNameField = new JTextField(emergencyContactName);
+        emergencyContactNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         emergencyContactNameField.setBounds(85, 230, 110, 20);
         panel.add(emergencyContactNameField);
         emergencyContactNameField.setColumns(10);
         
         emergencyContactPhoneField = new JTextField(emergencyContactPhone);
+        emergencyContactPhoneField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         emergencyContactPhoneField.setBounds(85, 255, 109, 20);
         panel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
@@ -240,11 +254,13 @@ public class AddEditPilotPanel extends JFrame {
         }
         
         medInfoNameField = new JTextField(medInfoName);
+        medInfoNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         medInfoNameField.setColumns(10);
         medInfoNameField.setBounds(319, 227, 110, 20);
         panel.add(medInfoNameField);
         
         medInfoPhoneField = new JTextField(medInfoPhone);
+        medInfoPhoneField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         medInfoPhoneField.setColumns(10);
         medInfoPhoneField.setBounds(319, 252, 109, 20);
         panel.add(medInfoPhoneField);
@@ -258,6 +274,7 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(additionalInformationLabel);
         
         optionalInfoField = new JTextArea(editPilot.getOptionalInfo());
+        optionalInfoField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         optionalInfoField.setBounds(10, 325, 450, 88);
         panel.add(optionalInfoField);
         optionalInfoField.setColumns(10);
@@ -300,6 +317,10 @@ public class AddEditPilotPanel extends JFrame {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 438, 89, 23);
         panel.add(cancelButton);
+        
+        JLabel flightWeightUnits = new JLabel("kgs");
+        flightWeightUnits.setBounds(280, 86, 46, 14);
+        panel.add(flightWeightUnits);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

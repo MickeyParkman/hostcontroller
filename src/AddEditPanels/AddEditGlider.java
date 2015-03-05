@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditGlider extends JFrame {
@@ -55,9 +56,10 @@ public class AddEditGlider extends JFrame {
         
         setTitle("Glider");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 650, 242);
+        setBounds(100, 100, 685, 242);
         
         contentPane = new JPanel();
+        contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -79,6 +81,7 @@ public class AddEditGlider extends JFrame {
         contentPane.add(lblIndicatedStallSpeed);
         
         stallSpeedField = new JTextField();
+        stallSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             stallSpeedField.setText(Integer.toString(currentGlider.getIndicatedStallSpeed()));
         }
@@ -87,6 +90,7 @@ public class AddEditGlider extends JFrame {
         stallSpeedField.setColumns(10);
         
         grossWeightField = new JTextField();
+        grossWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             grossWeightField.setText(Integer.toString(currentGlider.getMaxGrossWeight()));
         }
@@ -95,6 +99,7 @@ public class AddEditGlider extends JFrame {
         grossWeightField.setColumns(10);
         
         emptyWeightField = new JTextField();
+        emptyWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             emptyWeightField.setText(Integer.toString(currentGlider.getEmptyWeight()));
         }
@@ -103,11 +108,13 @@ public class AddEditGlider extends JFrame {
         emptyWeightField.setColumns(10);
         
         nNumberField = new JTextField(currentGlider.getNumber());
+        nNumberField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nNumberField.setBounds(160, 8, 110, 20);
         contentPane.add(nNumberField);
         nNumberField.setColumns(10);
         
         ballastCheckBox = new JCheckBox("Can Carry Ballast?");
+        ballastCheckBox.setBackground(Color.WHITE);
         ballastCheckBox.setSelected(currentGlider.getCarryBallast());
         ballastCheckBox.setBounds(10, 117, 154, 23);
         contentPane.add(ballastCheckBox);
@@ -129,11 +136,13 @@ public class AddEditGlider extends JFrame {
         contentPane.add(cableReleaseAngleLabel);
         
         multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
+        multipleSeatsCheckBox.setBackground(Color.WHITE);
         multipleSeatsCheckBox.setSelected(currentGlider.getMultipleSeats());
         multipleSeatsCheckBox.setBounds(320, 117, 159, 23);
         contentPane.add(multipleSeatsCheckBox);
         
         weakLinkField = new JTextField();
+        weakLinkField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             weakLinkField.setText(Integer.toString(currentGlider.getMaxWeakLinkStrength()));
         }
@@ -142,6 +151,7 @@ public class AddEditGlider extends JFrame {
         weakLinkField.setColumns(10);
         
         tensionField = new JTextField();
+        tensionField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             tensionField.setText(Integer.toString(currentGlider.getMaxTension()));
         }
@@ -150,6 +160,7 @@ public class AddEditGlider extends JFrame {
         tensionField.setColumns(10);
         
         releaseAngleField = new JTextField();
+        releaseAngleField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             releaseAngleField.setText(Integer.toString(currentGlider.getCableReleaseAngle()));
         }
@@ -158,6 +169,7 @@ public class AddEditGlider extends JFrame {
         releaseAngleField.setColumns(10);
         
         winchingSpeedField = new JTextField();
+        winchingSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             winchingSpeedField.setText(Integer.toString(currentGlider.getMaxWinchingSpeed()));
         }
@@ -220,6 +232,34 @@ public class AddEditGlider extends JFrame {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 180, 89, 23);
         contentPane.add(cancelButton);
+        
+        JLabel emptyWeightUnits = new JLabel("kgs");
+        emptyWeightUnits.setBounds(280, 36, 46, 14);
+        contentPane.add(emptyWeightUnits);
+        
+        JLabel grossWeightUnits = new JLabel("kgs");
+        grossWeightUnits.setBounds(280, 61, 46, 14);
+        contentPane.add(grossWeightUnits);
+        
+        JLabel stallSpeedUnits = new JLabel("km/h");
+        stallSpeedUnits.setBounds(280, 86, 46, 14);
+        contentPane.add(stallSpeedUnits);
+        
+        JLabel cableReleaseAngleUnits = new JLabel("degrees");
+        cableReleaseAngleUnits.setBounds(617, 86, 65, 14);
+        contentPane.add(cableReleaseAngleUnits);
+        
+        JLabel tensionUnits = new JLabel("N");
+        tensionUnits.setBounds(617, 61, 46, 14);
+        contentPane.add(tensionUnits);
+        
+        JLabel weakLinkStrengthUnits = new JLabel("N");
+        weakLinkStrengthUnits.setBounds(617, 36, 46, 14);
+        contentPane.add(weakLinkStrengthUnits);
+        
+        JLabel winchingSpeedUnits = new JLabel("km/h");
+        winchingSpeedUnits.setBounds(617, 11, 46, 14);
+        contentPane.add(winchingSpeedUnits);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

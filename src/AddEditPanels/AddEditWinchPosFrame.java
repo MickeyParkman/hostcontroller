@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditWinchPosFrame extends JFrame {
@@ -35,6 +36,7 @@ public class AddEditWinchPosFrame extends JFrame {
      * Create the frame.
      */
     public AddEditWinchPosFrame(WinchPosition editWinchPos, boolean isEditEntry) {
+    	setBackground(Color.WHITE);
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
         if (!isEditEntry){
@@ -47,11 +49,13 @@ public class AddEditWinchPosFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
+        contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
 
         JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
         panel.setLayout(null);
         contentPane.add(panel, BorderLayout.CENTER);
 
@@ -72,6 +76,7 @@ public class AddEditWinchPosFrame extends JFrame {
         panel.add(latitudeLabel);
 
         latitudeField = new JTextField();
+        latitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             latitudeField.setText(String.valueOf(currentWinchPos.getLatitude()));
         }
@@ -80,6 +85,7 @@ public class AddEditWinchPosFrame extends JFrame {
         panel.add(latitudeField);
 
         longitudeField = new JTextField();
+        longitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             longitudeField.setText(String.valueOf(currentWinchPos.getLongitude()));
         }
@@ -88,6 +94,7 @@ public class AddEditWinchPosFrame extends JFrame {
         panel.add(longitudeField);
 
         altitudeField = new JTextField();
+        altitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             altitudeField.setText(String.valueOf(currentWinchPos.getAltitude()));
         }
@@ -96,6 +103,7 @@ public class AddEditWinchPosFrame extends JFrame {
         panel.add(altitudeField);
 
         nameField = new JTextField(currentWinchPos.getName());
+        nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nameField.setColumns(10);
         nameField.setBounds(135, 11, 200, 20);
         panel.add(nameField);
@@ -162,6 +170,18 @@ public class AddEditWinchPosFrame extends JFrame {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 228, 89, 23);
         panel.add(cancelButton);
+        
+        JLabel latitudeUnits = new JLabel("degrees");
+        latitudeUnits.setBounds(345, 89, 65, 14);
+        panel.add(latitudeUnits);
+        
+        JLabel longitudeUnits = new JLabel("degrees");
+        longitudeUnits.setBounds(345, 64, 65, 14);
+        panel.add(longitudeUnits);
+        
+        JLabel altitudeUnits = new JLabel("m");
+        altitudeUnits.setBounds(345, 39, 46, 14);
+        panel.add(altitudeUnits);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

@@ -9,6 +9,7 @@ import Communications.MessagePipeline;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import Communications.Observer;
+import java.awt.Color;
 
 /**
  *
@@ -65,6 +66,7 @@ public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
     
     private void initComponents() {
         this.setPreferredSize(new Dimension (200, 400));
+        this.setBackground(Color.WHITE);
         EnvLabel = new javax.swing.JLabel();
         WNDSPDLabel = new javax.swing.JLabel();
         TEMPLabel = new javax.swing.JLabel();

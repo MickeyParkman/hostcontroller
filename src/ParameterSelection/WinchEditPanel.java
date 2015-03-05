@@ -6,6 +6,7 @@ import DataObjects.Drum;
 import DataObjects.Parachute;
 import DataObjects.Winch;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -84,10 +85,13 @@ public class WinchEditPanel extends JPanel {
         this.setLayout(new GridLayout(3,1));
         WinchPanel = new JPanel();
         WinchPanel.setLayout(new GridLayout(1,2));
+        WinchPanel.setBackground(Color.WHITE);
         DrumPanel = new JPanel();
         DrumPanel.setLayout(new GridLayout(1,2));
+        DrumPanel.setBackground(Color.WHITE);
         ParachutePanel = new JPanel();
         ParachutePanel.setLayout(new GridLayout(1,2));
+        ParachutePanel.setBackground(Color.WHITE);
         
         winchNameField = new JLabel("Name");
         winchBrakePressureField = new JLabel("Brake");
@@ -107,8 +111,10 @@ public class WinchEditPanel extends JPanel {
         
         winchList = new javax.swing.JList();
         JScrollPane winchScroller = new JScrollPane();
+        winchScroller.setBackground(Color.WHITE);
         WinchPanel.add(winchScroller);
         JPanel winchInfoPanel = new JPanel();
+        winchInfoPanel.setBackground(Color.WHITE);
         winchInfoPanel.setLayout(new BoxLayout(winchInfoPanel, BoxLayout.PAGE_AXIS));
         winchInfoPanel.add(winchNameField);        
         winchInfoPanel.add(winchBrakePressureField);
