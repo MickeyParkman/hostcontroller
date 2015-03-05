@@ -91,31 +91,33 @@ public class MainWindow extends JFrame {
         leftSidePanelDashboard.setBackground(Color.WHITE);
         
         final JButton pilotButton = new JButton();
-        pilotButton.setBackground(new Color(175,175,175));
-        pilotButton.setBorder(new LineBorder(Color.BLACK,1));
+        pilotButton.setBackground(Color.WHITE);
+        //pilotButton.setBorder(new LineBorder(Color.BLACK,1));
         pilotButton.setText("Select Pilot");
         pilotButton.setPreferredSize(new Dimension(250,20));
         final JButton gliderButton = new JButton();
         gliderButton.setText("Select Glider");
         gliderButton.setPreferredSize(new Dimension(250,20));
         gliderButton.setBackground(new Color(200,200,200));
-        gliderButton.setBorder(new LineBorder(Color.BLACK,1));
+        //gliderButton.setBorder(new LineBorder(Color.BLACK,1));
         final JButton airfieldButton = new JButton();
         airfieldButton.setText("Select Airfield");
         airfieldButton.setPreferredSize(new Dimension(250,20));
         airfieldButton.setBackground(new Color(200,200,200));
-        airfieldButton.setBorder(new LineBorder(Color.BLACK,1));
+        //airfieldButton.setBorder(new LineBorder(Color.BLACK,1));
         final JButton drumButton = new JButton();
         drumButton.setText("Select Drum");
         drumButton.setPreferredSize(new Dimension(250,20));
         drumButton.setBackground(new Color(200,200,200));
-        drumButton.setBorder(new LineBorder(Color.BLACK,1));
+        //drumButton.setBorder(new LineBorder(Color.BLACK,1));
         JButton clearButton = new JButton();
         clearButton.setText("Clear");
-        clearButton.setPreferredSize(new Dimension(180,20));
+        clearButton.setPreferredSize(new Dimension(250,20));
+        clearButton.setBackground(Color.WHITE);
         JButton submitButton = new JButton();
         submitButton.setText("Submit");
-        submitButton.setPreferredSize(new Dimension(180,20));
+        submitButton.setPreferredSize(new Dimension(250,20));
+        submitButton.setBackground(Color.WHITE);
         
         rightSidePanel.setPreferredSize(new Dimension(200, 600));
         rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -185,14 +187,10 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 selectionLayout.first(ParameterSelectionPanel_);
-                pilotButton.setBackground(new Color(175,175,175));
-                pilotButton.setBorder(new LineBorder(Color.BLACK,1));
+                pilotButton.setBackground(Color.WHITE);
                 gliderButton.setBackground(new Color(200,200,200));
-                gliderButton.setBorder(new LineBorder(Color.BLACK,1));
                 airfieldButton.setBackground(new Color(200,200,200));
-                airfieldButton.setBorder(new LineBorder(Color.BLACK,1));
                 drumButton.setBackground(new Color(200,200,200));
-                drumButton.setBorder(new LineBorder(Color.BLACK,1));
             }
         });
         
@@ -202,13 +200,9 @@ public class MainWindow extends JFrame {
                 selectionLayout.first(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
                 pilotButton.setBackground(new Color(200,200,200));
-                pilotButton.setBorder(new LineBorder(Color.BLACK,1));
-                gliderButton.setBackground(new Color(175,175,175));
-                gliderButton.setBorder(new LineBorder(Color.BLACK,1));
+                gliderButton.setBackground(Color.WHITE);
                 airfieldButton.setBackground(new Color(200,200,200));
-                airfieldButton.setBorder(new LineBorder(Color.BLACK,1));
                 drumButton.setBackground(new Color(200,200,200));
-                drumButton.setBorder(new LineBorder(Color.BLACK,1));
             }
         });
         
@@ -219,13 +213,9 @@ public class MainWindow extends JFrame {
                 selectionLayout.next(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
                 pilotButton.setBackground(new Color(200,200,200));
-                pilotButton.setBorder(new LineBorder(Color.BLACK,1));
                 gliderButton.setBackground(new Color(200,200,200));
-                gliderButton.setBorder(new LineBorder(Color.BLACK,1));
-                airfieldButton.setBackground(new Color(175,175,175));
-                airfieldButton.setBorder(new LineBorder(Color.BLACK,1));
+                airfieldButton.setBackground(Color.WHITE);
                 drumButton.setBackground(new Color(200,200,200));
-                drumButton.setBorder(new LineBorder(Color.BLACK,1));
             }
         });
         
@@ -237,13 +227,9 @@ public class MainWindow extends JFrame {
                 selectionLayout.next(ParameterSelectionPanel_);
                 selectionLayout.next(ParameterSelectionPanel_);
                 pilotButton.setBackground(new Color(200,200,200));
-                pilotButton.setBorder(new LineBorder(Color.BLACK,1));
                 gliderButton.setBackground(new Color(200,200,200));
-                gliderButton.setBorder(new LineBorder(Color.BLACK,1));
                 airfieldButton.setBackground(new Color(200,200,200));
-                airfieldButton.setBorder(new LineBorder(Color.BLACK,1));
-                drumButton.setBackground(new Color(175,175,175));
-                drumButton.setBorder(new LineBorder(Color.BLACK,1));
+                drumButton.setBackground(Color.WHITE);
             }
         });
         

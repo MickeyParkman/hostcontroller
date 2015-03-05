@@ -133,7 +133,7 @@ public class PilotPanel extends JPanel implements Observer{
                 emergencyContactPhoneField.setText(emergencyContactPhone);
                 emergencyContactPhoneField.setBackground(Color.GREEN);
 
-                String medInfo = thePilot.getEmergencyContact();
+                /*String medInfo = thePilot.getEmergencyContact();
                 String medInfoName;
                 String medInfoPhone;
                 int t = medInfo.indexOf('%');
@@ -150,7 +150,7 @@ public class PilotPanel extends JPanel implements Observer{
                 medInfoNameField.setText(medInfoName);
                 medInfoNameField.setBackground(Color.GREEN);
                 medInfoPhoneField.setText(medInfoPhone);
-                medInfoPhoneField.setBackground(Color.GREEN);
+                medInfoPhoneField.setBackground(Color.GREEN);*/
 
                 flightWeightField.setText(String.valueOf((int)(thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
                 flightWeightField.setBackground(Color.GREEN);
@@ -184,7 +184,6 @@ public class PilotPanel extends JPanel implements Observer{
      */
     public void initComponents() {
         pilotJList = new javax.swing.JList();
-        pilotJList.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         
         setLayout(new BorderLayout(0, 0));
 
@@ -319,7 +318,7 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
         
-        JLabel medInfoLabel = new JLabel("Primary Physician:");
+        /*JLabel medInfoLabel = new JLabel("Primary Physician:");
         medInfoLabel.setBounds(244, 247, 117, 14);
         attributesPanel.add(medInfoLabel);
         
@@ -341,7 +340,7 @@ public class PilotPanel extends JPanel implements Observer{
         
         JLabel medInfoPhoneLabel = new JLabel("Phone:");
         medInfoPhoneLabel.setBounds(267, 297, 46, 14);
-        attributesPanel.add(medInfoPhoneLabel);
+        attributesPanel.add(medInfoPhoneLabel);*/
         
         JLabel lblAdditionalInformation = new JLabel("Additional Information:");
         lblAdditionalInformation.setBounds(10, 342, 152, 14);

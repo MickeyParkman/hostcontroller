@@ -132,7 +132,6 @@ public class SailplanePanel extends JPanel {
      */
     public void initComponents() {
         sailplaneJList = new javax.swing.JList();
-        sailplaneJList.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         
         setLayout(new BorderLayout(0, 0));
 
@@ -162,8 +161,8 @@ public class SailplanePanel extends JPanel {
         attributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         attributesPanel.setLayout(null);
         
-        JLabel nNumberLabel = new JLabel("N Number:");
-        nNumberLabel.setBounds(10, 53, 86, 14);
+        JLabel nNumberLabel = new JLabel("Registration Number:");
+        nNumberLabel.setBounds(10, 53, 125, 14);
         attributesPanel.add(nNumberLabel);
         
         JLabel emptyWeightLabel = new JLabel("Empty Weight:");

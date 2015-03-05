@@ -381,7 +381,6 @@ public class AirfieldPanel extends JPanel {
         for(Object str: airfields){
                 airfieldModel.addElement(str);
         }
-        airfieldJList.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         airfieldJList.setModel(airfieldModel);
         
         airfieldJList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -506,7 +505,6 @@ public class AirfieldPanel extends JPanel {
         panel.add(gliderPostitionSubPanel);
         gliderPostitionSubPanel.setLayout(new BorderLayout(0, 0));
         gliderPostitionSubPanel.add(gliderPositionsScrollPane, BorderLayout.NORTH);
-        gliderPositionsJList.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 
         gliderPositionsJList.setModel(gliderPositionModel);
         gliderPositionsScrollPane.setViewportView(gliderPositionsJList);
@@ -631,7 +629,6 @@ public class AirfieldPanel extends JPanel {
         runwaySubPanel.add(runwaysScrollPane, BorderLayout.NORTH);
         
         DefaultListModel runwayModel = new DefaultListModel();
-        runwaysJList.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         runwaysJList.setModel(runwayModel);
         runwaysScrollPane.setViewportView(runwaysJList);
         
@@ -736,7 +733,6 @@ public class AirfieldPanel extends JPanel {
         panel_1.add(winchPostitionSubPanel);
         winchPostitionSubPanel.setLayout(new BorderLayout(0, 0));
         winchPostitionSubPanel.add(winchPositionsScrollPane, BorderLayout.NORTH);
-        winchPositionsJList.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         
         winchPositionsJList.setModel(winchPositionModel);
         winchPositionsScrollPane.setViewportView(winchPositionsJList);
