@@ -371,16 +371,19 @@ public class AddEditPilotPanel extends JFrame {
     
     public void deleteCommand(){
         try{
-            DatabaseEntryDelete.DeleteEntry(currentPilot);
-            CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-            objectSet.clearPilot();
-            JOptionPane.showMessageDialog(rootPane, currentPilot.toString() + " successfully deleted.");
-            parent.update();
-            this.dispose();
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentPilot.toString() + "?",
+                "Delete Pilot", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseEntryDelete.DeleteEntry(currentPilot);
+                CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                objectSet.clearPilot();
+                JOptionPane.showMessageDialog(rootPane, currentPilot.toString() + " successfully deleted.");
+                this.dispose();
+                parent.update();
+            }
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e3) {
-            System.out.println("NNNNNNN");
             e3.printStackTrace();
             //System.out.println(e3.getMessage());
         }   

@@ -188,11 +188,16 @@ public class AddEditAirfieldFrame extends JFrame {
     
     public void deleteCommand(){
         try{
-            DatabaseEntryDelete.DeleteEntry(currentAirfield);
-            CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-            objectSet.clearAirfield();
-            JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.");
-            this.dispose();
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentAirfield.getName() + "?"
+                    + "\n This will also delete all Runways on this airfield and Glider and Winch positions associated with those runways.",
+                    "Delete Airfield", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseEntryDelete.DeleteEntry(currentAirfield);
+                CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                objectSet.clearAirfield();
+                JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.");
+                this.dispose();
+            }
         }catch (ClassNotFoundException e1) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e2){

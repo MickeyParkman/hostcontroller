@@ -151,10 +151,15 @@ public class AddEditRunwayFrame extends JFrame {
     public void deleteCommand()
     {
         try{
-            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
-            objectSet.clearRunway();
-            JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.");
-            dispose();
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentRunway.getId() + "?"
+                    + "\n This will also delete all Glider and Winch positions associated with this runway.",
+                    "Delete Runway", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
+                objectSet.clearRunway();
+                JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.");
+                this.dispose();
+            }
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e3) {

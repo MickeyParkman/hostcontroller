@@ -173,10 +173,14 @@ public class AddEditGliderPosFrame extends JFrame {
 	
     public void deleteCommand(){
         try{
-            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
-            objectSet.cleafGliderPosition();
-            JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.");
-            dispose();
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGliderPos.getGliderPositionId() + "?",
+                "Delete Glider Position", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
+                objectSet.cleafGliderPosition();
+                JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.");
+                this.dispose();
+            }
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e3) {

@@ -173,10 +173,14 @@ public class AddEditWinchPosFrame extends JFrame {
 	
     public void deleteCommand(){
         try{
-            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentWinchPos);
-            objectSet.cleafGliderPosition();
-            JOptionPane.showMessageDialog(rootPane, currentWinchPos.toString() + " successfully deleted.");
-            dispose();
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentWinchPos.getName() + "?",
+                "Delete Winch Position", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentWinchPos);
+                objectSet.cleafGliderPosition();
+                JOptionPane.showMessageDialog(rootPane, currentWinchPos.toString() + " successfully deleted.");
+                this.dispose();
+            }
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
         }catch (Exception e3) {
