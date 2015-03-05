@@ -189,7 +189,7 @@ public class AddEditAirfieldFrame extends JFrame {
     public void deleteCommand(){
         try{
             int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentAirfield.getName() + "?"
-                    + "\n This will also delete all Runways on this airfield and Glider and Winch positions associated with those runways.",
+                    + "\n This will also delete all runways on this airfield and glider and winch positions associated with those runways.",
                     "Delete Airfield", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (choice == 0){
                 DatabaseEntryDelete.DeleteEntry(currentAirfield);

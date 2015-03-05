@@ -152,7 +152,7 @@ public class AddEditRunwayFrame extends JFrame {
     {
         try{
             int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentRunway.getId() + "?"
-                    + "\n This will also delete all Glider and Winch positions associated with this runway.",
+                    + "\n This will also delete all glider and winch positions associated with this runway.",
                     "Delete Runway", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (choice == 0){
                 DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
