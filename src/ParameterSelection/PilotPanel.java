@@ -31,6 +31,7 @@ import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
+import javax.swing.border.MatteBorder;
 
 
 public class PilotPanel extends JPanel implements Observer{
@@ -75,21 +76,21 @@ public class PilotPanel extends JPanel implements Observer{
     {
         pilotJList.clearSelection();
         firstNameField.setText("");
-        firstNameField.setBackground(new Color(255, 255, 255));
+        firstNameField.setBackground(Color.WHITE);
         lastNameField.setText("");
-        lastNameField.setBackground(new Color(255, 255, 255));
+        lastNameField.setBackground(Color.WHITE);
         middleNameField.setText("");
-        middleNameField.setBackground(new Color(255, 255, 255));
+        middleNameField.setBackground(Color.WHITE);
         emergencyContactNameField.setText("");
-        emergencyContactNameField.setBackground(new Color(255, 255, 255));
+        emergencyContactNameField.setBackground(Color.WHITE);
         emergencyContactPhoneField.setText("");
-        emergencyContactPhoneField.setBackground(new Color(255, 255, 255));
+        emergencyContactPhoneField.setBackground(Color.WHITE);
         medInfoNameField.setText("");
-        medInfoNameField.setBackground(new Color(255, 255, 255));
+        medInfoNameField.setBackground(Color.WHITE);
         medInfoPhoneField.setText("");
-        medInfoPhoneField.setBackground(new Color(255, 255, 255));
+        medInfoPhoneField.setBackground(Color.WHITE);
         flightWeightField.setText("");
-        flightWeightField.setBackground(new Color(255, 255, 255));
+        flightWeightField.setBackground(Color.WHITE);
         studentRadioButton.setSelected(false);
         proficientRadioButton.setSelected(false);
         advancedRadioButton.setSelected(false);
@@ -105,13 +106,13 @@ public class PilotPanel extends JPanel implements Observer{
                 Pilot thePilot = (Pilot)pilotJList.getSelectedValue();
                 currentData.setCurrentPilot(thePilot);
                 firstNameField.setText((thePilot.getFirstName()));
-                firstNameField.setBackground(new Color(142, 250, 127));
+                firstNameField.setBackground(Color.GREEN);
 
                 lastNameField.setText((thePilot.getLastName()));
-                lastNameField.setBackground(new Color(142, 250, 127));
+                lastNameField.setBackground(Color.GREEN);
 
                 middleNameField.setText((thePilot.getMiddleName()));
-                middleNameField.setBackground(new Color(142, 250, 127));
+                middleNameField.setBackground(Color.GREEN);
 
                 String emergencyContact = thePilot.getEmergencyContact();
                 String emergencyContactName;
@@ -128,11 +129,11 @@ public class PilotPanel extends JPanel implements Observer{
                     emergencyContactPhone = "";
                 }
                 emergencyContactNameField.setText(emergencyContactName);
-                emergencyContactNameField.setBackground(new Color(142, 250, 127));
+                emergencyContactNameField.setBackground(Color.GREEN);
                 emergencyContactPhoneField.setText(emergencyContactPhone);
-                emergencyContactPhoneField.setBackground(new Color(142, 250, 127));
+                emergencyContactPhoneField.setBackground(Color.GREEN);
 
-                String medInfo = thePilot.getEmergencyContact();
+                /*String medInfo = thePilot.getEmergencyContact();
                 String medInfoName;
                 String medInfoPhone;
                 int t = medInfo.indexOf('%');
@@ -147,12 +148,12 @@ public class PilotPanel extends JPanel implements Observer{
                     medInfoPhone = "";
                 }
                 medInfoNameField.setText(medInfoName);
-                medInfoNameField.setBackground(new Color(142, 250, 127));
+                medInfoNameField.setBackground(Color.GREEN);
                 medInfoPhoneField.setText(medInfoPhone);
-                medInfoPhoneField.setBackground(new Color(142, 250, 127));
+                medInfoPhoneField.setBackground(Color.GREEN);*/
 
                 flightWeightField.setText(String.valueOf((int)(thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
-                flightWeightField.setBackground(new Color(142, 250, 127));
+                flightWeightField.setBackground(Color.GREEN);
 
                 studentRadioButton.setSelected(thePilot.getCapability().equals("Student"));
                 proficientRadioButton.setSelected(thePilot.getCapability().equals("Proficient"));
@@ -202,6 +203,7 @@ public class PilotPanel extends JPanel implements Observer{
         pilotScrollPane.setViewportView(pilotJList);
 
         JPanel attributesPanel = new JPanel();
+        attributesPanel.setBackground(Color.WHITE);
         JScrollPane attributesPanelScrollPane = new JScrollPane();
         add(attributesPanelScrollPane, BorderLayout.CENTER);
         attributesPanel.setPreferredSize(new Dimension(700,500));
@@ -225,21 +227,25 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(flightWeightLabel);
         
         flightWeightField = new JTextField();
+        flightWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         flightWeightField.setBounds(160, 125, 110, 20);
         attributesPanel.add(flightWeightField);
         flightWeightField.setColumns(10);
         
         lastNameField = new JTextField();
+        lastNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         lastNameField.setBounds(160, 100, 110, 20);
         attributesPanel.add(lastNameField);
         lastNameField.setColumns(10);
         
         middleNameField = new JTextField();
+        middleNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         middleNameField.setBounds(160, 75, 110, 20);
         attributesPanel.add(middleNameField);
         middleNameField.setColumns(10);
         
         firstNameField = new JTextField();
+        firstNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         firstNameField.setBounds(160, 50, 110, 20);
         attributesPanel.add(firstNameField);
         firstNameField.setColumns(10);
@@ -249,17 +255,20 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(CapabilityLabel);
         
         studentRadioButton = new JRadioButton("Student");
-        buttonGroup.add(studentRadioButton);
+        capabilityButtonGroup.add(studentRadioButton);
+        studentRadioButton.setBackground(Color.WHITE);
         studentRadioButton.setBounds(85, 170, 109, 23);
         attributesPanel.add(studentRadioButton);
         
         proficientRadioButton = new JRadioButton("Proficient");
-        buttonGroup.add(proficientRadioButton);
+        capabilityButtonGroup.add(proficientRadioButton);
+        proficientRadioButton.setBackground(Color.WHITE);
         proficientRadioButton.setBounds(85, 195, 109, 23);
         attributesPanel.add(proficientRadioButton);
         
         advancedRadioButton = new JRadioButton("Advanced");
-        buttonGroup.add(advancedRadioButton);
+        capabilityButtonGroup.add(advancedRadioButton);
+        advancedRadioButton.setBackground(Color.WHITE);
         advancedRadioButton.setBounds(85, 220, 109, 23);
         attributesPanel.add(advancedRadioButton);
         
@@ -268,17 +277,20 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(preferenceLabel);
         
         mildRadioButton = new JRadioButton("Mild");
-        buttonGroup.add(mildRadioButton);
+        preferenceButtonGroup.add(mildRadioButton);
+        mildRadioButton.setBackground(Color.WHITE);
         mildRadioButton.setBounds(320, 170, 109, 23);
         attributesPanel.add(mildRadioButton);
         
         nominalRadioButton = new JRadioButton("Nominal");
-        buttonGroup.add(nominalRadioButton);
+        preferenceButtonGroup.add(nominalRadioButton);
+        nominalRadioButton.setBackground(Color.WHITE);
         nominalRadioButton.setBounds(320, 195, 109, 23);
         attributesPanel.add(nominalRadioButton);
         
         performanceRadioButton = new JRadioButton("Performance");
-        buttonGroup.add(performanceRadioButton);
+        preferenceButtonGroup.add(performanceRadioButton);
+        performanceRadioButton.setBackground(Color.WHITE);
         performanceRadioButton.setBounds(320, 220, 109, 23);
         attributesPanel.add(performanceRadioButton);
         
@@ -295,16 +307,18 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(emergencyContactPhoneLabel);
         
         emergencyContactNameField = new JTextField();
+        emergencyContactNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         emergencyContactNameField.setBounds(85, 272, 110, 20);
         attributesPanel.add(emergencyContactNameField);
         emergencyContactNameField.setColumns(10);
         
         emergencyContactPhoneField = new JTextField();
-        emergencyContactPhoneField.setBounds(85, 297, 109, 20);
+        emergencyContactPhoneField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        emergencyContactPhoneField.setBounds(85, 297, 110, 20);
         attributesPanel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
         
-        JLabel medInfoLabel = new JLabel("Primary Physician:");
+        /*JLabel medInfoLabel = new JLabel("Primary Physician:");
         medInfoLabel.setBounds(244, 247, 117, 14);
         attributesPanel.add(medInfoLabel);
         
@@ -313,24 +327,27 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(medInfoNameLabel);
         
         medInfoNameField = new JTextField();
+        medInfoNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         medInfoNameField.setColumns(10);
         medInfoNameField.setBounds(319, 269, 110, 20);
         attributesPanel.add(medInfoNameField);
         
         medInfoPhoneField = new JTextField();
+        medInfoPhoneField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         medInfoPhoneField.setColumns(10);
-        medInfoPhoneField.setBounds(319, 294, 109, 20);
+        medInfoPhoneField.setBounds(319, 294, 110, 20);
         attributesPanel.add(medInfoPhoneField);
         
         JLabel medInfoPhoneLabel = new JLabel("Phone:");
         medInfoPhoneLabel.setBounds(267, 297, 46, 14);
-        attributesPanel.add(medInfoPhoneLabel);
+        attributesPanel.add(medInfoPhoneLabel);*/
         
         JLabel lblAdditionalInformation = new JLabel("Additional Information:");
         lblAdditionalInformation.setBounds(10, 342, 152, 14);
         attributesPanel.add(lblAdditionalInformation);
         
         optionalInfoField = new JTextArea();
+        optionalInfoField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         optionalInfoField.setBounds(10, 367, 734, 88);
         attributesPanel.add(optionalInfoField);
         optionalInfoField.setColumns(10);
@@ -361,6 +378,10 @@ public class PilotPanel extends JPanel implements Observer{
         });
         editButton.setBounds(288, 0, 89, 23);
         attributesPanel.add(editButton);
+        
+        flightWeightUnits = new JLabel("kgs");
+        flightWeightUnits.setBounds(280, 128, 46, 14);
+        attributesPanel.add(flightWeightUnits);
     }
         
     private javax.swing.JList pilotJList;
@@ -382,7 +403,9 @@ public class PilotPanel extends JPanel implements Observer{
     private JLabel lblPilot;
     private JButton addNewButton;
     private JButton editButton;
-    private final ButtonGroup buttonGroup = new ButtonGroup();
+    private final ButtonGroup capabilityButtonGroup = new ButtonGroup();
+    private final ButtonGroup preferenceButtonGroup = new ButtonGroup();
+    private JLabel flightWeightUnits;
 
     @Override
     public void update(String msg) {

@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditRunwayFrame extends JFrame {
@@ -52,11 +53,13 @@ public class AddEditRunwayFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
+        contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
 
         JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
         panel.setLayout(null);
         contentPane.add(panel, BorderLayout.CENTER);
 
@@ -74,17 +77,20 @@ public class AddEditRunwayFrame extends JFrame {
         panel.add(altitudeLabel);
 
         magneticHeadingField = new JTextField(currentRunway.getMagneticHeading());
+        magneticHeadingField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         magneticHeadingField.setColumns(10);
         magneticHeadingField.setBounds(140, 36, 200, 20);
         panel.add(magneticHeadingField);
 
         nameField = new JTextField(currentRunway.getId());
         nameField.setEditable(!isEditEntry);
+        nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nameField.setColumns(10);
         nameField.setBounds(140, 11, 200, 20);
         panel.add(nameField);
 
         altitudeField = new JTextField();
+        altitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry)
         {
             altitudeField.setText(Integer.toString(editRunway.getAltitude()));
@@ -147,6 +153,10 @@ public class AddEditRunwayFrame extends JFrame {
         }
         parentAirfieldLabel.setBounds(10, 100, 220, 14);
         panel.add(parentAirfieldLabel);
+        
+        JLabel altitudeUnits = new JLabel("m");
+        altitudeUnits.setBounds(350, 64, 46, 14);
+        panel.add(altitudeUnits);
     }
 
     public void deleteCommand()

@@ -26,6 +26,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditAirfieldFrame extends JFrame {
@@ -69,6 +70,7 @@ public class AddEditAirfieldFrame extends JFrame {
         setBounds(100, 100, 650, 242);
         
         airfieldAttributesPanel = new JPanel();
+        airfieldAttributesPanel.setBackground(Color.WHITE);
         airfieldAttributesPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(airfieldAttributesPanel);
         airfieldAttributesPanel.setLayout(null);
@@ -94,6 +96,7 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldAttributesPanel.add(airfieldLatitudeLabel);
         
         airfieldAltitudeField = new JTextField();
+        airfieldAltitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             airfieldAltitudeField.setText(String.valueOf(currentAirfield.getAltitude()));
         }
@@ -102,17 +105,20 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldAltitudeField.setColumns(10);
         
         designatorField = new JTextField(currentAirfield.getDesignator());
+        designatorField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         designatorField.setBounds(140, 33, 120, 20);
         designatorField.setEditable(!isEditEntry);
         airfieldAttributesPanel.add(designatorField);
         designatorField.setColumns(10);
         
         airfieldNameField = new JTextField(currentAirfield.getName());
+        airfieldNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         airfieldNameField.setBounds(140, 8, 120, 20);
         airfieldAttributesPanel.add(airfieldNameField);
         airfieldNameField.setColumns(10);
         
         magneticVariationField = new JTextField();
+        magneticVariationField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             magneticVariationField.setText(String.valueOf(currentAirfield.getMagneticVariation()));
         }
@@ -125,6 +131,7 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldAttributesPanel.add(airfieldNameLabel);
         
         airfieldLongitudeField = new JTextField();
+        airfieldLongitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             airfieldLongitudeField.setText(String.valueOf(currentAirfield.getLongitude()));
         }
@@ -133,6 +140,7 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldLongitudeField.setColumns(10);
         
         airfieldLatitudeField = new JTextField();
+        airfieldLatitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             airfieldLatitudeField.setText(String.valueOf(currentAirfield.getLatitude()));
         }
@@ -179,6 +187,22 @@ public class AddEditAirfieldFrame extends JFrame {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 180, 89, 23);
         airfieldAttributesPanel.add(cancelButton);
+        
+        JLabel latitudeUnits = new JLabel("degrees");
+        latitudeUnits.setBounds(270, 137, 65, 14);
+        airfieldAttributesPanel.add(latitudeUnits);
+        
+        JLabel longitudeUnits = new JLabel("degrees");
+        longitudeUnits.setBounds(270, 112, 65, 14);
+        airfieldAttributesPanel.add(longitudeUnits);
+        
+        JLabel magneticVariationUnits = new JLabel("degrees");
+        magneticVariationUnits.setBounds(270, 87, 65, 14);
+        airfieldAttributesPanel.add(magneticVariationUnits);
+        
+        JLabel altitudeUnits = new JLabel("m");
+        altitudeUnits.setBounds(270, 62, 46, 14);
+        airfieldAttributesPanel.add(altitudeUnits);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

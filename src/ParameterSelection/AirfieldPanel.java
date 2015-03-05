@@ -34,6 +34,7 @@ import java.awt.Font;
 
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AirfieldPanel extends JPanel {
@@ -137,39 +138,39 @@ public class AirfieldPanel extends JPanel {
     {
         airfieldJList.clearSelection();
         airfieldNameField.setText("");
-        airfieldNameField.setBackground(new Color(255, 255, 255));
+        airfieldNameField.setBackground(Color.WHITE);
         designatorField.setText("");
-        designatorField.setBackground(new Color(255, 255, 255));
+        designatorField.setBackground(Color.WHITE);
         airfieldAltitudeField.setText("");
-        airfieldAltitudeField.setBackground(new Color(255, 255, 255));
+        airfieldAltitudeField.setBackground(Color.WHITE);
         magneticVariationField.setText("");
-        magneticVariationField.setBackground(new Color(255, 255, 255));
+        magneticVariationField.setBackground(Color.WHITE);
         airfieldLongitudeField.setText("");
-        airfieldLongitudeField.setBackground(new Color(255, 255, 255));
+        airfieldLongitudeField.setBackground(Color.WHITE);
         airfieldLatitudeField.setText("");
-        airfieldLatitudeField.setBackground(new Color(255, 255, 255));
+        airfieldLatitudeField.setBackground(Color.WHITE);
         runwayNameField.setText("");
-        runwayNameField.setBackground(new Color(255, 255, 255));
+        runwayNameField.setBackground(Color.WHITE);
         runwayAltitudeField.setText("");
-        runwayAltitudeField.setBackground(new Color(255, 255, 255));
+        runwayAltitudeField.setBackground(Color.WHITE);
         magneticHeadingField.setText("");
-        magneticHeadingField.setBackground(new Color(255, 255, 255));
+        magneticHeadingField.setBackground(Color.WHITE);
         gliderPosNameField.setText("");
-        gliderPosNameField.setBackground(new Color(255, 255, 255));
+        gliderPosNameField.setBackground(Color.WHITE);
         gliderPosAltitudeField.setText("");
-        gliderPosAltitudeField.setBackground(new Color(255, 255, 255));
+        gliderPosAltitudeField.setBackground(Color.WHITE);
         gliderPosLongitudeField.setText("");
-        gliderPosLongitudeField.setBackground(new Color(255, 255, 255));
+        gliderPosLongitudeField.setBackground(Color.WHITE);
         gliderPosLatitudeField.setText("");
-        gliderPosLatitudeField.setBackground(new Color(255, 255, 255));
+        gliderPosLatitudeField.setBackground(Color.WHITE);
         winchPosNameField.setText("");
-        winchPosNameField.setBackground(new Color(255, 255, 255));
+        winchPosNameField.setBackground(Color.WHITE);
         winchPosAltitudeField.setText("");
-        winchPosAltitudeField.setBackground(new Color(255, 255, 255));
+        winchPosAltitudeField.setBackground(Color.WHITE);
         winchPosLongitudeField.setText("");
-        winchPosLongitudeField.setBackground(new Color(255, 255, 255));
+        winchPosLongitudeField.setBackground(Color.WHITE);
         winchPosLatitudeField.setText("");
-        winchPosLatitudeField.setBackground(new Color(255, 255, 255));
+        winchPosLatitudeField.setBackground(Color.WHITE);
 
         runwaysModel.removeAllElements();
         winchPositionModel.removeAllElements();
@@ -187,45 +188,45 @@ public class AirfieldPanel extends JPanel {
                 currentData.clearWinchPosition();
                 
                 airfieldNameField.setText(theAirfield.getName());
-                airfieldNameField.setBackground(new Color(142, 250, 127));
+                airfieldNameField.setBackground(Color.GREEN);
                 
                 designatorField.setText(String.valueOf(theAirfield.getDesignator()));
-                designatorField.setBackground(new Color(142, 250, 127));
+                designatorField.setBackground(Color.GREEN);
                 
                 airfieldAltitudeField.setText(String.valueOf(theAirfield.getAltitude()));
-                airfieldAltitudeField.setBackground(new Color(142, 250, 127));
+                airfieldAltitudeField.setBackground(Color.GREEN);
                 
                 magneticVariationField.setText(String.valueOf(theAirfield.getMagneticVariation()));
-                magneticVariationField.setBackground(new Color(142, 250, 127));
+                magneticVariationField.setBackground(Color.GREEN);
                 
                 airfieldLongitudeField.setText(String.valueOf(theAirfield.getLongitude()));
-                airfieldLongitudeField.setBackground(new Color(142, 250, 127));
+                airfieldLongitudeField.setBackground(Color.GREEN);
                 
                 airfieldLatitudeField.setText(String.valueOf(theAirfield.getLatitude()));
-                airfieldLatitudeField.setBackground(new Color(142, 250, 127));
+                airfieldLatitudeField.setBackground(Color.GREEN);
                 
                 runwayNameField.setText("");
-                runwayNameField.setBackground(new Color(255, 255, 255));
+                runwayNameField.setBackground(Color.WHITE);
                 runwayAltitudeField.setText("");
-                runwayAltitudeField.setBackground(new Color(255, 255, 255));
+                runwayAltitudeField.setBackground(Color.WHITE);
                 magneticHeadingField.setText("");
-                magneticHeadingField.setBackground(new Color(255, 255, 255));
+                magneticHeadingField.setBackground(Color.WHITE);
                 gliderPosNameField.setText("");
-                gliderPosNameField.setBackground(new Color(255, 255, 255));
+                gliderPosNameField.setBackground(Color.WHITE);
                 gliderPosAltitudeField.setText("");
-                gliderPosAltitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosAltitudeField.setBackground(Color.WHITE);
                 gliderPosLongitudeField.setText("");
-                gliderPosLongitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosLongitudeField.setBackground(Color.WHITE);
                 gliderPosLatitudeField.setText("");
-                gliderPosLatitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosLatitudeField.setBackground(Color.WHITE);
                 winchPosNameField.setText("");
-                winchPosNameField.setBackground(new Color(255, 255, 255));
+                winchPosNameField.setBackground(Color.WHITE);
                 winchPosAltitudeField.setText("");
-                winchPosAltitudeField.setBackground(new Color(255, 255, 255));
+                winchPosAltitudeField.setBackground(Color.WHITE);
                 winchPosLongitudeField.setText("");
-                winchPosLongitudeField.setBackground(new Color(255, 255, 255));
+                winchPosLongitudeField.setBackground(Color.WHITE);
                 winchPosLatitudeField.setText("");
-                winchPosLatitudeField.setBackground(new Color(255, 255, 255));
+                winchPosLatitudeField.setBackground(Color.WHITE);
                 
                 runwaysModel.removeAllElements();
                 winchPositionModel.removeAllElements();
@@ -253,30 +254,30 @@ public class AirfieldPanel extends JPanel {
                 currentData.clearWinchPosition();
                 
                 runwayNameField.setText(theRunway.getId());
-                runwayNameField.setBackground(new Color(142, 250, 127));
+                runwayNameField.setBackground(Color.GREEN);
                 
                 runwayAltitudeField.setText(String.valueOf(theRunway.getAltitude()));
-                runwayAltitudeField.setBackground(new Color(142, 250, 127));
+                runwayAltitudeField.setBackground(Color.GREEN);
                 
                 magneticHeadingField.setText(String.valueOf(theRunway.getMagneticHeading()));
-                magneticHeadingField.setBackground(new Color(142, 250, 127));
+                magneticHeadingField.setBackground(Color.GREEN);
                 
                 gliderPosNameField.setText("");
-                gliderPosNameField.setBackground(new Color(255, 255, 255));
+                gliderPosNameField.setBackground(Color.WHITE);
                 gliderPosAltitudeField.setText("");
-                gliderPosAltitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosAltitudeField.setBackground(Color.WHITE);
                 gliderPosLongitudeField.setText("");
-                gliderPosLongitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosLongitudeField.setBackground(Color.WHITE);
                 gliderPosLatitudeField.setText("");
-                gliderPosLatitudeField.setBackground(new Color(255, 255, 255));
+                gliderPosLatitudeField.setBackground(Color.WHITE);
                 winchPosNameField.setText("");
-                winchPosNameField.setBackground(new Color(255, 255, 255));
+                winchPosNameField.setBackground(Color.WHITE);
                 winchPosAltitudeField.setText("");
-                winchPosAltitudeField.setBackground(new Color(255, 255, 255));
+                winchPosAltitudeField.setBackground(Color.WHITE);
                 winchPosLongitudeField.setText("");
-                winchPosLongitudeField.setBackground(new Color(255, 255, 255));
+                winchPosLongitudeField.setBackground(Color.WHITE);
                 winchPosLatitudeField.setText("");
-                winchPosLatitudeField.setBackground(new Color(255, 255, 255));
+                winchPosLatitudeField.setBackground(Color.WHITE);
                 
                 gliderPositionModel.removeAllElements();
                 for(GliderPosition str: gliderPositions){
@@ -304,16 +305,16 @@ public class AirfieldPanel extends JPanel {
                 currentData.setCurrentGliderPosition(theGliderPosition);
                 
                 gliderPosNameField.setText(theGliderPosition.getGliderPositionId());
-                gliderPosNameField.setBackground(new Color(142, 250, 127));
+                gliderPosNameField.setBackground(Color.GREEN);
                 
                 gliderPosAltitudeField.setText(String.valueOf(theGliderPosition.getAltitude()));
-                gliderPosAltitudeField.setBackground(new Color(142, 250, 127));
+                gliderPosAltitudeField.setBackground(Color.GREEN);
  
                 gliderPosLongitudeField.setText(String.valueOf(theGliderPosition.getLongitude()));
-                gliderPosLongitudeField.setBackground(new Color(142, 250, 127));
+                gliderPosLongitudeField.setBackground(Color.GREEN);
                 
                 gliderPosLatitudeField.setText(String.valueOf(theGliderPosition.getLatitude()));
-                gliderPosLatitudeField.setBackground(new Color(142, 250, 127));
+                gliderPosLatitudeField.setBackground(Color.GREEN);
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -328,16 +329,16 @@ public class AirfieldPanel extends JPanel {
                 currentData.setCurrentWinchPosition(theWinchPosition);
                 
                 winchPosNameField.setText(theWinchPosition.getName());
-                winchPosNameField.setBackground(new Color(142, 250, 127));
+                winchPosNameField.setBackground(Color.GREEN);
                 
                 winchPosAltitudeField.setText(String.valueOf(theWinchPosition.getAltitude()));
-                winchPosAltitudeField.setBackground(new Color(142, 250, 127));
+                winchPosAltitudeField.setBackground(Color.GREEN);
  
                 winchPosLongitudeField.setText(String.valueOf(theWinchPosition.getLongitude()));
-                winchPosLongitudeField.setBackground(new Color(142, 250, 127));
+                winchPosLongitudeField.setBackground(Color.GREEN);
                 
                 winchPosLatitudeField.setText(String.valueOf(theWinchPosition.getLatitude()));
-                winchPosLatitudeField.setBackground(new Color(142, 250, 127));
+                winchPosLatitudeField.setBackground(Color.GREEN);
                 
             } catch(Exception e) {
                 //TODO respond to error
@@ -394,6 +395,7 @@ public class AirfieldPanel extends JPanel {
         JScrollPane airfieldAttributesPanelScrollPane = new JScrollPane();
         airfieldSubPanel.add(airfieldAttributesPanelScrollPane, BorderLayout.CENTER);
         JPanel airfieldAttributesPanel = new JPanel();
+        airfieldAttributesPanel.setBackground(Color.WHITE);
         airfieldAttributesPanel.setPreferredSize(new Dimension(500,300));
         airfieldAttributesPanel.setLayout(null);
         airfieldAttributesPanelScrollPane.setViewportView(airfieldAttributesPanel);
@@ -419,21 +421,25 @@ public class AirfieldPanel extends JPanel {
         airfieldAttributesPanel.add(airfieldLatitudeLabel);
         
         airfieldAltitudeField = new JTextField();
+        airfieldAltitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         airfieldAltitudeField.setBounds(140, 100, 200, 20);
         airfieldAttributesPanel.add(airfieldAltitudeField);
         airfieldAltitudeField.setColumns(10);
         
         designatorField = new JTextField();
+        designatorField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         designatorField.setBounds(140, 75, 200, 20);
         airfieldAttributesPanel.add(designatorField);
         designatorField.setColumns(10);
         
         airfieldNameField = new JTextField();
+        airfieldNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         airfieldNameField.setBounds(140, 50, 200, 20);
         airfieldAttributesPanel.add(airfieldNameField);
         airfieldNameField.setColumns(10);
         
         magneticVariationField = new JTextField();
+        magneticVariationField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         magneticVariationField.setBounds(140, 125, 200, 20);
         airfieldAttributesPanel.add(magneticVariationField);
         magneticVariationField.setColumns(10);
@@ -443,11 +449,13 @@ public class AirfieldPanel extends JPanel {
         airfieldAttributesPanel.add(airfieldNameLabel);
         
         airfieldLongitudeField = new JTextField();
+        airfieldLongitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         airfieldLongitudeField.setBounds(140, 151, 200, 20);
         airfieldAttributesPanel.add(airfieldLongitudeField);
         airfieldLongitudeField.setColumns(10);
         
         airfieldLatitudeField = new JTextField();
+        airfieldLatitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         airfieldLatitudeField.setBounds(140, 176, 200, 20);
         airfieldAttributesPanel.add(airfieldLatitudeField);
         airfieldLatitudeField.setColumns(10);
@@ -476,6 +484,22 @@ public class AirfieldPanel extends JPanel {
         airfieldLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
         airfieldLabel.setBounds(10, 20, 100, 22);
         airfieldAttributesPanel.add(airfieldLabel);
+        
+        JLabel airfieldAltitudeUnits = new JLabel("m");
+        airfieldAltitudeUnits.setBounds(350, 104, 46, 14);
+        airfieldAttributesPanel.add(airfieldAltitudeUnits);
+        
+        JLabel airfieldLongitudeUnits = new JLabel("degrees");
+        airfieldLongitudeUnits.setBounds(350, 154, 65, 14);
+        airfieldAttributesPanel.add(airfieldLongitudeUnits);
+        
+        JLabel airfieldLatitudeUnits = new JLabel("degrees");
+        airfieldLatitudeUnits.setBounds(350, 179, 65, 14);
+        airfieldAttributesPanel.add(airfieldLatitudeUnits);
+        
+        JLabel magneticVariationUnits = new JLabel("degrees");
+        magneticVariationUnits.setBounds(350, 129, 65, 14);
+        airfieldAttributesPanel.add(magneticVariationUnits);
 
         JPanel gliderPostitionSubPanel = new JPanel();
         panel.add(gliderPostitionSubPanel);
@@ -487,6 +511,7 @@ public class AirfieldPanel extends JPanel {
         
         JScrollPane gliderPosAttributesPanelScrollPane = new JScrollPane();
         JPanel gliderPositionAttributesPanel = new JPanel();
+        gliderPositionAttributesPanel.setBackground(Color.WHITE);
         gliderPostitionSubPanel.add(gliderPosAttributesPanelScrollPane, BorderLayout.CENTER);
         gliderPositionAttributesPanel.setPreferredSize(new Dimension(500,300));
         gliderPosAttributesPanelScrollPane.setViewportView(gliderPositionAttributesPanel);
@@ -527,21 +552,25 @@ public class AirfieldPanel extends JPanel {
         gliderPosParentAirfieldField.setColumns(10);*/
         
         gliderPosLatitudeField = new JTextField();
+        gliderPosLatitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         gliderPosLatitudeField.setBounds(135, 125, 200, 20);
         gliderPositionAttributesPanel.add(gliderPosLatitudeField);
         gliderPosLatitudeField.setColumns(10);
         
         gliderPosLongitudeField = new JTextField();
+        gliderPosLongitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         gliderPosLongitudeField.setBounds(135, 100, 200, 20);
         gliderPositionAttributesPanel.add(gliderPosLongitudeField);
         gliderPosLongitudeField.setColumns(10);
         
         gliderPosAltitudeField = new JTextField();
+        gliderPosAltitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         gliderPosAltitudeField.setBounds(135, 75, 200, 20);
         gliderPositionAttributesPanel.add(gliderPosAltitudeField);
         gliderPosAltitudeField.setColumns(10);
         
         gliderPosNameField = new JTextField();
+        gliderPosNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         gliderPosNameField.setBounds(135, 50, 200, 20);
         gliderPositionAttributesPanel.add(gliderPosNameField);
         gliderPosNameField.setColumns(10);
@@ -571,6 +600,18 @@ public class AirfieldPanel extends JPanel {
         gliderPositionLabel.setBounds(10, 20, 180, 31);
         gliderPositionAttributesPanel.add(gliderPositionLabel);
         
+        JLabel gliderPosLongitudeUnits = new JLabel("degrees");
+        gliderPosLongitudeUnits.setBounds(345, 103, 65, 14);
+        gliderPositionAttributesPanel.add(gliderPosLongitudeUnits);
+        
+        JLabel gliderPosLatitudeUnits = new JLabel("degrees");
+        gliderPosLatitudeUnits.setBounds(345, 128, 65, 14);
+        gliderPositionAttributesPanel.add(gliderPosLatitudeUnits);
+        
+        JLabel gliderPosAltitudeUnits = new JLabel("m");
+        gliderPosAltitudeUnits.setBounds(345, 78, 46, 14);
+        gliderPositionAttributesPanel.add(gliderPosAltitudeUnits);
+        
         gliderPositionsJList.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -592,6 +633,7 @@ public class AirfieldPanel extends JPanel {
         runwaysScrollPane.setViewportView(runwaysJList);
         
         JPanel runwayAttributesPanel = new JPanel();
+        runwayAttributesPanel.setBackground(Color.WHITE);
         JScrollPane runwayAttributesPanelScrollPane = new JScrollPane();
         runwaySubPanel.add(runwayAttributesPanelScrollPane, BorderLayout.CENTER);
         runwayAttributesPanel.setLayout(null);
@@ -615,16 +657,19 @@ public class AirfieldPanel extends JPanel {
         runwayAttributesPanel.add(runwayParentAirfieldLabel);*/
         
         magneticHeadingField = new JTextField();
+        magneticHeadingField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         magneticHeadingField.setBounds(140, 75, 200, 20);
         runwayAttributesPanel.add(magneticHeadingField);
         magneticHeadingField.setColumns(10);
         
         runwayNameField = new JTextField();
+        runwayNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         runwayNameField.setBounds(140, 50, 200, 20);
         runwayAttributesPanel.add(runwayNameField);
         runwayNameField.setColumns(10);
         
         runwayAltitudeField = new JTextField();
+        runwayAltitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         runwayAltitudeField.setBounds(140, 100, 200, 20);
         runwayAttributesPanel.add(runwayAltitudeField);
         runwayAltitudeField.setColumns(10);
@@ -639,6 +684,7 @@ public class AirfieldPanel extends JPanel {
         runwayAttributesPanel.add(runwaySlopeLabel);
         
         runwaySlopeField = new JTextField();
+        runwaySlopeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         runwaySlopeField.setBounds(140, 125, 200, 20);
         runwayAttributesPanel.add(runwaySlopeField);
         runwaySlopeField.setColumns(10);
@@ -668,6 +714,14 @@ public class AirfieldPanel extends JPanel {
         runwayLabel.setBounds(10, 20, 140, 31);
         runwayAttributesPanel.add(runwayLabel);
         
+        JLabel runwayAltitudeUnits = new JLabel("m");
+        runwayAltitudeUnits.setBounds(350, 103, 46, 14);
+        runwayAttributesPanel.add(runwayAltitudeUnits);
+        
+        JLabel slopeUnits = new JLabel("degrees");
+        slopeUnits.setBounds(350, 128, 65, 14);
+        runwayAttributesPanel.add(slopeUnits);
+        
         runwaysJList.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -684,6 +738,7 @@ public class AirfieldPanel extends JPanel {
         winchPositionsScrollPane.setViewportView(winchPositionsJList);
         
         JPanel winchPositionAttributesPanel = new JPanel();
+        winchPositionAttributesPanel.setBackground(Color.WHITE);
         JScrollPane winchPositionAttributesPanelScrollPane = new JScrollPane();
         winchPostitionSubPanel.add(winchPositionAttributesPanelScrollPane, BorderLayout.CENTER);
         winchPositionAttributesPanel.setLayout(null);
@@ -695,6 +750,7 @@ public class AirfieldPanel extends JPanel {
         winchPositionAttributesPanel.add(winchPosNameLabel);
         
         winchPosNameField = new JTextField();
+        winchPosNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         winchPosNameField.setColumns(10);
         winchPosNameField.setBounds(135, 50, 200, 20);
         winchPositionAttributesPanel.add(winchPosNameField);
@@ -704,6 +760,7 @@ public class AirfieldPanel extends JPanel {
         winchPositionAttributesPanel.add(winchPosAltitudeLabel);
         
         winchPosAltitudeField = new JTextField();
+        winchPosAltitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         winchPosAltitudeField.setColumns(10);
         winchPosAltitudeField.setBounds(135, 75, 200, 20);
         winchPositionAttributesPanel.add(winchPosAltitudeField);
@@ -713,6 +770,7 @@ public class AirfieldPanel extends JPanel {
         winchPositionAttributesPanel.add(winchPosLongitudeLabel);
         
         winchPosLongitudeField = new JTextField();
+        winchPosLongitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         winchPosLongitudeField.setColumns(10);
         winchPosLongitudeField.setBounds(135, 100, 200, 20);
         winchPositionAttributesPanel.add(winchPosLongitudeField);
@@ -722,6 +780,7 @@ public class AirfieldPanel extends JPanel {
         winchPositionAttributesPanel.add(winchPosLatitudeLabel);
         
         winchPosLatitudeField = new JTextField();
+        winchPosLatitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         winchPosLatitudeField.setColumns(10);
         winchPosLatitudeField.setBounds(135, 125, 200, 20);
         winchPositionAttributesPanel.add(winchPosLatitudeField);
@@ -750,6 +809,18 @@ public class AirfieldPanel extends JPanel {
         winchPositionLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
         winchPositionLabel.setBounds(10, 20, 180, 31);
         winchPositionAttributesPanel.add(winchPositionLabel);
+        
+        JLabel winchPosAltitudeUnits = new JLabel("m");
+        winchPosAltitudeUnits.setBounds(345, 78, 46, 14);
+        winchPositionAttributesPanel.add(winchPosAltitudeUnits);
+        
+        JLabel winchPosLongitudeUnits = new JLabel("degrees");
+        winchPosLongitudeUnits.setBounds(345, 103, 65, 14);
+        winchPositionAttributesPanel.add(winchPosLongitudeUnits);
+        
+        JLabel winchPosLatitudeUnits = new JLabel("degrees");
+        winchPosLatitudeUnits.setBounds(345, 128, 65, 14);
+        winchPositionAttributesPanel.add(winchPosLatitudeUnits);
         
         /*JLabel winchPosParentAirfieldLabel = new JLabel("Parent Airfield:");
         winchPosParentAirfieldLabel.setBounds(10, 111, 103, 14);

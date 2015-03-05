@@ -6,6 +6,7 @@
 
 package DashboardInterface;
 
+import java.awt.Color;
 import java.util.Date;
 import javax.swing.JButton;
 import org.jfree.data.time.Millisecond;
@@ -54,7 +55,7 @@ public class TensionGraphPanel extends javax.swing.JPanel {
         demo.setVisible(true);
         jTabbedPane1.add(demo);
 
-
+        this.setBackground(Color.WHITE);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
