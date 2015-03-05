@@ -64,8 +64,8 @@ public class AddEditGlider extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel nNumberLabel = new JLabel("N Number:");
-        nNumberLabel.setBounds(10, 11, 86, 14);
+        JLabel nNumberLabel = new JLabel("Registration Number:");
+        nNumberLabel.setBounds(10, 11, 125, 14);
         contentPane.add(nNumberLabel);
         
         JLabel emptyWeightLabel = new JLabel("Empty Weight:");
@@ -234,6 +234,12 @@ public class AddEditGlider extends JFrame {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 180, 89, 23);
         contentPane.add(cancelButton);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                cancelCommand();
+            }
+        });
         
         JLabel emptyWeightUnits = new JLabel("kgs");
         emptyWeightUnits.setBounds(280, 36, 46, 14);
@@ -262,12 +268,7 @@ public class AddEditGlider extends JFrame {
         JLabel winchingSpeedUnits = new JLabel("km/h");
         winchingSpeedUnits.setBounds(617, 11, 46, 14);
         contentPane.add(winchingSpeedUnits);
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                cancelCommand();
-            }
-        });
+
     }
     
     public void deleteCommand(){

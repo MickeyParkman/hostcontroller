@@ -232,7 +232,7 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
         
-        JLabel medInfoLabel = new JLabel("Primary Physician:");
+        /*JLabel medInfoLabel = new JLabel("Primary Physician:");
         medInfoLabel.setBounds(244, 205, 117, 14);
         panel.add(medInfoLabel);
         
@@ -269,7 +269,7 @@ public class AddEditPilotPanel extends JFrame {
         
         JLabel medInfoPhoneLabel = new JLabel("Phone:");
         medInfoPhoneLabel.setBounds(267, 255, 46, 14);
-        panel.add(medInfoPhoneLabel);
+        panel.add(medInfoPhoneLabel);*/
         
         JLabel additionalInformationLabel = new JLabel("Additional Information:");
         additionalInformationLabel.setBounds(10, 300, 152, 14);
