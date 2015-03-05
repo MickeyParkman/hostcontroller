@@ -151,6 +151,7 @@ public class AddEditWinchPosFrame extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
+        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 228, 89, 23);
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {

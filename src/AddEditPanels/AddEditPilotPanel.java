@@ -290,6 +290,7 @@ public class AddEditPilotPanel extends JFrame {
         });
         
         JButton clearButton = new JButton("Clear");
+        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 438, 89, 23);
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
@@ -460,8 +461,8 @@ public class AddEditPilotPanel extends JFrame {
         pilotLaunchPref.clearSelection();
         emergencyContactNameField.setText("");
         emergencyContactPhoneField.setText("");
-	medInfoNameField.setText("");
-	medInfoPhoneField.setText("");
+	//medInfoNameField.setText("");
+	//medInfoPhoneField.setText("");
 	optionalInfoField.setText("");
         
         firstNameField.setBackground(Color.WHITE);

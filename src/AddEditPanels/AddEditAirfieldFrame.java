@@ -166,6 +166,7 @@ public class AddEditAirfieldFrame extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
+        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 180, 89, 23);
         airfieldAttributesPanel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {

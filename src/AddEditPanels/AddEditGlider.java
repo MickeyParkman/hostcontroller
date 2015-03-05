@@ -209,6 +209,7 @@ public class AddEditGlider extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
+        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 180, 89, 23);
         contentPane.add(clearButton);
         clearButton.addActionListener(new ActionListener() {

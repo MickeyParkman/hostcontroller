@@ -115,6 +115,7 @@ public class AddEditRunwayFrame extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
+        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 229, 89, 23);
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
