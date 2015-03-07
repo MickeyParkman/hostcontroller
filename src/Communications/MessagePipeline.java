@@ -43,12 +43,15 @@ public class MessagePipeline extends Thread {
     
     public void init()
     {
-        try {
-            socket = new Socket("147.222.165.75", 32123);
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer = new OutputStreamWriter(socket.getOutputStream());
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean DEBUG = true;
+        if(!DEBUG){
+            try {
+                socket = new Socket("147.222.165.75", 32123);
+                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                writer = new OutputStreamWriter(socket.getOutputStream());
+            } catch (Exception e) {
+                //e.printStackTrace();
+            }
         }
     }
     

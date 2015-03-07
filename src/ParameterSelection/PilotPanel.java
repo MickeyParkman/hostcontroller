@@ -61,11 +61,11 @@ public class PilotPanel extends JPanel implements Observer{
     private void initPilotList() {
         try{
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
-            pilotNames.add(new Pilot("1", "Alec", "Jacuzzi", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
-            pilotNames.add(0, new Pilot("1", "", "Default", "", 0, "Student", "Mild", "", "", ""));
+            //pilotNames.add(new Pilot("1", "Alec", "Jacuzzi", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
+            //pilotNames.add(0, new Pilot("1", "", "Default", "", 0, "Student", "Mild", "", "", ""));
         }catch(SQLException e) {
-            pilotNames.add(new Pilot("1", "Alec", "Jacuzzi", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
-            pilotNames.add(0, new Pilot("1", "", "Default", "", 0, "Student", "Mild", "", "", ""));
+            //pilotNames.add(new Pilot("1", "Alec", "Jacuzzi", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
+            //pilotNames.add(0, new Pilot("1", "", "Default", "", 0, "Student", "Mild", "", "", ""));
 
         } catch (ClassNotFoundException ex) {
             // TODO change exception case

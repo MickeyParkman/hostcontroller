@@ -187,6 +187,7 @@ public class DatabaseDataObjectUtilities {
             RunwayInsertStatement.executeUpdate();
             RunwayInsertStatement.close();
         }catch(SQLException e) {
+            e.printStackTrace();
             throw e;
         }
     }
