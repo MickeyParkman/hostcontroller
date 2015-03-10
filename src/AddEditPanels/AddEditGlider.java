@@ -1,5 +1,6 @@
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -43,7 +44,14 @@ public class AddEditGlider extends JFrame {
     private JCheckBox multipleSeatsCheckBox;
     private Sailplane currentGlider;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
+    
     /**
      * Create the frame.
      */
@@ -280,6 +288,7 @@ public class AddEditGlider extends JFrame {
                 CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 objectSet.clearGlider();
                 JOptionPane.showMessageDialog(rootPane, currentGlider.toString() + " successfully deleted.");
+                parent.update();
                 this.dispose();
             }
         }catch (ClassNotFoundException e1) {
@@ -317,6 +326,7 @@ public class AddEditGlider extends JFrame {
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentGlider(newGlider);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                parent.update();
                 this.dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)

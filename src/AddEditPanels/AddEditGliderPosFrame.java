@@ -1,6 +1,7 @@
 //Should be successful if entries in DB are set in the CurrentDataObjectSet
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.GliderPosition;
 import java.awt.BorderLayout;
@@ -31,7 +32,13 @@ public class AddEditGliderPosFrame extends JFrame {
     private CurrentDataObjectSet objectSet;
     private GliderPosition currentGliderPos;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
     /**
      * Create the frame.
      */
@@ -199,6 +206,7 @@ public class AddEditGliderPosFrame extends JFrame {
                 DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
                 objectSet.cleafGliderPosition();
                 JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.");
+                parent.update("3");
                 this.dispose();
             }
         }catch (ClassNotFoundException e2) {
@@ -252,6 +260,7 @@ public class AddEditGliderPosFrame extends JFrame {
                 }
                 objectSet.setCurrentGliderPosition(newGliderPos);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                parent.update("3");
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){

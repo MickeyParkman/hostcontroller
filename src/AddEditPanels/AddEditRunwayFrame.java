@@ -2,6 +2,7 @@
 
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Runway;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
@@ -35,7 +36,13 @@ public class AddEditRunwayFrame extends JFrame {
     private CurrentDataObjectSet objectSet;
     private Runway currentRunway;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
     /**
      * Create the frame.
      */
@@ -169,6 +176,7 @@ public class AddEditRunwayFrame extends JFrame {
                 DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
                 objectSet.clearRunway();
                 JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.");
+                parent.update("2");
                 this.dispose();
             }
         }catch (ClassNotFoundException e2) {
@@ -198,14 +206,14 @@ public class AddEditRunwayFrame extends JFrame {
                 name = nameField.getText();
             }
 
-            String parent = "";
+            String airfieldParent = "";
             try{
-                parent = objectSet.getCurrentAirfield().getDesignator();
+                airfieldParent = objectSet.getCurrentAirfield().getDesignator();
             }catch (Exception e){
                 System.out.println("cur Airfield 404 " + e.getMessage());
             }
             
-            Runway newRunway = new Runway(name, magneticHeading, parent, altitude, "");
+            Runway newRunway = new Runway(name, magneticHeading, airfieldParent, altitude, "");
             try{
                 if (isEditEntry){
                     DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newRunway);
@@ -216,6 +224,7 @@ public class AddEditRunwayFrame extends JFrame {
                 }
                 objectSet.setCurrentRunway(newRunway);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                parent.update("2");
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){

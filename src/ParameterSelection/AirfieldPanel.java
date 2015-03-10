@@ -4,6 +4,7 @@ import AddEditPanels.AddEditWinchPosFrame;
 import AddEditPanels.AddEditGliderPosFrame;
 import AddEditPanels.AddEditAirfieldFrame;
 import AddEditPanels.AddEditRunwayFrame;
+import Communications.Observer;
 import DataObjects.Airfield;
 import DataObjects.GliderPosition;
 import DataObjects.CurrentDataObjectSet;
@@ -37,7 +38,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.MatteBorder;
 
 
-public class AirfieldPanel extends JPanel {
+public class AirfieldPanel extends JPanel implements Observer{
 
     private javax.swing.JScrollPane airfieldScrollPane;
     private List<Airfield> airfields = new ArrayList<Airfield>();
@@ -47,6 +48,7 @@ public class AirfieldPanel extends JPanel {
     private List<WinchPosition> winchPositions = new ArrayList<WinchPosition>();
     private javax.swing.JScrollPane runwaysScrollPane;
     private List<Runway> runways = new ArrayList<Runway>();
+    DefaultListModel airfieldModel = new DefaultListModel();
     private DefaultListModel runwaysModel = new DefaultListModel();
     private DefaultListModel gliderPositionModel = new DefaultListModel();
     private DefaultListModel winchPositionModel = new DefaultListModel();
@@ -79,6 +81,64 @@ public class AirfieldPanel extends JPanel {
     private JTextField winchPosParentRunwayField;
     private CurrentDataObjectSet currentData;
 
+    
+    @Override
+    public void update(String s)
+    {
+        if(s.equals("1"))
+        {
+            initAirfieldList();
+            airfieldModel.clear();
+            for(Object str: airfields){
+                    airfieldModel.addElement(str);
+            }
+            airfieldJList.setModel(airfieldModel);
+            Airfield currentAirfield = currentData.getCurrentAirfield();
+            airfieldJList.setSelectedValue(currentAirfield.toString(), true);
+            airfieldScrollPane.setViewportView(airfieldJList); 
+        }
+        else if(s.equals("2"))
+        {
+            initRunwaysList();
+            runwaysModel.clear();
+            for(Object str: runways){
+                    runwaysModel.addElement(str);
+            }
+            runwaysJList.setModel(runwaysModel);
+            Runway currentRunway = currentData.getCurrentRunway();
+            runwaysJList.setSelectedValue(currentRunway.toString(), true);
+            runwaysScrollPane.setViewportView(runwaysJList); 
+        }
+        else if(s.equals("3"))
+        {
+            initGliderPositionsList();
+            gliderPositionModel.clear();
+            for(Object str: gliderPositions){
+                    gliderPositionModel.addElement(str);
+            }
+            gliderPositionsJList.setModel(gliderPositionModel);
+            GliderPosition currentGliderPosition = currentData.getCurrentGliderPosition();
+            gliderPositionsJList.setSelectedValue(currentGliderPosition.toString(), true);
+            gliderPositionsScrollPane.setViewportView(gliderPositionsJList); 
+        }
+        else
+        {
+            initWinchPositionsList();
+            winchPositionModel.clear();
+            for(Object str: winchPositions){
+                    winchPositionModel.addElement(str);
+            }
+            winchPositionsJList.setModel(winchPositionModel);
+            WinchPosition currentWinchPos = currentData.getCurrentWinchPosition();
+            winchPositionsJList.setSelectedValue(currentWinchPos.toString(), true);
+            winchPositionsScrollPane.setViewportView(winchPositionsJList); 
+        }
+    }
+    
+    private Observer getObserver() {
+        return this;
+    }
+    
     private void initAirfieldList() {
         try{
             airfields = DatabaseUtilities.DatabaseDataObjectUtilities.getAirfields();
@@ -377,7 +437,6 @@ public class AirfieldPanel extends JPanel {
         panel.add(airfieldSubPanel);
         airfieldSubPanel.setLayout(new BorderLayout(0, 0));
         airfieldSubPanel.add(airfieldScrollPane, BorderLayout.NORTH);
-        DefaultListModel airfieldModel = new DefaultListModel();
         for(Object str: airfields){
                 airfieldModel.addElement(str);
         }
@@ -465,6 +524,7 @@ public class AirfieldPanel extends JPanel {
         	public void actionPerformed(ActionEvent arg0) {
                     AddEditAirfieldFrame AddEditAirfieldFrame_ = new AddEditAirfieldFrame(currentData.getCurrentAirfield(), false);
                     AddEditAirfieldFrame_.setVisible(true);
+                    AddEditAirfieldFrame_.attach(getObserver());
         	}
         });
         airfieldAddNewButton.setBounds(200, 0, 89, 23);
@@ -475,6 +535,7 @@ public class AirfieldPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditAirfieldFrame AddEditAirfieldFrame_ = new AddEditAirfieldFrame(currentData.getCurrentAirfield(), true);
                     AddEditAirfieldFrame_.setVisible(true);
+                    AddEditAirfieldFrame_.attach(getObserver());
         	}
         });
         airfieldEditButton.setBounds(288, 0, 89, 23);
@@ -580,6 +641,7 @@ public class AirfieldPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGliderPosFrame AddEditGliderPosFrame_ = new AddEditGliderPosFrame(currentData.getCurrentGliderPosition(), false);
                     AddEditGliderPosFrame_.setVisible(true);
+                    AddEditGliderPosFrame_.attach(getObserver());
         	}
         });
         gliderPosAddNewButton.setBounds(200, 0, 89, 23);
@@ -590,6 +652,7 @@ public class AirfieldPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGliderPosFrame AddEditGliderPosFrame_ = new AddEditGliderPosFrame(currentData.getCurrentGliderPosition(), true);
                     AddEditGliderPosFrame_.setVisible(true);
+                    AddEditGliderPosFrame_.attach(getObserver());
         	}
         });
         gliderPosEditButton.setBounds(288, 0, 89, 23);
@@ -694,6 +757,7 @@ public class AirfieldPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditRunwayFrame AddEditRunwayFrame_ = new AddEditRunwayFrame(currentData.getCurrentRunway(), true);
                     AddEditRunwayFrame_.setVisible(true);
+                    AddEditRunwayFrame_.attach(getObserver());
         	}
         });
         runwayEditButton.setBounds(288, 0, 89, 23);
@@ -704,6 +768,7 @@ public class AirfieldPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditRunwayFrame AddEditRunwayFrame_ = new AddEditRunwayFrame(currentData.getCurrentRunway(), false);
                     AddEditRunwayFrame_.setVisible(true);
+                    AddEditRunwayFrame_.attach(getObserver());
         	}
         });
         runwayAddNewButton.setBounds(200, 0, 89, 23);
@@ -790,6 +855,7 @@ public class AirfieldPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), false);
                     AddEditWinchPosFrame_.setVisible(true);
+                    AddEditWinchPosFrame_.attach(getObserver());
         	}
         });
         winchPosAddNewButton.setBounds(200, 0, 89, 23);
@@ -800,6 +866,7 @@ public class AirfieldPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), true);
                     AddEditWinchPosFrame_.setVisible(true);
+                    AddEditWinchPosFrame_.attach(getObserver());
         	}
         });
         winchPosEditButton.setBounds(288, 0, 89, 23);
@@ -847,5 +914,10 @@ public class AirfieldPanel extends JPanel {
             }
         });
 
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

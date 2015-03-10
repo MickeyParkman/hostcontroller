@@ -44,9 +44,29 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 
-public class SailplanePanel extends JPanel {
+public class SailplanePanel extends JPanel implements Observer{
     private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
     private CurrentDataObjectSet currentData;
+    JScrollPane sailplaneScrollPane = new JScrollPane();
+    
+    @Override
+    public void update()
+    {
+        initSailPlaneList();
+        DefaultListModel sailplaneModel = new DefaultListModel();
+        sailplaneModel.clear();
+        for(Object str: sailplanes){
+                sailplaneModel.addElement(str);
+        }
+        sailplaneJList.setModel(sailplaneModel);
+        Sailplane currentSailplane = currentData.getCurrentSailplane();
+        sailplaneJList.setSelectedValue(currentSailplane.toString(), true);
+        sailplaneScrollPane.setViewportView(sailplaneJList);
+    }
+    
+    private Observer getObserver() {
+        return this;
+    }
     
     public void clear()
     {
@@ -134,8 +154,7 @@ public class SailplanePanel extends JPanel {
         sailplaneJList = new javax.swing.JList();
         
         setLayout(new BorderLayout(0, 0));
-
-        JScrollPane sailplaneScrollPane = new JScrollPane();
+        
         add(sailplaneScrollPane, BorderLayout.NORTH);
         DefaultListModel sailplaneModel = new DefaultListModel();
         for(Object str: sailplanes){
@@ -348,6 +367,7 @@ public class SailplanePanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGlider AddEditGlider_ = new AddEditGlider(currentData.getCurrentSailplane(), false);
                     AddEditGlider_.setVisible(true);
+                    AddEditGlider_.attach(getObserver());
         	}
         });
         addNewButton.setBounds(201, 0, 89, 23);
@@ -358,6 +378,7 @@ public class SailplanePanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGlider AddEditGlider_ = new AddEditGlider(currentData.getCurrentSailplane(), true);
                     AddEditGlider_.setVisible(true);
+                    AddEditGlider_.attach(getObserver());
         	}
         });
         editButton.setBounds(289, 0, 89, 23);
@@ -416,4 +437,9 @@ public class SailplanePanel extends JPanel {
     private JTextField passengerWeightField;
     private JTextField winchingSpeedField;
     private JTextField baggageField;
+
+    @Override
+    public void update(String msg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -1,6 +1,7 @@
 //Successful
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Airfield;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -39,7 +40,13 @@ public class AddEditAirfieldFrame extends JFrame {
     private JTextField airfieldLatitudeField;
     private Airfield currentAirfield;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
     /**
      * Launch the application.
      */
@@ -221,6 +228,7 @@ public class AddEditAirfieldFrame extends JFrame {
                 CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 objectSet.clearAirfield();
                 JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.");
+                parent.update("1");
                 this.dispose();
             }
         }catch (ClassNotFoundException e1) {
@@ -254,6 +262,7 @@ public class AddEditAirfieldFrame extends JFrame {
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentAirfield(newAirfield);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                parent.update("1");
                 this.dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)

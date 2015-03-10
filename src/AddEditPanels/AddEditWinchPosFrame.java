@@ -1,6 +1,7 @@
 //Should be successful if entries in DB are set in the CurrentDataObjectSet
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.WinchPosition;
 import java.awt.BorderLayout;
@@ -31,7 +32,13 @@ public class AddEditWinchPosFrame extends JFrame {
     private CurrentDataObjectSet objectSet;
     private WinchPosition currentWinchPos;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
     /**
      * Create the frame.
      */
@@ -200,6 +207,7 @@ public class AddEditWinchPosFrame extends JFrame {
                 DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentWinchPos);
                 objectSet.cleafGliderPosition();
                 JOptionPane.showMessageDialog(rootPane, currentWinchPos.toString() + " successfully deleted.");
+                parent.update("4");
                 this.dispose();
             }
         }catch (ClassNotFoundException e2) {
@@ -253,6 +261,7 @@ public class AddEditWinchPosFrame extends JFrame {
                 }
                 objectSet.setCurrentWinchPosition(newWinchPos);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                parent.update("4");
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
