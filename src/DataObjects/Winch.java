@@ -16,6 +16,7 @@ import java.util.List;
  * @date    11/19/2014
  */
 public class Winch {
+    private String id;
     private float brakePressure;
     private String name;
     private String optionalData;
@@ -36,6 +37,20 @@ public class Winch {
         name = nameIn;
         optionalData = opt;
         brakePressure = brake;
+    }
+    
+    public String getId(){
+        if (id != null){
+            return id;
+        }
+        else{
+            id = "";
+            return id;
+        }
+    }
+    
+    public void setId(String newId){
+        id = newId;
     }
     
     public void setBrakePressure(float newBrakePressure) {

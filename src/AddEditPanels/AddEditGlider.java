@@ -4,6 +4,7 @@ import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseEntryDelete;
 import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseEntryIdCheck;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
+import java.util.Random;
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 import javax.swing.JTextField;
@@ -48,11 +50,12 @@ public class AddEditGlider extends JFrame {
      * Create the frame.
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
+        
+        this.isEditEntry = isEditEntry;
         if (!isEditEntry){
             sailplaneEdited = new Sailplane("", "", 0, 0, 0, 0, 0, 0, 0, false, false, "");
         }
         currentGlider = sailplaneEdited;
-        this.isEditEntry = isEditEntry;
         
         setTitle("Glider");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -110,7 +113,6 @@ public class AddEditGlider extends JFrame {
         nNumberField = new JTextField(currentGlider.getNumber());
         nNumberField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nNumberField.setBounds(160, 8, 110, 20);
-        nNumberField.setEditable(!isEditEntry);
         contentPane.add(nNumberField);
         nNumberField.setColumns(10);
         
@@ -291,7 +293,7 @@ public class AddEditGlider extends JFrame {
     
     public void submitData(){
         if (isComplete()){
-            Sailplane oldGlider = currentGlider;
+            String nNumber = nNumberField.getText();
             int emptyWeight = Integer.parseInt(emptyWeightField.getText());
             int grossWeight = Integer.parseInt(grossWeightField.getText());
             int stallSpeed = Integer.parseInt(stallSpeedField.getText());
@@ -302,20 +304,31 @@ public class AddEditGlider extends JFrame {
             boolean carryBallast = ballastCheckBox.isSelected();
             boolean multipleSeats = multipleSeatsCheckBox.isSelected();
             
-            String nNumber = currentGlider.getNumber();
-            if (!isEditEntry){
-                nNumber = nNumberField.getText();
-            }
             Sailplane newGlider = new Sailplane(nNumber ,"", grossWeight,
                     emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
                     releaseAngle, carryBallast, multipleSeats, "");
+            CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+            newGlider.setId(ObjectSet.getCurrentSailplane().getId());
+            
+            System.out.println(ObjectSet.getCurrentSailplane().getId());
+            System.out.println(newGlider.getId());
+            
             try{
                 if (isEditEntry){
-                    DatabaseEntryDelete.DeleteEntry(oldGlider);
+                    DatabaseEntryEdit.UpdateEntry(newGlider);
                 }
-                DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
-                CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                else{
+                    Random randomId = new Random();
+                    newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
+                    while (DatabaseEntryIdCheck.IdCheck(newGlider)){
+                        newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
+                    }
+                    DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
+                    System.out.println(newGlider.getId());
+                }
+                //CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentGlider(newGlider);
+                System.out.println("this:" + ObjectSet.getCurrentSailplane().getId());
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
                 this.dispose();
             }catch(SQLException e1) {

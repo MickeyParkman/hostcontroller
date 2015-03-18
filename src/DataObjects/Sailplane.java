@@ -13,6 +13,7 @@ package DataObjects;
  */
 
 public class Sailplane {
+    String id;
     //n_number of the plane
     String nNumber;
     
@@ -75,6 +76,22 @@ public class Sailplane {
         this.optionalInfo = optional;
         
         ballast = 0;
+    }
+    
+    public String getId(){
+        if (id != null){
+            System.out.println("real id");
+            return id;
+        }
+        else{
+            System.out.println("no id");
+            id = "";
+            return id;
+        }
+    }
+    
+    public void setId(String newId){
+        id = newId;
     }
     
     public String getNumber() {

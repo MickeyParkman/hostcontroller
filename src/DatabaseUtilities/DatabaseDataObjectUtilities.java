@@ -91,24 +91,25 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)){
             PreparedStatement sailplaneInsertStatement = connect.prepareStatement(
-                    "INSERT INTO Sailplane(n_number, type, "
+                    "INSERT INTO Sailplane(sailplane_id, n_number, type, "
                             + "max_gross_weight, empty_weight, indicated_stall_speed, "
                             + "max_winching_speed, max_weak_link_strength, max_tension, "
                             + "cable_release_angle, carry_ballast, multiple_seats, "
                             + "optional_info)"
-                            + "values (?,?,?,?,?,?,?,?,?,?,?,?)");
-            sailplaneInsertStatement.setString(1, theSailplane.getNumber());
-            sailplaneInsertStatement.setString(2, theSailplane.getType());
-            sailplaneInsertStatement.setString(3, String.valueOf(theSailplane.getMaxGrossWeight()));
-            sailplaneInsertStatement.setString(4, String.valueOf(theSailplane.getEmptyWeight()));
-            sailplaneInsertStatement.setString(5, String.valueOf(theSailplane.getIndicatedStallSpeed()));
-            sailplaneInsertStatement.setString(6, String.valueOf(theSailplane.getMaxWinchingSpeed()));
-            sailplaneInsertStatement.setString(7, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
-            sailplaneInsertStatement.setString(8, String.valueOf(theSailplane.getMaxTension()));
-            sailplaneInsertStatement.setString(9, String.valueOf(theSailplane.getCableReleaseAngle()));
-            sailplaneInsertStatement.setString(10, String.valueOf(theSailplane.storeCarryBallast()));
-            sailplaneInsertStatement.setString(11, String.valueOf(theSailplane.storeMultipleSeats()));
-            sailplaneInsertStatement.setString(12, theSailplane.getOptionalInfo());
+                            + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            sailplaneInsertStatement.setString(1, theSailplane.getId());
+            sailplaneInsertStatement.setString(2, theSailplane.getNumber());
+            sailplaneInsertStatement.setString(3, theSailplane.getType());
+            sailplaneInsertStatement.setString(4, String.valueOf(theSailplane.getMaxGrossWeight()));
+            sailplaneInsertStatement.setString(5, String.valueOf(theSailplane.getEmptyWeight()));
+            sailplaneInsertStatement.setString(6, String.valueOf(theSailplane.getIndicatedStallSpeed()));
+            sailplaneInsertStatement.setString(7, String.valueOf(theSailplane.getMaxWinchingSpeed()));
+            sailplaneInsertStatement.setString(8, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
+            sailplaneInsertStatement.setString(9, String.valueOf(theSailplane.getMaxTension()));
+            sailplaneInsertStatement.setString(10, String.valueOf(theSailplane.getCableReleaseAngle()));
+            sailplaneInsertStatement.setString(11, String.valueOf(theSailplane.storeCarryBallast()));
+            sailplaneInsertStatement.setString(12, String.valueOf(theSailplane.storeMultipleSeats()));
+            sailplaneInsertStatement.setString(13, theSailplane.getOptionalInfo());
             sailplaneInsertStatement.executeUpdate();
             sailplaneInsertStatement.close();
         }catch(SQLException e) {
@@ -141,16 +142,17 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement AirfieldInsertStatement = connect.prepareStatement(
-                "INSERT INTO Airfield(name, designator, altitude, "
+                "INSERT INTO Airfield(airfield_id, name, designator, altitude, "
                 + "magnetic_variation, latitude, longitude, optional_info) "
-                + "values (?,?,?,?,?,?,?)");
-            AirfieldInsertStatement.setString(1, theAirfield.getName());
-            AirfieldInsertStatement.setString(2, theAirfield.getDesignator());
-            AirfieldInsertStatement.setString(3, String.valueOf(theAirfield.getAltitude()));
-            AirfieldInsertStatement.setString(4, String.valueOf(theAirfield.getMagneticVariation()));
-            AirfieldInsertStatement.setString(5, String.valueOf(theAirfield.getLatitude()));
-            AirfieldInsertStatement.setString(6, String.valueOf(theAirfield.getLongitude()));
-            AirfieldInsertStatement.setString(7, theAirfield.getOptionalInfo());
+                + "values (?,?,?,?,?,?,?,?)");
+            AirfieldInsertStatement.setString(1, theAirfield.getId());
+            AirfieldInsertStatement.setString(2, theAirfield.getName());
+            AirfieldInsertStatement.setString(3, theAirfield.getDesignator());
+            AirfieldInsertStatement.setString(4, String.valueOf(theAirfield.getAltitude()));
+            AirfieldInsertStatement.setString(5, String.valueOf(theAirfield.getMagneticVariation()));
+            AirfieldInsertStatement.setString(6, String.valueOf(theAirfield.getLatitude()));
+            AirfieldInsertStatement.setString(7, String.valueOf(theAirfield.getLongitude()));
+            AirfieldInsertStatement.setString(8, theAirfield.getOptionalInfo());
             AirfieldInsertStatement.executeUpdate();
             AirfieldInsertStatement.close();
         }catch(SQLException e) {
@@ -177,13 +179,15 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement RunwayInsertStatement = connect.prepareStatement(
-                "INSERT INTO Runway(runway_id, magnetic_heading, parent, altitude, optional_info) "
-                        + "values (?,?,?,?,?)");
+                "INSERT INTO Runway(runway_id, runway_name, magnetic_heading, parent, parent_id, altitude, optional_info) "
+                        + "values (?,?,?,?,?,?,?)");
             RunwayInsertStatement.setString(1, theRunway.getId());
-            RunwayInsertStatement.setString(2, theRunway.getMagneticHeading());
-            RunwayInsertStatement.setString(3, theRunway.getParent());
-            RunwayInsertStatement.setString(4, String.valueOf(theRunway.getAltitude()));
-            RunwayInsertStatement.setString(5, theRunway.getOptionalInfo());
+            RunwayInsertStatement.setString(2, theRunway.getName());
+            RunwayInsertStatement.setString(3, theRunway.getMagneticHeading());
+            RunwayInsertStatement.setString(4, theRunway.getParent());
+            RunwayInsertStatement.setString(5, theRunway.getParentId());
+            RunwayInsertStatement.setString(6, String.valueOf(theRunway.getAltitude()));
+            RunwayInsertStatement.setString(7, theRunway.getOptionalInfo());
             RunwayInsertStatement.executeUpdate();
             RunwayInsertStatement.close();
         }catch(SQLException e) {
@@ -211,15 +215,18 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement GliderPositionInsertStatement = connect.prepareStatement(
-                "INSERT INTO GliderPosition(position_id, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info) "
-                        + "values (?,?,?,?,?,?,?)");
-            GliderPositionInsertStatement.setString(1, theGliderPosition.getGliderPositionId());
-            GliderPositionInsertStatement.setString(2, theGliderPosition.getRunwayParent());
-            GliderPositionInsertStatement.setString(3, theGliderPosition.getAirfieldParent());
-            GliderPositionInsertStatement.setString(4, String.valueOf(theGliderPosition.getAltitude()));
-            GliderPositionInsertStatement.setString(5, String.valueOf(theGliderPosition.getLatitude()));
-            GliderPositionInsertStatement.setString(6, String.valueOf(theGliderPosition.getLongitude()));
-            GliderPositionInsertStatement.setString(7, theGliderPosition.getOptionalInfo());
+                "INSERT INTO GliderPosition(glider_position_id, position_id, runway_parent, runway_parent_id, airfield_parent, airfield_parent_id, altitude, latitude, longitude, optional_info) "
+                        + "values (?,?,?,?,?,?,?,?,?,?)");
+            GliderPositionInsertStatement.setString(1, theGliderPosition.getId());
+            GliderPositionInsertStatement.setString(2, theGliderPosition.getGliderPositionId());
+            GliderPositionInsertStatement.setString(3, theGliderPosition.getRunwayParent());
+            GliderPositionInsertStatement.setString(4, theGliderPosition.getRunwayParentId());
+            GliderPositionInsertStatement.setString(5, theGliderPosition.getAirfieldParent());
+            GliderPositionInsertStatement.setString(6, theGliderPosition.getAirfieldParentId());
+            GliderPositionInsertStatement.setString(7, String.valueOf(theGliderPosition.getAltitude()));
+            GliderPositionInsertStatement.setString(8, String.valueOf(theGliderPosition.getLatitude()));
+            GliderPositionInsertStatement.setString(9, String.valueOf(theGliderPosition.getLongitude()));
+            GliderPositionInsertStatement.setString(10, theGliderPosition.getOptionalInfo());
             GliderPositionInsertStatement.executeUpdate();
             GliderPositionInsertStatement.close();
         }catch(SQLException e) {
@@ -246,15 +253,18 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement WinchPositionInsertStatement = connect.prepareStatement(
-                "INSERT INTO WinchPosition(name, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info) "
-                        + "values (?,?,?,?,?,?,?)");
-            WinchPositionInsertStatement.setString(1, theWinchPosition.getName());
-            WinchPositionInsertStatement.setString(2, theWinchPosition.getRunwayParent());
-            WinchPositionInsertStatement.setString(3, theWinchPosition.getAirfieldParent());
-            WinchPositionInsertStatement.setString(4, String.valueOf(theWinchPosition.getAltitude()));
-            WinchPositionInsertStatement.setString(5, String.valueOf(theWinchPosition.getLatitude()));
-            WinchPositionInsertStatement.setString(6, String.valueOf(theWinchPosition.getLongitude()));
-            WinchPositionInsertStatement.setString(7, theWinchPosition.getOptionalInfo());
+                "INSERT INTO WinchPosition(winch_position_id, name, runway_parent, runway_parent_id, airfield_parent, airfield_parent_id, altitude, latitude, longitude, optional_info) "
+                        + "values (?,?,?,?,?,?,?,?,?,?)");
+            WinchPositionInsertStatement.setString(1, theWinchPosition.getId());
+            WinchPositionInsertStatement.setString(2, theWinchPosition.getName());
+            WinchPositionInsertStatement.setString(3, theWinchPosition.getRunwayParent());
+            WinchPositionInsertStatement.setString(4, theWinchPosition.getRunwayParentId());
+            WinchPositionInsertStatement.setString(5, theWinchPosition.getAirfieldParent());
+            WinchPositionInsertStatement.setString(6, theWinchPosition.getAirfieldParentId());
+            WinchPositionInsertStatement.setString(7, String.valueOf(theWinchPosition.getAltitude()));
+            WinchPositionInsertStatement.setString(8, String.valueOf(theWinchPosition.getLatitude()));
+            WinchPositionInsertStatement.setString(9, String.valueOf(theWinchPosition.getLongitude()));
+            WinchPositionInsertStatement.setString(10, theWinchPosition.getOptionalInfo());
             WinchPositionInsertStatement.executeUpdate();
             WinchPositionInsertStatement.close();
         }catch(SQLException e) {
@@ -789,24 +799,6 @@ public class DatabaseDataObjectUtilities {
             return tables;
             
         }catch(Exception e) {
-            throw e;
-        }
-    }
-    
-    public static boolean checkForPilotId(String pilot_id) throws SQLException, ClassNotFoundException {        
-        try{
-            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            throw e;
-        }
-        
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
-            Statement stmt = connect.createStatement();
-            ResultSet theIds = stmt.executeQuery("SELECT * FROM PILOT WHERE pilot_id = '" + pilot_id + "'");
-            return theIds.next();
-        }catch(SQLException e) {
             throw e;
         }
     }
