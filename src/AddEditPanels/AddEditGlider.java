@@ -307,11 +307,7 @@ public class AddEditGlider extends JFrame {
             Sailplane newGlider = new Sailplane(nNumber ,"", grossWeight,
                     emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
                     releaseAngle, carryBallast, multipleSeats, "");
-            CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-            newGlider.setId(ObjectSet.getCurrentSailplane().getId());
-            
-            System.out.println(ObjectSet.getCurrentSailplane().getId());
-            System.out.println(newGlider.getId());
+            newGlider.setId(currentGlider.getId());
             
             try{
                 if (isEditEntry){
@@ -326,7 +322,7 @@ public class AddEditGlider extends JFrame {
                     DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
                     System.out.println(newGlider.getId());
                 }
-                //CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentGlider(newGlider);
                 System.out.println("this:" + ObjectSet.getCurrentSailplane().getId());
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");

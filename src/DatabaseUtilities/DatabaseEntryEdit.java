@@ -148,7 +148,7 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE RUNWAY SET "
-                + "name = '" + runway.getName() + "', "
+                + "runway_name = '" + runway.getName() + "', "
                 + "parent = '" + runway.getParent() + "', "
                 + "magnetic_heading = '" + runway.getMagneticHeading() + "', "
                 + "altitude = " + String.valueOf(runway.getAltitude()) + ", "
