@@ -3,6 +3,8 @@ package AddEditPanels;
 
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.WinchPosition;
+import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseEntryIdCheck;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -17,6 +19,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
 
@@ -103,7 +106,6 @@ public class AddEditWinchPosFrame extends JFrame {
         panel.add(altitudeField);
 
         nameField = new JTextField(currentWinchPos.getName());
-        nameField.setEditable(!isEditEntry);
         nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nameField.setColumns(10);
         nameField.setBounds(135, 11, 200, 20);
@@ -222,20 +224,21 @@ public class AddEditWinchPosFrame extends JFrame {
     
     protected void submitData(){
         if (isComplete()){
+            String winchPosId = nameField.getText();
             int altitude = Integer.parseInt(altitudeField.getText());
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             
-            String winchPosId = currentWinchPos.getName();
-            if (!isEditEntry){
-                winchPosId = nameField.getText();
-            }
-            
             String runwayParent = "";
+            String runwayParentId = "";
             String airfieldParent = "";
+            String airfieldParentId = "";
+            
             try{
-                runwayParent = objectSet.getCurrentRunway().getId();
+                runwayParent = objectSet.getCurrentRunway().getName();
+                runwayParentId = objectSet.getCurrentRunway().getId();
                 airfieldParent = objectSet.getCurrentAirfield().getDesignator();
+                airfieldParentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
                 System.out.println("cur runway or airfield 404 " + e.getMessage());
             }
@@ -243,12 +246,19 @@ public class AddEditWinchPosFrame extends JFrame {
             WinchPosition newWinchPos = new WinchPosition(winchPosId, 
                     runwayParent, airfieldParent, altitude,
                     latitude, longitude, "");
+            newWinchPos.setId(currentWinchPos.getId());
+            newWinchPos.setRunwayParentId(runwayParentId);
+            newWinchPos.setAirfieldParentId(airfieldParentId);
             try{
                 if (isEditEntry){
-                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newWinchPos);
+                    DatabaseEntryEdit.UpdateEntry(newWinchPos);
                 }
-                else
-                {
+                else{
+                    Random randomId = new Random();
+                    newWinchPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                    while (DatabaseEntryIdCheck.IdCheck(newWinchPos)){
+                        newWinchPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                    }
                     DatabaseUtilities.DatabaseDataObjectUtilities.addWinchPositionToDB(newWinchPos);
                 }
                 objectSet.setCurrentWinchPosition(newWinchPos);
@@ -256,7 +266,7 @@ public class AddEditWinchPosFrame extends JFrame {
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
-                    System.out.println(e1.getMessage());
+                    e1.printStackTrace();
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the Winch Position " + newWinchPos.toString() + " already exists in the database");
                 }
             }catch (ClassNotFoundException e2) {

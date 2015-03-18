@@ -11,9 +11,12 @@ package DataObjects;
  * @author dbennett3, Noah Fujioka
  */
 public class WinchPosition {
+    String id;
     String name;
     String runwayParent;
+    String runwayParentId;
     String airfieldParent;
+    String airfieldParentId;
     int altitude;
     float latitude;
     float longitude;
@@ -29,6 +32,20 @@ public class WinchPosition {
         this.optionalInfo = optional;
     }
     
+    public String getId(){
+        if (id != null){
+            return id;
+        }
+        else{
+            id = "";
+            return id;
+        }
+    }
+    
+    public void setId(String newId){
+        id = newId;
+    }
+    
     public String getName() {
         return name;
     }
@@ -37,9 +54,37 @@ public class WinchPosition {
         return runwayParent;
     }
 
-    public String getAirfieldParent() {
-        return airfieldParent;
+    public String getRunwayParentId(){
+        if (runwayParentId != null){
+            return runwayParentId;
+        }
+        else{
+            runwayParentId = "";
+            return runwayParentId;
+        }
     }
+    
+    public void setRunwayParentId(String newRunwayParentId){
+        runwayParentId = newRunwayParentId;
+    } 
+    
+    public String getAirfieldParent(){
+       return airfieldParent; 
+    }
+    
+    public String getAirfieldParentId(){
+        if (airfieldParentId != null){
+            return airfieldParentId;
+        }
+        else{
+            airfieldParentId = "";
+            return airfieldParentId;
+        }
+    }
+    
+    public void setAirfieldParentId(String newAirfieldParentId){
+        airfieldParentId = newAirfieldParentId;
+    } 
     
     public int getAltitude() {
         return altitude;

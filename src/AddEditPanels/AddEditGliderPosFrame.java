@@ -3,6 +3,8 @@ package AddEditPanels;
 
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.GliderPosition;
+import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseEntryIdCheck;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -17,6 +19,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
 
@@ -102,7 +105,6 @@ public class AddEditGliderPosFrame extends JFrame {
         panel.add(altitudeField);
 
         nameField = new JTextField(currentGliderPos.getGliderPositionId());
-        nameField.setEditable(!isEditEntry);
         nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nameField.setColumns(10);
         nameField.setBounds(135, 11, 200, 20);
@@ -221,20 +223,21 @@ public class AddEditGliderPosFrame extends JFrame {
     
     protected void submitData(){
         if (isComplete()){
+            String gliderPosId = nameField.getText();
             int altitude = Integer.parseInt(altitudeField.getText());
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             
-            String gliderPosId = currentGliderPos.getGliderPositionId();
-            if (!isEditEntry){
-                gliderPosId = nameField.getText();
-            }
-            
             String runwayParent = "";
+            String runwayParentId = "";
             String airfieldParent = "";
+            String airfieldParentId = "";
+            
             try{
-                runwayParent = objectSet.getCurrentRunway().getId();
+                runwayParent = objectSet.getCurrentRunway().getName();
+                runwayParentId = objectSet.getCurrentRunway().getId();
                 airfieldParent = objectSet.getCurrentAirfield().getDesignator();
+                airfieldParentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
                 System.out.println("cur runway or airfield 404 " + e.getMessage());
             }
@@ -242,12 +245,19 @@ public class AddEditGliderPosFrame extends JFrame {
             GliderPosition newGliderPos = new GliderPosition(gliderPosId, 
                     runwayParent, airfieldParent, altitude,
                     latitude, longitude, "");
+            newGliderPos.setId(currentGliderPos.getId());
+            newGliderPos.setRunwayParentId(runwayParentId);
+            newGliderPos.setAirfieldParentId(airfieldParentId);
             try{
                 if (isEditEntry){
-                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newGliderPos);
+                    DatabaseEntryEdit.UpdateEntry(newGliderPos);
                 }
-                else
-                {
+                else{
+                    Random randomId = new Random();
+                    newGliderPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                    while (DatabaseEntryIdCheck.IdCheck(newGliderPos)){
+                        newGliderPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                    }
                     DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
                 }
                 objectSet.setCurrentGliderPosition(newGliderPos);

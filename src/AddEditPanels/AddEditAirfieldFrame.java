@@ -5,6 +5,7 @@ import DataObjects.CurrentDataObjectSet;
 import DataObjects.Airfield;
 import DatabaseUtilities.DatabaseEntryDelete;
 import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseEntryIdCheck;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,6 +13,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -107,7 +109,6 @@ public class AddEditAirfieldFrame extends JFrame {
         designatorField = new JTextField(currentAirfield.getDesignator());
         designatorField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         designatorField.setBounds(140, 33, 120, 20);
-        designatorField.setEditable(!isEditEntry);
         airfieldAttributesPanel.add(designatorField);
         designatorField.setColumns(10);
         
@@ -233,22 +234,26 @@ public class AddEditAirfieldFrame extends JFrame {
     public void submitData(){
         if (isComplete()){
             String airfieldName = airfieldNameField.getText();
+            String designator = designatorField.getText();
             int airfieldAltitude = Integer.parseInt(airfieldAltitudeField.getText());
             int magneticVariation = Integer.parseInt(magneticVariationField.getText());
             float airfieldLatitude = Float.parseFloat(airfieldLatitudeField.getText());
             float airfieldLongitude = Float.parseFloat(airfieldLongitudeField.getText());
             
-            String designator = currentAirfield.getDesignator();
-            if (!isEditEntry){
-                designator = designatorField.getText();
-            }
             Airfield newAirfield = new Airfield(airfieldName, designator, airfieldAltitude,
                     magneticVariation, airfieldLatitude, airfieldLongitude, "");
+            newAirfield.setId(currentAirfield.getId());
+            
             try{
                 if (isEditEntry){
                     DatabaseEntryEdit.UpdateEntry(newAirfield);
                 }
                 else{
+                    Random randomId = new Random();
+                    newAirfield.setId(String.valueOf(randomId.nextInt(100000000)));
+                    while (DatabaseEntryIdCheck.IdCheck(newAirfield)){
+                        newAirfield.setId(String.valueOf(randomId.nextInt(100000000)));
+                    }
                     DatabaseUtilities.DatabaseDataObjectUtilities.addAirfieldToDB(newAirfield);
                 }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
