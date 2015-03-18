@@ -215,17 +215,27 @@ public class AddEditRunwayFrame extends JFrame {
             
             Runway newRunway = new Runway(name, magneticHeading, airfieldParent, altitude, "");
             try{
-                if (isEditEntry){
-                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newRunway);
+                objectSet.setCurrentRunway(newRunway);
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Runway for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update("2");
+                    this.dispose();
                 }
                 else
                 {
-                    DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
+                    if (isEditEntry){
+                        DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newRunway);
+                    }
+                    else
+                    {
+                        DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
+                    }
+                    parent.update("2");
+                    this.dispose();
                 }
-                objectSet.setCurrentRunway(newRunway);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
-                parent.update("2");
-                dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());

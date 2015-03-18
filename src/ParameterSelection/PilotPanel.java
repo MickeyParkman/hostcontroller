@@ -29,6 +29,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import java.awt.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
 import javax.swing.border.MatteBorder;
@@ -52,6 +54,71 @@ public class PilotPanel extends JPanel implements Observer{
         Pilot currentPilot = currentData.getCurrentPilot();
         pilotJList.setSelectedValue(currentPilot.toString(), true);
         pilotScrollPane.setViewportView(pilotJList);
+        
+        try{
+            firstNameField.setText((currentPilot.getFirstName()));
+            firstNameField.setBackground(Color.GREEN);
+
+            lastNameField.setText((currentPilot.getLastName()));
+            lastNameField.setBackground(Color.GREEN);
+
+            middleNameField.setText((currentPilot.getMiddleName()));
+            middleNameField.setBackground(Color.GREEN);
+
+            String emergencyContact = currentPilot.getEmergencyContact();
+            String emergencyContactName;
+            String emergencyContactPhone;
+            int p = emergencyContact.indexOf('%');
+            if (p >= 0) 
+            {
+                emergencyContactName = emergencyContact.substring(0, p);
+                emergencyContactPhone = emergencyContact.substring(p + 1);
+            }
+            else
+            {
+                emergencyContactName = "";
+                emergencyContactPhone = "";
+            }
+            emergencyContactNameField.setText(emergencyContactName);
+            emergencyContactNameField.setBackground(Color.GREEN);
+            emergencyContactPhoneField.setText(emergencyContactPhone);
+            emergencyContactPhoneField.setBackground(Color.GREEN);
+
+            /*String medInfo = thePilot.getEmergencyContact();
+            String medInfoName;
+            String medInfoPhone;
+            int t = medInfo.indexOf('%');
+            if (t >= 0) 
+            {
+                medInfoName = emergencyContact.substring(0, t);
+                medInfoPhone = emergencyContact.substring(t + 1);
+            }
+            else
+            {
+                medInfoName = "";
+                medInfoPhone = "";
+            }
+            medInfoNameField.setText(medInfoName);
+            medInfoNameField.setBackground(Color.GREEN);
+            medInfoPhoneField.setText(medInfoPhone);
+            medInfoPhoneField.setBackground(Color.GREEN);*/
+
+            flightWeightField.setText(String.valueOf((int)(currentPilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
+            flightWeightField.setBackground(Color.GREEN);
+
+            studentRadioButton.setSelected(currentPilot.getCapability().equals("Student"));
+            proficientRadioButton.setSelected(currentPilot.getCapability().equals("Proficient"));
+            advancedRadioButton.setSelected(currentPilot.getCapability().equals("Advanced"));
+
+            mildRadioButton.setSelected(currentPilot.getPreference().equals("Mild"));
+            nominalRadioButton.setSelected(currentPilot.getPreference().equals("Nominal"));
+            performanceRadioButton.setSelected(currentPilot.getPreference().equals("Performance"));
+
+            optionalInfoField.setText((currentPilot.getOptionalInfo()));
+        } catch(Exception e) {
+            //TODO respond to error
+        }
+
     }
     
     private Observer getObserver() {
@@ -85,18 +152,14 @@ public class PilotPanel extends JPanel implements Observer{
         emergencyContactNameField.setBackground(Color.WHITE);
         emergencyContactPhoneField.setText("");
         emergencyContactPhoneField.setBackground(Color.WHITE);
-        medInfoNameField.setText("");
+        /*medInfoNameField.setText("");
         medInfoNameField.setBackground(Color.WHITE);
         medInfoPhoneField.setText("");
-        medInfoPhoneField.setBackground(Color.WHITE);
+        medInfoPhoneField.setBackground(Color.WHITE);*/
         flightWeightField.setText("");
         flightWeightField.setBackground(Color.WHITE);
-        studentRadioButton.setSelected(false);
-        proficientRadioButton.setSelected(false);
-        advancedRadioButton.setSelected(false);
-        mildRadioButton.setSelected(false);
-        nominalRadioButton.setSelected(false);
-        performanceRadioButton.setSelected(false);
+        capabilityButtonGroup.clearSelection();
+        preferenceButtonGroup.clearSelection();
         optionalInfoField.setText("");
 }
     
@@ -227,24 +290,32 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(flightWeightLabel);
         
         flightWeightField = new JTextField();
+        flightWeightField.setBackground(Color.WHITE);
+        flightWeightField.setEditable(false);
         flightWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         flightWeightField.setBounds(160, 125, 110, 20);
         attributesPanel.add(flightWeightField);
         flightWeightField.setColumns(10);
         
         lastNameField = new JTextField();
+        lastNameField.setBackground(Color.WHITE);
+        lastNameField.setEditable(false);
         lastNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         lastNameField.setBounds(160, 100, 110, 20);
         attributesPanel.add(lastNameField);
         lastNameField.setColumns(10);
         
         middleNameField = new JTextField();
+        middleNameField.setBackground(Color.WHITE);
+        middleNameField.setEditable(false);
         middleNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         middleNameField.setBounds(160, 75, 110, 20);
         attributesPanel.add(middleNameField);
         middleNameField.setColumns(10);
         
         firstNameField = new JTextField();
+        firstNameField.setBackground(Color.WHITE);
+        firstNameField.setEditable(false);
         firstNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         firstNameField.setBounds(160, 50, 110, 20);
         attributesPanel.add(firstNameField);
@@ -294,29 +365,38 @@ public class PilotPanel extends JPanel implements Observer{
         performanceRadioButton.setBounds(320, 220, 109, 23);
         attributesPanel.add(performanceRadioButton);
         
-        JLabel emergencyContactLabel = new JLabel("Emergency Contact:");
-        emergencyContactLabel.setBounds(10, 250, 117, 14);
+        emergencyContactLabel.setText("Emergency Contact:");
+        emergencyContactLabel.setBounds(10, 284, 117, 14);
         attributesPanel.add(emergencyContactLabel);
+        emergencyContactLabel.setVisible(false);
         
-        JLabel emergencyContactNameLabel = new JLabel("Name:");
-        emergencyContactNameLabel.setBounds(33, 275, 46, 14);
+        emergencyContactNameLabel.setText("Name:");
+        emergencyContactNameLabel.setBounds(33, 309, 46, 14);
         attributesPanel.add(emergencyContactNameLabel);
+        emergencyContactNameLabel.setVisible(false);
         
-        JLabel emergencyContactPhoneLabel = new JLabel("Phone:");
-        emergencyContactPhoneLabel.setBounds(33, 300, 46, 14);
+        emergencyContactPhoneLabel.setText("Phone:");
+        emergencyContactPhoneLabel.setBounds(33, 334, 46, 14);
         attributesPanel.add(emergencyContactPhoneLabel);
+        emergencyContactPhoneLabel.setVisible(false);
         
         emergencyContactNameField = new JTextField();
+        emergencyContactNameField.setBackground(Color.WHITE);
+        emergencyContactNameField.setEditable(false);
         emergencyContactNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        emergencyContactNameField.setBounds(85, 272, 110, 20);
+        emergencyContactNameField.setBounds(85, 306, 110, 20);
         attributesPanel.add(emergencyContactNameField);
         emergencyContactNameField.setColumns(10);
+        emergencyContactNameField.setVisible(false);
         
         emergencyContactPhoneField = new JTextField();
+        emergencyContactPhoneField.setBackground(Color.WHITE);
+        emergencyContactPhoneField.setEditable(false);
         emergencyContactPhoneField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        emergencyContactPhoneField.setBounds(85, 297, 110, 20);
+        emergencyContactPhoneField.setBounds(85, 331, 110, 20);
         attributesPanel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
+        emergencyContactPhoneField.setVisible(false);
         
         /*JLabel medInfoLabel = new JLabel("Primary Physician:");
         medInfoLabel.setBounds(244, 247, 117, 14);
@@ -342,20 +422,24 @@ public class PilotPanel extends JPanel implements Observer{
         medInfoPhoneLabel.setBounds(267, 297, 46, 14);
         attributesPanel.add(medInfoPhoneLabel);*/
         
-        JLabel lblAdditionalInformation = new JLabel("Additional Information:");
-        lblAdditionalInformation.setBounds(10, 342, 152, 14);
-        attributesPanel.add(lblAdditionalInformation);
+        additionalInformationLabel.setText("Additional Information:");
+        additionalInformationLabel.setBounds(10, 376, 152, 14);
+        attributesPanel.add(additionalInformationLabel);
+        additionalInformationLabel.setVisible(false);
         
         optionalInfoField = new JTextArea();
+        optionalInfoField.setBackground(Color.WHITE);
+        optionalInfoField.setEditable(false);
         optionalInfoField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        optionalInfoField.setBounds(10, 367, 734, 88);
+        optionalInfoField.setBounds(10, 401, 734, 88);
         attributesPanel.add(optionalInfoField);
         optionalInfoField.setColumns(10);
+        optionalInfoField.setVisible(false);
         
-        lblPilot = new JLabel("Pilot");
-        lblPilot.setFont(new Font("Tahoma", Font.PLAIN, 24));
-        lblPilot.setBounds(10, 20, 86, 31);
-        attributesPanel.add(lblPilot);
+        PilotLabel = new JLabel("Pilot");
+        PilotLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        PilotLabel.setBounds(10, 20, 86, 31);
+        attributesPanel.add(PilotLabel);
         
         addNewButton = new JButton("Add New");
         addNewButton.addActionListener(new ActionListener() {
@@ -382,6 +466,39 @@ public class PilotPanel extends JPanel implements Observer{
         flightWeightUnits = new JLabel("kgs");
         flightWeightUnits.setBounds(280, 128, 46, 14);
         attributesPanel.add(flightWeightUnits);
+        
+        shown = false;
+        showMoreButton.setText("Show More");
+        showMoreButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		if(shown)
+        		{
+                            emergencyContactLabel.setVisible(false);
+                            emergencyContactNameLabel.setVisible(false);
+                            emergencyContactPhoneLabel.setVisible(false);
+                            emergencyContactNameField.setVisible(false);
+                            emergencyContactPhoneField.setVisible(false);
+                            additionalInformationLabel.setVisible(false);
+                            optionalInfoField.setVisible(false);
+                            shown = false;
+                            showMoreButton.setText("Show More");
+        		}
+        		else
+        		{
+                            emergencyContactLabel.setVisible(true);
+                            emergencyContactNameLabel.setVisible(true);
+                            emergencyContactPhoneLabel.setVisible(true);
+                            emergencyContactNameField.setVisible(true);
+                            emergencyContactPhoneField.setVisible(true);
+                            additionalInformationLabel.setVisible(true);
+                            optionalInfoField.setVisible(true);
+                            shown = true;
+                            showMoreButton.setText("Show Less");
+        		}
+        	}
+        });
+        showMoreButton.setBounds(7, 261, 140, 23);
+        attributesPanel.add(showMoreButton);
     }
         
     private javax.swing.JList pilotJList;
@@ -400,13 +517,19 @@ public class PilotPanel extends JPanel implements Observer{
     private JRadioButton nominalRadioButton;
     private JRadioButton performanceRadioButton;
     private JTextArea optionalInfoField;
-    private JLabel lblPilot;
+    private JLabel PilotLabel;
     private JButton addNewButton;
     private JButton editButton;
     private final ButtonGroup capabilityButtonGroup = new ButtonGroup();
     private final ButtonGroup preferenceButtonGroup = new ButtonGroup();
     private JLabel flightWeightUnits;
-
+    private JLabel emergencyContactLabel = new JLabel();
+    private JLabel emergencyContactNameLabel = new JLabel();
+    private JLabel emergencyContactPhoneLabel = new JLabel();
+    private JLabel additionalInformationLabel = new JLabel();
+    private JButton showMoreButton = new JButton();
+    private Boolean shown;
+    
     @Override
     public void update(String msg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

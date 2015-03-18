@@ -252,17 +252,26 @@ public class AddEditWinchPosFrame extends JFrame {
                     runwayParent, airfieldParent, altitude,
                     latitude, longitude, "");
             try{
-                if (isEditEntry){
-                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newWinchPos);
+                objectSet.setCurrentWinchPosition(newWinchPos);
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Winch Position for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update("4");
+                    this.dispose();
                 }
                 else
                 {
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addWinchPositionToDB(newWinchPos);
+                    if (isEditEntry){
+                        DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newWinchPos);
+                    }
+                    else{
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addWinchPositionToDB(newWinchPos);
+                    }
+                    parent.update("4");
+                    this.dispose();
                 }
-                objectSet.setCurrentWinchPosition(newWinchPos);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
-                parent.update("4");
-                dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());

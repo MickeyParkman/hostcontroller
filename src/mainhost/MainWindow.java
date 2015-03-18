@@ -236,6 +236,7 @@ public class MainWindow extends JFrame {
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                ParameterSelectionPanel_.clear();
                 currentData.cleafGliderPosition();
                 currentData.clearAirfield();
                 currentData.clearGlider();
@@ -243,7 +244,7 @@ public class MainWindow extends JFrame {
                 currentData.clearRunway();
                 currentData.clearWinchPosition();
                 currentData.clearDrum();
-                ParameterSelectionPanel_.clear();
+                
             }
         });
         

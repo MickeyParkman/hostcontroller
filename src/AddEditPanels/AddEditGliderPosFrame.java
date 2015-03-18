@@ -251,17 +251,26 @@ public class AddEditGliderPosFrame extends JFrame {
                     runwayParent, airfieldParent, altitude,
                     latitude, longitude, "");
             try{
-                if (isEditEntry){
-                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newGliderPos);
+                objectSet.setCurrentGliderPosition(newGliderPos);
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider Position for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update("3");
+                    this.dispose();
                 }
                 else
                 {
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
+                    if (isEditEntry){
+                        DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newGliderPos);
+                    }
+                    else{
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
+                    }
+                    parent.update("3");
+                    this.dispose();
                 }
-                objectSet.setCurrentGliderPosition(newGliderPos);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
-                parent.update("3");
-                dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     e1.printStackTrace();

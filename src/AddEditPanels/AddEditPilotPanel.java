@@ -366,17 +366,27 @@ public class AddEditPilotPanel extends JFrame {
                         weight, capability, preference, emergencyContact,
                         medicalInformation, optionalInformation);
 
-                if (isEditEntry){
-                    DatabaseEntryEdit.UpdateEntry(newPilot);
-                }
-                else{
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
-                }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentPilot(newPilot);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
-                parent.update();
-                this.dispose();
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider Position for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update();
+                    this.dispose();
+                }
+                else
+                {
+                    if (isEditEntry){
+                        DatabaseEntryEdit.UpdateEntry(newPilot);
+                    }
+                    else{
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
+                    }
+                    parent.update();
+                    this.dispose();
+                }
             }catch(SQLException e1) {
                 e1.printStackTrace();
                 if(e1.getErrorCode() == 30000)

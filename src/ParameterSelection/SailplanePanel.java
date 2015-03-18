@@ -62,6 +62,47 @@ public class SailplanePanel extends JPanel implements Observer{
         Sailplane currentSailplane = currentData.getCurrentSailplane();
         sailplaneJList.setSelectedValue(currentSailplane.toString(), true);
         sailplaneScrollPane.setViewportView(sailplaneJList);
+        
+        nNumberField.setText(currentSailplane.getNumber());
+        nNumberField.setBackground(Color.GREEN);
+
+        weakLinkField.setText(String.valueOf(currentSailplane.getMaxWeakLinkStrength()));
+        weakLinkField.setBackground(Color.GREEN);
+
+        tensionField.setText(String.valueOf(currentSailplane.getMaxTension()));
+        tensionField.setBackground(Color.GREEN);
+
+        releaseAngleField.setText(String.valueOf(currentSailplane.getCableReleaseAngle()));
+        releaseAngleField.setBackground(Color.GREEN);
+
+        stallSpeedField.setText(String.valueOf(currentSailplane.getIndicatedStallSpeed()));
+        stallSpeedField.setBackground(Color.GREEN);
+
+        grossWeightField.setText(String.valueOf(currentSailplane.getMaxGrossWeight()));
+        grossWeightField.setBackground(Color.GREEN);
+
+        emptyWeightField.setText(String.valueOf(currentSailplane.getEmptyWeight()));
+        emptyWeightField.setBackground(Color.GREEN);
+
+        winchingSpeedField.setText(String.valueOf(currentSailplane.getMaxWinchingSpeed()));
+        winchingSpeedField.setBackground(Color.GREEN);
+
+        if(currentSailplane.getCarryBallast())
+        {
+            ballastCheckBox.setSelected(true);
+        }
+        if(!currentSailplane.getCarryBallast())
+        {
+            ballastCheckBox.setSelected(false);
+        }
+        if(currentSailplane.getMultipleSeats())
+        {
+            multipleSeatsCheckBox.setSelected(true);
+        }
+        if(!currentSailplane.getMultipleSeats())
+        {
+            multipleSeatsCheckBox.setSelected(false);
+        }
     }
     
     private Observer getObserver() {
@@ -87,7 +128,10 @@ public class SailplanePanel extends JPanel implements Observer{
         emptyWeightField.setBackground(Color.WHITE);
         winchingSpeedField.setText("");
         winchingSpeedField.setBackground(Color.WHITE);
+        ballastCheckBox.setSelected(false);
+        multipleSeatsCheckBox.setSelected(false);
     }
+    
     private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) 
     {
         if(sailplaneJList.getSelectedIndex() >= 0){
@@ -118,6 +162,23 @@ public class SailplanePanel extends JPanel implements Observer{
 
                 winchingSpeedField.setText(String.valueOf(theSailplane.getMaxWinchingSpeed()));
                 winchingSpeedField.setBackground(Color.GREEN);
+                
+                if(theSailplane.getCarryBallast())
+                {
+                    ballastCheckBox.setSelected(true);
+                }
+                if(!theSailplane.getCarryBallast())
+                {
+                    ballastCheckBox.setSelected(false);
+                }
+                if(theSailplane.getMultipleSeats())
+                {
+                    multipleSeatsCheckBox.setSelected(true);
+                }
+                if(!theSailplane.getMultipleSeats())
+                {
+                    multipleSeatsCheckBox.setSelected(false);
+                }
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -197,30 +258,38 @@ public class SailplanePanel extends JPanel implements Observer{
         attributesPanel.add(lblIndicatedStallSpeed);
         
         stallSpeedField = new JTextField();
+        stallSpeedField.setBackground(Color.WHITE);
+        stallSpeedField.setEditable(false);
         stallSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         stallSpeedField.setBounds(160, 125, 110, 20);
         attributesPanel.add(stallSpeedField);
         stallSpeedField.setColumns(10);
         
         grossWeightField = new JTextField();
+        grossWeightField.setBackground(Color.WHITE);
+        grossWeightField.setEditable(false);
         grossWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         grossWeightField.setBounds(160, 100, 110, 20);
         attributesPanel.add(grossWeightField);
         grossWeightField.setColumns(10);
         
         emptyWeightField = new JTextField();
+        emptyWeightField.setBackground(Color.WHITE);
+        emptyWeightField.setEditable(false);
         emptyWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         emptyWeightField.setBounds(160, 75, 110, 20);
         attributesPanel.add(emptyWeightField);
         emptyWeightField.setColumns(10);
         
         nNumberField = new JTextField();
+        nNumberField.setBackground(Color.WHITE);
+        nNumberField.setEditable(false);
         nNumberField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nNumberField.setBounds(160, 50, 110, 20);
         attributesPanel.add(nNumberField);
         nNumberField.setColumns(10);
         
-        JCheckBox ballastCheckBox = new JCheckBox("Can Carry Ballast?");
+        ballastCheckBox = new JCheckBox("Can Carry Ballast?");
         ballastCheckBox.setBackground(Color.WHITE);
         ballastCheckBox.addItemListener(new ItemListener() {
             @Override
@@ -268,7 +337,7 @@ public class SailplanePanel extends JPanel implements Observer{
         cableReleaseAngleLabel.setBounds(320, 128, 140, 14);
         attributesPanel.add(cableReleaseAngleLabel);
         
-        JCheckBox multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
+        multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
         multipleSeatsCheckBox.setBackground(Color.WHITE);
         
         multipleSeatsCheckBox.addItemListener(new ItemListener() {
@@ -294,18 +363,24 @@ public class SailplanePanel extends JPanel implements Observer{
         attributesPanel.add(passengerWeightLabel);
         
         weakLinkField = new JTextField();
+        weakLinkField.setBackground(Color.WHITE);
+        weakLinkField.setEditable(false);
         weakLinkField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         weakLinkField.setBounds(487, 75, 120, 20);
         attributesPanel.add(weakLinkField);
         weakLinkField.setColumns(10);
         
         tensionField = new JTextField();
+        tensionField.setBackground(Color.WHITE);
+        tensionField.setEditable(false);
         tensionField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         tensionField.setBounds(487, 100, 120, 20);
         attributesPanel.add(tensionField);
         tensionField.setColumns(10);
         
         releaseAngleField = new JTextField();
+        releaseAngleField.setBackground(Color.WHITE);
+        releaseAngleField.setEditable(false);
         releaseAngleField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         releaseAngleField.setBounds(487, 125, 120, 20);
         attributesPanel.add(releaseAngleField);
@@ -320,6 +395,8 @@ public class SailplanePanel extends JPanel implements Observer{
         passengerWeightField.setBackground(Color.LIGHT_GRAY);
         
         winchingSpeedField = new JTextField();
+        winchingSpeedField.setBackground(Color.WHITE);
+        winchingSpeedField.setEditable(false);
         winchingSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         winchingSpeedField.setBounds(487, 50, 120, 20);
         attributesPanel.add(winchingSpeedField);
@@ -437,7 +514,9 @@ public class SailplanePanel extends JPanel implements Observer{
     private JTextField passengerWeightField;
     private JTextField winchingSpeedField;
     private JTextField baggageField;
-
+    private JCheckBox multipleSeatsCheckBox;
+    private JCheckBox ballastCheckBox;
+    
     @Override
     public void update(String msg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

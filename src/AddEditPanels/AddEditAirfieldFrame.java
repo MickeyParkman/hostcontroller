@@ -253,17 +253,27 @@ public class AddEditAirfieldFrame extends JFrame {
             Airfield newAirfield = new Airfield(airfieldName, designator, airfieldAltitude,
                     magneticVariation, airfieldLatitude, airfieldLongitude, "");
             try{
-                if (isEditEntry){
-                    DatabaseEntryEdit.UpdateEntry(newAirfield);
-                }
-                else{
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addAirfieldToDB(newAirfield);
-                }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentAirfield(newAirfield);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
-                parent.update("1");
-                this.dispose();
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Airfield for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update("1");
+                    this.dispose();
+                }
+                else
+                {
+                    if (isEditEntry){
+                    DatabaseEntryEdit.UpdateEntry(newAirfield);
+                    }
+                    else{
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addAirfieldToDB(newAirfield);
+                    }
+                    parent.update("1");
+                    this.dispose();
+                } 
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
                     e1.printStackTrace();

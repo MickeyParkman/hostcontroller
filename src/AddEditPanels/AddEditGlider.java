@@ -319,15 +319,28 @@ public class AddEditGlider extends JFrame {
                     emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
                     releaseAngle, carryBallast, multipleSeats, "");
             try{
-                if (isEditEntry){
-                    DatabaseEntryDelete.DeleteEntry(oldGlider);
-                }
-                DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentGlider(newGlider);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
-                parent.update();
-                this.dispose();
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update();
+                    this.dispose();
+                }
+                else
+                {
+                    if (isEditEntry){
+                        DatabaseEntryDelete.DeleteEntry(oldGlider);
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
+                    }
+                    else{
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
+                    }
+                    parent.update();
+                    this.dispose();
+                } 
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
                     e1.printStackTrace();
