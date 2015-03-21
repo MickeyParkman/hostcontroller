@@ -1,3 +1,6 @@
+/** THIS CLASS WILL BE UPDATED WITH THE NEW SYSTEM */
+
+
 package Communications;
 
 import java.awt.event.ActionEvent;
