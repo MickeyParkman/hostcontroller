@@ -442,6 +442,7 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(PilotLabel);
         
         addNewButton = new JButton("Add New");
+        addNewButton.setBackground(new Color(200,200,200));
         addNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditPilotPanel AddEditPilotPanel_ = new AddEditPilotPanel(currentData.getCurrentPilot(), false);
@@ -453,6 +454,7 @@ public class PilotPanel extends JPanel implements Observer{
         attributesPanel.add(addNewButton);
         
         editButton = new JButton("Edit");
+        editButton.setBackground(new Color(200,200,200));
         editButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditPilotPanel AddEditPilotPanel_ = new AddEditPilotPanel(currentData.getCurrentPilot(), true);
@@ -469,6 +471,7 @@ public class PilotPanel extends JPanel implements Observer{
         
         shown = false;
         showMoreButton.setText("Show More");
+        showMoreButton.setBackground(new Color(200,200,200));
         showMoreButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		if(shown)

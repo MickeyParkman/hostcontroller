@@ -40,7 +40,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             pilotNameLabel.setForeground(Color.RED);       
         } else {
             pilotNameLabel.setText(pilot.toString());      
-            pilotNameLabel.setForeground(Color.BLACK);       
+            pilotNameLabel.setForeground(new Color(0,128,0));       
         }
 
         if(airfield == null) {
@@ -48,7 +48,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             airfieldLabel.setForeground(Color.RED); 
         } else {
             airfieldLabel.setText(airfield.toString());    
-            airfieldLabel.setForeground(Color.BLACK); 
+            airfieldLabel.setForeground(new Color(0,128,0)); 
         }
 
         if(glider == null) {
@@ -56,7 +56,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             gliderLabel.setForeground(Color.RED); 
         } else {
             gliderLabel.setText(glider.toString());
-            gliderLabel.setForeground(Color.BLACK); 
+            gliderLabel.setForeground(new Color(0,128,0)); 
         }
         
         if(runway == null) {
@@ -64,7 +64,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             runwayLabel.setForeground(Color.RED); 
         } else {
             runwayLabel.setText(runway.toString());
-            runwayLabel.setForeground(Color.BLACK); 
+            runwayLabel.setForeground(new Color(0,128,0)); 
         }
         
         if(position == null) {
@@ -72,7 +72,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             positionLabel.setForeground(Color.RED); 
         } else {
             positionLabel.setText(position.toString());    
-            positionLabel.setForeground(Color.BLACK); 
+            positionLabel.setForeground(new Color(0,128,0)); 
         }
 
         if(winch == null) {
@@ -80,7 +80,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             winchposLabel.setForeground(Color.RED); 
         } else {
             winchposLabel.setText(winch.toString());    
-            winchposLabel.setForeground(Color.BLACK); 
+            winchposLabel.setForeground(new Color(0,128,0)); 
         }
         
         if(drum == null) {
@@ -88,7 +88,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             drumLabel.setForeground(Color.RED);
         } else {
             drumLabel.setText(drum.toString());    
-            drumLabel.setForeground(Color.BLACK);  
+            drumLabel.setForeground(new Color(0,128,0));  
         }
     }
     

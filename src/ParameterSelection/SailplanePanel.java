@@ -29,14 +29,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-
 import java.awt.Font;
-
 import javax.swing.JButton;
-
 import Communications.Observer;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
@@ -440,6 +436,7 @@ public class SailplanePanel extends JPanel implements Observer{
         attributesPanel.add(lblGlider);
         
         JButton addNewButton = new JButton("Add New");
+        addNewButton.setBackground(new Color(200,200,200));
         addNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGlider AddEditGlider_ = new AddEditGlider(currentData.getCurrentSailplane(), false);
@@ -451,6 +448,7 @@ public class SailplanePanel extends JPanel implements Observer{
         attributesPanel.add(addNewButton);
         
         JButton editButton = new JButton("Edit");
+        editButton.setBackground(new Color(200,200,200));
         editButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGlider AddEditGlider_ = new AddEditGlider(currentData.getCurrentSailplane(), true);

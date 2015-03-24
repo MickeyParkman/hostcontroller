@@ -589,6 +589,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         airfieldLatitudeField.setColumns(10);
         
         JButton airfieldAddNewButton = new JButton("Add New");
+        airfieldAddNewButton.setBackground(new Color(200,200,200));
         airfieldAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
                     AddEditAirfieldFrame AddEditAirfieldFrame_ = new AddEditAirfieldFrame(currentData.getCurrentAirfield(), false);
@@ -600,6 +601,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         airfieldAttributesPanel.add(airfieldAddNewButton);
         
         JButton airfieldEditButton = new JButton("Edit");
+        airfieldEditButton.setBackground(new Color(200,200,200));
         airfieldEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditAirfieldFrame AddEditAirfieldFrame_ = new AddEditAirfieldFrame(currentData.getCurrentAirfield(), true);
@@ -714,6 +716,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         gliderPosNameField.setColumns(10);
         
         JButton gliderPosAddNewButton = new JButton("Add New");
+        gliderPosAddNewButton.setBackground(new Color(200,200,200));
         gliderPosAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGliderPosFrame AddEditGliderPosFrame_ = new AddEditGliderPosFrame(currentData.getCurrentGliderPosition(), false);
@@ -725,6 +728,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         gliderPositionAttributesPanel.add(gliderPosAddNewButton);
         
         JButton gliderPosEditButton = new JButton("Edit");
+        gliderPosEditButton.setBackground(new Color(200,200,200));
         gliderPosEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGliderPosFrame AddEditGliderPosFrame_ = new AddEditGliderPosFrame(currentData.getCurrentGliderPosition(), true);
@@ -842,6 +846,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwaySlopeField.setColumns(10);
         
         JButton runwayEditButton = new JButton("Edit");
+        runwayEditButton.setBackground(new Color(200,200,200));
         runwayEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditRunwayFrame AddEditRunwayFrame_ = new AddEditRunwayFrame(currentData.getCurrentRunway(), true);
@@ -853,6 +858,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwayAttributesPanel.add(runwayEditButton);
         
         JButton runwayAddNewButton = new JButton("Add New");
+        runwayAddNewButton.setBackground(new Color(200,200,200));
         runwayAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditRunwayFrame AddEditRunwayFrame_ = new AddEditRunwayFrame(currentData.getCurrentRunway(), false);
@@ -948,6 +954,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         winchPositionAttributesPanel.add(winchPosLatitudeField);
         
         JButton winchPosAddNewButton = new JButton("Add New");
+        winchPosAddNewButton.setBackground(new Color(200,200,200));
         winchPosAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), false);
@@ -959,6 +966,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         winchPositionAttributesPanel.add(winchPosAddNewButton);
         
         JButton winchPosEditButton = new JButton("Edit");
+        winchPosEditButton.setBackground(new Color(200,200,200));
         winchPosEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditWinchPosFrame AddEditWinchPosFrame_ = new AddEditWinchPosFrame(currentData.getCurrentWinchPosition(), true);
