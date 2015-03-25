@@ -36,10 +36,12 @@ public class MainWindow extends JFrame {
     private JPanel leftSidePanelWinch;
     private JLabel statusLabel;
     private JPanel rightSidePanel;
-    private JPanel upperLeftSidePanelScenario;
     private JPanel lowerLeftSidePanelScenario;    
-    private JPanel upperLeftSidePanelDashboard;
     private JPanel lowerLeftSidePanelDashboard;
+    private JPanel lowerLeftSidePanelWinch;
+    private JPanel upperLeftSidePanelScenario;    
+    private JPanel upperLeftSidePanelDashboard;
+    private JPanel upperLeftSidePanelWinch;
     private JTabbedPane tabbedPane;
     private ParameterSelectionPanel ParameterSelectionPanel_;
     private ProfileManagementFrame ProfileManagementFrame;
@@ -48,6 +50,7 @@ public class MainWindow extends JFrame {
     private EnvironmentalWindow EnvironmentalWindow_;
     private CurrentScenario CurrentScenario_;
     private CurrentDataObjectSet currentData;
+    private CardLayout selectionLayout;
 
     public MainWindow() {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
@@ -64,7 +67,10 @@ public class MainWindow extends JFrame {
         FlightDashboard_ = new FlightDashboard();
         EnvironmentalWindow_ = new EnvironmentalWindow();
         rightSidePanel = EnvironmentalWindow_;
-        //CurrentScenario_ = new CurrentScenario();
+        selectionLayout = (CardLayout)ParameterSelectionPanel_.getLayout();
+        upperLeftSidePanelScenario = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
+        upperLeftSidePanelDashboard = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
+        upperLeftSidePanelWinch = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         createAndShowGUI();
     }
 
@@ -82,88 +88,41 @@ public class MainWindow extends JFrame {
         
         leftSidePanelScenario.setPreferredSize(new Dimension(200, 600));
         leftSidePanelDashboard.setPreferredSize(new Dimension(200, 600));
+        leftSidePanelWinch.setPreferredSize(new Dimension(200, 600));
         leftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
         leftSidePanelDashboard.setBorder(BorderFactory.createLineBorder(Color.black));
-        leftSidePanelWinch.setPreferredSize(new Dimension(200, 600));
         leftSidePanelWinch.setBorder(BorderFactory.createLineBorder(Color.black));
-        leftSidePanelWinch.setBackground(Color.WHITE);
         leftSidePanelScenario.setBackground(Color.WHITE);
         leftSidePanelDashboard.setBackground(Color.WHITE);
-        
-        final JButton pilotButton = new JButton();
-        pilotButton.setBackground(Color.WHITE);
-        //pilotButton.setBorder(new LineBorder(Color.BLACK,1));
-        pilotButton.setText("Select Pilot");
-        pilotButton.setPreferredSize(new Dimension(250,20));
-        final JButton gliderButton = new JButton();
-        gliderButton.setText("Select Glider");
-        gliderButton.setPreferredSize(new Dimension(250,20));
-        gliderButton.setBackground(new Color(200,200,200));
-        //gliderButton.setBorder(new LineBorder(Color.BLACK,1));
-        final JButton airfieldButton = new JButton();
-        airfieldButton.setText("Select Airfield");
-        airfieldButton.setPreferredSize(new Dimension(250,20));
-        airfieldButton.setBackground(new Color(200,200,200));
-        //airfieldButton.setBorder(new LineBorder(Color.BLACK,1));
-        final JButton drumButton = new JButton();
-        drumButton.setText("Select Drum");
-        drumButton.setPreferredSize(new Dimension(250,20));
-        drumButton.setBackground(new Color(200,200,200));
-        //drumButton.setBorder(new LineBorder(Color.BLACK,1));
-        JButton clearButton = new JButton();
-        clearButton.setText("Clear");
-        clearButton.setPreferredSize(new Dimension(250,20));
-        clearButton.setBackground(Color.WHITE);
-        JButton submitButton = new JButton();
-        submitButton.setText("Submit");
-        submitButton.setPreferredSize(new Dimension(250,20));
-        submitButton.setBackground(Color.WHITE);
-        
+        leftSidePanelWinch.setBackground(Color.WHITE);
+
         rightSidePanel.setPreferredSize(new Dimension(200, 600));
         rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         rightSidePanel.setBackground(Color.WHITE);
         
         //TODO (jtroxel) move all side panels into their respective panels, since they are tied to them
         // RSP can stay with main window IF static.
-        upperLeftSidePanelScenario = new JPanel();
-        upperLeftSidePanelScenario.setPreferredSize(new Dimension(200,200));
-        upperLeftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
-        upperLeftSidePanelScenario.setBackground(Color.WHITE);
-        lowerLeftSidePanelScenario = new CurrentScenario();
-        lowerLeftSidePanelScenario.setPreferredSize(new Dimension(200,300));
-        lowerLeftSidePanelScenario.setBorder(BorderFactory.createLineBorder(Color.black));
+        lowerLeftSidePanelScenario = new JPanel();
+        lowerLeftSidePanelScenario.setPreferredSize(new Dimension(200,WIDTH));
         lowerLeftSidePanelScenario.setBackground(Color.WHITE);
         leftSidePanelScenario.add(upperLeftSidePanelScenario);
         leftSidePanelScenario.add(lowerLeftSidePanelScenario);
         
-        JPanel upperLeftSidePanelWinch = new CurrentScenario();
-        upperLeftSidePanelWinch.setPreferredSize(new Dimension(200,300));
-        upperLeftSidePanelWinch.setBorder(BorderFactory.createLineBorder(Color.black));
-        upperLeftSidePanelWinch.setBackground(Color.WHITE);
-        leftSidePanelWinch.add(upperLeftSidePanelWinch);
-        
-        //lowerLeftSidePanelScenario.add(new JLabel("Current Scenario"));
-        
-        upperLeftSidePanelDashboard = new CurrentScenario();
-        upperLeftSidePanelDashboard.setPreferredSize(new Dimension(200,300));
-        upperLeftSidePanelDashboard.setBorder(BorderFactory.createLineBorder(Color.black));
-        upperLeftSidePanelDashboard.setBackground(Color.WHITE);
         lowerLeftSidePanelDashboard = new JPanel();
-        lowerLeftSidePanelDashboard.setPreferredSize(new Dimension(200,300));
-        lowerLeftSidePanelDashboard.setBorder(BorderFactory.createLineBorder(Color.black));
+        lowerLeftSidePanelDashboard.setPreferredSize(new Dimension(200,WIDTH));
         lowerLeftSidePanelDashboard.setBackground(Color.WHITE);
         leftSidePanelDashboard.add(upperLeftSidePanelDashboard);
         leftSidePanelDashboard.add(lowerLeftSidePanelDashboard);
-
+        
+        lowerLeftSidePanelWinch = new JPanel();
+        lowerLeftSidePanelWinch.setPreferredSize(new Dimension(200,WIDTH));
+        lowerLeftSidePanelWinch.setBackground(Color.WHITE);
+        leftSidePanelWinch.add(upperLeftSidePanelWinch);
+        leftSidePanelWinch.add(lowerLeftSidePanelWinch);
+                
+        
         //upperLeftSidePanelDashboard.add(new JLabel("REPLAY LIST HERE"));
         //lowerLeftSidePanelDashboard.add(new JLabel("Current Scenario"));
-        
-        upperLeftSidePanelScenario.add(pilotButton);        
-        upperLeftSidePanelScenario.add(gliderButton);   
-        upperLeftSidePanelScenario.add(airfieldButton);
-        upperLeftSidePanelScenario.add(drumButton);        
-        upperLeftSidePanelScenario.add(clearButton);   
-        upperLeftSidePanelScenario.add(submitButton);
         
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
@@ -179,81 +138,7 @@ public class MainWindow extends JFrame {
         getContentPane().add(mainWindow);
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);  
-        setVisible(true);
-        
-        final CardLayout selectionLayout = (CardLayout)ParameterSelectionPanel_.getLayout();
-        
-        pilotButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                selectionLayout.first(ParameterSelectionPanel_);
-                pilotButton.setBackground(Color.WHITE);
-                gliderButton.setBackground(new Color(200,200,200));
-                airfieldButton.setBackground(new Color(200,200,200));
-                drumButton.setBackground(new Color(200,200,200));
-            }
-        });
-        
-        gliderButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                selectionLayout.first(ParameterSelectionPanel_);
-                selectionLayout.next(ParameterSelectionPanel_);
-                pilotButton.setBackground(new Color(200,200,200));
-                gliderButton.setBackground(Color.WHITE);
-                airfieldButton.setBackground(new Color(200,200,200));
-                drumButton.setBackground(new Color(200,200,200));
-            }
-        });
-        
-        airfieldButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                selectionLayout.first(ParameterSelectionPanel_);
-                selectionLayout.next(ParameterSelectionPanel_);
-                selectionLayout.next(ParameterSelectionPanel_);
-                pilotButton.setBackground(new Color(200,200,200));
-                gliderButton.setBackground(new Color(200,200,200));
-                airfieldButton.setBackground(Color.WHITE);
-                drumButton.setBackground(new Color(200,200,200));
-            }
-        });
-        
-        drumButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                selectionLayout.first(ParameterSelectionPanel_);
-                selectionLayout.next(ParameterSelectionPanel_);
-                selectionLayout.next(ParameterSelectionPanel_);
-                selectionLayout.next(ParameterSelectionPanel_);
-                pilotButton.setBackground(new Color(200,200,200));
-                gliderButton.setBackground(new Color(200,200,200));
-                airfieldButton.setBackground(new Color(200,200,200));
-                drumButton.setBackground(Color.WHITE);
-            }
-        });
-        
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ParameterSelectionPanel_.clear();
-                currentData.cleafGliderPosition();
-                currentData.clearAirfield();
-                currentData.clearGlider();
-                currentData.clearPilot();
-                currentData.clearRunway();
-                currentData.clearWinchPosition();
-                currentData.clearDrum();
-                
-            }
-        });
-        
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                
-            }
-        });
+        setVisible(true);       
     }
 
     private JPanel makePanel(JPanel innerPanel, int tab) {

@@ -209,6 +209,7 @@ public class AddEditGlider extends JFrame {
 
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 180, 89, 23);
+        submitButton.setBackground(new Color(200,200,200));
         contentPane.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -220,6 +221,7 @@ public class AddEditGlider extends JFrame {
         JButton deleteButton = new JButton("Delete");
         deleteButton.setEnabled(isEditEntry);
         deleteButton.setBounds(90, 180, 89, 23);
+        deleteButton.setBackground(new Color(200,200,200));
         contentPane.add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -231,6 +233,7 @@ public class AddEditGlider extends JFrame {
         JButton clearButton = new JButton("Clear");
         clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 180, 89, 23);
+        clearButton.setBackground(new Color(200,200,200));
         contentPane.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -241,6 +244,7 @@ public class AddEditGlider extends JFrame {
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 180, 89, 23);
+        cancelButton.setBackground(new Color(200,200,200));
         contentPane.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
             @Override

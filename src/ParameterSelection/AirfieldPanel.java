@@ -35,6 +35,8 @@ import java.awt.Font;
 
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.MatteBorder;
 
 
@@ -66,7 +68,6 @@ public class AirfieldPanel extends JPanel implements Observer{
     private JTextField runwayNameField;
     private JTextField runwayAltitudeField;
     private JTextField runwayParentAirfieldField;
-    private JTextField runwaySlopeField;
     private JTextField gliderPosParentRunwayField;
     private JTextField gliderPosParentAirfieldField;
     private JTextField gliderPosLatitudeField;
@@ -184,6 +185,8 @@ public class AirfieldPanel extends JPanel implements Observer{
             winchPosLatitudeField.setText(String.valueOf(currentWinchPos.getLatitude()));
             winchPosLatitudeField.setBackground(Color.GREEN);
         }
+        
+        
     }
     
     private Observer getObserver() {
@@ -193,11 +196,7 @@ public class AirfieldPanel extends JPanel implements Observer{
     private void initAirfieldList() {
         try{
             airfields = DatabaseUtilities.DatabaseDataObjectUtilities.getAirfields();
-            //airfields.add(0, new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));   
         }catch(SQLException e) {
-            //e.printStackTrace();
-            //airfields.add(new Airfield("Spokane", "GEG", 1000, 5, 5, 5, "sdfgsdgf"));
-            //airfields.add(new Airfield("Bob-land", "BOB", 1000, 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -206,12 +205,7 @@ public class AirfieldPanel extends JPanel implements Observer{
     private void initGliderPositionsList() {
         try{
             gliderPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getGliderPositions();
-            //gliderPositions.add(new GliderPosition("The glider position", "The Runway","The Airfield", 5, 5, 5, "sdfgsdgf"));
         }catch(SQLException e) {
-            //gliderPositions.add(new GliderPosition("Spokane Runway1 glider", "Spokane Runway1","GEG", 5, 5, 5, "sdfgsdgf"));
-            //gliderPositions.add(new GliderPosition("Spokane Runway2 glider", "Spokane Runway2","GEG", 5, 5, 5, "sdfgsdgf"));
-            //gliderPositions.add(new GliderPosition("Bob-land Runway1 glider", "Bob-land Runway1","BOB", 5, 5, 5, "sdfgsdgf"));
-            //gliderPositions.add(new GliderPosition("Bob-land Runway2 glider", "Bob-land Runway2","BOB", 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -220,12 +214,7 @@ public class AirfieldPanel extends JPanel implements Observer{
     private void initWinchPositionsList() {
         try{
             winchPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getWinchPositions();
-            //winchPositions.add(new WinchPosition("The winch position", "The Runway","The Airfield", 5, 5, 5, "sdfgsdgf"));
         }catch(SQLException e) {
-            //winchPositions.add(new WinchPosition("Spokane Runway1 winch", "Spokane Runway1","GEG", 5, 5, 5, "sdfgsdgf"));
-            //winchPositions.add(new WinchPosition("Spokane Runway2 winch", "Spokane Runway2","GEG", 5, 5, 5, "sdfgsdgf"));
-            //winchPositions.add(new WinchPosition("Bob-land Runway1 winch", "Bob-land Runway1","BOB", 5, 5, 5, "sdfgsdgf"));
-            //winchPositions.add(new WinchPosition("Bob-land Runway2 winch", "Bob-land Runway2","BOB", 5, 5, 5, "sdfgsdgf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -234,12 +223,7 @@ public class AirfieldPanel extends JPanel implements Observer{
     private void initRunwaysList() {
         try{
             runways = DatabaseUtilities.DatabaseDataObjectUtilities.getRunways();
-            //runways.add(new Runway("The Runway", "North", "Spokane", 5, "sdghsdg"));
         }catch(SQLException e) {
-            //runways.add(new Runway("Spokane Runway1", "North", "GEG", 5, "sdghsdg"));
-            //runways.add(new Runway("Spokane Runway2", "North", "GEG", 5, "sdghsdg"));
-            //runways.add(new Runway("Bob-land Runway1", "South", "BOB", 6, "asdfasdf"));
-            //runways.add(new Runway("Bob-land Runway2", "South", "BOB", 6, "asdfasdf"));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -509,6 +493,8 @@ public class AirfieldPanel extends JPanel implements Observer{
         airfieldAttributesPanel.setPreferredSize(new Dimension(500,300));
         airfieldAttributesPanel.setLayout(null);
         airfieldAttributesPanelScrollPane.setViewportView(airfieldAttributesPanel);
+        airfieldAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        airfieldAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         
         JLabel designatorLabel = new JLabel("Designator:");
         designatorLabel.setBounds(10, 78, 84, 14);
@@ -647,6 +633,8 @@ public class AirfieldPanel extends JPanel implements Observer{
         gliderPostitionSubPanel.add(gliderPosAttributesPanelScrollPane, BorderLayout.CENTER);
         gliderPositionAttributesPanel.setPreferredSize(new Dimension(500,300));
         gliderPosAttributesPanelScrollPane.setViewportView(gliderPositionAttributesPanel);
+        gliderPosAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        gliderPosAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         gliderPositionAttributesPanel.setLayout(null);
         
         JLabel gliderPosNameLabel = new JLabel("Name:");
@@ -783,6 +771,8 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwayAttributesPanel.setLayout(null);
         runwayAttributesPanel.setPreferredSize(new Dimension(500,300));
         runwayAttributesPanelScrollPane.setViewportView(runwayAttributesPanel);
+        runwayAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        runwayAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         
         JLabel runwayNameLabel = new JLabel("Name:");
         runwayNameLabel.setBounds(10, 53, 106, 14);
@@ -832,19 +822,6 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwayAttributesPanel.add(runwayParentAirfieldField);
         runwayParentAirfieldField.setColumns(10);*/
         
-        JLabel runwaySlopeLabel = new JLabel("Slope:");
-        runwaySlopeLabel.setBounds(10, 128, 81, 14);
-        runwayAttributesPanel.add(runwaySlopeLabel);
-        
-        runwaySlopeField = new JTextField();
-        runwaySlopeField.setBackground(Color.WHITE);
-        runwaySlopeField.setDisabledTextColor(Color.WHITE);
-        runwaySlopeField.setEditable(false);
-        runwaySlopeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        runwaySlopeField.setBounds(140, 125, 200, 20);
-        runwayAttributesPanel.add(runwaySlopeField);
-        runwaySlopeField.setColumns(10);
-        
         JButton runwayEditButton = new JButton("Edit");
         runwayEditButton.setBackground(new Color(200,200,200));
         runwayEditButton.addActionListener(new ActionListener() {
@@ -878,10 +855,6 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwayAltitudeUnits.setBounds(350, 103, 46, 14);
         runwayAttributesPanel.add(runwayAltitudeUnits);
         
-        JLabel slopeUnits = new JLabel("degrees");
-        slopeUnits.setBounds(350, 128, 65, 14);
-        runwayAttributesPanel.add(slopeUnits);
-        
         runwaysJList.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -904,6 +877,8 @@ public class AirfieldPanel extends JPanel implements Observer{
         winchPositionAttributesPanel.setLayout(null);
         winchPositionAttributesPanel.setPreferredSize(new Dimension(500,300));
         winchPositionAttributesPanelScrollPane.setViewportView(winchPositionAttributesPanel);
+        winchPositionAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        winchPositionAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         
         JLabel winchPosNameLabel = new JLabel("Name:");
         winchPosNameLabel.setBounds(10, 53, 46, 14);

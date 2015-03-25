@@ -33,14 +33,45 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.MatteBorder;
+import Configuration.UnitLabelUtilities;
 
 
 public class PilotPanel extends JPanel implements Observer{
-    private List<Pilot> pilotNames = new ArrayList<Pilot>();
+    private javax.swing.JList pilotJList;
+    private JTextField firstNameField;
+    private JTextField lastNameField;
+    private JTextField middleNameField;
+    private JTextField flightWeightField;
+    private JTextField emergencyContactNameField;
+    private JTextField emergencyContactPhoneField;
+    private JTextField medInfoNameField;
+    private JTextField medInfoPhoneField;
+    private JRadioButton studentRadioButton;
+    private JRadioButton proficientRadioButton;
+    private JRadioButton advancedRadioButton;
+    private JRadioButton mildRadioButton;
+    private JRadioButton nominalRadioButton;
+    private JRadioButton performanceRadioButton;
+    private JTextArea optionalInfoField;
+    private JLabel PilotLabel;
+    private JButton addNewButton;
+    private JButton editButton;
+    private JLabel flightWeightUnits;
+    private Boolean shown;
     private CurrentDataObjectSet currentData;
+    private JLabel emergencyContactLabel = new JLabel();
+    private JLabel emergencyContactNameLabel = new JLabel();
+    private JLabel emergencyContactPhoneLabel = new JLabel();
+    private JLabel additionalInformationLabel = new JLabel();
+    private JButton showMoreButton = new JButton();
+    private List<Pilot> pilotNames = new ArrayList<Pilot>();
     private JScrollPane pilotScrollPane = new JScrollPane();
-
+    private final ButtonGroup capabilityButtonGroup = new ButtonGroup();
+    private final ButtonGroup preferenceButtonGroup = new ButtonGroup();
+    
     @Override
     public void update()
     {
@@ -119,6 +150,9 @@ public class PilotPanel extends JPanel implements Observer{
             //TODO respond to error
         }
 
+        int flightWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("flightWeight");
+        String flightWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(flightWeightUnitsID);
+        flightWeightUnits.setText(flightWeightUnitsString);
     }
     
     private Observer getObserver() {
@@ -128,12 +162,7 @@ public class PilotPanel extends JPanel implements Observer{
     private void initPilotList() {
         try{
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
-            //pilotNames.add(new Pilot("1", "Alec", "Jacuzzi", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
-            //pilotNames.add(0, new Pilot("1", "", "Default", "", 0, "Student", "Mild", "", "", ""));
         }catch(SQLException e) {
-            //pilotNames.add(new Pilot("1", "Alec", "Jacuzzi", "Michael", 100, "Advanced", "Performance", "John Doe.200-234-2345", "John Doe.200-234-2345", "asdgfsdhasdgf"));
-            //pilotNames.add(0, new Pilot("1", "", "Default", "", 0, "Student", "Mild", "", "", ""));
-
         } catch (ClassNotFoundException ex) {
             // TODO change exception case
         }
@@ -271,6 +300,8 @@ public class PilotPanel extends JPanel implements Observer{
         add(attributesPanelScrollPane, BorderLayout.CENTER);
         attributesPanel.setPreferredSize(new Dimension(700,500));
         attributesPanelScrollPane.setViewportView(attributesPanel);
+        attributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        attributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         attributesPanel.setLayout(null);
         
         JLabel firstNameLabel = new JLabel("First Name:");
@@ -503,36 +534,7 @@ public class PilotPanel extends JPanel implements Observer{
         showMoreButton.setBounds(7, 261, 140, 23);
         attributesPanel.add(showMoreButton);
     }
-        
-    private javax.swing.JList pilotJList;
-    private JTextField firstNameField;
-    private JTextField lastNameField;
-    private JTextField middleNameField;
-    private JTextField flightWeightField;
-    private JTextField emergencyContactNameField;
-    private JTextField emergencyContactPhoneField;
-    private JTextField medInfoNameField;
-    private JTextField medInfoPhoneField;
-    private JRadioButton studentRadioButton;
-    private JRadioButton proficientRadioButton;
-    private JRadioButton advancedRadioButton;
-    private JRadioButton mildRadioButton;
-    private JRadioButton nominalRadioButton;
-    private JRadioButton performanceRadioButton;
-    private JTextArea optionalInfoField;
-    private JLabel PilotLabel;
-    private JButton addNewButton;
-    private JButton editButton;
-    private final ButtonGroup capabilityButtonGroup = new ButtonGroup();
-    private final ButtonGroup preferenceButtonGroup = new ButtonGroup();
-    private JLabel flightWeightUnits;
-    private JLabel emergencyContactLabel = new JLabel();
-    private JLabel emergencyContactNameLabel = new JLabel();
-    private JLabel emergencyContactPhoneLabel = new JLabel();
-    private JLabel additionalInformationLabel = new JLabel();
-    private JButton showMoreButton = new JButton();
-    private Boolean shown;
-    
+            
     @Override
     public void update(String msg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -146,6 +146,7 @@ public class AddEditWinchPosFrame extends JFrame {
 
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 228, 89, 23);
+        submitButton.setBackground(new Color(200,200,200));
         panel.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -157,6 +158,7 @@ public class AddEditWinchPosFrame extends JFrame {
         JButton deleteButton = new JButton("Delete");
         deleteButton.setEnabled(isEditEntry);
         deleteButton.setBounds(90, 228, 89, 23);
+        deleteButton.setBackground(new Color(200,200,200));
         panel.add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -168,6 +170,7 @@ public class AddEditWinchPosFrame extends JFrame {
         JButton clearButton = new JButton("Clear");
         clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 228, 89, 23);
+        clearButton.setBackground(new Color(200,200,200));
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -178,6 +181,7 @@ public class AddEditWinchPosFrame extends JFrame {
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 228, 89, 23);
+        cancelButton.setBackground(new Color(200,200,200));
         panel.add(cancelButton);
         
         JLabel latitudeUnits = new JLabel("degrees");

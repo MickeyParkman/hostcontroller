@@ -184,12 +184,8 @@ public class SailplanePanel extends JPanel implements Observer{
     private void initSailPlaneList() {
         try{
             sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
-            //sailplanes.add(0, new Sailplane("Default Glider", "", 0, 0, 0, 0, 0, 0, 0, false, false, ""));
-            //sailplanes.add(new Sailplane("N5789678", "thing", 654, 698, 987, 231, 684, 161, 165, true, true, "khghjghjghjfghf"));
-        }catch(SQLException e) 
-        {
-            //sailplanes.add(0, new Sailplane("Default Glider", "", 0, 0, 0, 0, 0, 0, 0, false, false, ""));
-            //sailplanes.add(new Sailplane("N5789678", "thing", 654, 698, 987, 231, 684, 161, 165, true, true, "khghjghjghjfghf"));
+
+        }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
 
         }
