@@ -5,6 +5,7 @@ import Configuration.DatabaseExportFrame;
 import ParameterSelection.ParameterSelectionPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
+import DatabaseUtilities.DatabaseImporter;
 import javax.swing.*;
 import java.awt.Dimension;   
 import java.awt.event.KeyEvent;
@@ -271,6 +272,22 @@ public class MainWindow extends JFrame {
             }
         });
 	fileMenu.add(exportDBItem);
+        
+        JMenuItem importDBItem = new JMenuItem("Import From Database");
+        importDBItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try {
+                    DatabaseImporter.importDatabase("hi");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+	fileMenu.add(importDBItem);
+        
 
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(new ActionListener() {

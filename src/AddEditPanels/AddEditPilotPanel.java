@@ -344,7 +344,7 @@ public class AddEditPilotPanel extends JFrame {
                 }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentPilot(newPilot);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 parent.update();
                 this.dispose();
             }catch(SQLException e1) {
@@ -353,7 +353,7 @@ public class AddEditPilotPanel extends JFrame {
                     System.out.println(e1.getMessage());
                     //JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (Exception e3) {
                 System.out.println(e3.getMessage());
                 //e3.printStackTrace();
@@ -366,11 +366,11 @@ public class AddEditPilotPanel extends JFrame {
             DatabaseEntryDelete.DeleteEntry(currentPilot);
             CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             objectSet.clearPilot();
-            JOptionPane.showMessageDialog(rootPane, currentPilot.toString() + " successfully deleted.");
+            JOptionPane.showMessageDialog(rootPane, currentPilot.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             parent.update();
             this.dispose();
         }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
             System.out.println("NNNNNNN");
             e3.printStackTrace();
@@ -431,10 +431,12 @@ public class AddEditPilotPanel extends JFrame {
             }
             
         }catch(NumberFormatException e){
-            ew = new ErrWindow("Please input a numerical weight value");
+            JOptionPane.showMessageDialog(rootPane, "Please input a numerical weight value", "Error", JOptionPane.INFORMATION_MESSAGE);
+            //ew = new ErrWindow("Please input a numerical weight value");
             return false;
         }catch(Exception e){
-            ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+            //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
             return false;
         }
         return true;

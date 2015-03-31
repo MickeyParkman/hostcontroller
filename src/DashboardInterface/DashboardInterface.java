@@ -50,7 +50,7 @@ public class DashboardInterface extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         tensionGraphPanel1 = new TensionGraphPanel();
         stateMachinePanel12 = new StateMachinePanel();
-        dial = new TensionSpeedDial();
+        //dial = new TensionSpeedDial();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 

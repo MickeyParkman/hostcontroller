@@ -174,10 +174,10 @@ public class AddEditGliderPosFrame extends JFrame {
         try{
             DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
             objectSet.cleafGliderPosition();
-            JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.");
+            JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
 
         }
@@ -223,15 +223,15 @@ public class AddEditGliderPosFrame extends JFrame {
                     DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
                 }
                 objectSet.setCurrentGliderPosition(newGliderPos);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the Glider Position " + newGliderPos.toString() + " already exists in the database");
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the Glider Position " + newGliderPos.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e3) {
 
             }
@@ -282,10 +282,12 @@ public class AddEditGliderPosFrame extends JFrame {
         Float.parseFloat(latitude);
         
     }catch(NumberFormatException e){
-        ew = new ErrWindow("Please input correct numerical values");
+        JOptionPane.showMessageDialog(rootPane, "Please input correct numerical values", "Error", JOptionPane.INFORMATION_MESSAGE);
+        //ew = new ErrWindow("Please input correct numerical values");
         return false;
     }catch(Exception e){
-        ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
+        JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+        //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
         return false;
     }
     return true;

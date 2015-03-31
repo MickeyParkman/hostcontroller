@@ -38,7 +38,7 @@ public class DatabaseEntryEdit
             Class.forName(clientDriverName);
             Class.forName(driverName);
         }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDB ClientDriver");
+            JOptionPane.showMessageDialog(null, "Can't load JavaDB ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
@@ -46,7 +46,7 @@ public class DatabaseEntryEdit
         try {
             connection = DriverManager.getConnection(databaseConnectionName);
         } catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong");
+            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
@@ -57,7 +57,7 @@ public class DatabaseEntryEdit
             ps.close();
         }catch(Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error executing");
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }finally
         {

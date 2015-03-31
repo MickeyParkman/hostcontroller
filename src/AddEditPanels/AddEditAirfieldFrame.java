@@ -186,10 +186,10 @@ public class AddEditAirfieldFrame extends JFrame {
             DatabaseEntryDelete.DeleteEntry(currentAirfield);
             CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             objectSet.clearAirfield();
-            JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.");
+            JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         }catch (ClassNotFoundException e1) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e2){
             System.out.println(e2.getMessage());
         }
@@ -219,14 +219,14 @@ public class AddEditAirfieldFrame extends JFrame {
                 }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentAirfield(newAirfield);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
                     System.out.println(e1.getMessage());
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the airfield " + newAirfield.toString() + " already exists in the database");
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the airfield " + newAirfield.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (Exception e3){
                 System.out.println(e3.getMessage());
             }
@@ -291,10 +291,12 @@ public class AddEditAirfieldFrame extends JFrame {
             Float.parseFloat(airfieldLongitude);
             
         }catch(NumberFormatException e){
-            ew = new ErrWindow("Please input correct numerical values");
+            JOptionPane.showMessageDialog(rootPane, "Please input correct numerical values", "Error", JOptionPane.INFORMATION_MESSAGE);
+            //ew = new ErrWindow("Please input correct numerical values");
             return false;
         }catch(Exception e){
-            ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+            //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
             return false;
         }
         return true;

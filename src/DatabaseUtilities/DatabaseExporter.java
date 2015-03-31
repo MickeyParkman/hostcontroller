@@ -41,7 +41,7 @@ public class DatabaseExporter {
             Class.forName(clientDriverName);
             Class.forName(driverName);
         }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDb ClientDriver");
+            JOptionPane.showMessageDialog(null, "Can't load JavaDb ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
@@ -49,14 +49,14 @@ public class DatabaseExporter {
         try {
             connection = DriverManager.getConnection(databaseConnectionName);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong");
+            JOptionPane.showMessageDialog(null, "Correctly loaded the JavaDb ClientDriver, somethin else is wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
         try {
             exportTable(connection, tableName, zipName);
         }catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Couldn't export table");
+            JOptionPane.showMessageDialog(null, "Couldn't export table", "Error", JOptionPane.INFORMATION_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -104,7 +104,7 @@ public class DatabaseExporter {
             }
             
         }catch(Exception e)
-        { e.printStackTrace(); }
+        { }
         finally{
             zos.close();
             fos.close();

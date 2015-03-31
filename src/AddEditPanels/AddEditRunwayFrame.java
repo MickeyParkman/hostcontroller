@@ -152,10 +152,10 @@ public class AddEditRunwayFrame extends JFrame {
         try{
             DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
             objectSet.clearRunway();
-            JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.");
+            JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
 
         }
@@ -198,15 +198,15 @@ public class AddEditRunwayFrame extends JFrame {
                     DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
                 }
                 objectSet.setCurrentRunway(newRunway);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the runway " + newRunway.toString() + " already exists in the database");
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the runway " + newRunway.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e3) {
 
             }
@@ -246,7 +246,8 @@ public class AddEditRunwayFrame extends JFrame {
             throw new Exception("");
         }
     }catch(Exception e){
-        ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
+        JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+        //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
         return false;
     }
     return true;

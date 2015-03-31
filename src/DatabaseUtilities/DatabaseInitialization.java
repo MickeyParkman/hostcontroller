@@ -32,7 +32,7 @@ public class DatabaseInitialization {
             Class.forName(clientDriverName);
             Class.forName(driverName);
         }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDb ClientDriver");
+            JOptionPane.showMessageDialog(null, "Can't load JavaDb ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
     
@@ -41,8 +41,7 @@ public class DatabaseInitialization {
             connection = DriverManager.getConnection(databaseConnectionName);
         }catch(SQLException e) {
             //TODO Fix error handling
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Loaded JavaDb ClientDriver, somethin else wrong");
+            JOptionPane.showMessageDialog(null, "Correctly loaded the JavaDb ClientDriver, somethin else is wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
@@ -64,8 +63,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            
-            throw e;
+            //throw e;
         } 
         
         //Build and fill Preference table
@@ -75,8 +73,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            
-            throw e;
+            //throw e;
         }
         //Build the Pilot table
         try{
@@ -85,8 +82,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
-            throw e;
+            //throw e;
         }  
         //Build the Sailplane table
         try{
@@ -95,8 +91,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            
-            throw e;
+            //throw e;
         }  
         //Build the Airfield table  
         try{
@@ -105,7 +100,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         //Build the Runway table
         try{
@@ -114,9 +109,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            System.out.println("NOPE");
-            e.printStackTrace();
-            throw e;
+            //throw e;
         }
         //Build the GliderPosition table
         try{
@@ -125,7 +118,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         //Build the WinchPosition table
         try{
@@ -134,7 +127,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         //Build the Operator Profile table
         try{
@@ -143,7 +136,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         //Build the Parachute table
         try{
@@ -152,7 +145,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         
         //Build the RecentLaunches table
@@ -161,7 +154,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         //Build the PreviousLaunchesInfo table
         try{
@@ -169,7 +162,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         
         try{
@@ -177,91 +170,91 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createTensionUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createVelocityUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createWeightUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createTemperatureUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createPressureUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createPilotUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createSailplaneUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createAirfieldUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createPositionUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createDashboardUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
              createEnvironmentalUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         try{
-             createMessageBlackBoxTable(connection);
+             createMessagesTable(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
-            throw e;
+            //throw e;
         }
         connection.close();
     }
@@ -872,12 +865,12 @@ public class DatabaseInitialization {
      * @param connect the connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createMessageBlackBoxTable(Connection connect) throws SQLException {
-        String createBlackBoxString = "CREATE TABLE BlackBoxMessages"
+    private static void createMessagesTable(Connection connect) throws SQLException {
+        String createMessagesString = "CREATE TABLE Messages"
                 + "( timestamp BIGINT, "
                 + " message VARCHAR(40))";
-        try (Statement createBlackBoxTableStatement = connect.createStatement()) {
-            createBlackBoxTableStatement.execute(createBlackBoxString);
+        try (Statement createMessagesTableStatement = connect.createStatement()) {
+            createMessagesTableStatement.execute(createMessagesString);
         }catch(SQLException e) {
             throw e;
         }
