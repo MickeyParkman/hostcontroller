@@ -59,7 +59,6 @@ public class PilotPanel extends JPanel implements Observer{
     private JLabel PilotLabel;
     private JButton addNewButton;
     private JButton editButton;
-    private JLabel flightWeightUnits;
     private Boolean shown;
     private CurrentDataObjectSet currentData;
     private JLabel emergencyContactLabel = new JLabel();
@@ -71,6 +70,7 @@ public class PilotPanel extends JPanel implements Observer{
     private JScrollPane pilotScrollPane = new JScrollPane();
     private final ButtonGroup capabilityButtonGroup = new ButtonGroup();
     private final ButtonGroup preferenceButtonGroup = new ButtonGroup();
+    private JLabel flightWeightUnits = new JLabel();
     
     @Override
     public void update()
@@ -86,73 +86,69 @@ public class PilotPanel extends JPanel implements Observer{
         pilotJList.setSelectedValue(currentPilot.toString(), true);
         pilotScrollPane.setViewportView(pilotJList);
         
-        try{
-            firstNameField.setText((currentPilot.getFirstName()));
-            firstNameField.setBackground(Color.GREEN);
-
-            lastNameField.setText((currentPilot.getLastName()));
-            lastNameField.setBackground(Color.GREEN);
-
-            middleNameField.setText((currentPilot.getMiddleName()));
-            middleNameField.setBackground(Color.GREEN);
-
-            String emergencyContact = currentPilot.getEmergencyContact();
-            String emergencyContactName;
-            String emergencyContactPhone;
-            int p = emergencyContact.indexOf('%');
-            if (p >= 0) 
-            {
-                emergencyContactName = emergencyContact.substring(0, p);
-                emergencyContactPhone = emergencyContact.substring(p + 1);
-            }
-            else
-            {
-                emergencyContactName = "";
-                emergencyContactPhone = "";
-            }
-            emergencyContactNameField.setText(emergencyContactName);
-            emergencyContactNameField.setBackground(Color.GREEN);
-            emergencyContactPhoneField.setText(emergencyContactPhone);
-            emergencyContactPhoneField.setBackground(Color.GREEN);
-
-            /*String medInfo = thePilot.getEmergencyContact();
-            String medInfoName;
-            String medInfoPhone;
-            int t = medInfo.indexOf('%');
-            if (t >= 0) 
-            {
-                medInfoName = emergencyContact.substring(0, t);
-                medInfoPhone = emergencyContact.substring(t + 1);
-            }
-            else
-            {
-                medInfoName = "";
-                medInfoPhone = "";
-            }
-            medInfoNameField.setText(medInfoName);
-            medInfoNameField.setBackground(Color.GREEN);
-            medInfoPhoneField.setText(medInfoPhone);
-            medInfoPhoneField.setBackground(Color.GREEN);*/
-
-            flightWeightField.setText(String.valueOf((int)(currentPilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
-            flightWeightField.setBackground(Color.GREEN);
-
-            studentRadioButton.setSelected(currentPilot.getCapability().equals("Student"));
-            proficientRadioButton.setSelected(currentPilot.getCapability().equals("Proficient"));
-            advancedRadioButton.setSelected(currentPilot.getCapability().equals("Advanced"));
-
-            mildRadioButton.setSelected(currentPilot.getPreference().equals("Mild"));
-            nominalRadioButton.setSelected(currentPilot.getPreference().equals("Nominal"));
-            performanceRadioButton.setSelected(currentPilot.getPreference().equals("Performance"));
-
-            optionalInfoField.setText((currentPilot.getOptionalInfo()));
-        } catch(Exception e) {
-            //TODO respond to error
-        }
-
         int flightWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("flightWeight");
         String flightWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(flightWeightUnitsID);
         flightWeightUnits.setText(flightWeightUnitsString);
+        
+        firstNameField.setText((currentPilot.getFirstName()));
+        firstNameField.setBackground(Color.GREEN);
+
+        lastNameField.setText((currentPilot.getLastName()));
+        lastNameField.setBackground(Color.GREEN);
+
+        middleNameField.setText((currentPilot.getMiddleName()));
+        middleNameField.setBackground(Color.GREEN);
+
+        String emergencyContact = currentPilot.getEmergencyContact();
+        String emergencyContactName;
+        String emergencyContactPhone;
+        int p = emergencyContact.indexOf('%');
+        if (p >= 0) 
+        {
+            emergencyContactName = emergencyContact.substring(0, p);
+            emergencyContactPhone = emergencyContact.substring(p + 1);
+        }
+        else
+        {
+            emergencyContactName = "";
+            emergencyContactPhone = "";
+        }
+        emergencyContactNameField.setText(emergencyContactName);
+        emergencyContactNameField.setBackground(Color.GREEN);
+        emergencyContactPhoneField.setText(emergencyContactPhone);
+        emergencyContactPhoneField.setBackground(Color.GREEN);
+
+        /*String medInfo = thePilot.getEmergencyContact();
+        String medInfoName;
+        String medInfoPhone;
+        int t = medInfo.indexOf('%');
+        if (t >= 0) 
+        {
+            medInfoName = emergencyContact.substring(0, t);
+            medInfoPhone = emergencyContact.substring(t + 1);
+        }
+        else
+        {
+            medInfoName = "";
+            medInfoPhone = "";
+        }
+        medInfoNameField.setText(medInfoName);
+        medInfoNameField.setBackground(Color.GREEN);
+        medInfoPhoneField.setText(medInfoPhone);
+        medInfoPhoneField.setBackground(Color.GREEN);*/
+
+        flightWeightField.setText(String.valueOf((currentPilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID))));
+        flightWeightField.setBackground(Color.GREEN);
+
+        studentRadioButton.setSelected(currentPilot.getCapability().equals("Student"));
+        proficientRadioButton.setSelected(currentPilot.getCapability().equals("Proficient"));
+        advancedRadioButton.setSelected(currentPilot.getCapability().equals("Advanced"));
+
+        mildRadioButton.setSelected(currentPilot.getPreference().equals("Mild"));
+        nominalRadioButton.setSelected(currentPilot.getPreference().equals("Nominal"));
+        performanceRadioButton.setSelected(currentPilot.getPreference().equals("Performance"));
+
+        optionalInfoField.setText((currentPilot.getOptionalInfo()));      
     }
     
     private Observer getObserver() {
@@ -496,7 +492,7 @@ public class PilotPanel extends JPanel implements Observer{
         editButton.setBounds(288, 0, 89, 23);
         attributesPanel.add(editButton);
         
-        flightWeightUnits = new JLabel("kgs");
+        flightWeightUnits.setText("kg");
         flightWeightUnits.setBounds(280, 128, 46, 14);
         attributesPanel.add(flightWeightUnits);
         
