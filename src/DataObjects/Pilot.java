@@ -21,7 +21,7 @@ public class Pilot {
     //Pilot's middle name
     String middleName;
     //Pilot's weight
-    int flightWeight;
+    float flightWeight;
     //Pilot's capability
     String capability;
     //Pilot's paunch preference
@@ -33,7 +33,7 @@ public class Pilot {
     //Pilot's optional_info
     String optional_info;
     
-    public Pilot(String pilotId, String firstName, String lastName, String middleName, int weight, String capability, String preference, String emergencyContact, String medInfo, String optional) {
+    public Pilot(String pilotId, String firstName, String lastName, String middleName, float weight, String capability, String preference, String emergencyContact, String medInfo, String optional) {
         this.pilotId = pilotId;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -71,7 +71,7 @@ public class Pilot {
         return middleName;
     }
     
-    public int getWeight() {
+    public float getWeight() {
         return flightWeight;
     }
     

@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditGliderPosFrame extends JFrame {
@@ -47,8 +48,8 @@ public class AddEditGliderPosFrame extends JFrame {
     public AddEditGliderPosFrame(GliderPosition editGliderPos, boolean isEditEntry) {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
-        if (!isEditEntry){
-            editGliderPos = new GliderPosition("", "", 0, 0, 0, "");
+        if (!isEditEntry || editGliderPos == null){
+            editGliderPos = new GliderPosition("", "", "", 0, 0, 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentGliderPos = editGliderPos;
@@ -217,7 +218,7 @@ public class AddEditGliderPosFrame extends JFrame {
     protected void submitData(){
         if (isComplete()){
             String gliderPosId = nameField.getText();
-            int altitude = Integer.parseInt(altitudeField.getText());
+            float altitude = Float.parseFloat(altitudeField.getText());
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             
@@ -264,8 +265,6 @@ public class AddEditGliderPosFrame extends JFrame {
                         }
                         DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
                     }
-                    objectSet.setCurrentGliderPosition(newGliderPos);
-                    //JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                     parent.update("3");
                     dispose();
                 }
@@ -321,7 +320,7 @@ public class AddEditGliderPosFrame extends JFrame {
         if (emptyFields){
             throw new Exception("");
         }
-        Integer.parseInt(altitude);
+        Float.parseFloat(altitude);
         Float.parseFloat(longitude);
         Float.parseFloat(latitude);
         

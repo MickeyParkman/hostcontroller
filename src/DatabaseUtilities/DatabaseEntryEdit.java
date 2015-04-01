@@ -99,7 +99,7 @@ public class DatabaseEntryEdit
     public static void UpdateEntry(Sailplane sailplane) throws Exception
     {
         String updateString;
-        updateString = "UPDATE SAILPLANE SET "
+        updateString = "UPDATE GLIDER SET "
                 + "n_number = '" + sailplane.getNumber() + "', "
                 + "type = '" + sailplane.getType() + "', "
                 + "max_gross_weight = " + String.valueOf(sailplane.getMaxGrossWeight()) + ", "
@@ -111,7 +111,7 @@ public class DatabaseEntryEdit
                 + "carry_ballast = " + String.valueOf(sailplane.storeCarryBallast()) + ", "
                 + "multiple_seats = " + String.valueOf(sailplane.storeMultipleSeats()) + ", "
                 + "optional_info = '" + sailplane.getOptionalInfo() + "' "
-                + "WHERE sailplane_id = '" + sailplane.getId() + "'";
+                + "WHERE glider_id = '" + sailplane.getId() + "'";
         
         Update(updateString);
     }

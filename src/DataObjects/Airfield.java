@@ -15,14 +15,14 @@ public class Airfield {
     String id;
     String name;
     String designator;
-    int altitude;
-    int magneticVariation;
+    float altitude;
+    float magneticVariation;
     float latitude;
     float longitude;
     String optionalInfo;
     
     
-    public Airfield(String name, String designator, int altitude, int magneticVariation, float latitude, float longitude, String optional){
+    public Airfield(String name, String designator, float altitude, float magneticVariation, float latitude, float longitude, String optional){
        this.name = name;
        this.designator = designator;
        this.altitude = altitude;
@@ -54,11 +54,11 @@ public class Airfield {
        return designator; 
     }
     
-    public int getAltitude(){
+    public float getAltitude(){
        return altitude; 
     }
     
-    public int getMagneticVariation(){
+    public float getMagneticVariation(){
        return magneticVariation; 
     }
     

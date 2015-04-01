@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditWinchPosFrame extends JFrame {
@@ -47,8 +48,8 @@ public class AddEditWinchPosFrame extends JFrame {
     public AddEditWinchPosFrame(WinchPosition editWinchPos, boolean isEditEntry) {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
-        if (!isEditEntry){
-            editWinchPos = new WinchPosition("", "", 0, 0, 0, "");
+        if (!isEditEntry || editWinchPos == null){
+            editWinchPos = new WinchPosition("", "", "", 0, 0, 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentWinchPos = editWinchPos;
@@ -218,7 +219,7 @@ public class AddEditWinchPosFrame extends JFrame {
     protected void submitData(){
         if (isComplete()){
             String winchPosId = nameField.getText();
-            int altitude = Integer.parseInt(altitudeField.getText());
+            float altitude = Float.parseFloat(altitudeField.getText());
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             
@@ -258,6 +259,11 @@ public class AddEditWinchPosFrame extends JFrame {
                         DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newWinchPos);
                     }
                     else{
+                        Random randomId = new Random();
+                        newWinchPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                        while (DatabaseEntryIdCheck.IdCheck(newWinchPos)){
+                            newWinchPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                        }
                         DatabaseUtilities.DatabaseDataObjectUtilities.addWinchPositionToDB(newWinchPos);
                     }
                     parent.update("4");
@@ -316,7 +322,7 @@ public class AddEditWinchPosFrame extends JFrame {
             if (emptyFields){
                 throw new Exception("");
             }
-            Integer.parseInt(altitude);
+            Float.parseFloat(altitude);
             Float.parseFloat(longitude);
             Float.parseFloat(latitude);
             

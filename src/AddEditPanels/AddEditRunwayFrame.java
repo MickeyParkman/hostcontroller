@@ -27,6 +27,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditRunwayFrame extends JFrame {
@@ -52,7 +53,7 @@ public class AddEditRunwayFrame extends JFrame {
         
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
-        if (!isEditEntry){
+        if (!isEditEntry || editRunway == null){
             editRunway = new Runway("", "", "", 0, "");
         }
         this.isEditEntry = isEditEntry;
@@ -97,7 +98,7 @@ public class AddEditRunwayFrame extends JFrame {
         altitudeField = new JTextField();
         if (isEditEntry)
         {
-            altitudeField.setText(Integer.toString(editRunway.getAltitude()));
+            altitudeField.setText(String.valueOf(editRunway.getAltitude()));
         }
         altitudeField.setColumns(10);
         altitudeField.setBounds(140, 61, 200, 20);
@@ -196,18 +197,18 @@ public class AddEditRunwayFrame extends JFrame {
         if (isComplete()){
             String name = nameField.getText();
             String magneticHeading = magneticHeadingField.getText();
-            int altitude = Integer.parseInt(altitudeField.getText());
+            float altitude = Float.parseFloat(altitudeField.getText());
 
-            String parent = "";
+            String parentAirfield = "";
             String parentId = "";
             try{
-                parent = objectSet.getCurrentAirfield().getDesignator();
+                parentAirfield = objectSet.getCurrentAirfield().getDesignator();
                 parentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
                 System.out.println("cur Airfield 404 " + e.getMessage());
             }
             
-            Runway newRunway = new Runway(name, magneticHeading, parent, altitude, "");
+            Runway newRunway = new Runway(name, magneticHeading, parentAirfield, altitude, "");
             newRunway.setId(currentRunway.getId());
             newRunway.setParentId(parentId);
             try{
@@ -233,7 +234,6 @@ public class AddEditRunwayFrame extends JFrame {
                         }
                         DatabaseUtilities.DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
                     }
-                    //objectSet.setCurrentRunway(newRunway);
                     parent.update("2");
                     this.dispose();
                 }

@@ -91,7 +91,7 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)){
             PreparedStatement sailplaneInsertStatement = connect.prepareStatement(
-                    "INSERT INTO Sailplane(sailplane_id, n_number, type, "
+                    "INSERT INTO Glider(glider_id, n_number, type, "
                             + "max_gross_weight, empty_weight, indicated_stall_speed, "
                             + "max_winching_speed, max_weak_link_strength, max_tension, "
                             + "cable_release_angle, carry_ballast, multiple_seats, "
@@ -365,11 +365,11 @@ public class DatabaseDataObjectUtilities {
                 String pilotLastName = thePilots.getString(3);
                 String pilotMiddleName = thePilots.getString(4);
                 
-                int weight = 0; 
+                float weight = 0; 
                 int capability = 1;
                 int preference = 1;
                 try {
-                    weight = Integer.parseInt(thePilots.getString(5));
+                    weight = Float.parseFloat(thePilots.getString(5));
                     capability = Integer.parseInt(thePilots.getString(6));
                     preference = Integer.parseInt(thePilots.getString(7));
                 }catch(NumberFormatException e) {
@@ -408,32 +408,32 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theSailplanes = stmt.executeQuery("SELECT sailplane_id, n_number, type, "
+            ResultSet theSailplanes = stmt.executeQuery("SELECT glider_id, n_number, type, "
                     + "max_gross_weight, empty_weight, indicated_stall_speed,"
                     + "max_winching_speed, max_weak_link_strength, max_tension, "
                     + "cable_release_angle, carry_ballast, multiple_seats, "
                     + "optional_info "
-                    + "FROM Sailplane ORDER BY n_number");
+                    + "FROM Glider ORDER BY n_number");
             List sailplanes = new ArrayList<Sailplane>();
             
             while(theSailplanes.next()) {
                 String nNumber = theSailplanes.getString(2);
                 String type = theSailplanes.getString(3);
-                int maxGrossWeight = 0; 
-                int emptyWeight = 0;
-                int stallSpeed = 0;
-                int maxWinchingSpeed = 0;
-                int maxWeakLinkStrength = 0;
-                int maxTension = 0;
-                int cableAngle = 0;
+                float maxGrossWeight = 0; 
+                float emptyWeight = 0;
+                float stallSpeed = 0;
+                float maxWinchingSpeed = 0;
+                float maxWeakLinkStrength = 0;
+                float maxTension = 0;
+                float cableAngle = 0;
                 try {
-                    maxGrossWeight = Integer.parseInt(theSailplanes.getString(4));
-                    emptyWeight = Integer.parseInt(theSailplanes.getString(5));
-                    stallSpeed = Integer.parseInt(theSailplanes.getString(6));
-                    maxWinchingSpeed = Integer.parseInt(theSailplanes.getString(7));
-                    maxWeakLinkStrength = Integer.parseInt(theSailplanes.getString(8));
-                    maxTension = Integer.parseInt(theSailplanes.getString(9));
-                    cableAngle = Integer.parseInt(theSailplanes.getString(10));
+                    maxGrossWeight = Float.parseFloat(theSailplanes.getString(4));
+                    emptyWeight = Float.parseFloat(theSailplanes.getString(5));
+                    stallSpeed = Float.parseFloat(theSailplanes.getString(6));
+                    maxWinchingSpeed = Float.parseFloat(theSailplanes.getString(7));
+                    maxWeakLinkStrength = Float.parseFloat(theSailplanes.getString(8));
+                    maxTension = Float.parseFloat(theSailplanes.getString(9));
+                    cableAngle = Float.parseFloat(theSailplanes.getString(10));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -444,12 +444,13 @@ public class DatabaseDataObjectUtilities {
                     ballast = Sailplane.returnCarryBallast(Integer.parseInt(theSailplanes.getString(11)));
                     multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theSailplanes.getString(12)));
                 }catch(NumberFormatException e) {
+                    e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error reading ballast in reading from DB");
                 }
                 
                 Sailplane newSailplane = new Sailplane(nNumber, type,
                         maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, 
-                        maxWeakLinkStrength, maxTension, cableAngle, ballast, multipleSeats, theSailplanes.getString(12));
+                        maxWeakLinkStrength, maxTension, cableAngle, ballast, multipleSeats, theSailplanes.getString(13));
                 newSailplane.setId(theSailplanes.getString(1));
                 sailplanes.add(newSailplane);
                 
@@ -490,13 +491,13 @@ public class DatabaseDataObjectUtilities {
                 String name = theAirfields.getString(2);
                 String designator = theAirfields.getString(3);
                 
-                int altitude = 0;
-                int magneticVariation = 0;
+                float altitude = 0;
+                float magneticVariation = 0;
                 float latitude = 0;
                 float longitude = 0;
                 try {
-                    altitude = Integer.parseInt(theAirfields.getString(4));
-                    magneticVariation = Integer.parseInt(theAirfields.getString(5));
+                    altitude = Float.parseFloat(theAirfields.getString(4));
+                    magneticVariation = Float.parseFloat(theAirfields.getString(5));
                     latitude = Float.parseFloat(theAirfields.getString(6));
                     longitude = Float.parseFloat(theAirfields.getString(7));
                 }catch(NumberFormatException e) {
@@ -548,9 +549,9 @@ public class DatabaseDataObjectUtilities {
                 String magneticHeading = theRunways.getString(3);
                 String parent = theRunways.getString(4);
                 
-                int altitude = 0;
+                float altitude = 0;
                 try {
-                    altitude = Integer.parseInt(theRunways.getString(6));
+                    altitude = Float.parseFloat(theRunways.getString(6));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -600,11 +601,11 @@ public class DatabaseDataObjectUtilities {
                 String runwayParent = theGliderPositions.getString(3);
                 String airfieldParent = theGliderPositions.getString(5);
                 
-                int altitude = 0;
+                float altitude = 0;
                 float latitude = 0;
                 float longitude = 0;
                 try {
-                    altitude = Integer.parseInt(theGliderPositions.getString(7));
+                    altitude = Float.parseFloat(theGliderPositions.getString(7));
                     latitude = Float.parseFloat(theGliderPositions.getString(8));
                     longitude = Float.parseFloat(theGliderPositions.getString(9));
                 }catch(NumberFormatException e) {
@@ -657,11 +658,11 @@ public class DatabaseDataObjectUtilities {
                 String runwayParent = theWinchPositions.getString(3);
                 String airfieldParent = theWinchPositions.getString(5);
                 
-                int altitude = 0;
+                float altitude = 0;
                 float latitude = 0;
                 float longitude = 0;
                 try {
-                    altitude = Integer.parseInt(theWinchPositions.getString(7));
+                    altitude = Float.parseFloat(theWinchPositions.getString(7));
                     latitude = Float.parseFloat(theWinchPositions.getString(8));
                     longitude = Float.parseFloat(theWinchPositions.getString(9));
                 }catch(NumberFormatException e) {

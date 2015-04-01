@@ -17,12 +17,12 @@ public class WinchPosition {
     String runwayParentId;
     String airfieldParent;
     String airfieldParentId;
-    int altitude;
+    float altitude;
     float latitude;
     float longitude;
     String optionalInfo;
     
-    public WinchPosition(String name, String runwayParent, String airfieldParent, int altitude, float latitude, float longitude, String optional) {
+    public WinchPosition(String name, String runwayParent, String airfieldParent, float altitude, float latitude, float longitude, String optional) {
         this.name = name;
         this.runwayParent = runwayParent;
         this.airfieldParent = airfieldParent;
@@ -86,7 +86,7 @@ public class WinchPosition {
         airfieldParentId = newAirfieldParentId;
     } 
     
-    public int getAltitude() {
+    public float getAltitude() {
         return altitude;
     }
     
