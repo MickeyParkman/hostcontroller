@@ -1,12 +1,10 @@
 
-package Communications;
+// TO BE REMOVED
+
+/*package Communications;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Gisela Arreola-Gutierrez
- */
 public class DashboardListener extends MessageListener{
 
     ArrayList<MessageListener> listeners  = new ArrayList();
@@ -74,3 +72,4 @@ public class DashboardListener extends MessageListener{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
+*/
