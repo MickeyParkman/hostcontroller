@@ -35,7 +35,7 @@ public class UnitLabelUtilities {
             case 1:
                 return "ldf";
             case 2: 
-                return "Kgf";
+                return "kgf";
             default:
                 return "";
         } 
@@ -46,7 +46,7 @@ public class UnitLabelUtilities {
             case 0:
                 return "lbs";
             case 1:
-                return "Kg";
+                return "kg";
             default:
                 return "";
         } 
@@ -57,7 +57,7 @@ public class UnitLabelUtilities {
             case 0:
                 return "mph";
             case 1:
-                return "Km/h";
+                return "kph";
             case 2: 
                 return "m/s";
             case 3:

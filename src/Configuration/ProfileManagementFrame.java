@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
 
 
@@ -78,25 +79,28 @@ public class ProfileManagementFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-
 		contentPane.add(profileScrollPane, BorderLayout.WEST);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
-		JButton btnNewButton = new JButton("Save");
-		panel.add(btnNewButton);
+		JButton saveButton = new JButton("Save");
+                saveButton.setBackground(new Color(200,200,200));
+		panel.add(saveButton);
 		
-		JButton btnNewButton_1 = new JButton("Save as new");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton saveAsNewButton = new JButton("Save as new");
+                saveAsNewButton.setBackground(new Color(200,200,200));
+		saveAsNewButton.addActionListener(new ActionListener() {
                         @Override
 			public void actionPerformed(ActionEvent arg0) {
                             SaveAsNewFrame = new SaveAsNewFrame();
@@ -104,7 +108,7 @@ public class ProfileManagementFrame extends JFrame {
                             SaveAsNewFrame.setVisible(true);
 			}
 		});
-		panel.add(btnNewButton_1);
+		panel.add(saveAsNewButton);
 		
                 profileJList.setPreferredSize(new Dimension(200,100));
                 DefaultListModel profileModel = new DefaultListModel();
@@ -114,23 +118,25 @@ public class ProfileManagementFrame extends JFrame {
                 profileJList.setModel(profileModel);
                 profileScrollPane.setViewportView(profileJList);
                 
-		JButton btnNewButton_2 = new JButton("Reset to default");
-		panel.add(btnNewButton_2);
+		JButton resetButton = new JButton("Reset to default");
+                resetButton.setBackground(new Color(200,200,200));
+		panel.add(resetButton);
 		
-		JButton btnNewButton_3 = new JButton("Cancel");
-                btnNewButton_3.addActionListener(new ActionListener() {
+		JButton cancelButton = new JButton("Cancel");
+                cancelButton.setBackground(new Color(200,200,200));
+                cancelButton.addActionListener(new ActionListener() {
                         @Override
 			public void actionPerformed(ActionEvent arg0) {
                             dispose();
 			}
 		});
-		panel.add(btnNewButton_3);
+		panel.add(cancelButton);
+                
 		
 		tabbedPane.addTab("Pilot", ProfilePilotPanel);
 		tabbedPane.addTab("Glider", ProfileGliderPanel);
 		tabbedPane.addTab("Airfield", ProfileAirfieldPanel);
-		tabbedPane.addTab("Winch", ProfileWinchPanel);
-		tabbedPane.addTab("Other", ProfileOtherPanel);
+		tabbedPane.addTab("Display", ProfileWinchPanel);
 	}
 
 }

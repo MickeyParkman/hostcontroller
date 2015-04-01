@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Configuration;
+import java.awt.Color;
 
 /**
  *
@@ -15,6 +16,7 @@ public class UnitSelectionPanel extends javax.swing.JPanel {
      * Creates new form UnitSelectionPanel
      */
     public UnitSelectionPanel() {
+    	setBackground(Color.WHITE);
         initComponents();
     }
 
@@ -28,10 +30,12 @@ public class UnitSelectionPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel1.setBackground(Color.WHITE);
         saveButton = new javax.swing.JButton();
         saveAsNewButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jPanel2.setBackground(Color.WHITE);
         pilotWeightLabel = new javax.swing.JLabel();
         pilotWeightTextField = new javax.swing.JTextField();
         gliderGrossWeightLabel = new javax.swing.JLabel();
