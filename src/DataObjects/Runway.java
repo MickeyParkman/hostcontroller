@@ -9,17 +9,19 @@ package DataObjects;
 /**
  * This Class stores the data about a Runway
  * 
- * @author garreola-gutierrez, matt dargen, dbennett3
+ * @author garreola-gutierrez, matt dargen, dbennett3, Noah Fujioka
  */
 public class Runway {
-    String runwayId;
+    String id;
+    String runwayName;
     String magneticHeading;
     String parent;
+    String parentId;
     int altitude;
     String optionalInfo;
     
-    public Runway(String runwayId, String magneticHeading, String parent, int altitude, String optional){
-       this.runwayId = runwayId;
+    public Runway(String runwayName, String magneticHeading, String parent, int altitude, String optional){
+       this.runwayName = runwayName;
        this.magneticHeading = magneticHeading;
        this.parent = parent;
        this.altitude = altitude;
@@ -27,7 +29,21 @@ public class Runway {
     }
     
     public String getId(){
-       return runwayId; 
+        if (id != null){
+            return id;
+        }
+        else{
+            id = "";
+            return id;
+        }
+    }
+    
+    public void setId(String newId){
+        id = newId;
+    }
+    
+    public String getName(){
+       return runwayName; 
     }
     
     public String getMagneticHeading(){
@@ -38,6 +54,20 @@ public class Runway {
         return parent;
     }
     
+    public String getParentId(){
+        if (parentId != null){
+            return parentId;
+        }
+        else{
+            parentId = "";
+            return parentId;
+        }
+    }
+    
+    public void setParentId(String newParentId){
+        parentId = newParentId;
+    }    
+    
     public int getAltitude() {
         return altitude;
     }
@@ -47,6 +77,6 @@ public class Runway {
     }
     
     public String toString() {
-      return runwayId;
+      return runwayName;
     } 
 }

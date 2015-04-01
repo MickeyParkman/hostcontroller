@@ -9,9 +9,10 @@ package DataObjects;
 /**
  * This class represents the relevant data about an Airfield
  * 
- * @author garreola-gutierrez, dbennett3
+ * @author garreola-gutierrez, dbennett3, Noah Fujioka
  */
 public class Airfield {
+    String id;
     String name;
     String designator;
     int altitude;
@@ -29,6 +30,20 @@ public class Airfield {
        this.latitude = latitude;
        this.longitude = longitude;
        this.optionalInfo = optional;
+    }
+    
+    public String getId(){
+        if (id != null){
+            return id;
+        }
+        else{
+            id = "";
+            return id;
+        }
+    }
+    
+    public void setId(String newId){
+        id = newId;
     }
     
     public String getName(){

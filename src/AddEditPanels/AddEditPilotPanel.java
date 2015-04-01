@@ -5,6 +5,8 @@ import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
 import DatabaseUtilities.DatabaseEntryDelete;
 import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DatabaseUtilities.DatabaseEntryIdCheck;
 import ParameterSelection.PilotPanel;
 
 import java.awt.BorderLayout;
@@ -327,19 +329,22 @@ public class AddEditPilotPanel extends JFrame {
             }
             String capability = pilotCapability.getSelection().getActionCommand();
             String preference = pilotLaunchPref.getSelection().getActionCommand();
+            
             String newPilotId = currentPilot.getPilotId();
-            if (!isEditEntry){
-                newPilotId = firstName+middleName+lastName;
-            }
-
             Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
-                    weight, capability, preference, emergencyContact,
-                    medicalInformation, optionalInformation);
+                        weight, capability, preference, emergencyContact,
+                        medicalInformation, optionalInformation);
+            
             try{
                 if (isEditEntry){
                     DatabaseEntryEdit.UpdateEntry(newPilot);
                 }
                 else{
+                    Random randomId = new Random();
+                    newPilot.setPilotId(String.valueOf(randomId.nextInt(100000000)));
+                    while (DatabaseEntryIdCheck.IdCheck(newPilot)){
+                        newPilotId = String.valueOf(randomId.nextInt(100000000));
+                    }
                     DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
                 }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();

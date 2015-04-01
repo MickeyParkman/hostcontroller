@@ -91,24 +91,25 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)){
             PreparedStatement sailplaneInsertStatement = connect.prepareStatement(
-                    "INSERT INTO Sailplane(n_number, type, "
+                    "INSERT INTO Sailplane(sailplane_id, n_number, type, "
                             + "max_gross_weight, empty_weight, indicated_stall_speed, "
                             + "max_winching_speed, max_weak_link_strength, max_tension, "
                             + "cable_release_angle, carry_ballast, multiple_seats, "
                             + "optional_info)"
-                            + "values (?,?,?,?,?,?,?,?,?,?,?,?)");
-            sailplaneInsertStatement.setString(1, theSailplane.getNumber());
-            sailplaneInsertStatement.setString(2, theSailplane.getType());
-            sailplaneInsertStatement.setString(3, String.valueOf(theSailplane.getMaxGrossWeight()));
-            sailplaneInsertStatement.setString(4, String.valueOf(theSailplane.getEmptyWeight()));
-            sailplaneInsertStatement.setString(5, String.valueOf(theSailplane.getIndicatedStallSpeed()));
-            sailplaneInsertStatement.setString(6, String.valueOf(theSailplane.getMaxWinchingSpeed()));
-            sailplaneInsertStatement.setString(7, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
-            sailplaneInsertStatement.setString(8, String.valueOf(theSailplane.getMaxTension()));
-            sailplaneInsertStatement.setString(9, String.valueOf(theSailplane.getCableReleaseAngle()));
-            sailplaneInsertStatement.setString(10, String.valueOf(theSailplane.storeCarryBallast()));
-            sailplaneInsertStatement.setString(11, String.valueOf(theSailplane.storeMultipleSeats()));
-            sailplaneInsertStatement.setString(12, theSailplane.getOptionalInfo());
+                            + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            sailplaneInsertStatement.setString(1, theSailplane.getId());
+            sailplaneInsertStatement.setString(2, theSailplane.getNumber());
+            sailplaneInsertStatement.setString(3, theSailplane.getType());
+            sailplaneInsertStatement.setString(4, String.valueOf(theSailplane.getMaxGrossWeight()));
+            sailplaneInsertStatement.setString(5, String.valueOf(theSailplane.getEmptyWeight()));
+            sailplaneInsertStatement.setString(6, String.valueOf(theSailplane.getIndicatedStallSpeed()));
+            sailplaneInsertStatement.setString(7, String.valueOf(theSailplane.getMaxWinchingSpeed()));
+            sailplaneInsertStatement.setString(8, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
+            sailplaneInsertStatement.setString(9, String.valueOf(theSailplane.getMaxTension()));
+            sailplaneInsertStatement.setString(10, String.valueOf(theSailplane.getCableReleaseAngle()));
+            sailplaneInsertStatement.setString(11, String.valueOf(theSailplane.storeCarryBallast()));
+            sailplaneInsertStatement.setString(12, String.valueOf(theSailplane.storeMultipleSeats()));
+            sailplaneInsertStatement.setString(13, theSailplane.getOptionalInfo());
             sailplaneInsertStatement.executeUpdate();
             sailplaneInsertStatement.close();
         }catch(SQLException e) {
@@ -141,16 +142,17 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement AirfieldInsertStatement = connect.prepareStatement(
-                "INSERT INTO Airfield(name, designator, altitude, "
+                "INSERT INTO Airfield(airfield_id, name, designator, altitude, "
                 + "magnetic_variation, latitude, longitude, optional_info) "
-                + "values (?,?,?,?,?,?,?)");
-            AirfieldInsertStatement.setString(1, theAirfield.getName());
-            AirfieldInsertStatement.setString(2, theAirfield.getDesignator());
-            AirfieldInsertStatement.setString(3, String.valueOf(theAirfield.getAltitude()));
-            AirfieldInsertStatement.setString(4, String.valueOf(theAirfield.getMagneticVariation()));
-            AirfieldInsertStatement.setString(5, String.valueOf(theAirfield.getLatitude()));
-            AirfieldInsertStatement.setString(6, String.valueOf(theAirfield.getLongitude()));
-            AirfieldInsertStatement.setString(7, theAirfield.getOptionalInfo());
+                + "values (?,?,?,?,?,?,?,?)");
+            AirfieldInsertStatement.setString(1, theAirfield.getId());
+            AirfieldInsertStatement.setString(2, theAirfield.getName());
+            AirfieldInsertStatement.setString(3, theAirfield.getDesignator());
+            AirfieldInsertStatement.setString(4, String.valueOf(theAirfield.getAltitude()));
+            AirfieldInsertStatement.setString(5, String.valueOf(theAirfield.getMagneticVariation()));
+            AirfieldInsertStatement.setString(6, String.valueOf(theAirfield.getLatitude()));
+            AirfieldInsertStatement.setString(7, String.valueOf(theAirfield.getLongitude()));
+            AirfieldInsertStatement.setString(8, theAirfield.getOptionalInfo());
             AirfieldInsertStatement.executeUpdate();
             AirfieldInsertStatement.close();
         }catch(SQLException e) {
@@ -177,13 +179,15 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement RunwayInsertStatement = connect.prepareStatement(
-                "INSERT INTO Runway(runway_id, magnetic_heading, parent, altitude, optional_info) "
-                        + "values (?,?,?,?,?)");
+                "INSERT INTO Runway(runway_id, runway_name, magnetic_heading, parent, parent_id, altitude, optional_info) "
+                        + "values (?,?,?,?,?,?,?)");
             RunwayInsertStatement.setString(1, theRunway.getId());
-            RunwayInsertStatement.setString(2, theRunway.getMagneticHeading());
-            RunwayInsertStatement.setString(3, theRunway.getParent());
-            RunwayInsertStatement.setString(4, String.valueOf(theRunway.getAltitude()));
-            RunwayInsertStatement.setString(5, theRunway.getOptionalInfo());
+            RunwayInsertStatement.setString(2, theRunway.getName());
+            RunwayInsertStatement.setString(3, theRunway.getMagneticHeading());
+            RunwayInsertStatement.setString(4, theRunway.getParent());
+            RunwayInsertStatement.setString(5, theRunway.getParentId());
+            RunwayInsertStatement.setString(6, String.valueOf(theRunway.getAltitude()));
+            RunwayInsertStatement.setString(7, theRunway.getOptionalInfo());
             RunwayInsertStatement.executeUpdate();
             RunwayInsertStatement.close();
         }catch(SQLException e) {
@@ -211,15 +215,18 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement GliderPositionInsertStatement = connect.prepareStatement(
-                "INSERT INTO GliderPosition(position_id, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info) "
-                        + "values (?,?,?,?,?,?,?)");
-            GliderPositionInsertStatement.setString(1, theGliderPosition.getGliderPositionId());
-            GliderPositionInsertStatement.setString(2, theGliderPosition.getRunwayParent());
-            GliderPositionInsertStatement.setString(3, theGliderPosition.getAirfieldParent());
-            GliderPositionInsertStatement.setString(4, String.valueOf(theGliderPosition.getAltitude()));
-            GliderPositionInsertStatement.setString(5, String.valueOf(theGliderPosition.getLatitude()));
-            GliderPositionInsertStatement.setString(6, String.valueOf(theGliderPosition.getLongitude()));
-            GliderPositionInsertStatement.setString(7, theGliderPosition.getOptionalInfo());
+                "INSERT INTO GliderPosition(glider_position_id, position_id, runway_parent, runway_parent_id, airfield_parent, airfield_parent_id, altitude, latitude, longitude, optional_info) "
+                        + "values (?,?,?,?,?,?,?,?,?,?)");
+            GliderPositionInsertStatement.setString(1, theGliderPosition.getId());
+            GliderPositionInsertStatement.setString(2, theGliderPosition.getGliderPositionId());
+            GliderPositionInsertStatement.setString(3, theGliderPosition.getRunwayParent());
+            GliderPositionInsertStatement.setString(4, theGliderPosition.getRunwayParentId());
+            GliderPositionInsertStatement.setString(5, theGliderPosition.getAirfieldParent());
+            GliderPositionInsertStatement.setString(6, theGliderPosition.getAirfieldParentId());
+            GliderPositionInsertStatement.setString(7, String.valueOf(theGliderPosition.getAltitude()));
+            GliderPositionInsertStatement.setString(8, String.valueOf(theGliderPosition.getLatitude()));
+            GliderPositionInsertStatement.setString(9, String.valueOf(theGliderPosition.getLongitude()));
+            GliderPositionInsertStatement.setString(10, theGliderPosition.getOptionalInfo());
             GliderPositionInsertStatement.executeUpdate();
             GliderPositionInsertStatement.close();
         }catch(SQLException e) {
@@ -246,15 +253,18 @@ public class DatabaseDataObjectUtilities {
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement WinchPositionInsertStatement = connect.prepareStatement(
-                "INSERT INTO WinchPosition(name, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info) "
-                        + "values (?,?,?,?,?,?,?)");
-            WinchPositionInsertStatement.setString(1, theWinchPosition.getName());
-            WinchPositionInsertStatement.setString(2, theWinchPosition.getRunwayParent());
-            WinchPositionInsertStatement.setString(3, theWinchPosition.getAirfieldParent());
-            WinchPositionInsertStatement.setString(4, String.valueOf(theWinchPosition.getAltitude()));
-            WinchPositionInsertStatement.setString(5, String.valueOf(theWinchPosition.getLatitude()));
-            WinchPositionInsertStatement.setString(6, String.valueOf(theWinchPosition.getLongitude()));
-            WinchPositionInsertStatement.setString(7, theWinchPosition.getOptionalInfo());
+                "INSERT INTO WinchPosition(winch_position_id, name, runway_parent, runway_parent_id, airfield_parent, airfield_parent_id, altitude, latitude, longitude, optional_info) "
+                        + "values (?,?,?,?,?,?,?,?,?,?)");
+            WinchPositionInsertStatement.setString(1, theWinchPosition.getId());
+            WinchPositionInsertStatement.setString(2, theWinchPosition.getName());
+            WinchPositionInsertStatement.setString(3, theWinchPosition.getRunwayParent());
+            WinchPositionInsertStatement.setString(4, theWinchPosition.getRunwayParentId());
+            WinchPositionInsertStatement.setString(5, theWinchPosition.getAirfieldParent());
+            WinchPositionInsertStatement.setString(6, theWinchPosition.getAirfieldParentId());
+            WinchPositionInsertStatement.setString(7, String.valueOf(theWinchPosition.getAltitude()));
+            WinchPositionInsertStatement.setString(8, String.valueOf(theWinchPosition.getLatitude()));
+            WinchPositionInsertStatement.setString(9, String.valueOf(theWinchPosition.getLongitude()));
+            WinchPositionInsertStatement.setString(10, theWinchPosition.getOptionalInfo());
             WinchPositionInsertStatement.executeUpdate();
             WinchPositionInsertStatement.close();
         }catch(SQLException e) {
@@ -398,7 +408,7 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theSailplanes = stmt.executeQuery("SELECT n_number, type, "
+            ResultSet theSailplanes = stmt.executeQuery("SELECT sailplane_id, n_number, type, "
                     + "max_gross_weight, empty_weight, indicated_stall_speed,"
                     + "max_winching_speed, max_weak_link_strength, max_tension, "
                     + "cable_release_angle, carry_ballast, multiple_seats, "
@@ -407,8 +417,8 @@ public class DatabaseDataObjectUtilities {
             List sailplanes = new ArrayList<Sailplane>();
             
             while(theSailplanes.next()) {
-                String nNumber = theSailplanes.getString(1);
-                String type = theSailplanes.getString(2);
+                String nNumber = theSailplanes.getString(2);
+                String type = theSailplanes.getString(3);
                 int maxGrossWeight = 0; 
                 int emptyWeight = 0;
                 int stallSpeed = 0;
@@ -417,13 +427,13 @@ public class DatabaseDataObjectUtilities {
                 int maxTension = 0;
                 int cableAngle = 0;
                 try {
-                    maxGrossWeight = Integer.parseInt(theSailplanes.getString(3));
-                    emptyWeight = Integer.parseInt(theSailplanes.getString(4));
-                    stallSpeed = Integer.parseInt(theSailplanes.getString(5));
-                    maxWinchingSpeed = Integer.parseInt(theSailplanes.getString(6));
-                    maxWeakLinkStrength = Integer.parseInt(theSailplanes.getString(7));
-                    maxTension = Integer.parseInt(theSailplanes.getString(8));
-                    cableAngle = Integer.parseInt(theSailplanes.getString(9));
+                    maxGrossWeight = Integer.parseInt(theSailplanes.getString(4));
+                    emptyWeight = Integer.parseInt(theSailplanes.getString(5));
+                    stallSpeed = Integer.parseInt(theSailplanes.getString(6));
+                    maxWinchingSpeed = Integer.parseInt(theSailplanes.getString(7));
+                    maxWeakLinkStrength = Integer.parseInt(theSailplanes.getString(8));
+                    maxTension = Integer.parseInt(theSailplanes.getString(9));
+                    cableAngle = Integer.parseInt(theSailplanes.getString(10));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -431,8 +441,8 @@ public class DatabaseDataObjectUtilities {
                 boolean ballast = false;
                 boolean multipleSeats = false;
                 try{
-                    ballast = Sailplane.returnCarryBallast(Integer.parseInt(theSailplanes.getString(10)));
-                    multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theSailplanes.getString(11)));
+                    ballast = Sailplane.returnCarryBallast(Integer.parseInt(theSailplanes.getString(11)));
+                    multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theSailplanes.getString(12)));
                 }catch(NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Error reading ballast in reading from DB");
                 }
@@ -440,6 +450,7 @@ public class DatabaseDataObjectUtilities {
                 Sailplane newSailplane = new Sailplane(nNumber, type,
                         maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, 
                         maxWeakLinkStrength, maxTension, cableAngle, ballast, multipleSeats, theSailplanes.getString(12));
+                newSailplane.setId(theSailplanes.getString(1));
                 sailplanes.add(newSailplane);
                 
             }
@@ -470,33 +481,34 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theAirfields = stmt.executeQuery("SELECT name, designator, altitude, "
+            ResultSet theAirfields = stmt.executeQuery("SELECT airfield_id, name, designator, altitude, "
                 + "magnetic_variation, latitude, longitude, optional_info "
                 + "FROM Airfield ORDER BY name");
             List airfields = new ArrayList<Airfield>();
             
             while(theAirfields.next()) {
-                String name = theAirfields.getString(1);
-                String designator = theAirfields.getString(2);
+                String name = theAirfields.getString(2);
+                String designator = theAirfields.getString(3);
                 
                 int altitude = 0;
                 int magneticVariation = 0;
                 float latitude = 0;
                 float longitude = 0;
                 try {
-                    altitude = Integer.parseInt(theAirfields.getString(3));
-                    magneticVariation = Integer.parseInt(theAirfields.getString(4));
-                    latitude = Float.parseFloat(theAirfields.getString(5));
-                    longitude = Float.parseFloat(theAirfields.getString(6));
+                    altitude = Integer.parseInt(theAirfields.getString(4));
+                    magneticVariation = Integer.parseInt(theAirfields.getString(5));
+                    latitude = Float.parseFloat(theAirfields.getString(6));
+                    longitude = Float.parseFloat(theAirfields.getString(7));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String optional = theAirfields.getString(7);
+                String optional = theAirfields.getString(8);
                 
                 Airfield newAirfield = new Airfield(name, designator, altitude, magneticVariation,
                         latitude, longitude, optional);
+                newAirfield.setId(theAirfields.getString(1));
                 airfields.add(newAirfield);
                 
             }
@@ -527,27 +539,28 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theRunways = stmt.executeQuery("SELECT runway_id, magnetic_heading, parent, altitude, optional_info "
+            ResultSet theRunways = stmt.executeQuery("SELECT runway_id, runway_name, magnetic_heading, parent, parent_id, altitude, optional_info "
                 + "FROM Runway ORDER BY runway_id");
             List runways = new ArrayList<Runway>();
             
             while(theRunways.next()) {
-                String id = theRunways.getString(1);
-                String magneticHeading = theRunways.getString(2);
-                String parent = theRunways.getString(3);
+                String name = theRunways.getString(2);
+                String magneticHeading = theRunways.getString(3);
+                String parent = theRunways.getString(4);
                 
                 int altitude = 0;
                 try {
-                    altitude = Integer.parseInt(theRunways.getString(4));
+                    altitude = Integer.parseInt(theRunways.getString(6));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String optional = theRunways.getString(5);
+                String optional = theRunways.getString(7);
                           
-                Runway newRunway = new Runway(id, magneticHeading, parent, altitude, optional);
-                        
+                Runway newRunway = new Runway(name, magneticHeading, parent, altitude, optional);
+                newRunway.setId(theRunways.getString(1));
+                newRunway.setParentId(theRunways.getString(5));
                 runways.add(newRunway);
                 
             }
@@ -578,31 +591,33 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theGliderPositions = stmt.executeQuery("SELECT position_id, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info "
+            ResultSet theGliderPositions = stmt.executeQuery("SELECT glider_position_id, position_id, runway_parent, runway_parent_id, airfield_parent, airfield_parent_id, altitude, latitude, longitude, optional_info "
                 + "FROM GliderPosition ORDER BY position_id");
             List positions = new ArrayList<GliderPosition>();
             
             while(theGliderPositions.next()) {
-                String id = theGliderPositions.getString(1);
-                String runwayParent = theGliderPositions.getString(2);
-                String airfieldParent = theGliderPositions.getString(3);
+                String id = theGliderPositions.getString(2);
+                String runwayParent = theGliderPositions.getString(3);
+                String airfieldParent = theGliderPositions.getString(5);
                 
                 int altitude = 0;
                 float latitude = 0;
                 float longitude = 0;
                 try {
-                    altitude = Integer.parseInt(theGliderPositions.getString(4));
-                    latitude = Float.parseFloat(theGliderPositions.getString(5));
-                    longitude = Float.parseFloat(theGliderPositions.getString(6));
+                    altitude = Integer.parseInt(theGliderPositions.getString(7));
+                    latitude = Float.parseFloat(theGliderPositions.getString(8));
+                    longitude = Float.parseFloat(theGliderPositions.getString(9));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String optional = theGliderPositions.getString(7);
+                String optional = theGliderPositions.getString(10);
                           
                 GliderPosition newGliderPosition = new GliderPosition(id, runwayParent, airfieldParent, altitude, latitude, longitude, optional);
-                        
+                newGliderPosition.setId(theGliderPositions.getString(1));
+                newGliderPosition.setRunwayParentId(theGliderPositions.getString(4));
+                newGliderPosition.setAirfieldParentId(theGliderPositions.getString(6));
                 positions.add(newGliderPosition);
                 
             }
@@ -633,22 +648,22 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theWinchPositions = stmt.executeQuery("SELECT name, runway_parent, airfield_parent, altitude, latitude, longitude, optional_info "
+            ResultSet theWinchPositions = stmt.executeQuery("SELECT glider_position_id, name, runway_parent, runway_parent_id, airfield_parent, airfield_parent_id, altitude, latitude, longitude, optional_info "
                 + "FROM WinchPosition ORDER BY name");
             List positions = new ArrayList<WinchPosition>();
             
             while(theWinchPositions.next()) {
-                String name = theWinchPositions.getString(1);
-                String runwayParent = theWinchPositions.getString(2);
-                String airfieldParent = theWinchPositions.getString(3);
+                String name = theWinchPositions.getString(2);
+                String runwayParent = theWinchPositions.getString(3);
+                String airfieldParent = theWinchPositions.getString(5);
                 
                 int altitude = 0;
                 float latitude = 0;
                 float longitude = 0;
                 try {
-                    altitude = Integer.parseInt(theWinchPositions.getString(4));
-                    latitude = Float.parseFloat(theWinchPositions.getString(5));
-                    longitude = Float.parseFloat(theWinchPositions.getString(6));
+                    altitude = Integer.parseInt(theWinchPositions.getString(7));
+                    latitude = Float.parseFloat(theWinchPositions.getString(8));
+                    longitude = Float.parseFloat(theWinchPositions.getString(9));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -657,7 +672,9 @@ public class DatabaseDataObjectUtilities {
                 String optional = theWinchPositions.getString(7);
                           
                 WinchPosition newWinchPosition = new WinchPosition(name, runwayParent, airfieldParent, altitude, latitude, longitude, optional);
-                        
+                newWinchPosition.setId(theWinchPositions.getString(1));
+                newWinchPosition.setRunwayParentId(theWinchPositions.getString(4));
+                newWinchPosition.setAirfieldParentId(theWinchPositions.getString(6));
                 positions.add(newWinchPosition);
                 
             }
@@ -789,24 +806,6 @@ public class DatabaseDataObjectUtilities {
             return tables;
             
         }catch(Exception e) {
-            throw e;
-        }
-    }
-    
-    public static boolean checkForPilotId(String pilot_id) throws SQLException, ClassNotFoundException {        
-        try{
-            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            throw e;
-        }
-        
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
-            Statement stmt = connect.createStatement();
-            ResultSet theIds = stmt.executeQuery("SELECT * FROM PILOT WHERE pilot_id = '" + pilot_id + "'");
-            return theIds.next();
-        }catch(SQLException e) {
             throw e;
         }
     }

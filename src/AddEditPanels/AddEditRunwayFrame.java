@@ -5,6 +5,8 @@ package AddEditPanels;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Runway;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseEntryIdCheck;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -20,6 +22,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -78,7 +81,8 @@ public class AddEditRunwayFrame extends JFrame {
         magneticHeadingField.setBounds(140, 36, 200, 20);
         panel.add(magneticHeadingField);
 
-        nameField = new JTextField(currentRunway.getId());
+        nameField = new JTextField(currentRunway.getName());
+        nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nameField.setColumns(10);
         nameField.setBounds(140, 11, 200, 20);
         panel.add(nameField);
@@ -173,29 +177,33 @@ public class AddEditRunwayFrame extends JFrame {
     
     protected void submitData(){
         if (isComplete()){
+            String name = nameField.getText();
             String magneticHeading = magneticHeadingField.getText();
             int altitude = Integer.parseInt(altitudeField.getText());
-            
-            String name = currentRunway.getId();
-            if (!isEditEntry){
-                name = nameField.getText();
-            }
 
             String parent = "";
+            String parentId = "";
             try{
                 parent = objectSet.getCurrentAirfield().getDesignator();
+                parentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
                 System.out.println("cur Airfield 404 " + e.getMessage());
             }
             
             Runway newRunway = new Runway(name, magneticHeading, parent, altitude, "");
+            newRunway.setId(currentRunway.getId());
+            newRunway.setParentId(parentId);
             try{
                 if (isEditEntry){
-                    DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newRunway);
+                    DatabaseEntryEdit.UpdateEntry(newRunway);
                 }
-                else
-                {
-                    DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
+                else{
+                    Random randomId = new Random();
+                    newRunway.setId(String.valueOf(randomId.nextInt(100000000)));
+                    while (DatabaseEntryIdCheck.IdCheck(newRunway)){
+                        newRunway.setId(String.valueOf(randomId.nextInt(100000000)));
+                    }
+                    DatabaseUtilities.DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
                 }
                 objectSet.setCurrentRunway(newRunway);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
@@ -204,6 +212,7 @@ public class AddEditRunwayFrame extends JFrame {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the runway " + newRunway.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
+
                 }
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);

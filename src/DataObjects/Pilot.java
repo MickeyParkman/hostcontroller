@@ -9,7 +9,7 @@ package DataObjects;
 /**
  *  This Class stores the data about a Pilot
  * 
- * @author awilliams5, dbennett3
+ * @author awilliams5, dbennett3, Noah Fujioka
  */
 public class Pilot {
     //Pilot's unique id
@@ -47,7 +47,16 @@ public class Pilot {
     }
     
     public String getPilotId() {
-        return pilotId;
+        if (pilotId != null){
+            return pilotId;
+        }
+        else{
+            pilotId = "";
+            return pilotId;
+        }
+    }
+    public void setPilotId(String newId) {
+        pilotId = newId;
     }
     
     public String getLastName() {

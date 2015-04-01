@@ -4,6 +4,7 @@ import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseEntryDelete;
 import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseEntryIdCheck;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
+import java.util.Random;
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 import javax.swing.JTextField;
@@ -47,11 +49,12 @@ public class AddEditGlider extends JFrame {
      * Create the frame.
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
+        
+        this.isEditEntry = isEditEntry;
         if (!isEditEntry){
             sailplaneEdited = new Sailplane("", "", 0, 0, 0, 0, 0, 0, 0, false, "");
         }
         currentGlider = sailplaneEdited;
-        this.isEditEntry = isEditEntry;
         
         setTitle("Glider");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -244,7 +247,7 @@ public class AddEditGlider extends JFrame {
     
     public void submitData(){
         if (isComplete()){
-            Sailplane oldGlider = currentGlider;
+            String nNumber = nNumberField.getText();
             int emptyWeight = Integer.parseInt(emptyWeightField.getText());
             int grossWeight = Integer.parseInt(grossWeightField.getText());
             int stallSpeed = Integer.parseInt(stallSpeedField.getText());
@@ -255,18 +258,25 @@ public class AddEditGlider extends JFrame {
             boolean carryBallast = ballastCheckBox.isSelected();
             boolean multipleSeats = multipleSeatsCheckBox.isSelected();
             
-            String nNumber = currentGlider.getNumber();
-            if (!isEditEntry){
-                nNumber = nNumberField.getText();
-            }
             Sailplane newGlider = new Sailplane(nNumber ,"", grossWeight,
                     emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
-                    releaseAngle, carryBallast, "");
+                    releaseAngle, carryBallast, multipleSeats, "");
+            newGlider.setId(currentGlider.getId());
+            
+
             try{
                 if (isEditEntry){
-                    DatabaseEntryDelete.DeleteEntry(oldGlider);
+                    DatabaseEntryEdit.UpdateEntry(newGlider);
                 }
-                DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
+                else{
+                    Random randomId = new Random();
+                    newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
+                    while (DatabaseEntryIdCheck.IdCheck(newGlider)){
+                        newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
+                    }
+                    DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
+                    System.out.println(newGlider.getId());
+                }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentGlider(newGlider);
                 JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);

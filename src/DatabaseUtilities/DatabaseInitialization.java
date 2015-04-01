@@ -268,9 +268,9 @@ public class DatabaseInitialization {
      */
     private static void createPilot(Connection connect) throws SQLException {
         String createPilotString = "CREATE TABLE Pilot"
-                + "(pilot_id VARCHAR(30) NOT NULL, "
-                + "first_name VARCHAR(30) NOT NULL, "
-                + "last_name VARCHAR(30) NOT NULL, "
+                + "(pilot_id VARCHAR(8), "
+                + "first_name VARCHAR(30), "
+                + "last_name VARCHAR(30), "
                 + "middle_name VARCHAR(30), "
                 + "flight_weight INT, "
                 + "capability INT, "
@@ -298,7 +298,8 @@ public class DatabaseInitialization {
      */
     private static void createSailplane(Connection connect) throws SQLException {
         String createSailplaneString = "CREATE TABLE Sailplane"
-                + "(n_number VARCHAR(20),"
+                + "(sailplane_id VARCHAR(8), "
+                + "n_number VARCHAR(30),"
                 + "type VARCHAR(30),"
                 + "max_gross_weight INT,"
                 + "empty_weight INT,"
@@ -310,7 +311,7 @@ public class DatabaseInitialization {
                 + "carry_ballast INT, "
                 + "multiple_seats INT, "
                 + "optional_info VARCHAR(150),"
-                + "PRIMARY KEY (n_number))";
+                + "PRIMARY KEY (sailplane_id))";
         try (Statement createPilotTableStatement = connect.createStatement()) {
             createPilotTableStatement.execute(createSailplaneString);
         }catch(SQLException e) {
@@ -378,14 +379,15 @@ public class DatabaseInitialization {
      */
     private static void createAirfield(Connection connect) throws SQLException {
         String createAirfieldString = "CREATE TABLE Airfield"
-                + "(name VARCHAR(30), "
+                + "(airfield_id VARCHAR(8), "
+                + "name VARCHAR(30), "
                 + "designator VARCHAR(30), "
                 + "altitude VARCHAR(20), "
                 + "magnetic_variation VARCHAR(20), "
                 + "latitude FLOAT, "
                 + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
-                + "PRIMARY KEY (designator))";
+                + "PRIMARY KEY (airfield_id))";
         try (Statement createAirfieldTableStatement = connect.createStatement()) {
             createAirfieldTableStatement.execute(createAirfieldString);
         }catch(SQLException e) {
@@ -400,14 +402,16 @@ public class DatabaseInitialization {
      * @throws SQLException if the table can't be created
      */
     private static void createRunway(Connection connect) throws SQLException {
-        String createRunwayString = "CREATE TABLE Runway"
-                + "(runway_id VARCHAR(30), "
+        String createRunwayString = "CREATE TABLE Runway "
+                + "(runway_id VARCHAR(8), "
+                + "runway_name VARCHAR(30), "
                 + "magnetic_heading VARCHAR(10), "
                 + "parent VARCHAR(30), "
+                + "parent_id VARCHAR(8), "
                 + "altitude INT, "
                 + "optional_info VARCHAR(150), "
-                + "PRIMARY KEY (runway_id, parent), "
-                + "FOREIGN KEY (parent) REFERENCES Airfield (designator))";
+                + "PRIMARY KEY (runway_id, parent_id), "
+                + "FOREIGN KEY (parent_id) REFERENCES Airfield (airfield_id))";
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
         }catch(SQLException e) {
@@ -423,16 +427,19 @@ public class DatabaseInitialization {
      */
     private static void createGliderPosition(Connection connect) throws SQLException {
         String createGliderPositionString = "CREATE TABLE GliderPosition "
-                + "(position_id VARCHAR(30), "
+                + "(glider_position_id VARCHAR(8), "
+                + "position_id VARCHAR(30), "
                 + "runway_parent VARCHAR(30), "
+                + "runway_parent_id VARCHAR(8), "
                 + "airfield_parent VARCHAR(30), "
+                + "airfield_parent_id VARCHAR(8), "
                 + "altitude INT, "
                 + "latitude FLOAT, "
                 + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
-                + "PRIMARY KEY (position_id, runway_parent, airfield_parent), "
-                + "FOREIGN KEY (runway_parent, airfield_parent) REFERENCES Runway (runway_id, parent), "
-                + "FOREIGN KEY (airfield_parent) REFERENCES Airfield (designator))";
+                + "PRIMARY KEY (glider_position_id, runway_parent_id, airfield_parent_id), "
+                + "FOREIGN KEY (runway_parent_id, airfield_parent_id) REFERENCES Runway (runway_id, parent_id), "
+                + "FOREIGN KEY (airfield_parent_id) REFERENCES Airfield (airfield_id))";
         try (Statement createGliderPositionTableStatement = connect.createStatement()) {
             createGliderPositionTableStatement.execute(createGliderPositionString);
         }catch(SQLException e) {
@@ -448,16 +455,19 @@ public class DatabaseInitialization {
      */
     private static void createWinchPosition(Connection connect) throws SQLException {
         String createWinchPositionString = "CREATE TABLE WinchPosition"
-                + "(name VARCHAR(30), "
+                + "(winch_position_id VARCHAR(8), "
+                + "name VARCHAR(30), "
                 + "runway_parent VARCHAR(30), "
+                + "runway_parent_id VARCHAR(8), "
                 + "airfield_parent VARCHAR(30), "
+                + "airfield_parent_id VARCHAR(8), "
                 + "altitude INT, "
                 + "latitude FLOAT, "
                 + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
-                + "PRIMARY KEY (name, runway_parent, airfield_parent), "
-                + "FOREIGN KEY (runway_parent, airfield_parent) REFERENCES Runway (runway_id, parent), "
-                + "FOREIGN KEY (airfield_parent) REFERENCES Airfield (designator))";
+                + "PRIMARY KEY (winch_position_id, runway_parent_id, airfield_parent_id), "
+                + "FOREIGN KEY (runway_parent_id, airfield_parent_id) REFERENCES Runway (runway_id, parent_id), "
+                + "FOREIGN KEY (airfield_parent_id) REFERENCES Airfield (airfield_id))";
         try (Statement createWinchPositionTableStatement = connect.createStatement()) {
             createWinchPositionTableStatement.execute(createWinchPositionString);
         }catch(SQLException e) {
