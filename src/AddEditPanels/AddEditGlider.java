@@ -1,5 +1,6 @@
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -44,7 +45,14 @@ public class AddEditGlider extends JFrame {
     private JCheckBox multipleSeatsCheckBox;
     private Sailplane currentGlider;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
+    
     /**
      * Create the frame.
      */
@@ -191,6 +199,7 @@ public class AddEditGlider extends JFrame {
 
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 180, 89, 23);
+        submitButton.setBackground(new Color(200,200,200));
         contentPane.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -202,6 +211,7 @@ public class AddEditGlider extends JFrame {
         JButton deleteButton = new JButton("Delete");
         deleteButton.setEnabled(isEditEntry);
         deleteButton.setBounds(90, 180, 89, 23);
+        deleteButton.setBackground(new Color(200,200,200));
         contentPane.add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -212,6 +222,7 @@ public class AddEditGlider extends JFrame {
 
         JButton clearButton = new JButton("Clear");
         clearButton.setBounds(180, 180, 89, 23);
+        clearButton.setBackground(new Color(200,200,200));
         contentPane.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -222,6 +233,7 @@ public class AddEditGlider extends JFrame {
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 180, 89, 23);
+        cancelButton.setBackground(new Color(200,200,200));
         contentPane.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -233,11 +245,16 @@ public class AddEditGlider extends JFrame {
     
     public void deleteCommand(){
         try{
-            DatabaseEntryDelete.DeleteEntry(currentGlider);
-            CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-            objectSet.clearGlider();
-            JOptionPane.showMessageDialog(rootPane, currentGlider.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGlider.getNumber() + "?",
+                "Delete Glider", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseEntryDelete.DeleteEntry(currentGlider);
+                CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                objectSet.clearGlider();
+                JOptionPane.showMessageDialog(rootPane, currentGlider.toString() + " successfully deleted.");
+                parent.update();
+                this.dispose();
+            }
         }catch (ClassNotFoundException e1) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e2){
@@ -265,22 +282,36 @@ public class AddEditGlider extends JFrame {
             
 
             try{
-                if (isEditEntry){
-                    DatabaseEntryEdit.UpdateEntry(newGlider);
-                }
-                else{
-                    Random randomId = new Random();
-                    newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
-                    while (DatabaseEntryIdCheck.IdCheck(newGlider)){
-                        newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
-                    }
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
-                    System.out.println(newGlider.getId());
-                }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentGlider(newGlider);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update();
+                    this.dispose();
+                }
+                else
+                {
+                    if (isEditEntry){
+                        DatabaseEntryEdit.UpdateEntry(newGlider);
+                    }
+                    else{
+                        Random randomId = new Random();
+                        newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
+                        while (DatabaseEntryIdCheck.IdCheck(newGlider)){
+                            newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
+                        }
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
+                        System.out.println(newGlider.getId());
+                    }
+                    CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                    ObjectSet.setCurrentGlider(newGlider);
+                    JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    parent.update();
+                    this.dispose();
+                } 
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the glider " + newGlider.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);

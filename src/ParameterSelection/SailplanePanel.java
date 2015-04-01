@@ -29,24 +29,129 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-
 import java.awt.Font;
-
 import javax.swing.JButton;
-
 import Communications.Observer;
+import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
+import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 
-public class SailplanePanel extends JPanel {
+public class SailplanePanel extends JPanel implements Observer{
     private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
     private CurrentDataObjectSet currentData;
+    JScrollPane sailplaneScrollPane = new JScrollPane();
+    private JLabel emptyWeightUnits = new JLabel();
+    private JLabel maxGrossWeightUnits = new JLabel();
+    private JLabel stallSpeedUnits = new JLabel();
+    private JLabel ballastWeightUnits = new JLabel();
+    private JLabel baggageWeightUnits = new JLabel();
+    private JLabel passengerWeightUnits = new JLabel();
+    private JLabel tensionUnits = new JLabel();
+    private JLabel weakLinkStrengthUnits = new JLabel();
+    private JLabel winchingSpeedUnits = new JLabel();
+    
+    @Override
+    public void update()
+    {
+        initSailPlaneList();
+        DefaultListModel sailplaneModel = new DefaultListModel();
+        sailplaneModel.clear();
+        for(Object str: sailplanes){
+                sailplaneModel.addElement(str);
+        }
+        sailplaneJList.setModel(sailplaneModel);
+        Sailplane currentSailplane = currentData.getCurrentSailplane();
+        sailplaneJList.setSelectedValue(currentSailplane.toString(), true);
+        sailplaneScrollPane.setViewportView(sailplaneJList);
+        
+        int emptyWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("emptyWeight");
+        String emptyWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(emptyWeightUnitsID);
+        emptyWeightUnits.setText(emptyWeightUnitsString);
+        
+        int maxGrossWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("maxGrossWeight");
+        String maxGrossWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(maxGrossWeightUnitsID);
+        maxGrossWeightUnits.setText(maxGrossWeightUnitsString);
+        
+        int stallSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("stallSpeed");
+        String stallSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(stallSpeedUnitsID);
+        stallSpeedUnits.setText(stallSpeedUnitsString);
+        
+        int ballastWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("ballastWeight");
+        String ballastWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(ballastWeightUnitsID);
+        ballastWeightUnits.setText(ballastWeightUnitsString);
+        
+        int baggageWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("baggageWeight");
+        String baggageWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(baggageWeightUnitsID);
+        baggageWeightUnits.setText(baggageWeightUnitsString);
+        
+        int passengerWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("passengerWeight");
+        String passengerWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(passengerWeightUnitsID);
+        passengerWeightUnits.setText(passengerWeightUnitsString);
+        
+        int tensionUnitsID = currentData.getCurrentProfile().getUnitSetting("maxTension");
+        String tensionUnitsString = UnitLabelUtilities.tensionUnitIndexToString(tensionUnitsID);
+        tensionUnits.setText(tensionUnitsString);
+        
+        int weakLinkStrengthUnitsID = currentData.getCurrentProfile().getUnitSetting("weakLinkStrength");
+        String weakLinkStrengthUnitsString = UnitLabelUtilities.tensionUnitIndexToString(weakLinkStrengthUnitsID);
+        weakLinkStrengthUnits.setText(weakLinkStrengthUnitsString);
+        
+        int winchingSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("winchingSpeed");
+        String winchingSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(winchingSpeedUnitsID);
+        winchingSpeedUnits.setText(winchingSpeedUnitsString);
+               
+        nNumberField.setText(currentSailplane.getNumber());
+        nNumberField.setBackground(Color.GREEN);
+
+        weakLinkField.setText(String.valueOf(currentSailplane.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
+        weakLinkField.setBackground(Color.GREEN);
+
+        tensionField.setText(String.valueOf(currentSailplane.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
+        tensionField.setBackground(Color.GREEN);
+
+        releaseAngleField.setText(String.valueOf(currentSailplane.getCableReleaseAngle()));
+        releaseAngleField.setBackground(Color.GREEN);
+
+        stallSpeedField.setText(String.valueOf(currentSailplane.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
+        stallSpeedField.setBackground(Color.GREEN);
+
+        grossWeightField.setText(String.valueOf(currentSailplane.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
+        grossWeightField.setBackground(Color.GREEN);
+
+        emptyWeightField.setText(String.valueOf(currentSailplane.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
+        emptyWeightField.setBackground(Color.GREEN);
+
+        winchingSpeedField.setText(String.valueOf(currentSailplane.getMaxWinchingSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
+        winchingSpeedField.setBackground(Color.GREEN);
+
+        if(currentSailplane.getCarryBallast())
+        {
+            ballastCheckBox.setSelected(true);
+        }
+        if(!currentSailplane.getCarryBallast())
+        {
+            ballastCheckBox.setSelected(false);
+        }
+        if(currentSailplane.getMultipleSeats())
+        {
+            multipleSeatsCheckBox.setSelected(true);
+        }
+        if(!currentSailplane.getMultipleSeats())
+        {
+            multipleSeatsCheckBox.setSelected(false);
+        }
+    }
+    
+    private Observer getObserver() {
+        return this;
+    }
     
     public void clear()
     {
@@ -67,7 +172,10 @@ public class SailplanePanel extends JPanel {
         emptyWeightField.setBackground(Color.WHITE);
         winchingSpeedField.setText("");
         winchingSpeedField.setBackground(Color.WHITE);
+        ballastCheckBox.setSelected(false);
+        multipleSeatsCheckBox.setSelected(false);
     }
+    
     private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) 
     {
         if(sailplaneJList.getSelectedIndex() >= 0){
@@ -98,6 +206,23 @@ public class SailplanePanel extends JPanel {
 
                 winchingSpeedField.setText(String.valueOf(theSailplane.getMaxWinchingSpeed()));
                 winchingSpeedField.setBackground(Color.GREEN);
+                
+                if(theSailplane.getCarryBallast())
+                {
+                    ballastCheckBox.setSelected(true);
+                }
+                if(!theSailplane.getCarryBallast())
+                {
+                    ballastCheckBox.setSelected(false);
+                }
+                if(theSailplane.getMultipleSeats())
+                {
+                    multipleSeatsCheckBox.setSelected(true);
+                }
+                if(!theSailplane.getMultipleSeats())
+                {
+                    multipleSeatsCheckBox.setSelected(false);
+                }
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -107,12 +232,8 @@ public class SailplanePanel extends JPanel {
     private void initSailPlaneList() {
         try{
             sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
-            //sailplanes.add(0, new Sailplane("Default Glider", "", 0, 0, 0, 0, 0, 0, 0, false, false, ""));
-            //sailplanes.add(new Sailplane("N5789678", "thing", 654, 698, 987, 231, 684, 161, 165, true, true, "khghjghjghjfghf"));
-        }catch(SQLException e) 
-        {
-            //sailplanes.add(0, new Sailplane("Default Glider", "", 0, 0, 0, 0, 0, 0, 0, false, false, ""));
-            //sailplanes.add(new Sailplane("N5789678", "thing", 654, 698, 987, 231, 684, 161, 165, true, true, "khghjghjghjfghf"));
+
+        }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
 
         }
@@ -134,8 +255,7 @@ public class SailplanePanel extends JPanel {
         sailplaneJList = new javax.swing.JList();
         
         setLayout(new BorderLayout(0, 0));
-
-        JScrollPane sailplaneScrollPane = new JScrollPane();
+        
         add(sailplaneScrollPane, BorderLayout.NORTH);
         DefaultListModel sailplaneModel = new DefaultListModel();
         for(Object str: sailplanes){
@@ -178,30 +298,38 @@ public class SailplanePanel extends JPanel {
         attributesPanel.add(lblIndicatedStallSpeed);
         
         stallSpeedField = new JTextField();
+        stallSpeedField.setBackground(Color.WHITE);
+        stallSpeedField.setEditable(false);
         stallSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         stallSpeedField.setBounds(160, 125, 110, 20);
         attributesPanel.add(stallSpeedField);
         stallSpeedField.setColumns(10);
         
         grossWeightField = new JTextField();
+        grossWeightField.setBackground(Color.WHITE);
+        grossWeightField.setEditable(false);
         grossWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         grossWeightField.setBounds(160, 100, 110, 20);
         attributesPanel.add(grossWeightField);
         grossWeightField.setColumns(10);
         
         emptyWeightField = new JTextField();
+        emptyWeightField.setBackground(Color.WHITE);
+        emptyWeightField.setEditable(false);
         emptyWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         emptyWeightField.setBounds(160, 75, 110, 20);
         attributesPanel.add(emptyWeightField);
         emptyWeightField.setColumns(10);
         
         nNumberField = new JTextField();
+        nNumberField.setBackground(Color.WHITE);
+        nNumberField.setEditable(false);
         nNumberField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nNumberField.setBounds(160, 50, 110, 20);
         attributesPanel.add(nNumberField);
         nNumberField.setColumns(10);
         
-        JCheckBox ballastCheckBox = new JCheckBox("Can Carry Ballast?");
+        ballastCheckBox = new JCheckBox("Can Carry Ballast?");
         ballastCheckBox.setBackground(Color.WHITE);
         ballastCheckBox.addItemListener(new ItemListener() {
             @Override
@@ -249,7 +377,7 @@ public class SailplanePanel extends JPanel {
         cableReleaseAngleLabel.setBounds(320, 128, 140, 14);
         attributesPanel.add(cableReleaseAngleLabel);
         
-        JCheckBox multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
+        multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
         multipleSeatsCheckBox.setBackground(Color.WHITE);
         
         multipleSeatsCheckBox.addItemListener(new ItemListener() {
@@ -275,18 +403,24 @@ public class SailplanePanel extends JPanel {
         attributesPanel.add(passengerWeightLabel);
         
         weakLinkField = new JTextField();
+        weakLinkField.setBackground(Color.WHITE);
+        weakLinkField.setEditable(false);
         weakLinkField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         weakLinkField.setBounds(487, 75, 120, 20);
         attributesPanel.add(weakLinkField);
         weakLinkField.setColumns(10);
         
         tensionField = new JTextField();
+        tensionField.setBackground(Color.WHITE);
+        tensionField.setEditable(false);
         tensionField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         tensionField.setBounds(487, 100, 120, 20);
         attributesPanel.add(tensionField);
         tensionField.setColumns(10);
         
         releaseAngleField = new JTextField();
+        releaseAngleField.setBackground(Color.WHITE);
+        releaseAngleField.setEditable(false);
         releaseAngleField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         releaseAngleField.setBounds(487, 125, 120, 20);
         attributesPanel.add(releaseAngleField);
@@ -301,6 +435,8 @@ public class SailplanePanel extends JPanel {
         passengerWeightField.setBackground(Color.LIGHT_GRAY);
         
         winchingSpeedField = new JTextField();
+        winchingSpeedField.setBackground(Color.WHITE);
+        winchingSpeedField.setEditable(false);
         winchingSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         winchingSpeedField.setBounds(487, 50, 120, 20);
         attributesPanel.add(winchingSpeedField);
@@ -344,46 +480,50 @@ public class SailplanePanel extends JPanel {
         attributesPanel.add(lblGlider);
         
         JButton addNewButton = new JButton("Add New");
+        addNewButton.setBackground(new Color(200,200,200));
         addNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGlider AddEditGlider_ = new AddEditGlider(currentData.getCurrentSailplane(), false);
                     AddEditGlider_.setVisible(true);
+                    AddEditGlider_.attach(getObserver());
         	}
         });
         addNewButton.setBounds(201, 0, 89, 23);
         attributesPanel.add(addNewButton);
         
         JButton editButton = new JButton("Edit");
+        editButton.setBackground(new Color(200,200,200));
         editButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     AddEditGlider AddEditGlider_ = new AddEditGlider(currentData.getCurrentSailplane(), true);
                     AddEditGlider_.setVisible(true);
+                    AddEditGlider_.attach(getObserver());
         	}
         });
         editButton.setBounds(289, 0, 89, 23);
         attributesPanel.add(editButton);
         
-        JLabel emptyWeightUnits = new JLabel("kgs");
+        emptyWeightUnits.setText("kg");
         emptyWeightUnits.setBounds(280, 78, 46, 14);
         attributesPanel.add(emptyWeightUnits);
         
-        JLabel maxGrossWeightUnits = new JLabel("kgs");
+        maxGrossWeightUnits.setText("kg");
         maxGrossWeightUnits.setBounds(280, 103, 46, 14);
         attributesPanel.add(maxGrossWeightUnits);
         
-        JLabel stallSpeedUnits = new JLabel("km/h");
+        stallSpeedUnits.setText("Km/h");
         stallSpeedUnits.setBounds(280, 128, 46, 14);
         attributesPanel.add(stallSpeedUnits);
         
-        JLabel ballastWeightUnits = new JLabel("kgs");
+        ballastWeightUnits.setText("kg");
         ballastWeightUnits.setBounds(280, 189, 46, 14);
         attributesPanel.add(ballastWeightUnits);
         
-        JLabel baggageWeightUnits = new JLabel("kgs");
+        baggageWeightUnits.setText("kg");
         baggageWeightUnits.setBounds(280, 250, 46, 14);
         attributesPanel.add(baggageWeightUnits);
         
-        JLabel passengerWeightUnits = new JLabel("kgs");
+        passengerWeightUnits.setText("kg");
         passengerWeightUnits.setBounds(617, 189, 46, 14);
         attributesPanel.add(passengerWeightUnits);
         
@@ -391,15 +531,15 @@ public class SailplanePanel extends JPanel {
         cableReleaseAngleUnits.setBounds(617, 128, 65, 14);
         attributesPanel.add(cableReleaseAngleUnits);
         
-        JLabel tensionUnits = new JLabel("N");
+        tensionUnits.setText("N");
         tensionUnits.setBounds(617, 103, 46, 14);
         attributesPanel.add(tensionUnits);
         
-        JLabel weakLinkStrengthUnits = new JLabel("N");
+        weakLinkStrengthUnits.setText("N");
         weakLinkStrengthUnits.setBounds(617, 78, 46, 14);
         attributesPanel.add(weakLinkStrengthUnits);
         
-        JLabel winchingSpeedUnits = new JLabel("km/h");
+        winchingSpeedUnits.setText("Km/h");
         winchingSpeedUnits.setBounds(617, 53, 46, 14);
         attributesPanel.add(winchingSpeedUnits);
     }
@@ -416,4 +556,11 @@ public class SailplanePanel extends JPanel {
     private JTextField passengerWeightField;
     private JTextField winchingSpeedField;
     private JTextField baggageField;
+    private JCheckBox multipleSeatsCheckBox;
+    private JCheckBox ballastCheckBox;
+    
+    @Override
+    public void update(String msg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

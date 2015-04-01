@@ -1,6 +1,7 @@
 //Successful
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Airfield;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -40,7 +41,13 @@ public class AddEditAirfieldFrame extends JFrame {
     private JTextField airfieldLatitudeField;
     private Airfield currentAirfield;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
     /**
      * Launch the application.
      */
@@ -143,6 +150,7 @@ public class AddEditAirfieldFrame extends JFrame {
     
     JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 180, 89, 23);
+        submitButton.setBackground(new Color(200,200,200));
         airfieldAttributesPanel.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -154,6 +162,7 @@ public class AddEditAirfieldFrame extends JFrame {
         JButton deleteButton = new JButton("Delete");
         deleteButton.setEnabled(isEditEntry);
         deleteButton.setBounds(90, 180, 89, 23);
+        deleteButton.setBackground(new Color(200,200,200));
         airfieldAttributesPanel.add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -164,6 +173,7 @@ public class AddEditAirfieldFrame extends JFrame {
 
         JButton clearButton = new JButton("Clear");
         clearButton.setBounds(180, 180, 89, 23);
+        clearButton.setBackground(new Color(200,200,200));
         airfieldAttributesPanel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -174,6 +184,7 @@ public class AddEditAirfieldFrame extends JFrame {
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 180, 89, 23);
+        cancelButton.setBackground(new Color(200,200,200));
         airfieldAttributesPanel.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -185,11 +196,18 @@ public class AddEditAirfieldFrame extends JFrame {
     
     public void deleteCommand(){
         try{
-            DatabaseEntryDelete.DeleteEntry(currentAirfield);
-            CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-            objectSet.clearAirfield();
-            JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
+
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentAirfield.getName() + "?"
+                    + "\n This will also delete all runways on this airfield and glider and winch positions associated with those runways.",
+                    "Delete Airfield", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseEntryDelete.DeleteEntry(currentAirfield);
+                CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                objectSet.clearAirfield();
+                JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.");
+                parent.update("1");
+                this.dispose();
+            }
         }catch (ClassNotFoundException e1) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e2){
@@ -211,21 +229,35 @@ public class AddEditAirfieldFrame extends JFrame {
             newAirfield.setId(currentAirfield.getId());
             
             try{
-                if (isEditEntry){
-                    DatabaseEntryEdit.UpdateEntry(newAirfield);
-                }
-                else{
-                    Random randomId = new Random();
-                    newAirfield.setId(String.valueOf(randomId.nextInt(100000000)));
-                    while (DatabaseEntryIdCheck.IdCheck(newAirfield)){
-                        newAirfield.setId(String.valueOf(randomId.nextInt(100000000)));
-                    }
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addAirfieldToDB(newAirfield);
-                }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentAirfield(newAirfield);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Airfield for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update("1");
+                    this.dispose();
+                }
+                else
+                {
+                    if (isEditEntry){
+                        DatabaseEntryEdit.UpdateEntry(newAirfield);
+                    }
+                    else{
+                        Random randomId = new Random();
+                        newAirfield.setId(String.valueOf(randomId.nextInt(100000000)));
+                        while (DatabaseEntryIdCheck.IdCheck(newAirfield)){
+                            newAirfield.setId(String.valueOf(randomId.nextInt(100000000)));
+                        }
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addAirfieldToDB(newAirfield);
+                    }
+                    CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                    ObjectSet.setCurrentAirfield(newAirfield);
+                    JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    parent.update("1");
+                    this.dispose();
+                } 
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
                     System.out.println(e1.getMessage());

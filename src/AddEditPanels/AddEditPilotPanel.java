@@ -270,6 +270,7 @@ public class AddEditPilotPanel extends JFrame {
         
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 438, 89, 23);
+        submitButton.setBackground(new Color(200,200,200));
         panel.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -281,6 +282,7 @@ public class AddEditPilotPanel extends JFrame {
         JButton deleteButton = new JButton("Delete");
         deleteButton.setEnabled(isEditEntry);
         deleteButton.setBounds(90, 438, 89, 23);
+        deleteButton.setBackground(new Color(200,200,200));
         panel.add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -291,6 +293,7 @@ public class AddEditPilotPanel extends JFrame {
         
         JButton clearButton = new JButton("Clear");
         clearButton.setBounds(180, 438, 89, 23);
+        clearButton.setBackground(new Color(200,200,200));
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -301,6 +304,7 @@ public class AddEditPilotPanel extends JFrame {
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 438, 89, 23);
+        cancelButton.setBackground(new Color(200,200,200));
         panel.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -334,24 +338,36 @@ public class AddEditPilotPanel extends JFrame {
             Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
                         weight, capability, preference, emergencyContact,
                         medicalInformation, optionalInformation);
-            
-            try{
-                if (isEditEntry){
-                    DatabaseEntryEdit.UpdateEntry(newPilot);
-                }
-                else{
-                    Random randomId = new Random();
-                    newPilot.setPilotId(String.valueOf(randomId.nextInt(100000000)));
-                    while (DatabaseEntryIdCheck.IdCheck(newPilot)){
-                        newPilotId = String.valueOf(randomId.nextInt(100000000));
-                    }
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
-                }
+
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentPilot(newPilot);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                parent.update();
-                this.dispose();
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider Position for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update();
+                    this.dispose();
+                }
+                else
+                {
+                    if (isEditEntry){
+                        DatabaseEntryEdit.UpdateEntry(newPilot);
+                    }
+                    else{
+                        Random randomId = new Random();
+                        newPilot.setPilotId(String.valueOf(randomId.nextInt(100000000)));
+                        while (DatabaseEntryIdCheck.IdCheck(newPilot)){
+                            newPilotId = String.valueOf(randomId.nextInt(100000000));
+                        }
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
+                    }
+                    CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                    ObjectSet.setCurrentPilot(newPilot);
+                    JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    parent.update();
+                    this.dispose();
+                }
             }catch(SQLException e1) {
                 e1.printStackTrace();
                 if(e1.getErrorCode() == 30000)

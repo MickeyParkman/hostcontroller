@@ -25,10 +25,28 @@ public class UnitConversionRate {
     public static final double POUND_FORCE = 0.224808943;
     public static final double KILOGRAM_FORCE = 0.101971621;
     
+    //Conversion rates for weight from the standard of a Pound
     public static final double POUND = 1;
     public static final double KILOGRAM = 0.453592;
     
-    //Conversion rates for weight from the standard of a Newton
+    //Conversion rates for speed from the standard of km/h
+    public static final double KPH = 1;
+    public static final double MPH = 0.621371;
+    
+    
+    public static double convertTensionUnitIndexToFactor(int index) {
+        switch (index) {
+            case 0:
+                return NEWTON;
+            case 1:
+                return POUND_FORCE;
+            case 2:
+                return KILOGRAM_FORCE;
+            default:
+                return NEWTON;
+        }
+    }  
+    
     
     public static double convertDistanceUnitIndexToFactor(int index) {
         switch (index) {
@@ -57,4 +75,15 @@ public class UnitConversionRate {
                 return POUND;
         }
     }    
+    
+    public static double convertSpeedUnitIndexToFactor(int index) {
+        switch (index) {
+            case 0:
+                return KPH;
+            case 1:
+                return MPH;
+            default:
+                return KPH;
+        }
+    }  
 }

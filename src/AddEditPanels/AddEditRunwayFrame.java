@@ -2,6 +2,7 @@
 
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Runway;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
@@ -37,7 +38,13 @@ public class AddEditRunwayFrame extends JFrame {
     private CurrentDataObjectSet objectSet;
     private Runway currentRunway;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
     /**
      * Create the frame.
      */
@@ -98,6 +105,7 @@ public class AddEditRunwayFrame extends JFrame {
 
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 229, 89, 23);
+        submitButton.setBackground(new Color(200,200,200));
         panel.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
         @Override
@@ -109,6 +117,7 @@ public class AddEditRunwayFrame extends JFrame {
         JButton deleteButton = new JButton("Delete");
         deleteButton.setEnabled(isEditEntry);
         deleteButton.setBounds(90, 229, 89, 23);
+        deleteButton.setBackground(new Color(200,200,200));
         panel.add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
         @Override
@@ -119,6 +128,7 @@ public class AddEditRunwayFrame extends JFrame {
 
         JButton clearButton = new JButton("Clear");
         clearButton.setBounds(180, 229, 89, 23);
+        clearButton.setBackground(new Color(200,200,200));
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
         @Override
@@ -129,6 +139,7 @@ public class AddEditRunwayFrame extends JFrame {
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 229, 89, 23);
+        cancelButton.setBackground(new Color(200,200,200));
         panel.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
         @Override
@@ -154,10 +165,16 @@ public class AddEditRunwayFrame extends JFrame {
     public void deleteCommand()
     {
         try{
-            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
-            objectSet.clearRunway();
-            JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentRunway.getId() + "?"
+                    + "\n This will also delete all glider and winch positions associated with this runway.",
+                    "Delete Runway", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
+                objectSet.clearRunway();
+                JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.");
+                parent.update("2");
+                this.dispose();
+            }
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
@@ -194,20 +211,32 @@ public class AddEditRunwayFrame extends JFrame {
             newRunway.setId(currentRunway.getId());
             newRunway.setParentId(parentId);
             try{
-                if (isEditEntry){
-                    DatabaseEntryEdit.UpdateEntry(newRunway);
-                }
-                else{
-                    Random randomId = new Random();
-                    newRunway.setId(String.valueOf(randomId.nextInt(100000000)));
-                    while (DatabaseEntryIdCheck.IdCheck(newRunway)){
-                        newRunway.setId(String.valueOf(randomId.nextInt(100000000)));
-                    }
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
-                }
                 objectSet.setCurrentRunway(newRunway);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Runway for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update("2");
+                    this.dispose();
+                }
+                else
+                {
+                    if (isEditEntry){
+                        DatabaseEntryEdit.UpdateEntry(newRunway);
+                    }
+                    else{
+                        Random randomId = new Random();
+                        newRunway.setId(String.valueOf(randomId.nextInt(100000000)));
+                        while (DatabaseEntryIdCheck.IdCheck(newRunway)){
+                            newRunway.setId(String.valueOf(randomId.nextInt(100000000)));
+                        }
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
+                    }
+                    //objectSet.setCurrentRunway(newRunway);
+                    parent.update("2");
+                    this.dispose();
+                }
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());

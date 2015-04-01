@@ -1,6 +1,7 @@
 //Should be successful if entries in DB are set in the CurrentDataObjectSet
 package AddEditPanels;
 
+import Communications.Observer;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.GliderPosition;
 import DatabaseUtilities.DatabaseEntryEdit;
@@ -33,7 +34,13 @@ public class AddEditGliderPosFrame extends JFrame {
     private CurrentDataObjectSet objectSet;
     private GliderPosition currentGliderPos;
     private boolean isEditEntry;
-
+    private Observer parent;
+    
+    public void attach(Observer o)
+    {
+        parent = o;
+    }
+    
     /**
      * Create the frame.
      */
@@ -134,6 +141,7 @@ public class AddEditGliderPosFrame extends JFrame {
 
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 228, 89, 23);
+        submitButton.setBackground(new Color(200,200,200));
         panel.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -145,6 +153,7 @@ public class AddEditGliderPosFrame extends JFrame {
         JButton deleteButton = new JButton("Delete");
         deleteButton.setEnabled(isEditEntry);
         deleteButton.setBounds(90, 228, 89, 23);
+        deleteButton.setBackground(new Color(200,200,200));
         panel.add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -155,6 +164,7 @@ public class AddEditGliderPosFrame extends JFrame {
 
         JButton clearButton = new JButton("Clear");
         clearButton.setBounds(180, 228, 89, 23);
+        clearButton.setBackground(new Color(200,200,200));
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -165,6 +175,7 @@ public class AddEditGliderPosFrame extends JFrame {
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 228, 89, 23);
+        cancelButton.setBackground(new Color(200,200,200));
         panel.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -176,10 +187,15 @@ public class AddEditGliderPosFrame extends JFrame {
 	
     public void deleteCommand(){
         try{
-            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
-            objectSet.cleafGliderPosition();
-            JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGliderPos.getGliderPositionId() + "?",
+                "Delete Glider Position", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (choice == 0){
+                DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
+                objectSet.cleafGliderPosition();
+                JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.");
+                parent.update("3");
+                this.dispose();
+            }
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
@@ -226,20 +242,33 @@ public class AddEditGliderPosFrame extends JFrame {
             newGliderPos.setRunwayParentId(runwayParentId);
             newGliderPos.setAirfieldParentId(airfieldParentId);
             try{
-                if (isEditEntry){
-                    DatabaseEntryEdit.UpdateEntry(newGliderPos);
-                }
-                else{
-                    Random randomId = new Random();
-                    newGliderPos.setId(String.valueOf(randomId.nextInt(100000000)));
-                    while (DatabaseEntryIdCheck.IdCheck(newGliderPos)){
-                        newGliderPos.setId(String.valueOf(randomId.nextInt(100000000)));
-                    }
-                    DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
-                }
                 objectSet.setCurrentGliderPosition(newGliderPos);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
+                Object[] options = {"One-time Launch", "Save to Database"};
+                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider Position for a one-time launch or save it to the database?",
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                System.out.println(choice);
+                if (choice == 0){
+                    parent.update("3");
+                    this.dispose();
+                }
+                else
+                {
+                    if (isEditEntry){
+                        DatabaseEntryEdit.UpdateEntry(newGliderPos);
+                    }
+                    else{
+                        Random randomId = new Random();
+                        newGliderPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                        while (DatabaseEntryIdCheck.IdCheck(newGliderPos)){
+                            newGliderPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                        }
+                        DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
+                    }
+                    objectSet.setCurrentGliderPosition(newGliderPos);
+                    //JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    parent.update("3");
+                    dispose();
+                }
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());

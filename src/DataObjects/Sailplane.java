@@ -133,11 +133,7 @@ public class Sailplane {
     public int getMaximumGrossWeight(){
         return maximumGrossWeight;
     }
-    
-    public int getMaximumWinchingSpeed(){
-        return maximumWinchingSpeed;
-    }
-    
+        
     public int storeCarryBallast() {
         if (carryBallast)
             return 1;
