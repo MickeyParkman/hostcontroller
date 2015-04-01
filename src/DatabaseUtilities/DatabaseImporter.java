@@ -112,8 +112,9 @@ public class DatabaseImporter {
                 //System.out.println("Importing to runway");
                 
             }
-            else if(fileName.contains("SAILPLANE")) {
-                //System.out.println("Importing to sailplane");
+
+            else if(fileName.contains("GLIDER")) {
+                System.out.println("Importing to glider");
                 
             }else if(fileName.contains("WINCHPOSITION")) {
                 //System.out.println("Importing to winchposition");

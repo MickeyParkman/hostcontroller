@@ -67,7 +67,7 @@ public class DatabaseEntryIdCheck {
     public static boolean IdCheck(Sailplane sailplane) throws Exception
     {
         String idCheckString;
-        idCheckString = "SELECT * FROM SAILPLANE WHERE sailplane_id = '" + sailplane.getId() + "'";
+        idCheckString = "SELECT * FROM GLIDER WHERE glider_id = '" + sailplane.getId() + "'";
         
         return IdCheck(idCheckString);
     }

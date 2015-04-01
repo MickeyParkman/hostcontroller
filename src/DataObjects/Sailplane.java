@@ -21,25 +21,25 @@ public class Sailplane {
     String type;
     
     //max gross weight of the plane
-    int maximumGrossWeight;
+    float maximumGrossWeight;
     
     //empty weight of the plane
-    int emptyWeight;
+    float emptyWeight;
     
     //stall speed of the plane
-    int indicatedStallSpeed;
+    float indicatedStallSpeed;
     
     //max winching speed of the plane
-    int maximumWinchingSpeed;
+    float maximumWinchingSpeed;
     
     //max weak link of the plane
-    int maximumAllowableWeakLinkStrength;
+    float maximumAllowableWeakLinkStrength;
     
     //max tension of the plane
-    int maximumTension;
+    float maximumTension;
     
     //cable release angle of the plane
-    int cableReleaseAngle;
+    float cableReleaseAngle;
     
     //boolean on whether or not the plane can carry ballast
     boolean carryBallast;
@@ -50,7 +50,7 @@ public class Sailplane {
     //optional info on the plane
     String optionalInfo;
     
-    int ballast;
+    float ballast;
     
     /**
      * Default Constructor
@@ -59,9 +59,9 @@ public class Sailplane {
     }
     
     public Sailplane(String nNumber, String Type,
-                     int maximumGrossWeight, int emptyWeight, int indicatedStallSpeed,
-                     int maximumWinchingSpeed, int maximumAllowableWeakLinkStrength, int maxTension,
-                     int cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
+                     float maximumGrossWeight, float emptyWeight, float indicatedStallSpeed,
+                     float maximumWinchingSpeed, float maximumAllowableWeakLinkStrength, float maxTension,
+                     float cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
         this.nNumber = nNumber;
         this.type = Type;
         this.maximumGrossWeight = maximumGrossWeight;
@@ -80,12 +80,9 @@ public class Sailplane {
     
     public String getId(){
         if (id != null){
-            System.out.println("real id");
             return id;
         }
         else{
-            System.out.println("no id");
-            id = "";
             return id;
         }
     }
@@ -102,35 +99,35 @@ public class Sailplane {
         return type;
     }
     
-    public int getMaxGrossWeight() {
+    public float getMaxGrossWeight() {
         return maximumGrossWeight;
     }
     
-    public int getEmptyWeight() {
+    public float getEmptyWeight() {
         return emptyWeight;
     }
     
-    public int getIndicatedStallSpeed() {
+    public float getIndicatedStallSpeed() {
         return indicatedStallSpeed;
     }
     
-    public int getMaxWinchingSpeed() {
+    public float getMaxWinchingSpeed() {
         return maximumWinchingSpeed;
     }
     
-    public int getMaxWeakLinkStrength() {
+    public float getMaxWeakLinkStrength() {
         return maximumAllowableWeakLinkStrength;
     }
     
-    public int getMaxTension() {
+    public float getMaxTension() {
         return maximumTension;
     }
     
-    public int getCableReleaseAngle() {
+    public float getCableReleaseAngle() {
         return cableReleaseAngle;
     }
     
-    public int getMaximumGrossWeight(){
+    public float getMaximumGrossWeight(){
         return maximumGrossWeight;
     }
         
@@ -174,11 +171,11 @@ public class Sailplane {
         return optionalInfo;
     }
     
-    public int getBallastWeight() {
+    public float getBallastWeight() {
         return ballast;
     }
     
-    public void addBallast(int ballast) {
+    public void addBallast(float ballast) {
         this.ballast += ballast;
     }
 

@@ -67,7 +67,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(Sailplane sailplane) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM SAILPLANE WHERE sailplane_id = '" + sailplane.getId() + "'";
+        deleteString = "DELETE FROM GLIDER WHERE glider_id = '" + sailplane.getId() + "'";
         
         Delete(deleteString);
     }

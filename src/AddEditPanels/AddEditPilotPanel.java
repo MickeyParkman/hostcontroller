@@ -57,7 +57,7 @@ public class AddEditPilotPanel extends JFrame {
      * Create the frame.
      */
     public AddEditPilotPanel(Pilot editPilot, boolean isEditEntry) {
-        if (!isEditEntry){
+        if (!isEditEntry || editPilot == null){
             editPilot = new Pilot("", "", "", "", 0, "", "", "", "", "");
         }
         this.isEditEntry = isEditEntry;
@@ -91,7 +91,8 @@ public class AddEditPilotPanel extends JFrame {
         
         flightWeightField = new JTextField();
         if (isEditEntry){
-            flightWeightField.setText(Float.toString(editPilot.getWeight()));
+
+            flightWeightField.setText(String.valueOf(editPilot.getWeight()));
         }
         flightWeightField.setBounds(160, 83, 110, 20);
         panel.add(flightWeightField);
@@ -326,9 +327,9 @@ public class AddEditPilotPanel extends JFrame {
             String medicalInformation = medInfoNameField.getText() +
                     "%" + medInfoPhoneField.getText();
             String optionalInformation = optionalInfoField.getText();
-            int weight = 0;
+            float weight = 0;
             try {
-                weight = Integer.parseInt(flightWeightField.getText());
+                weight = Float.parseFloat(flightWeightField.getText());
             }catch (NumberFormatException e) {
                 weight = -1;
             }
@@ -339,7 +340,7 @@ public class AddEditPilotPanel extends JFrame {
             Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
                         weight, capability, preference, emergencyContact,
                         medicalInformation, optionalInformation);
-
+            
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentPilot(newPilot);
                 Object[] options = {"One-time Launch", "Save to Database"};
@@ -363,8 +364,7 @@ public class AddEditPilotPanel extends JFrame {
                         }
                         DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
                     }
-                    ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-                    ObjectSet.setCurrentPilot(newPilot);
+
                     parent.update();
                     dispose();
                 }
@@ -376,8 +376,7 @@ public class AddEditPilotPanel extends JFrame {
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (Exception e3) {
-                System.out.println(e3.getMessage());
-                //e3.printStackTrace();
+                e3.printStackTrace();
             }
         }
     }
@@ -393,7 +392,9 @@ public class AddEditPilotPanel extends JFrame {
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
-            
+
+            e3.printStackTrace();
+            //System.out.println(e3.getMessage());
         }   
     }
     
@@ -446,7 +447,7 @@ public class AddEditPilotPanel extends JFrame {
             }
             
             if (!weightStr.isEmpty()){
-                Integer.parseInt(weightStr);
+                Float.parseFloat(weightStr);
             }
             
         }catch(NumberFormatException e){

@@ -68,7 +68,7 @@ public class AddEditAirfieldFrame extends JFrame {
      * Create the frame.
      */
     public AddEditAirfieldFrame(Airfield editAirfield, boolean isEditEntry) {
-        if (!isEditEntry){
+        if (!isEditEntry || editAirfield == null){
             editAirfield = new Airfield("", "", 0, 0, 0, 0, "");
         }
         currentAirfield = editAirfield;
@@ -219,8 +219,8 @@ public class AddEditAirfieldFrame extends JFrame {
         if (isComplete()){
             String airfieldName = airfieldNameField.getText();
             String designator = designatorField.getText();
-            int airfieldAltitude = Integer.parseInt(airfieldAltitudeField.getText());
-            int magneticVariation = Integer.parseInt(magneticVariationField.getText());
+            float airfieldAltitude = Float.parseFloat(airfieldAltitudeField.getText());
+            float magneticVariation = Float.parseFloat(magneticVariationField.getText());
             float airfieldLatitude = Float.parseFloat(airfieldLatitudeField.getText());
             float airfieldLongitude = Float.parseFloat(airfieldLongitudeField.getText());
             
@@ -252,9 +252,7 @@ public class AddEditAirfieldFrame extends JFrame {
                         }
                         DatabaseUtilities.DatabaseDataObjectUtilities.addAirfieldToDB(newAirfield);
                     }
-                    ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-                    ObjectSet.setCurrentAirfield(newAirfield);
-                    JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+
                     parent.update("1");
                     this.dispose();
                 } 
@@ -322,8 +320,8 @@ public class AddEditAirfieldFrame extends JFrame {
             if (emptyFields){
                 throw new Exception("");
             }
-            Integer.parseInt(airfieldAltitude);
-            Integer.parseInt(magneticVariation);
+            Float.parseFloat(airfieldAltitude);
+            Float.parseFloat(magneticVariation);
             Float.parseFloat(airfieldLatitude);
             Float.parseFloat(airfieldLongitude);
             

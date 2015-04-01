@@ -84,10 +84,10 @@ public class DatabaseInitialization {
             //JOptionPane.showMessageDialog(null, e.getMessage());
             //throw e;
         }  
-        //Build the Sailplane table
+        //Build the Glider table
         try{
-             createSailplane(connection);
-             System.out.println("Build sailplane");
+             createGlider(connection);
+             System.out.println("Build glider");
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -216,7 +216,7 @@ public class DatabaseInitialization {
             //throw e;
         }
         try{
-             createSailplaneUnits(connection);
+             createGliderUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
             //JOptionPane.showMessageDialog(null, e.getMessage());
@@ -272,7 +272,7 @@ public class DatabaseInitialization {
                 + "first_name VARCHAR(30), "
                 + "last_name VARCHAR(30), "
                 + "middle_name VARCHAR(30), "
-                + "flight_weight INT, "
+                + "flight_weight FLOAT, "
                 + "capability INT, "
                 + "preference INT, "
                 + "emergency_contact_info VARCHAR(100), "
@@ -291,29 +291,29 @@ public class DatabaseInitialization {
     }
     
     /**
-     * Creates the table in the database for storing data associated with a Sailplane object
+     * Creates the table in the database for storing data associated with a Glider object
      * 
      * @param connectthe connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createSailplane(Connection connect) throws SQLException {
-        String createSailplaneString = "CREATE TABLE Sailplane"
-                + "(sailplane_id VARCHAR(8), "
+    private static void createGlider(Connection connect) throws SQLException {
+        String createGliderString = "CREATE TABLE Glider"
+                + "(glider_id VARCHAR(8), "
                 + "n_number VARCHAR(30),"
                 + "type VARCHAR(30),"
-                + "max_gross_weight INT,"
-                + "empty_weight INT,"
-                + "indicated_stall_speed INT,"
-                + "max_winching_speed INT,"
-                + "max_weak_link_strength INT,"
-                + "max_tension INT,"
-                + "cable_release_angle INT, "
+                + "max_gross_weight FLOAT,"
+                + "empty_weight FLOAT,"
+                + "indicated_stall_speed FLOAT,"
+                + "max_winching_speed FLOAT,"
+                + "max_weak_link_strength FLOAT,"
+                + "max_tension FLOAT,"
+                + "cable_release_angle FLOAT, "
                 + "carry_ballast INT, "
                 + "multiple_seats INT, "
                 + "optional_info VARCHAR(150),"
-                + "PRIMARY KEY (sailplane_id))";
+                + "PRIMARY KEY (glider_id))";
         try (Statement createPilotTableStatement = connect.createStatement()) {
-            createPilotTableStatement.execute(createSailplaneString);
+            createPilotTableStatement.execute(createGliderString);
         }catch(SQLException e) {
             throw e;
         }
@@ -408,7 +408,7 @@ public class DatabaseInitialization {
                 + "magnetic_heading VARCHAR(10), "
                 + "parent VARCHAR(30), "
                 + "parent_id VARCHAR(8), "
-                + "altitude INT, "
+                + "altitude FLOAT, "
                 + "optional_info VARCHAR(150), "
                 + "PRIMARY KEY (runway_id, parent_id), "
                 + "FOREIGN KEY (parent_id) REFERENCES Airfield (airfield_id))";
@@ -433,7 +433,7 @@ public class DatabaseInitialization {
                 + "runway_parent_id VARCHAR(8), "
                 + "airfield_parent VARCHAR(30), "
                 + "airfield_parent_id VARCHAR(8), "
-                + "altitude INT, "
+                + "altitude FLOAT, "
                 + "latitude FLOAT, "
                 + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
@@ -461,7 +461,7 @@ public class DatabaseInitialization {
                 + "runway_parent_id VARCHAR(8), "
                 + "airfield_parent VARCHAR(30), "
                 + "airfield_parent_id VARCHAR(8), "
-                + "altitude INT, "
+                + "altitude FLOAT, "
                 + "latitude FLOAT, "
                 + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
@@ -530,7 +530,7 @@ public class DatabaseInitialization {
                 + "unit_settings VARCHAR(1000), "
                 + "display_prefs VARCHAR(1000), " //Guessing at min number of chars
                 + "pilot_name VARCHAR(30), "
-                + "weight INT, "
+                + "weight FLOAT, "
                 + "capability INT, "
                 + "preference INT, "
                 + "emergency_contact_info VARCHAR(100), "
@@ -539,12 +539,12 @@ public class DatabaseInitialization {
                 + "type VARCHAR(30), "
                 + "owner VARCHAR(30), "
                 + "contact_info VARCHAR(60), "
-                + "max_gross_weight INT, "
-                + "empty_weight INT, "
-                + "indicated_stall_speed INT, "
-                + "max_winching_speed INT, "
-                + "max_weak_link_strength INT, "
-                + "max_tension INT, "
+                + "max_gross_weight FLOAT, "
+                + "empty_weight FLOAT, "
+                + "indicated_stall_speed FLOAT, "
+                + "max_winching_speed FLOAT, "
+                + "max_weak_link_strength FLOAT, "
+                + "max_tension FLOAT, "
                 + "airfield_name VARCHAR(30), "
                 + "designator VARCHAR(20), "
                 + "location VARCHAR(20), "
@@ -760,13 +760,13 @@ public class DatabaseInitialization {
     }
     
      /**
-     * Creates the table to store the units for Sailplane data
+     * Creates the table to store the units for Glider data
      * 
      * @param connect the connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createSailplaneUnits(Connection connect) throws SQLException {
-        String createPressureUnitsString = "CREATE TABLE SailplaneUnits"
+    private static void createGliderUnits(Connection connect) throws SQLException {
+        String createPressureUnitsString = "CREATE TABLE GliderUnits"
                 + "( unit_set INT, "
                 + " weight_unit INT, "
                 + " velocity_unit INT, "
@@ -775,7 +775,7 @@ public class DatabaseInitialization {
                 + "FOREIGN KEY (weight_unit) REFERENCES WeightUnits (index), "
                 + "FOREIGN KEY (velocity_unit) REFERENCES VelocityUnits (index) ,"
                 + "FOREIGN KEY (tension_unit) REFERENCES TensionUnits (index))";
-        String insertRow = "INSERT INTO SailplaneUnits(unit_set, weight_unit, velocity_unit, tension_unit) VALUES (0, 0, 0, 0)";
+        String insertRow = "INSERT INTO GliderUnits(unit_set, weight_unit, velocity_unit, tension_unit) VALUES (0, 0, 0, 0)";
         try (Statement createPressureUnitsTableStatement = connect.createStatement()) {
             createPressureUnitsTableStatement.execute(createPressureUnitsString);
             createPressureUnitsTableStatement.executeUpdate(insertRow);
@@ -902,8 +902,8 @@ public class DatabaseInitialization {
         String createPastLaunches = "CREATE TABLE PreviousLaunches"
                 + "( timestamp BIGINT, "
                 + " pilot VARCHAR(20), "
-                + " sailplane VARCHAR(20), "
-                + " PRIMARY KEY (timestamp, pilot, sailplane))";
+                + " glider VARCHAR(20), "
+                + " PRIMARY KEY (timestamp, pilot, glider))";
         try (Statement createPastLaunchesTableStatement = connect.createStatement()) {
             createPastLaunchesTableStatement.execute(createPastLaunches);
         }catch(SQLException e) {
@@ -925,10 +925,10 @@ public class DatabaseInitialization {
                 + " message_timestamp BIGINT,"
                 + " launch_timestamp BIGINT, "
                 + " pilot VARCHAR(20),"
-                + " sailplane VARCHAR(20), "
+                + " glider VARCHAR(20), "
                 + " PRIMARY KEY (id), "
-                + " FOREIGN KEY (launch_timestamp, pilot, sailplane) "
-                + " REFERENCES PreviousLaunches (timestamp, pilot, sailplane))";
+                + " FOREIGN KEY (launch_timestamp, pilot, glider) "
+                + " REFERENCES PreviousLaunches (timestamp, pilot, glider))";
         try (Statement createLaunchMessagesTableStatement = connect.createStatement()) {
             createLaunchMessagesTableStatement.execute(createLaunchMessages);
         }catch(SQLException e) {
@@ -991,9 +991,9 @@ public class DatabaseInitialization {
             } catch(SQLException e) { }
             try 
             {
-                stmt.execute("SELECT * FROM SAILPLANE");
-                stmt.execute("DROP TABLE SAILPLANE");
-                System.out.println("Dropped sailplane");
+                stmt.execute("SELECT * FROM GLIDER");
+                stmt.execute("DROP TABLE GLIDER");
+                System.out.println("Dropped glider");
             } catch(SQLException e) { }
             try 
             {

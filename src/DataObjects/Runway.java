@@ -17,10 +17,10 @@ public class Runway {
     String magneticHeading;
     String parent;
     String parentId;
-    int altitude;
+    float altitude;
     String optionalInfo;
     
-    public Runway(String runwayName, String magneticHeading, String parent, int altitude, String optional){
+    public Runway(String runwayName, String magneticHeading, String parent, float altitude, String optional){
        this.runwayName = runwayName;
        this.magneticHeading = magneticHeading;
        this.parent = parent;
@@ -68,7 +68,7 @@ public class Runway {
         parentId = newParentId;
     }    
     
-    public int getAltitude() {
+    public float getAltitude() {
         return altitude;
     }
     

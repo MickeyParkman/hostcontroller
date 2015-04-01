@@ -75,7 +75,7 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
             float weight = editPilot.getWeight();
             String weightString = "";
             if (weight > 0){
-                weightString = Float.toString(weight);
+                weightString = String.valueOf(weight);
             }
             
             weightField = new JTextField(weightString);

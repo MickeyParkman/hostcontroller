@@ -11,26 +11,26 @@ package DataObjects;
  * @author garreola-gutierrez
  */
 public class Environmental {
-    int windSpeed;
+    float windSpeed;
     String direction;
-    int temperature;
-    int pressure;
-    int  densityAlitude;
+    float temperature;
+    float pressure;
+    float  densityAlitude;
     public Environmental(){
         
     }
-    public Environmental(int w, String d, int a){
+    public Environmental(float w, String d, float a){
        windSpeed = w;
        direction = d;
        densityAlitude = a;
 
     }
     
-    public void setWindSpeed(int wind){
+    public void setWindSpeed(float wind){
         windSpeed = wind;    
     }
     
-    public int getWindSpeed(){
+    public float getWindSpeed(){
     return windSpeed;
     }
     
@@ -42,24 +42,24 @@ public class Environmental {
         return direction;
     }
     
-    public void setTemperature(int t){
+    public void setTemperature(float t){
         temperature = t;
     }
     
-    public int getTemperature(){
+    public float getTemperature(){
         return temperature;
     }
-    public void setPressure(int p){
+    public void setPressure(float p){
         pressure = p;
     }
-    public int getPressure(){
+    public float getPressure(){
         return pressure;
     }
-    public void setAltitudeDensity(int a){
+    public void setAltitudeDensity(float a){
         densityAlitude = a;
         
     }
-    public int getAltitudeDensity(){
+    public float getAltitudeDensity(){
         return densityAlitude;
     }
     public void calculateAltitudeDensity(){
