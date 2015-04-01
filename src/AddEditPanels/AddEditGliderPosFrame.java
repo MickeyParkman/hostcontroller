@@ -18,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import javax.swing.border.MatteBorder;
 
 
 public class AddEditGliderPosFrame extends JFrame {
@@ -39,7 +38,7 @@ public class AddEditGliderPosFrame extends JFrame {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
         if (!isEditEntry){
-            editGliderPos = new GliderPosition("", "","", 0, 0, 0, "");
+            editGliderPos = new GliderPosition("", "", 0, 0, 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentGliderPos = editGliderPos;
@@ -48,13 +47,11 @@ public class AddEditGliderPosFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
-        contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
 
         JPanel panel = new JPanel();
-        panel.setBackground(Color.WHITE);
         panel.setLayout(null);
         contentPane.add(panel, BorderLayout.CENTER);
 
@@ -75,7 +72,6 @@ public class AddEditGliderPosFrame extends JFrame {
         panel.add(latitudeLabel);
 
         latitudeField = new JTextField();
-        latitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             latitudeField.setText(String.valueOf(currentGliderPos.getLatitude()));
         }
@@ -84,7 +80,6 @@ public class AddEditGliderPosFrame extends JFrame {
         panel.add(latitudeField);
 
         longitudeField = new JTextField();
-        longitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             longitudeField.setText(String.valueOf(currentGliderPos.getLongitude()));
         }
@@ -93,7 +88,6 @@ public class AddEditGliderPosFrame extends JFrame {
         panel.add(longitudeField);
 
         altitudeField = new JTextField();
-        altitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             altitudeField.setText(String.valueOf(currentGliderPos.getAltitude()));
         }
@@ -102,8 +96,6 @@ public class AddEditGliderPosFrame extends JFrame {
         panel.add(altitudeField);
 
         nameField = new JTextField(currentGliderPos.getGliderPositionId());
-        nameField.setEditable(!isEditEntry);
-        nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nameField.setColumns(10);
         nameField.setBounds(135, 11, 200, 20);
         panel.add(nameField);
@@ -158,7 +150,6 @@ public class AddEditGliderPosFrame extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
-        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 228, 89, 23);
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
@@ -171,18 +162,6 @@ public class AddEditGliderPosFrame extends JFrame {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 228, 89, 23);
         panel.add(cancelButton);
-        
-        JLabel latitudeUnits = new JLabel("degrees");
-        latitudeUnits.setBounds(345, 89, 65, 14);
-        panel.add(latitudeUnits);
-        
-        JLabel longitudeUnits = new JLabel("degrees");
-        longitudeUnits.setBounds(345, 64, 65, 14);
-        panel.add(longitudeUnits);
-        
-        JLabel altitudeUnits = new JLabel("m");
-        altitudeUnits.setBounds(345, 39, 46, 14);
-        panel.add(altitudeUnits);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -193,16 +172,12 @@ public class AddEditGliderPosFrame extends JFrame {
 	
     public void deleteCommand(){
         try{
-            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGliderPos.getGliderPositionId() + "?",
-                "Delete Glider Position", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if (choice == 0){
-                DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
-                objectSet.cleafGliderPosition();
-                JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.");
-                this.dispose();
-            }
+            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
+            objectSet.cleafGliderPosition();
+            JOptionPane.showMessageDialog(rootPane, currentGliderPos.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
         }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
 
         }
@@ -230,18 +205,15 @@ public class AddEditGliderPosFrame extends JFrame {
                 gliderPosId = nameField.getText();
             }
             
-            String runwayParent = "";
-            String airfieldParent = "";
+            String parent = "";
             try{
-                runwayParent = objectSet.getCurrentRunway().getId();
-                airfieldParent = objectSet.getCurrentAirfield().getDesignator();
+                parent = objectSet.getCurrentRunway().getId();
             }catch (Exception e){
-                System.out.println("cur runway or airfield 404 " + e.getMessage());
+                System.out.println("cur runway 404 " + e.getMessage());
             }
             
-            GliderPosition newGliderPos = new GliderPosition(gliderPosId, 
-                    runwayParent, airfieldParent, altitude,
-                    latitude, longitude, "");
+            GliderPosition newGliderPos = new GliderPosition(gliderPosId, parent,
+                    altitude, latitude, longitude, "");
             try{
                 if (isEditEntry){
                     DatabaseUtilities.DatabaseEntryEdit.UpdateEntry(newGliderPos);
@@ -251,15 +223,15 @@ public class AddEditGliderPosFrame extends JFrame {
                     DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
                 }
                 objectSet.setCurrentGliderPosition(newGliderPos);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
-                    e1.printStackTrace();
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the Glider Position " + newGliderPos.toString() + " already exists in the database");
+                    System.out.println(e1.getMessage());
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the Glider Position " + newGliderPos.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e3) {
 
             }
@@ -310,10 +282,12 @@ public class AddEditGliderPosFrame extends JFrame {
         Float.parseFloat(latitude);
         
     }catch(NumberFormatException e){
-        ew = new ErrWindow("Please input correct numerical values");
+        JOptionPane.showMessageDialog(rootPane, "Please input correct numerical values", "Error", JOptionPane.INFORMATION_MESSAGE);
+        //ew = new ErrWindow("Please input correct numerical values");
         return false;
     }catch(Exception e){
-        ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
+        JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+        //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
         return false;
     }
     return true;

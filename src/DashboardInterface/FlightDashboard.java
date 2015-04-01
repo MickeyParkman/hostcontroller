@@ -2,7 +2,12 @@ package DashboardInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +26,10 @@ public class FlightDashboard extends javax.swing.JPanel
     private GroupLayout layout;
     
     private JPanel graphPane;
+    private JPanel dialSquare;
     private JPanel dialPane;
+    private JPanel systemPane;
+    private JPanel diagramPane;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -37,39 +45,62 @@ public class FlightDashboard extends javax.swing.JPanel
     
     private void initComponents()
     {
-        dial = new TensionSpeedDial();
-        health = new SystemsStatus();
-        graph = new LaunchGraph("title");
         
         //dial.dialUpdate(1125.0, 25.0);
-        dial.setSize(20, 20);
+        //dial.setSize(20, 20);
         
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         
-        contentPane.setBackground(Color.WHITE);
         graphPane = new javax.swing.JPanel();
         dialPane = new JPanel();
         
-        jTextArea1 = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
-
+        //dialPane.setLayout(new BorderLayout());
+        
+        dialPane.setLayout(new GridBagLayout());
+        //dialPane.setBorder(BorderFactory.createLineBorder(Color.black));
+        systemPane = new JPanel();
+        diagramPane = new StateMachinePanel();
+        
+        dialSquare = new JPanel(new BorderLayout()) {
+            @Override
+            public final Dimension getPreferredSize() {
+                Dimension d = super.getPreferredSize();
+                Dimension prefSize = null;
+                Component c = getParent();
+                if (c == null) {
+                    prefSize = new Dimension(
+                            (int)d.getWidth(),(int)d.getHeight());
+                } else if (c!=null &&
+                        c.getWidth()>d.getWidth() &&
+                        c.getHeight()>d.getHeight()) {
+                    prefSize = c.getSize();
+                } else {
+                    prefSize = d;
+                }
+                int w = (int) prefSize.getWidth();
+                int h = (int) prefSize.getHeight();
+                // the smaller of the two sizes
+                int s = (w>h ? h : w);
+                //System.out.println(s);
+                return new Dimension(s,s);
+            }
+        };
+        
+        //dialSquare.setBorder(BorderFactory.createLineBorder(Color.black));
+        
+        dial = new TensionSpeedDial(dialSquare);
+        dialSquare.add(dial, BorderLayout.CENTER);
+        health = new SystemsStatus();
+        graph = new LaunchGraph("title");
+        
+        //dial.dialUpdate(1125.0, 25.0);
+        //dial.setSize(20, 20);
+        
         graphPane.add(graph);
-        dialPane.add(dial);
-
-        jTextArea2.setText("Dial");
-        jScrollPane2.setViewportView(jTextArea2);
-
-        jTextArea4.setText("System Status");
-        jScrollPane4.setViewportView(jTextArea4);
-
-        jTextArea3.setText("State diagram");
-        jScrollPane3.setViewportView(jTextArea3);
+        //dialPane.add(dial, BorderLayout.CENTER);
+        dialPane.add(dialSquare);
+        systemPane.add(health);
         
         layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -80,8 +111,8 @@ public class FlightDashboard extends javax.swing.JPanel
                     .addComponent(graphPane)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4)
-                            .addComponent(jScrollPane3))
+                            .addComponent(systemPane)
+                            .addComponent(diagramPane))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dialPane)))
                 .addContainerGap())
@@ -92,9 +123,9 @@ public class FlightDashboard extends javax.swing.JPanel
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dialPane)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3)
+                        .addComponent(diagramPane)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4)))
+                        .addComponent(systemPane)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(graphPane)
                 .addContainerGap())

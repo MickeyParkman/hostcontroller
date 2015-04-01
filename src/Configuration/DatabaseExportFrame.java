@@ -108,15 +108,11 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
                             DatabaseExporter.exportDatabase(selectedTables, zipLocation);
                             getFrame().dispose();
                             }catch(Exception e)
-                            { }
-                        }
-                        System.out.println(zipLocation);
-                        
-                        
-                        
-                        
-                        
-                    }                      
+                            {
+                                JOptionPane.showMessageDialog(rootPane, "Couldn't export", "Error", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }  
+                    }                     
                 });
         panel.add(submitButton);
         

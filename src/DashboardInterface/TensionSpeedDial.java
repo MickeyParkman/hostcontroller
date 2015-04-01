@@ -35,7 +35,8 @@ public class TensionSpeedDial extends JPanel implements Observer {
         JSlider slider1;
         JSlider slider2;
         private MessagePipeline pipe;
-
+        JPanel parent;
+        
         /**
          * Method to update the dial
          * @param tension a new tension to display
@@ -47,15 +48,16 @@ public class TensionSpeedDial extends JPanel implements Observer {
             dataset2.setValue(tension);      
         }
         
-        public TensionSpeedDial()
+        public TensionSpeedDial(JPanel parentIn)
         {
                 super(new BorderLayout());
+                parent = parentIn;
                 dataset1 = new DefaultValueDataset(0D);
                 dataset2 = new DefaultValueDataset(0D);
                 
                 pipe = MessagePipeline.getInstance();
                 pipe.attach(this);
-                        
+                
                 DialPlot dialplot = new DialPlot();
                         
                 dialplot.setView(0.0D, 0.0D, 1.0D, 1.0D);
@@ -150,12 +152,43 @@ public class TensionSpeedDial extends JPanel implements Observer {
                         dialcap.setRadius(0.10000000000000001D);
                         dialplot.setCap(dialcap);
                         
+                        Dimension size = parent.getBounds().getSize();
+                        int width = parent.getWidth();
+                        int height = parent.getHeight();
+                        
+                        width = 200;
+                        
                         JFreeChart jfreechart = new JFreeChart(dialplot);
                         ChartPanel chartpanel = new ChartPanel(jfreechart);
-                        chartpanel.setPreferredSize(new Dimension(300, 300));
-                        JPanel jpanel = new JPanel(new GridLayout(2, 2));
+                        chartpanel.setPreferredSize(new Dimension(width, width));
+                        
+                        /**
+                        JPanel jpanel = new JPanel() {
+                            @Override
+                            public final Dimension getPreferredSize() {
+                                Dimension d = super.getPreferredSize();
+                                Dimension prefSize = null;
+                                Component c = getParent();
+                                if (c == null) {
+                                    prefSize = new Dimension(
+                                            (int)d.getWidth(),(int)d.getHeight());
+                                } else if (c!=null &&
+                                        c.getWidth()>d.getWidth() &&
+                                        c.getHeight()>d.getHeight()) {
+                                    prefSize = c.getSize();
+                                } else {
+                                    prefSize = d;
+                                }
+                                int w = (int) prefSize.getWidth();
+                                int h = (int) prefSize.getHeight();
+                                // the smaller of the two sizes
+                                int s = (w>h ? h : w);
+                                return new Dimension(s,s);
+                            }
+                        };
+                        **/
+                        //jpanel.add(chartpanel);
                         add(chartpanel);
-                        //add(jpanel, "South");
         }
         
         private void updateDial() {
@@ -173,20 +206,5 @@ public class TensionSpeedDial extends JPanel implements Observer {
         String mParts[] = msg.split(" ");
         dialUpdate(Double.parseDouble(mParts[1]), Double.parseDouble(mParts[0]));
     }
-        
-        /*private class DialUpdater implements Runnable {
-
-            @Override
-            public void run() {
-                for(int i = 0; i < 101; i ++) {
-                    updateDial();
-                    try {
-                        Thread.sleep(100L);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(TensionSpeedDial.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-            
-        }*/
+    
 }

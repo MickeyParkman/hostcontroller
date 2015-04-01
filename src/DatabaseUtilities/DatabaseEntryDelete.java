@@ -7,7 +7,6 @@ package DatabaseUtilities;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
-import java.util.List;
 
 import DataObjects.*;
 
@@ -30,7 +29,7 @@ public class DatabaseEntryDelete {
             Class.forName(clientDriverName);
             Class.forName(driverName);
         }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDB ClientDriver");
+            JOptionPane.showMessageDialog(null, "Can't load JavaDB ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
@@ -38,7 +37,7 @@ public class DatabaseEntryDelete {
         try {
             connection = DriverManager.getConnection(databaseConnectionName);
         } catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong");
+            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
@@ -49,7 +48,7 @@ public class DatabaseEntryDelete {
             ps.close();
         }catch(Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error executing");
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }finally
         { 
@@ -74,7 +73,6 @@ public class DatabaseEntryDelete {
     
     public static void DeleteEntry(Airfield airfield) throws Exception
     {
-        DeleteRunways(airfield.getDesignator());
         String deleteString;
         deleteString = "DELETE FROM AIRFIELD WHERE name = '" + airfield.getName() + "'";
         
@@ -83,11 +81,8 @@ public class DatabaseEntryDelete {
     
     public static void DeleteEntry(Runway runway) throws Exception
     {
-        DeleteGliderPositions(runway.getId(), runway.getParent());
-        DeleteWinchPositions(runway.getId(), runway.getParent());
         String deleteString;
-        deleteString = "DELETE FROM RUNWAY WHERE runway_id = '" + runway.getId() + "' "
-                + "AND parent = '" + runway.getParent() + "'";
+        deleteString = "DELETE FROM RUNWAY WHERE runway_id = '" + runway.getId() + "'";
         
         Delete(deleteString);
     }
@@ -95,9 +90,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(GliderPosition position) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM GLIDERPOSITION WHERE position_id = '" + position.getGliderPositionId() + "' "
-                + "AND runway_parent = '" + position.getRunwayParent() + "' "
-                + "AND airfield_parent = '" + position.getAirfieldParent() + "'";
+        deleteString = "DELETE FROM GLIDERPOSITION WHERE position_id = '" + position.getGliderPositionId() + "'";
         
         Delete(deleteString);
     }
@@ -105,9 +98,7 @@ public class DatabaseEntryDelete {
     public static void DeleteEntry(WinchPosition position) throws Exception
     {
         String deleteString;
-        deleteString = "DELETE FROM WINCHPOSITION WHERE name = '" + position.getName() + "' "
-                + "AND runway_parent = '" + position.getRunwayParent() + "' "
-                + "AND airfield_parent = '" + position.getAirfieldParent() + "'";
+        deleteString = "DELETE FROM WINCHPOSITION WHERE name = '" + position.getName() + "'";
         
         Delete(deleteString);
     }
@@ -120,30 +111,4 @@ public class DatabaseEntryDelete {
         Delete(deleteString);
     }
     
-    private static void DeleteRunways(String airfieldParent) throws Exception
-    {
-        List<Runway> runways = DatabaseDataObjectUtilities.getRunways();
-        for(Runway str: runways){
-            if(str.getParent().equals(airfieldParent))
-                DeleteEntry(str);
-        }
-    }
-    
-    private static void DeleteGliderPositions(String runwayParent, String airfieldParent) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM GLIDERPOSITION WHERE runway_parent = '" + runwayParent + "' "
-                + "AND airfield_parent = '" + airfieldParent + "'";
-        
-        Delete(deleteString);
-    }
-    
-    private static void DeleteWinchPositions(String runwayParent, String airfieldParent) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM WINCHPOSITION WHERE runway_parent = '" + runwayParent + "' "
-                + "AND airfield_parent = '" + airfieldParent + "'";
-        
-        Delete(deleteString);
-    }
 }

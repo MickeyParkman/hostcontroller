@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.border.MatteBorder;
 
 
 public class AddEditGlider extends JFrame {
@@ -49,23 +48,22 @@ public class AddEditGlider extends JFrame {
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
         if (!isEditEntry){
-            sailplaneEdited = new Sailplane("", "", 0, 0, 0, 0, 0, 0, 0, false, false, "");
+            sailplaneEdited = new Sailplane("", "", 0, 0, 0, 0, 0, 0, 0, false, "");
         }
         currentGlider = sailplaneEdited;
         this.isEditEntry = isEditEntry;
         
         setTitle("Glider");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 685, 242);
+        setBounds(100, 100, 650, 242);
         
         contentPane = new JPanel();
-        contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel nNumberLabel = new JLabel("Registration Number:");
-        nNumberLabel.setBounds(10, 11, 125, 14);
+        JLabel nNumberLabel = new JLabel("N Number:");
+        nNumberLabel.setBounds(10, 11, 86, 14);
         contentPane.add(nNumberLabel);
         
         JLabel emptyWeightLabel = new JLabel("Empty Weight:");
@@ -81,7 +79,6 @@ public class AddEditGlider extends JFrame {
         contentPane.add(lblIndicatedStallSpeed);
         
         stallSpeedField = new JTextField();
-        stallSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             stallSpeedField.setText(Integer.toString(currentGlider.getIndicatedStallSpeed()));
         }
@@ -90,7 +87,6 @@ public class AddEditGlider extends JFrame {
         stallSpeedField.setColumns(10);
         
         grossWeightField = new JTextField();
-        grossWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             grossWeightField.setText(Integer.toString(currentGlider.getMaxGrossWeight()));
         }
@@ -99,7 +95,6 @@ public class AddEditGlider extends JFrame {
         grossWeightField.setColumns(10);
         
         emptyWeightField = new JTextField();
-        emptyWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             emptyWeightField.setText(Integer.toString(currentGlider.getEmptyWeight()));
         }
@@ -108,14 +103,11 @@ public class AddEditGlider extends JFrame {
         emptyWeightField.setColumns(10);
         
         nNumberField = new JTextField(currentGlider.getNumber());
-        nNumberField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nNumberField.setBounds(160, 8, 110, 20);
-        nNumberField.setEditable(!isEditEntry);
         contentPane.add(nNumberField);
         nNumberField.setColumns(10);
         
         ballastCheckBox = new JCheckBox("Can Carry Ballast?");
-        ballastCheckBox.setBackground(Color.WHITE);
         ballastCheckBox.setSelected(currentGlider.getCarryBallast());
         ballastCheckBox.setBounds(10, 117, 154, 23);
         contentPane.add(ballastCheckBox);
@@ -137,13 +129,11 @@ public class AddEditGlider extends JFrame {
         contentPane.add(cableReleaseAngleLabel);
         
         multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
-        multipleSeatsCheckBox.setBackground(Color.WHITE);
-        multipleSeatsCheckBox.setSelected(currentGlider.getMultipleSeats());
+        multipleSeatsCheckBox.setSelected(false);//Needs to change to curGlider.getSeats
         multipleSeatsCheckBox.setBounds(320, 117, 159, 23);
         contentPane.add(multipleSeatsCheckBox);
         
         weakLinkField = new JTextField();
-        weakLinkField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             weakLinkField.setText(Integer.toString(currentGlider.getMaxWeakLinkStrength()));
         }
@@ -152,7 +142,6 @@ public class AddEditGlider extends JFrame {
         weakLinkField.setColumns(10);
         
         tensionField = new JTextField();
-        tensionField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             tensionField.setText(Integer.toString(currentGlider.getMaxTension()));
         }
@@ -161,7 +150,6 @@ public class AddEditGlider extends JFrame {
         tensionField.setColumns(10);
         
         releaseAngleField = new JTextField();
-        releaseAngleField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             releaseAngleField.setText(Integer.toString(currentGlider.getCableReleaseAngle()));
         }
@@ -170,7 +158,6 @@ public class AddEditGlider extends JFrame {
         releaseAngleField.setColumns(10);
         
         winchingSpeedField = new JTextField();
-        winchingSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             winchingSpeedField.setText(Integer.toString(currentGlider.getMaxWinchingSpeed()));
         }
@@ -221,7 +208,6 @@ public class AddEditGlider extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
-        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 180, 89, 23);
         contentPane.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
@@ -240,50 +226,17 @@ public class AddEditGlider extends JFrame {
                 cancelCommand();
             }
         });
-        
-        JLabel emptyWeightUnits = new JLabel("kgs");
-        emptyWeightUnits.setBounds(280, 36, 46, 14);
-        contentPane.add(emptyWeightUnits);
-        
-        JLabel grossWeightUnits = new JLabel("kgs");
-        grossWeightUnits.setBounds(280, 61, 46, 14);
-        contentPane.add(grossWeightUnits);
-        
-        JLabel stallSpeedUnits = new JLabel("km/h");
-        stallSpeedUnits.setBounds(280, 86, 46, 14);
-        contentPane.add(stallSpeedUnits);
-        
-        JLabel cableReleaseAngleUnits = new JLabel("degrees");
-        cableReleaseAngleUnits.setBounds(617, 86, 65, 14);
-        contentPane.add(cableReleaseAngleUnits);
-        
-        JLabel tensionUnits = new JLabel("N");
-        tensionUnits.setBounds(617, 61, 46, 14);
-        contentPane.add(tensionUnits);
-        
-        JLabel weakLinkStrengthUnits = new JLabel("N");
-        weakLinkStrengthUnits.setBounds(617, 36, 46, 14);
-        contentPane.add(weakLinkStrengthUnits);
-        
-        JLabel winchingSpeedUnits = new JLabel("km/h");
-        winchingSpeedUnits.setBounds(617, 11, 46, 14);
-        contentPane.add(winchingSpeedUnits);
-
     }
     
     public void deleteCommand(){
         try{
-            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGlider.getNumber() + "?",
-                "Delete Glider", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if (choice == 0){
-                DatabaseEntryDelete.DeleteEntry(currentGlider);
-                CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-                objectSet.clearGlider();
-                JOptionPane.showMessageDialog(rootPane, currentGlider.toString() + " successfully deleted.");
-                this.dispose();
-            }
+            DatabaseEntryDelete.DeleteEntry(currentGlider);
+            CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+            objectSet.clearGlider();
+            JOptionPane.showMessageDialog(rootPane, currentGlider.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         }catch (ClassNotFoundException e1) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e2){
             System.out.println(e2.getMessage());
         }
@@ -308,7 +261,7 @@ public class AddEditGlider extends JFrame {
             }
             Sailplane newGlider = new Sailplane(nNumber ,"", grossWeight,
                     emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
-                    releaseAngle, carryBallast, multipleSeats, "");
+                    releaseAngle, carryBallast, "");
             try{
                 if (isEditEntry){
                     DatabaseEntryDelete.DeleteEntry(oldGlider);
@@ -316,14 +269,13 @@ public class AddEditGlider extends JFrame {
                 DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentGlider(newGlider);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
-                    e1.printStackTrace();
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the glider " + newGlider.toString() + " already exists in the database");
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the glider " + newGlider.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (Exception e3){
                 System.out.println(e3.getMessage());
             }
@@ -406,9 +358,11 @@ public class AddEditGlider extends JFrame {
             Integer.parseInt(winchingSpeed);
             
         }catch(NumberFormatException e){
-            ew = new ErrWindow("Please input a numerical values");
+            JOptionPane.showMessageDialog(rootPane, "Please input a numerical values", "Error", JOptionPane.INFORMATION_MESSAGE);
+            //ew = new ErrWindow("Please input a numerical values");
             return false;
         }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
             ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
             return false;
         }

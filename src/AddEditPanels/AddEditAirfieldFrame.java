@@ -26,7 +26,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
 
 public class AddEditAirfieldFrame extends JFrame {
@@ -70,7 +69,6 @@ public class AddEditAirfieldFrame extends JFrame {
         setBounds(100, 100, 650, 242);
         
         airfieldAttributesPanel = new JPanel();
-        airfieldAttributesPanel.setBackground(Color.WHITE);
         airfieldAttributesPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(airfieldAttributesPanel);
         airfieldAttributesPanel.setLayout(null);
@@ -96,7 +94,6 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldAttributesPanel.add(airfieldLatitudeLabel);
         
         airfieldAltitudeField = new JTextField();
-        airfieldAltitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             airfieldAltitudeField.setText(String.valueOf(currentAirfield.getAltitude()));
         }
@@ -105,20 +102,16 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldAltitudeField.setColumns(10);
         
         designatorField = new JTextField(currentAirfield.getDesignator());
-        designatorField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         designatorField.setBounds(140, 33, 120, 20);
-        designatorField.setEditable(!isEditEntry);
         airfieldAttributesPanel.add(designatorField);
         designatorField.setColumns(10);
         
         airfieldNameField = new JTextField(currentAirfield.getName());
-        airfieldNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         airfieldNameField.setBounds(140, 8, 120, 20);
         airfieldAttributesPanel.add(airfieldNameField);
         airfieldNameField.setColumns(10);
         
         magneticVariationField = new JTextField();
-        magneticVariationField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             magneticVariationField.setText(String.valueOf(currentAirfield.getMagneticVariation()));
         }
@@ -131,7 +124,6 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldAttributesPanel.add(airfieldNameLabel);
         
         airfieldLongitudeField = new JTextField();
-        airfieldLongitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             airfieldLongitudeField.setText(String.valueOf(currentAirfield.getLongitude()));
         }
@@ -140,19 +132,14 @@ public class AddEditAirfieldFrame extends JFrame {
         airfieldLongitudeField.setColumns(10);
         
         airfieldLatitudeField = new JTextField();
-        airfieldLatitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry){
             airfieldLatitudeField.setText(String.valueOf(currentAirfield.getLatitude()));
         }
         airfieldLatitudeField.setBounds(140, 134, 120, 20);
         airfieldAttributesPanel.add(airfieldLatitudeField);
         airfieldLatitudeField.setColumns(10);
-        
-        JLabel requiredNoteLabel = new JLabel("All fields are required");
-        requiredNoteLabel.setBounds(10, 160, 200, 14);
-        airfieldAttributesPanel.add(requiredNoteLabel);
     
-        JButton submitButton = new JButton("Submit");
+    JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 180, 89, 23);
         airfieldAttributesPanel.add(submitButton);
         submitButton.addActionListener(new ActionListener() {
@@ -174,7 +161,6 @@ public class AddEditAirfieldFrame extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
-        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 180, 89, 23);
         airfieldAttributesPanel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
@@ -187,22 +173,6 @@ public class AddEditAirfieldFrame extends JFrame {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setBounds(270, 180, 89, 23);
         airfieldAttributesPanel.add(cancelButton);
-        
-        JLabel latitudeUnits = new JLabel("degrees");
-        latitudeUnits.setBounds(270, 137, 65, 14);
-        airfieldAttributesPanel.add(latitudeUnits);
-        
-        JLabel longitudeUnits = new JLabel("degrees");
-        longitudeUnits.setBounds(270, 112, 65, 14);
-        airfieldAttributesPanel.add(longitudeUnits);
-        
-        JLabel magneticVariationUnits = new JLabel("degrees");
-        magneticVariationUnits.setBounds(270, 87, 65, 14);
-        airfieldAttributesPanel.add(magneticVariationUnits);
-        
-        JLabel altitudeUnits = new JLabel("m");
-        altitudeUnits.setBounds(270, 62, 46, 14);
-        airfieldAttributesPanel.add(altitudeUnits);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -213,20 +183,15 @@ public class AddEditAirfieldFrame extends JFrame {
     
     public void deleteCommand(){
         try{
-            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentAirfield.getName() + "?"
-                    + "\n This will also delete all runways on this airfield and glider and winch positions associated with those runways.",
-                    "Delete Airfield", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if (choice == 0){
-                DatabaseEntryDelete.DeleteEntry(currentAirfield);
-                CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-                objectSet.clearAirfield();
-                JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.");
-                this.dispose();
-            }
+            DatabaseEntryDelete.DeleteEntry(currentAirfield);
+            CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+            objectSet.clearAirfield();
+            JOptionPane.showMessageDialog(rootPane, currentAirfield.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         }catch (ClassNotFoundException e1) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e2){
-            e2.printStackTrace();
+            System.out.println(e2.getMessage());
         }
     }
     
@@ -242,6 +207,7 @@ public class AddEditAirfieldFrame extends JFrame {
             if (!isEditEntry){
                 designator = designatorField.getText();
             }
+            System.out.println(designator);
             Airfield newAirfield = new Airfield(airfieldName, designator, airfieldAltitude,
                     magneticVariation, airfieldLatitude, airfieldLongitude, "");
             try{
@@ -253,16 +219,16 @@ public class AddEditAirfieldFrame extends JFrame {
                 }
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentAirfield(newAirfield);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000)
-                    e1.printStackTrace();
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the airfield " + newAirfield.toString() + " already exists in the database");
+                    System.out.println(e1.getMessage());
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the airfield " + newAirfield.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (Exception e3){
-                e3.printStackTrace();
+                System.out.println(e3.getMessage());
             }
         }
     }
@@ -325,10 +291,12 @@ public class AddEditAirfieldFrame extends JFrame {
             Float.parseFloat(airfieldLongitude);
             
         }catch(NumberFormatException e){
-            ew = new ErrWindow("Please input correct numerical values");
+            JOptionPane.showMessageDialog(rootPane, "Please input correct numerical values", "Error", JOptionPane.INFORMATION_MESSAGE);
+            //ew = new ErrWindow("Please input correct numerical values");
             return false;
         }catch(Exception e){
-            ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+            //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
             return false;
         }
         return true;

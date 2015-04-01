@@ -38,7 +38,7 @@ public class DatabaseEntryEdit
             Class.forName(clientDriverName);
             Class.forName(driverName);
         }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDB ClientDriver");
+            JOptionPane.showMessageDialog(null, "Can't load JavaDB ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
@@ -46,7 +46,7 @@ public class DatabaseEntryEdit
         try {
             connection = DriverManager.getConnection(databaseConnectionName);
         } catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong");
+            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         
@@ -57,7 +57,7 @@ public class DatabaseEntryEdit
             ps.close();
         }catch(Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error executing");
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }finally
         {
@@ -100,16 +100,15 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE SAILPLANE SET "
-                + "type = '" + sailplane.getType() + "', "
-                + "max_gross_weight = " + String.valueOf(sailplane.getMaxGrossWeight()) + ", "
-                + "empty_weight = " + String.valueOf(sailplane.getEmptyWeight()) + ", "
-                + "indicated_stall_speed = " + String.valueOf(sailplane.getIndicatedStallSpeed()) + ", "
-                + "max_winching_speed = " + String.valueOf(sailplane.getMaxWinchingSpeed()) + ", "
-                + "max_tension = " + String.valueOf(sailplane.getMaxTension()) + ", "
-                + "cable_release_angle = " + String.valueOf(sailplane.getCableReleaseAngle()) + ", "
-                + "carry_ballast = " + String.valueOf(sailplane.storeCarryBallast()) + ", "
-                + "multiple_seats = " + String.valueOf(sailplane.storeMultipleSeats()) + ", "
-                + "optional_info = '" + sailplane.getOptionalInfo() + "' "
+                + "type = '" + sailplane.getType() + "'"
+                + "max_gross_weight = '" + String.valueOf(sailplane.getMaxGrossWeight()) + "'"
+                + "empty_weight = '" + String.valueOf(sailplane.getEmptyWeight()) + "'"
+                + "indicated_stall_speed = '" + String.valueOf(sailplane.getIndicatedStallSpeed()) + "'"
+                + "max_winching_speed = '" + String.valueOf(sailplane.getMaxWinchingSpeed()) + "'"
+                + "max_tension = '" + String.valueOf(sailplane.getMaxTension()) + "'"
+                + "cable_release_angle = '" + String.valueOf(sailplane.getCableReleaseAngle()) + "'"
+                + "carry_ballast = '" + String.valueOf(sailplane.storeCarryBallast()) + "'"
+                + "optional_info = '" + sailplane.getOptionalInfo() + "'"
                 + "WHERE n_number = '" + sailplane.getNumber() + "'";
         
         Update(updateString);
@@ -124,13 +123,13 @@ public class DatabaseEntryEdit
     public static void UpdateEntry(Airfield airfield) throws Exception
     {
         String updateString;
-        updateString = "UPDATE AIRFIELD SET "
-                + "designator = '" + airfield.getDesignator() + "', "
-                + "altitude = '" + String.valueOf(airfield.getAltitude()) + "', "
-                + "magnetic_variation = '" + String.valueOf(airfield.getMagneticVariation()) + "', "
-                + "latitude = " + String.valueOf(airfield.getLatitude()) + ", "
-                + "longitude = " + String.valueOf(airfield.getLongitude()) + ", "
-                + "optional_info = '" + airfield.getOptionalInfo() + "' "
+        updateString = "UPDATE ARIFIELD SET "
+                + "designator = '" + airfield.getDesignator() + "'"
+                + "altitude = '" + String.valueOf(airfield.getAltitude()) + "'"
+                + "magneticVariation = '" + String.valueOf(airfield.getMagneticVariation()) + "'"
+                + "latitude = '" + String.valueOf(airfield.getLatitude()) + "'"
+                + "longitude = '" + String.valueOf(airfield.getLongitude()) + "'"
+                + "optional_info = '" + airfield.getOptionalInfo() + "'"
                 + "WHERE name = '" + airfield.getName() + "'";
         
         Update(updateString);
@@ -146,11 +145,11 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE RUNWAY SET "
-                + "magnetic_heading = '" + runway.getMagneticHeading() + "', "
-                + "altitude = " + String.valueOf(runway.getAltitude()) + ", "
-                + "optional_info = '" + runway.getOptionalInfo() + "' "
-                + "WHERE runway_id = '" + runway.getId() + "' "
-                + "AND parent = '" + runway.getParent() + "' ";
+                + "magnetic_heading = '" + runway.getMagneticHeading() + "'"
+                + "parent = '" + runway.getParent() + "'"
+                + "altitude = '" + String.valueOf(runway.getAltitude()) + "'"
+                + "optional_info = '" + runway.getOptionalInfo() + "'"
+                + "WHERE runway_id = '" + runway.getId() + "'";
         
         Update(updateString);
     }
@@ -165,13 +164,12 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE GLIDERPOSITION SET "
-                + "altitude = " + String.valueOf(position.getAltitude()) + ", "
-                + "latitude = " + String.valueOf(position.getLatitude()) + ", "
-                + "longitude = " + String.valueOf(position.getLongitude()) + ", "
-                + "optional_info = '" + position.getOptionalInfo() + "' "
-                + "WHERE position_id = '" + position.getGliderPositionId() + "' "
-                + "AND runway_parent = '" + position.getRunwayParent() + "' "
-                + "AND airfield_parent = '" + position.getAirfieldParent() + "' ";
+                + "runway_parent = '" + position.getParent() + "'"
+                + "altitude = '" + String.valueOf(position.getAltitude()) + "'"
+                + "latitude = '" + String.valueOf(position.getLatitude()) + "'"
+                + "longitude = '" + String.valueOf(position.getLongitude()) + "'"
+                + "optional_info = '" + position.getOptionalInfo() + "'"
+                + "WHERE position_id = '" + position.getGliderPositionId() + "'";
         
         Update(updateString);
     }
@@ -185,14 +183,13 @@ public class DatabaseEntryEdit
     public static void UpdateEntry(WinchPosition position) throws Exception
     {
         String updateString;
-        updateString = "UPDATE WINCHPOSITION SET "
-                + "altitude = " + String.valueOf(position.getAltitude()) + ", "
-                + "latitude = " + String.valueOf(position.getLatitude()) + ", "
-                + "longitude = " + String.valueOf(position.getLongitude()) + ", "
-                + "optional_info = '" + position.getOptionalInfo() + "' "
-                + "WHERE name = '" + position.getName() + "' "
-                + "AND runway_parent = '" + position.getRunwayParent() + "' "
-                + "AND airfield_parent = '" + position.getAirfieldParent() + "' ";
+        updateString = "UPDATE GLIDERPOSITION SET "
+                + "runway_parent = '" + position.getParent() + "'"
+                + "altitude = '" + String.valueOf(position.getAltitude()) + "'"
+                + "latitude = '" + String.valueOf(position.getLatitude()) + "'"
+                + "longitude = '" + String.valueOf(position.getLongitude()) + "'"
+                + "optional_info = '" + position.getOptionalInfo() + "'"
+                + "WHERE name = '" + position.getName() + "'";
         
         Update(updateString);
     }
@@ -207,9 +204,9 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE PARACHUTE SET "
-                + "lift = " + String.valueOf(parachute.getLift()) + " "
-                + "drag = " + String.valueOf(parachute.getDrag()) + " "
-                + "weight = " + String.valueOf(parachute.getWeight()) + " "
+                + "lift = '" + String.valueOf(parachute.getLift()) + "'"
+                + "drag = '" + String.valueOf(parachute.getDrag()) + "'"
+                + "weight = '" + String.valueOf(parachute.getWeight()) + "'"
                 + "WHERE parachute_id = '" + parachute.getParachuteNumber() + "'";
         
         Update(updateString);

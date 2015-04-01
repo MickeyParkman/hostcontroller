@@ -23,7 +23,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.border.MatteBorder;
 
 
 public class AddEditRunwayFrame extends JFrame {
@@ -53,13 +52,11 @@ public class AddEditRunwayFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
-        contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
 
         JPanel panel = new JPanel();
-        panel.setBackground(Color.WHITE);
         panel.setLayout(null);
         contentPane.add(panel, BorderLayout.CENTER);
 
@@ -77,20 +74,16 @@ public class AddEditRunwayFrame extends JFrame {
         panel.add(altitudeLabel);
 
         magneticHeadingField = new JTextField(currentRunway.getMagneticHeading());
-        magneticHeadingField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         magneticHeadingField.setColumns(10);
         magneticHeadingField.setBounds(140, 36, 200, 20);
         panel.add(magneticHeadingField);
 
         nameField = new JTextField(currentRunway.getId());
-        nameField.setEditable(!isEditEntry);
-        nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nameField.setColumns(10);
         nameField.setBounds(140, 11, 200, 20);
         panel.add(nameField);
 
         altitudeField = new JTextField();
-        altitudeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         if (isEditEntry)
         {
             altitudeField.setText(Integer.toString(editRunway.getAltitude()));
@@ -121,7 +114,6 @@ public class AddEditRunwayFrame extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
-        clearButton.setEnabled(!isEditEntry);
         clearButton.setBounds(180, 229, 89, 23);
         panel.add(clearButton);
         clearButton.addActionListener(new ActionListener() {
@@ -153,28 +145,19 @@ public class AddEditRunwayFrame extends JFrame {
         }
         parentAirfieldLabel.setBounds(10, 100, 220, 14);
         panel.add(parentAirfieldLabel);
-        
-        JLabel altitudeUnits = new JLabel("m");
-        altitudeUnits.setBounds(350, 64, 46, 14);
-        panel.add(altitudeUnits);
     }
 
     public void deleteCommand()
     {
         try{
-            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentRunway.getId() + "?"
-                    + "\n This will also delete all glider and winch positions associated with this runway.",
-                    "Delete Runway", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if (choice == 0){
-                DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
-                objectSet.clearRunway();
-                JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.");
-                this.dispose();
-            }
+            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentRunway);
+            objectSet.clearRunway();
+            JOptionPane.showMessageDialog(rootPane, currentRunway.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
         }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
-            //e3.printStackTrace();
+
         }
     }
 
@@ -215,15 +198,15 @@ public class AddEditRunwayFrame extends JFrame {
                     DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
                 }
                 objectSet.setCurrentRunway(newRunway);
-                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.");
+                JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }catch(SQLException e1) {
                 if(e1.getErrorCode() == 30000){
                     System.out.println(e1.getMessage());
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the runway " + newRunway.toString() + " already exists in the database");
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the runway " + newRunway.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.");
+                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e3) {
 
             }
@@ -263,7 +246,8 @@ public class AddEditRunwayFrame extends JFrame {
             throw new Exception("");
         }
     }catch(Exception e){
-        ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
+        JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+        //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
         return false;
     }
     return true;
