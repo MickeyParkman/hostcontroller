@@ -15,6 +15,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -333,7 +334,7 @@ public class AddEditPilotPanel extends JFrame {
             }
             String capability = pilotCapability.getSelection().getActionCommand();
             String preference = pilotLaunchPref.getSelection().getActionCommand();
-            
+            try{
             String newPilotId = currentPilot.getPilotId();
             Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
                         weight, capability, preference, emergencyContact,
@@ -347,7 +348,7 @@ public class AddEditPilotPanel extends JFrame {
                 System.out.println(choice);
                 if (choice == 0){
                     parent.update();
-                    this.dispose();
+                    dispose();
                 }
                 else
                 {
@@ -362,11 +363,10 @@ public class AddEditPilotPanel extends JFrame {
                         }
                         DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
                     }
-                    CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                    ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                     ObjectSet.setCurrentPilot(newPilot);
-                    JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                     parent.update();
-                    this.dispose();
+                    dispose();
                 }
             }catch(SQLException e1) {
                 e1.printStackTrace();
@@ -393,9 +393,7 @@ public class AddEditPilotPanel extends JFrame {
         }catch (ClassNotFoundException e2) {
             JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }catch (Exception e3) {
-            System.out.println("NNNNNNN");
-            e3.printStackTrace();
-            //System.out.println(e3.getMessage());
+            
         }   
     }
     

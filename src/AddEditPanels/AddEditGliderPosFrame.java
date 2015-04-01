@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditGliderPosFrame extends JFrame {
@@ -48,7 +49,7 @@ public class AddEditGliderPosFrame extends JFrame {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
 
         if (!isEditEntry){
-            editGliderPos = new GliderPosition("", "", 0, 0, 0, "");
+            editGliderPos = new GliderPosition("", "", "", 0, 0, 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentGliderPos = editGliderPos;

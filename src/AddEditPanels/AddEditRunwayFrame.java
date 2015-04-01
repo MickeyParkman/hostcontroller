@@ -27,6 +27,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.border.MatteBorder;
 
 
 public class AddEditRunwayFrame extends JFrame {
@@ -198,16 +199,16 @@ public class AddEditRunwayFrame extends JFrame {
             String magneticHeading = magneticHeadingField.getText();
             int altitude = Integer.parseInt(altitudeField.getText());
 
-            String parent = "";
+            String parentDesig = "";
             String parentId = "";
             try{
-                parent = objectSet.getCurrentAirfield().getDesignator();
+                parentDesig = objectSet.getCurrentAirfield().getDesignator();
                 parentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
                 System.out.println("cur Airfield 404 " + e.getMessage());
             }
             
-            Runway newRunway = new Runway(name, magneticHeading, parent, altitude, "");
+            Runway newRunway = new Runway(name, magneticHeading, parentDesig, altitude, "");
             newRunway.setId(currentRunway.getId());
             newRunway.setParentId(parentId);
             try{

@@ -252,7 +252,7 @@ public class AddEditAirfieldFrame extends JFrame {
                         }
                         DatabaseUtilities.DatabaseDataObjectUtilities.addAirfieldToDB(newAirfield);
                     }
-                    CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+                    ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                     ObjectSet.setCurrentAirfield(newAirfield);
                     JOptionPane.showMessageDialog(rootPane, "Submission successfully saved.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                     parent.update("1");
