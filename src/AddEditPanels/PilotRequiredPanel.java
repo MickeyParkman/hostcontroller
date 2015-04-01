@@ -72,10 +72,10 @@ public class PilotRequiredPanel extends javax.swing.JPanel {
             lblWeight.setBounds(10, 104, 88, 14);
             add(lblWeight);
 
-            int weight = editPilot.getWeight();
+            float weight = editPilot.getWeight();
             String weightString = "";
             if (weight > 0){
-                weightString = Integer.toString(weight);
+                weightString = Float.toString(weight);
             }
             
             weightField = new JTextField(weightString);

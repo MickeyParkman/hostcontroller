@@ -91,7 +91,7 @@ public class AddEditPilotPanel extends JFrame {
         
         flightWeightField = new JTextField();
         if (isEditEntry){
-            flightWeightField.setText(Integer.toString(editPilot.getWeight()));
+            flightWeightField.setText(Float.toString(editPilot.getWeight()));
         }
         flightWeightField.setBounds(160, 83, 110, 20);
         panel.add(flightWeightField);
