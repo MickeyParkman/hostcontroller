@@ -203,8 +203,11 @@ public class TensionSpeedDial extends JPanel implements Observer {
 
     @Override
     public void update(String msg) {
-        String mParts[] = msg.split(" ");
-        dialUpdate(Double.parseDouble(mParts[1]), Double.parseDouble(mParts[0]));
+        if(!msg.equals(""))
+        {
+            String mParts[] = msg.split(" ");
+            dialUpdate(Double.parseDouble(mParts[1]), Double.parseDouble(mParts[0]));
+        }
     }
     
 }

@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import Communications.MessagePipeline;
+import javax.swing.SwingUtilities;
 
 /**
  * The Main class is the launching point for this program where the UI and 
@@ -30,7 +31,8 @@ public class Main {
         MainWindow a = new MainWindow();
         a.setVisible(true);
         MessagePipeline pipe = MessagePipeline.getInstance();
-        pipe.start();
+        Thread pipeThread = new Thread(pipe);
+        pipeThread.start();//runs in background, not connected yet
     }
     
 }

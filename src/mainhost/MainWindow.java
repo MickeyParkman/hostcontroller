@@ -26,6 +26,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
+import Communications.MessagePipeline;
+import java.awt.Component;
 
 public class MainWindow extends JFrame {
     private String version = "2.0.1";
@@ -209,8 +211,42 @@ public class MainWindow extends JFrame {
             }
         });
 	fileMenu.add(importDBItem);
+ 
+        JMenuItem connectMenuItem = new JMenuItem("Connect to Server");
+        connectMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                JTextField address = new JTextField("IP", 10);
+                JTextField port = new JTextField("PORT", 10);
+                JPanel connectPanel = new JPanel();
+                connectPanel.setLayout(new BoxLayout(connectPanel, BoxLayout.PAGE_AXIS));
+                connectPanel.add(new JLabel("Enter an IP Address and Port Number"));
+                connectPanel.add(address);
+                connectPanel.add(port);
+                int result = JOptionPane.showConfirmDialog(null, connectPanel, "Connect to Server", JOptionPane.OK_CANCEL_OPTION);
+                if(result == JOptionPane.OK_OPTION)
+                {
+                    String adString = address.getText();
+                    int portNum = Integer.parseInt(port.getText());
+                    if(!MessagePipeline.getInstance().connect(adString, portNum))
+                    {
+                        JOptionPane.showMessageDialog(null, "The Connection Failed", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        });
+	fileMenu.add(connectMenuItem);
         
-
+        JMenuItem disconnectMenuItem = new JMenuItem("Disconnect from Server");
+        disconnectMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                MessagePipeline.getInstance().disconnect();
+            }
+        });
+        //disconnectMenuItem.setEnabled(false);
+	fileMenu.add(disconnectMenuItem);
+        
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -219,6 +255,8 @@ public class MainWindow extends JFrame {
             }
         });
 	fileMenu.add(exitMenuItem);
+        
+        
 //EDIT MENU
         //editMenu.add(editAddMenu);
         
