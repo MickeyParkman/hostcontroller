@@ -20,6 +20,7 @@ public class MessagePipeline implements Runnable {
     private static MessagePipeline instance = null;
     private boolean running = false;
     private boolean connected = false;
+    private MessageListener listener = new MessageListener();
     private String DEBUGMessageList[] = {"5 100 100 65"
                                         ,"5.1 200 100 50"
                                         ,"5.2 100 500 100"
@@ -65,6 +66,7 @@ public class MessagePipeline implements Runnable {
                 writer = new OutputStreamWriter(socket.getOutputStream());
             }
             connected = true;
+            System.out.println("Connected");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,6 +77,7 @@ public class MessagePipeline implements Runnable {
     public void disconnect()
     {
         connected = false;
+        currentMessage = "";
     }
     
     public void attach(Observer ob)
@@ -85,10 +88,10 @@ public class MessagePipeline implements Runnable {
     private void notifyObservers()
     {
         //System.out.println("Notifying");
-        for(Observer ob : observers)
+        /*for(Observer ob : observers)
         {
             ob.update(currentMessage);
-        }
+        }*/
     }
     
     public void TEMPReadFromSocket()
@@ -106,6 +109,16 @@ public class MessagePipeline implements Runnable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }*/
+    }
+    
+    public void ReadFromSocket()
+    {
+        try {
+            String s = reader.readLine();
+            currentMessage = s;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public void TEMPWriteToSocket(String s)
@@ -127,6 +140,7 @@ public class MessagePipeline implements Runnable {
                 long elapsed = 0;
                 while(elapsed < 100) {
                     if(debugMode) TEMPReadFromSocket();
+                    else ReadFromSocket();
                     long endTime = System.currentTimeMillis();
                     elapsed = endTime - startTime;
                 }
@@ -140,7 +154,7 @@ public class MessagePipeline implements Runnable {
                     //error related to sleeping?
                 }
             }*/
-            notifyObservers();
+            if(!currentMessage.equals("")) listener.update(currentMessage);
         }
     }
     
