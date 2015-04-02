@@ -22,6 +22,8 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
 import DataObjects.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
@@ -31,13 +33,14 @@ import java.util.List;
 public class DatabaseImporter {
     
     private static BufferedReader br;
+    private static Connection connection;
     
     public static void importDatabase(String zipName) throws ClassNotFoundException, SQLException 
     {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
         String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
-        Connection connection = null;
+        connection = null;
 
         //Check for DB drivers
         try {
@@ -57,7 +60,6 @@ public class DatabaseImporter {
         }
         
         try {
-            zipName = "C:\\Users\\dbennett3\\Documents\\importTest.zip";
             importTable(connection, zipName);
         }catch(Exception e) {
             JOptionPane.showMessageDialog(null, "Couldn't import", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -82,43 +84,27 @@ public class DatabaseImporter {
             br = new BufferedReader(isr);
             
             if(fileName.contains("CAPABILITY")) {
-                //System.out.println("Importing to capability");
-                //importCapability();
-                
+                importCapability();
             }else if(fileName.contains("PREFERENCE")) {
-                //System.out.println("Importing to preference");
-                
+                importPreference();
             }else if(fileName.contains("AIRFIELD")) {
-                //System.out.println("Importing to airfield");
-                
-            }
-            else if(fileName.contains("GLIDERPOSITION")) {
-                //System.out.println("Importing to gliderposition");
-                
-            }
-            else if(fileName.contains("PARACHUTE")) {
-                //System.out.println("Importing to parachute");
-                
-            }
-            else if(fileName.contains("PILOT")) {
-                System.out.println("Importing to pilot");
-                importPilot();
-            }
-            else if(fileName.contains("PROFILE")) {
-                //System.out.println("Importing to profile");
-                
-            }
-            else if(fileName.contains("RUNWAY")) {
-                //System.out.println("Importing to runway");
-                
-            }
-
-            else if(fileName.contains("GLIDER")) {
-                System.out.println("Importing to glider");
-                
+                importAirfield();
+            }else if(fileName.contains("RUNWAY")) {
+                importRunway();
+            }else if(fileName.contains("GLIDERPOSITION")) {
+                importGliderPosition();
             }else if(fileName.contains("WINCHPOSITION")) {
-                //System.out.println("Importing to winchposition");
-                
+                importWinchPosition();
+            }else if(fileName.contains("PARACHUTE")) {
+                importParachute();
+            }else if(fileName.contains("PILOT")) {
+                importPilot();
+            }else if(fileName.contains("PROFILE")) {
+                importProfile();
+            }else if(fileName.contains("GLIDER")) {
+                importSailplane();
+            }else if(fileName.contains("Messages")) {
+                importMessages();
             }
             
                
@@ -128,34 +114,158 @@ public class DatabaseImporter {
     private static void importCapability() throws IOException {
         String s;
         while((s = br.readLine()) != null) {
-            System.out.println(s);
+            String[] capabilityData = s.split(",", -1);
+            
+            try {
+                PreparedStatement insertStatement = connection.prepareStatement(
+                "INSERT INTO Capability(capability_id, capability_string)"
+                        + "VALUES (?, ?)");
+                insertStatement.setString(1, capabilityData[0]);
+                insertStatement.setString(2, capabilityData[1]);
+                insertStatement.executeUpdate();
+                insertStatement.close();               
+            }catch(Exception e)
+            {   }
+            
+        }
+    }
+    
+    private static void importPreference() throws IOException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] capabilityData = s.split(",", -1);
+            
+            try {
+                PreparedStatement insertStatement = connection.prepareStatement(
+                "INSERT INTO Preference(preference_id, preference_string)"
+                        + "VALUES (?, ?)");
+                insertStatement.setString(1, capabilityData[0]);
+                insertStatement.setString(2, capabilityData[1]);
+                insertStatement.executeUpdate();
+                insertStatement.close();               
+            }catch(Exception e)
+            {   }
         }
     }
     
     private static void importPilot() throws IOException, SQLException, ClassNotFoundException {
-        boolean isNewPilot = true;
-        List<Pilot> currentPilots = DatabaseDataObjectUtilities.getPilots();
-        
         String s;
-        br.readLine();
         while((s = br.readLine()) != null) {
-            String[] pilotData = s.split(",");
-            System.out.println(pilotData[8]);
-            System.out.println(pilotData[9]);
-            
-            Pilot importer = new Pilot(pilotData[0], pilotData[1], pilotData[2], pilotData[3], Integer.parseInt(pilotData[4]), pilotData[5], pilotData[6], pilotData[7], pilotData[8], pilotData[9]);
-            
-            for(Pilot p: currentPilots)
-            {
-                if(p.pilotEquals(importer))
-                {
-                    isNewPilot = false;
-                    break;
-                }
-            }
-            if(isNewPilot)
+            String[] pilotData = s.split(",",-1);
+            Pilot importer = new Pilot(pilotData[0], pilotData[1], pilotData[2], pilotData[3], Float.parseFloat(pilotData[4]), pilotData[5], pilotData[6], pilotData[7], pilotData[8], pilotData[9]);
+            try {
                 DatabaseDataObjectUtilities.addPilotToDB(importer);
-            //System.out.println(s);
+            } catch(SQLIntegrityConstraintViolationException e)
+            {   }
+        }
+    }
+    
+    private static void importAirfield() throws IOException, SQLException, ClassNotFoundException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] airfieldData = s.split(",",-1);
+            Airfield importer = new Airfield(airfieldData[0], airfieldData[1], Float.parseFloat(airfieldData[2]), Float.parseFloat(airfieldData[3]), 
+                    Float.parseFloat(airfieldData[4]), Float.parseFloat(airfieldData[5]), airfieldData[6]);
+            try {
+                DatabaseDataObjectUtilities.addAirfieldToDB(importer);
+            } catch(SQLIntegrityConstraintViolationException e)
+            {   }
+        }
+    }
+    
+    private static void importRunway() throws IOException, SQLException, ClassNotFoundException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] runwayData = s.split(",",-1);
+            Runway importer = new Runway(runwayData[0], runwayData[1], runwayData[2], Float.parseFloat(runwayData[3]), runwayData[6]);
+            try {
+                DatabaseDataObjectUtilities.addRunwayToDB(importer);
+            } catch(SQLIntegrityConstraintViolationException e)
+            {   }
+        }
+    }
+    
+    private static void importGliderPosition() throws IOException, SQLException, ClassNotFoundException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] gliderPositionData = s.split(",",-1);
+            GliderPosition importer = new GliderPosition(gliderPositionData[0], gliderPositionData[1], gliderPositionData[2], Float.parseFloat(gliderPositionData[3]), 
+                    Float.parseFloat(gliderPositionData[4]), Float.parseFloat(gliderPositionData[5]), gliderPositionData[6]);
+            try {
+                DatabaseDataObjectUtilities.addGliderPositionToDB(importer);
+            } catch(SQLIntegrityConstraintViolationException e)
+            {   }
+        }
+    }
+    
+    private static void importWinchPosition() throws IOException, SQLException, ClassNotFoundException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] winchPositionData = s.split(",",-1);
+            WinchPosition importer = new WinchPosition(winchPositionData[0], winchPositionData[1], winchPositionData[2], Float.parseFloat(winchPositionData[3]), 
+                    Float.parseFloat(winchPositionData[4]), Float.parseFloat(winchPositionData[5]), winchPositionData[6]);
+            try {
+                DatabaseDataObjectUtilities.addWinchPositionToDB(importer);
+            } catch(SQLIntegrityConstraintViolationException e)
+            {   }
+        }
+    }
+    
+    private static void importParachute() throws IOException, SQLException, ClassNotFoundException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] parachuteData = s.split(",",-1);
+            Parachute importer = new Parachute(Integer.parseInt(parachuteData[0]), Float.parseFloat(parachuteData[1]), Float.parseFloat(parachuteData[2]), Integer.parseInt(parachuteData[3])); 
+                    
+            try {
+                DatabaseDataObjectUtilities.addParachuteToDB(importer);
+            } catch(SQLIntegrityConstraintViolationException e)
+            {   }
+        }
+    }
+    
+    private static void importProfile() throws IOException, SQLException, ClassNotFoundException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] profileData = s.split(",",-1);
+            Profile importer = new Profile(profileData[0], profileData[1], profileData[2]); 
+                    
+            try {
+                DatabaseDataObjectUtilities.addProfileToDB(importer);
+            } catch(SQLIntegrityConstraintViolationException e)
+            {   }
+        }
+    }
+    
+    private static void importSailplane() throws IOException, SQLException, ClassNotFoundException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] gliderData = s.split(",",-1);
+            Sailplane importer = new Sailplane(gliderData[0], gliderData[1], Float.parseFloat(gliderData[2]), Float.parseFloat(gliderData[3]), 
+                    Float.parseFloat(gliderData[4]), Float.parseFloat(gliderData[5]), Float.parseFloat(gliderData[6]), Float.parseFloat(gliderData[7]),
+                    Float.parseFloat(gliderData[8]), Boolean.valueOf(gliderData[9]), Boolean.valueOf(gliderData[10]), gliderData[11]);
+            try {
+                DatabaseDataObjectUtilities.addSailplaneToDB(importer);
+            } catch(SQLIntegrityConstraintViolationException e)
+            {   }
+        }
+    }
+    
+    private static void importMessages() throws IOException, SQLException, ClassNotFoundException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] messagesData = s.split(",", -1);
+            
+            try {
+                PreparedStatement insertStatement = connection.prepareStatement(
+                "INSERT INTO Preference(timestamp, message)"
+                        + "VALUES (?, ?)");
+                insertStatement.setString(1, String.valueOf(messagesData[0]));
+                insertStatement.setString(2, messagesData[1]);
+                insertStatement.executeUpdate();
+                insertStatement.close();               
+            }catch(Exception e)
+            {   }
         }
     }
 }
