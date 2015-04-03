@@ -232,6 +232,7 @@ public class MainWindow extends JFrame {
                     {
                         JOptionPane.showMessageDialog(null, "The Connection Failed", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
+                    statusLabel.setText("Connected to " + adString + ":" + port.getText());
                 }
             }
         });
@@ -242,6 +243,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 MessagePipeline.getInstance().disconnect();
+                statusLabel.setText("Disconnected");
             }
         });
         //disconnectMenuItem.setEnabled(false);
