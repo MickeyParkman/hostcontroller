@@ -216,8 +216,8 @@ public class MainWindow extends JFrame {
         connectMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                JTextField address = new JTextField("IP", 10);
-                JTextField port = new JTextField("PORT", 10);
+                JTextField address = new JTextField("127.0.0.1", 10);
+                JTextField port = new JTextField("32123", 10);
                 JPanel connectPanel = new JPanel();
                 connectPanel.setLayout(new BoxLayout(connectPanel, BoxLayout.PAGE_AXIS));
                 connectPanel.add(new JLabel("Enter an IP Address and Port Number"));
@@ -232,7 +232,10 @@ public class MainWindow extends JFrame {
                     {
                         JOptionPane.showMessageDialog(null, "The Connection Failed", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
-                    statusLabel.setText("Connected to " + adString + ":" + port.getText());
+                    else
+                    {
+                        statusLabel.setText("Connected to " + adString + ":" + port.getText());                    
+                    }
                 }
             }
         });

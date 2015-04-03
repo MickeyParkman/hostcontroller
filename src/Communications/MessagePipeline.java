@@ -136,14 +136,8 @@ public class MessagePipeline implements Runnable {
         {
             if(connected)
             {
-                long startTime = System.currentTimeMillis();
-                long elapsed = 0;
-                while(elapsed < 100) {
-                    if(debugMode) TEMPReadFromSocket();
-                    else ReadFromSocket();
-                    long endTime = System.currentTimeMillis();
-                    elapsed = endTime - startTime;
-                }
+                if(debugMode) TEMPReadFromSocket();
+                else ReadFromSocket();
             }
             /*else
             {
@@ -154,7 +148,7 @@ public class MessagePipeline implements Runnable {
                     //error related to sleeping?
                 }
             }*/
-            if(!currentMessage.equals("")) listener.update(currentMessage);
+            listener.update(currentMessage);
         }
     }
     
