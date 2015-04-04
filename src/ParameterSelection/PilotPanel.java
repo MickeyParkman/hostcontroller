@@ -114,9 +114,9 @@ public class PilotPanel extends JPanel implements Observer{
             emergencyContactPhone = "";
         }
         emergencyContactNameField.setText(emergencyContactName);
-        emergencyContactNameField.setBackground(Color.GREEN);
+        //emergencyContactNameField.setBackground(Color.GREEN);
         emergencyContactPhoneField.setText(emergencyContactPhone);
-        emergencyContactPhoneField.setBackground(Color.GREEN);
+        //emergencyContactPhoneField.setBackground(Color.GREEN);
 
         /*String medInfo = thePilot.getEmergencyContact();
         String medInfoName;
@@ -167,25 +167,25 @@ public class PilotPanel extends JPanel implements Observer{
     public void clear()
     {
         pilotJList.clearSelection();
-        firstNameField.setText("");
+        firstNameField.setText("No Pilot Selected");
         firstNameField.setBackground(Color.WHITE);
-        lastNameField.setText("");
+        lastNameField.setText("No Pilot Selected");
         lastNameField.setBackground(Color.WHITE);
-        middleNameField.setText("");
+        middleNameField.setText("No Pilot Selected");
         middleNameField.setBackground(Color.WHITE);
-        emergencyContactNameField.setText("");
+        emergencyContactNameField.setText("No Pilot Selected");
         emergencyContactNameField.setBackground(Color.WHITE);
-        emergencyContactPhoneField.setText("");
+        emergencyContactPhoneField.setText("No Pilot Selected");
         emergencyContactPhoneField.setBackground(Color.WHITE);
         /*medInfoNameField.setText("");
         medInfoNameField.setBackground(Color.WHITE);
         medInfoPhoneField.setText("");
         medInfoPhoneField.setBackground(Color.WHITE);*/
-        flightWeightField.setText("");
+        flightWeightField.setText("No Pilot Selected");
         flightWeightField.setBackground(Color.WHITE);
         capabilityButtonGroup.clearSelection();
         preferenceButtonGroup.clearSelection();
-        optionalInfoField.setText("");
+        optionalInfoField.setText("No Pilot Selected");
 }
     
     private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
@@ -319,34 +319,38 @@ public class PilotPanel extends JPanel implements Observer{
         flightWeightField = new JTextField();
         flightWeightField.setBackground(Color.WHITE);
         flightWeightField.setEditable(false);
-        flightWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        flightWeightField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         flightWeightField.setBounds(160, 125, 110, 20);
         attributesPanel.add(flightWeightField);
         flightWeightField.setColumns(10);
+        flightWeightField.setText("No Pilot Selected");
         
         lastNameField = new JTextField();
         lastNameField.setBackground(Color.WHITE);
         lastNameField.setEditable(false);
-        lastNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        lastNameField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         lastNameField.setBounds(160, 100, 110, 20);
         attributesPanel.add(lastNameField);
         lastNameField.setColumns(10);
+        lastNameField.setText("No Pilot Selected");
         
         middleNameField = new JTextField();
         middleNameField.setBackground(Color.WHITE);
         middleNameField.setEditable(false);
-        middleNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        middleNameField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         middleNameField.setBounds(160, 75, 110, 20);
         attributesPanel.add(middleNameField);
         middleNameField.setColumns(10);
+        middleNameField.setText("No Pilot Selected");
         
         firstNameField = new JTextField();
         firstNameField.setBackground(Color.WHITE);
         firstNameField.setEditable(false);
-        firstNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        firstNameField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         firstNameField.setBounds(160, 50, 110, 20);
         attributesPanel.add(firstNameField);
         firstNameField.setColumns(10);
+        firstNameField.setText("No Pilot Selected");
         
         JLabel CapabilityLabel = new JLabel("Capability:");
         CapabilityLabel.setBounds(10, 174, 69, 14);
@@ -410,20 +414,22 @@ public class PilotPanel extends JPanel implements Observer{
         emergencyContactNameField = new JTextField();
         emergencyContactNameField.setBackground(Color.WHITE);
         emergencyContactNameField.setEditable(false);
-        emergencyContactNameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        emergencyContactNameField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         emergencyContactNameField.setBounds(85, 306, 110, 20);
         attributesPanel.add(emergencyContactNameField);
         emergencyContactNameField.setColumns(10);
         emergencyContactNameField.setVisible(false);
+        emergencyContactNameField.setText("No Pilot Selected");
         
         emergencyContactPhoneField = new JTextField();
         emergencyContactPhoneField.setBackground(Color.WHITE);
         emergencyContactPhoneField.setEditable(false);
-        emergencyContactPhoneField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        emergencyContactPhoneField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         emergencyContactPhoneField.setBounds(85, 331, 110, 20);
         attributesPanel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
         emergencyContactPhoneField.setVisible(false);
+        emergencyContactPhoneField.setText("No Pilot Selected");
         
         /*JLabel medInfoLabel = new JLabel("Primary Physician:");
         medInfoLabel.setBounds(244, 247, 117, 14);
@@ -457,11 +463,12 @@ public class PilotPanel extends JPanel implements Observer{
         optionalInfoField = new JTextArea();
         optionalInfoField.setBackground(Color.WHITE);
         optionalInfoField.setEditable(false);
-        optionalInfoField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        optionalInfoField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         optionalInfoField.setBounds(10, 401, 734, 88);
         attributesPanel.add(optionalInfoField);
         optionalInfoField.setColumns(10);
         optionalInfoField.setVisible(false);
+        optionalInfoField.setText("No Pilot Selected");
         
         PilotLabel = new JLabel("Pilot");
         PilotLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));

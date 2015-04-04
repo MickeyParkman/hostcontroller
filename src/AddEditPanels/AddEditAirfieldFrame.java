@@ -2,6 +2,7 @@
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Airfield;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -219,7 +220,7 @@ public class AddEditAirfieldFrame extends JFrame {
         if (isComplete()){
             String airfieldName = airfieldNameField.getText();
             String designator = designatorField.getText();
-            float airfieldAltitude = Float.parseFloat(airfieldAltitudeField.getText());
+            float airfieldAltitude = Float.parseFloat(airfieldAltitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(0);
             float magneticVariation = Float.parseFloat(magneticVariationField.getText());
             float airfieldLatitude = Float.parseFloat(airfieldLatitudeField.getText());
             float airfieldLongitude = Float.parseFloat(airfieldLongitudeField.getText());

@@ -1,6 +1,7 @@
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -266,13 +267,13 @@ public class AddEditGlider extends JFrame {
     public void submitData(){
         if (isComplete()){
             String nNumber = nNumberField.getText();
-            float emptyWeight = Float.parseFloat(emptyWeightField.getText());
-            float grossWeight = Float.parseFloat(grossWeightField.getText());
-            float stallSpeed = Float.parseFloat(stallSpeedField.getText());
-            float weakLink = Float.parseFloat(weakLinkField.getText());
-            float tension = Float.parseFloat(tensionField.getText());
+            float emptyWeight = Float.parseFloat(emptyWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(0);
+            float grossWeight = Float.parseFloat(grossWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(0);
+            float stallSpeed = Float.parseFloat(stallSpeedField.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(0);
+            float weakLink = Float.parseFloat(weakLinkField.getText()) / UnitConversionRate.convertTensionUnitIndexToFactor(0);
+            float tension = Float.parseFloat(tensionField.getText()) / UnitConversionRate.convertTensionUnitIndexToFactor(0);
             float releaseAngle = Float.parseFloat(releaseAngleField.getText());
-            float winchingSpeed = Float.parseFloat(winchingSpeedField.getText());
+            float winchingSpeed = Float.parseFloat(winchingSpeedField.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(0);
             boolean carryBallast = ballastCheckBox.isSelected();
             boolean multipleSeats = multipleSeatsCheckBox.isSelected();
             

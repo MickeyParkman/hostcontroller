@@ -2,6 +2,7 @@
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.WinchPosition;
 import DatabaseUtilities.DatabaseEntryEdit;
@@ -220,7 +221,7 @@ public class AddEditWinchPosFrame extends JFrame {
     protected void submitData(){
         if (isComplete()){
             String winchPosId = nameField.getText();
-            float altitude = Float.parseFloat(altitudeField.getText());
+            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(0);
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             

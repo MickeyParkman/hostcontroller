@@ -3,6 +3,7 @@
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Runway;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
@@ -197,7 +198,7 @@ public class AddEditRunwayFrame extends JFrame {
         if (isComplete()){
             String name = nameField.getText();
             String magneticHeading = magneticHeadingField.getText();
-            float altitude = Float.parseFloat(altitudeField.getText());
+            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(0);
 
             String parentAirfield = "";
             String parentId = "";

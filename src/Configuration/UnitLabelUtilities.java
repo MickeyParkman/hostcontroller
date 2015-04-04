@@ -36,6 +36,8 @@ public class UnitLabelUtilities {
                 return "ldf";
             case 2: 
                 return "kgf";
+            case 3:
+                return "dN";
             default:
                 return "";
         } 
@@ -44,9 +46,9 @@ public class UnitLabelUtilities {
     public static String weightUnitIndexToString(int index) {
        switch (index) {
             case 0:
-                return "lbs";
-            case 1:
                 return "kg";
+            case 1:
+                return "lbs";
             default:
                 return "";
         } 
@@ -55,9 +57,9 @@ public class UnitLabelUtilities {
     public static String velocityUnitIndexToString(int index) {
        switch (index) {
             case 0:
-                return "mph";
-            case 1:
                 return "kph";
+            case 1:
+                return "mph";
             case 2: 
                 return "m/s";
             case 3:

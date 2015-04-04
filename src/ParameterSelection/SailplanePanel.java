@@ -156,21 +156,21 @@ public class SailplanePanel extends JPanel implements Observer{
     public void clear()
     {
         sailplaneJList.clearSelection();
-        nNumberField.setText("");
+        nNumberField.setText("No Glider Selected");
         nNumberField.setBackground(Color.WHITE);
-        weakLinkField.setText("");
+        weakLinkField.setText("No Glider Selected");
         weakLinkField.setBackground(Color.WHITE);
-        tensionField.setText("");
+        tensionField.setText("No Glider Selected");
         tensionField.setBackground(Color.WHITE);
-        releaseAngleField.setText("");
+        releaseAngleField.setText("No Glider Selected");
         releaseAngleField.setBackground(Color.WHITE);
-        stallSpeedField.setText("");
+        stallSpeedField.setText("No Glider Selected");
         stallSpeedField.setBackground(Color.WHITE);
-        grossWeightField.setText("");
+        grossWeightField.setText("No Glider Selected");
         grossWeightField.setBackground(Color.WHITE);
-        emptyWeightField.setText("");
+        emptyWeightField.setText("No Glider Selected");
         emptyWeightField.setBackground(Color.WHITE);
-        winchingSpeedField.setText("");
+        winchingSpeedField.setText("No Glider Selected");
         winchingSpeedField.setBackground(Color.WHITE);
         ballastCheckBox.setSelected(false);
         multipleSeatsCheckBox.setSelected(false);
@@ -300,34 +300,38 @@ public class SailplanePanel extends JPanel implements Observer{
         stallSpeedField = new JTextField();
         stallSpeedField.setBackground(Color.WHITE);
         stallSpeedField.setEditable(false);
-        stallSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        stallSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         stallSpeedField.setBounds(160, 125, 110, 20);
         attributesPanel.add(stallSpeedField);
         stallSpeedField.setColumns(10);
+        stallSpeedField.setText("No Glider Selected");
         
         grossWeightField = new JTextField();
         grossWeightField.setBackground(Color.WHITE);
         grossWeightField.setEditable(false);
-        grossWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        grossWeightField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         grossWeightField.setBounds(160, 100, 110, 20);
         attributesPanel.add(grossWeightField);
         grossWeightField.setColumns(10);
+        grossWeightField.setText("No Glider Selected");
         
         emptyWeightField = new JTextField();
         emptyWeightField.setBackground(Color.WHITE);
         emptyWeightField.setEditable(false);
-        emptyWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        emptyWeightField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         emptyWeightField.setBounds(160, 75, 110, 20);
         attributesPanel.add(emptyWeightField);
         emptyWeightField.setColumns(10);
+        emptyWeightField.setText("No Glider Selected");
         
         nNumberField = new JTextField();
         nNumberField.setBackground(Color.WHITE);
         nNumberField.setEditable(false);
-        nNumberField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        nNumberField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         nNumberField.setBounds(160, 50, 110, 20);
         attributesPanel.add(nNumberField);
         nNumberField.setColumns(10);
+        nNumberField.setText("No Glider Selected");
         
         ballastCheckBox = new JCheckBox("Can Carry Ballast?");
         ballastCheckBox.setBackground(Color.WHITE);
@@ -405,26 +409,29 @@ public class SailplanePanel extends JPanel implements Observer{
         weakLinkField = new JTextField();
         weakLinkField.setBackground(Color.WHITE);
         weakLinkField.setEditable(false);
-        weakLinkField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        weakLinkField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         weakLinkField.setBounds(487, 75, 120, 20);
         attributesPanel.add(weakLinkField);
         weakLinkField.setColumns(10);
+        weakLinkField.setText("No Glider Selected");
         
         tensionField = new JTextField();
         tensionField.setBackground(Color.WHITE);
         tensionField.setEditable(false);
-        tensionField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        tensionField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         tensionField.setBounds(487, 100, 120, 20);
         attributesPanel.add(tensionField);
         tensionField.setColumns(10);
+        tensionField.setText("No Glider Selected");
         
         releaseAngleField = new JTextField();
         releaseAngleField.setBackground(Color.WHITE);
         releaseAngleField.setEditable(false);
-        releaseAngleField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        releaseAngleField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         releaseAngleField.setBounds(487, 125, 120, 20);
         attributesPanel.add(releaseAngleField);
         releaseAngleField.setColumns(10);
+        releaseAngleField.setText("No Glider Selected");
         
         passengerWeightField = new JTextField();
         passengerWeightField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -437,10 +444,11 @@ public class SailplanePanel extends JPanel implements Observer{
         winchingSpeedField = new JTextField();
         winchingSpeedField.setBackground(Color.WHITE);
         winchingSpeedField.setEditable(false);
-        winchingSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        winchingSpeedField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         winchingSpeedField.setBounds(487, 50, 120, 20);
         attributesPanel.add(winchingSpeedField);
         winchingSpeedField.setColumns(10);
+        winchingSpeedField.setText("No Glider Selected");
         
         JCheckBox baggageCheckBox = new JCheckBox("Baggage?");
         baggageCheckBox.setBackground(Color.WHITE);

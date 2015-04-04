@@ -1,6 +1,7 @@
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -92,7 +93,7 @@ public class AddEditPilotPanel extends JFrame {
         flightWeightField = new JTextField();
         if (isEditEntry){
 
-            flightWeightField.setText(String.valueOf(editPilot.getWeight()));
+            flightWeightField.setText(String.valueOf((currentPilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(0))));
         }
         flightWeightField.setBounds(160, 83, 110, 20);
         panel.add(flightWeightField);
@@ -220,7 +221,7 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
         
-        JLabel medInfoLabel = new JLabel("Primary Physician:");
+        /*JLabel medInfoLabel = new JLabel("Primary Physician:");
         medInfoLabel.setBounds(244, 205, 117, 14);
         panel.add(medInfoLabel);
         
@@ -255,7 +256,7 @@ public class AddEditPilotPanel extends JFrame {
         
         JLabel medInfoPhoneLabel = new JLabel("Phone:");
         medInfoPhoneLabel.setBounds(267, 255, 46, 14);
-        panel.add(medInfoPhoneLabel);
+        panel.add(medInfoPhoneLabel);*/
         
         JLabel additionalInformationLabel = new JLabel("Additional Information:");
         additionalInformationLabel.setBounds(10, 300, 152, 14);
@@ -324,12 +325,12 @@ public class AddEditPilotPanel extends JFrame {
             String middleName = middleNameField.getText();
             String emergencyContact = emergencyContactNameField.getText() +
                     "%" + emergencyContactPhoneField.getText();
-            String medicalInformation = medInfoNameField.getText() +
-                    "%" + medInfoPhoneField.getText();
+            //String medicalInformation = medInfoNameField.getText() +
+            //        "%" + medInfoPhoneField.getText();
             String optionalInformation = optionalInfoField.getText();
             float weight = 0;
             try {
-                weight = Float.parseFloat(flightWeightField.getText());
+                weight = Float.parseFloat(flightWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(0);
             }catch (NumberFormatException e) {
                 weight = -1;
             }
@@ -339,7 +340,7 @@ public class AddEditPilotPanel extends JFrame {
             String newPilotId = currentPilot.getPilotId();
             Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
                         weight, capability, preference, emergencyContact,
-                        medicalInformation, optionalInformation);
+                        "", optionalInformation);
             
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentPilot(newPilot);
