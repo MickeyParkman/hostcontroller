@@ -19,6 +19,7 @@ public class UnitConversionRate {
     public static final float MILLIMETERS = 1000;
     public static final float CENTIMETERS = 100;
     public static final float KILOMETERS = (float) 0.001;
+    public static final float MILES = (float) 0.000621371;
     
     //Conversion rates for tension from the standard of a Newton
     public static final float NEWTON = 1;
@@ -65,6 +66,8 @@ public class UnitConversionRate {
                 return CENTIMETERS;
             case 4:
                 return KILOMETERS;
+            case 5:
+                return MILES;
             default:
                 return METERS;
         }

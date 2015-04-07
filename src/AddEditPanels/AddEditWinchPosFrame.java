@@ -3,6 +3,7 @@ package AddEditPanels;
 
 import Communications.Observer;
 import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.WinchPosition;
 import DatabaseUtilities.DatabaseEntryEdit;
@@ -27,7 +28,6 @@ import javax.swing.border.MatteBorder;
 
 
 public class AddEditWinchPosFrame extends JFrame {
-
     private JPanel contentPane;
     private JTextField latitudeField;
     private JTextField longitudeField;
@@ -37,6 +37,15 @@ public class AddEditWinchPosFrame extends JFrame {
     private WinchPosition currentWinchPos;
     private boolean isEditEntry;
     private Observer parent;
+    private JLabel winchPosAltitudeUnitsLabel = new JLabel(); 
+    private int winchPosAltitudeUnitsID;
+    
+    public void setupUnits()
+    {
+        winchPosAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("winchPosAltitude");
+        String winchPosAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(winchPosAltitudeUnitsID);
+        winchPosAltitudeUnitsLabel.setText(winchPosAltitudeUnitsString);
+    }
     
     public void attach(Observer o)
     {
@@ -48,6 +57,7 @@ public class AddEditWinchPosFrame extends JFrame {
      */
     public AddEditWinchPosFrame(WinchPosition editWinchPos, boolean isEditEntry) {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+        setupUnits();
 
 
         if (!isEditEntry || editWinchPos == null){
@@ -102,7 +112,7 @@ public class AddEditWinchPosFrame extends JFrame {
 
         altitudeField = new JTextField();
         if (isEditEntry){
-            altitudeField.setText(String.valueOf(currentWinchPos.getAltitude()));
+            altitudeField.setText(String.valueOf((currentWinchPos.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID))));
         }
         altitudeField.setColumns(10);
         altitudeField.setBounds(135, 36, 200, 20);
@@ -131,7 +141,7 @@ public class AddEditWinchPosFrame extends JFrame {
         parentRunwayLabel.setBounds(10, 151, 220, 14);
         panel.add(parentRunwayLabel);
         try{
-        JLabel parentRunwayNameLabel = new JLabel(objectSet.getCurrentRunway().getId());
+        JLabel parentRunwayNameLabel = new JLabel(objectSet.getCurrentRunway().getName());
         parentRunwayNameLabel.setBounds(135, 151, 220, 14);
         panel.add(parentRunwayNameLabel);
         }catch(Exception e){
@@ -181,6 +191,18 @@ public class AddEditWinchPosFrame extends JFrame {
         cancelButton.setBounds(270, 228, 89, 23);
         cancelButton.setBackground(new Color(200,200,200));
         panel.add(cancelButton);
+        
+        JLabel latitudeUnitsLabel = new JLabel("degrees");
+        latitudeUnitsLabel.setBounds(345, 89, 60, 14);
+        panel.add(latitudeUnitsLabel);
+        
+        JLabel longitudeUnitsLabel = new JLabel("degrees");
+        longitudeUnitsLabel.setBounds(345, 64, 60, 14);
+        panel.add(longitudeUnitsLabel);
+        
+        winchPosAltitudeUnitsLabel.setText("m");
+        winchPosAltitudeUnitsLabel.setBounds(345, 39, 46, 14);
+        panel.add(winchPosAltitudeUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -221,7 +243,7 @@ public class AddEditWinchPosFrame extends JFrame {
     protected void submitData(){
         if (isComplete()){
             String winchPosId = nameField.getText();
-            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(0);
+            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID);
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             
@@ -339,5 +361,4 @@ public class AddEditWinchPosFrame extends JFrame {
         }
         return true;
     }
-
 }

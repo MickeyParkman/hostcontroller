@@ -3,6 +3,7 @@ package AddEditPanels;
 
 import Communications.Observer;
 import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Airfield;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -41,8 +42,18 @@ public class AddEditAirfieldFrame extends JFrame {
     private JTextField airfieldLongitudeField;
     private JTextField airfieldLatitudeField;
     private Airfield currentAirfield;
+    private CurrentDataObjectSet objectSet;
     private boolean isEditEntry;
     private Observer parent;
+    private JLabel airfieldAltitudeUnitsLabel = new JLabel(); 
+    private int airfieldAltitudeUnitsID;
+    
+    public void setupUnits()
+    {
+        airfieldAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("airfieldAltitude");
+        String airfieldAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(airfieldAltitudeUnitsID);
+        airfieldAltitudeUnitsLabel.setText(airfieldAltitudeUnitsString);
+    }
     
     public void attach(Observer o)
     {
@@ -50,25 +61,12 @@ public class AddEditAirfieldFrame extends JFrame {
     }
     
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-            EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                            try {
-                                    AddEditAirfieldFrame frame = new AddEditAirfieldFrame(new Airfield("name", "des", 100, 200, 300, 400, "optional"), false);
-                                    frame.setVisible(true);
-                            } catch (Exception e) {
-                                    e.printStackTrace();
-                            }
-                    }
-            });
-    }
-
-    /**
      * Create the frame.
      */
     public AddEditAirfieldFrame(Airfield editAirfield, boolean isEditEntry) {
+        objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+        setupUnits();
+        
         if (!isEditEntry || editAirfield == null){
             editAirfield = new Airfield("", "", 0, 0, 0, 0, "");
         }
@@ -105,7 +103,7 @@ public class AddEditAirfieldFrame extends JFrame {
         
         airfieldAltitudeField = new JTextField();
         if (isEditEntry){
-            airfieldAltitudeField.setText(String.valueOf(currentAirfield.getAltitude()));
+            airfieldAltitudeField.setText(String.valueOf(currentAirfield.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
         }
         airfieldAltitudeField.setBounds(140, 58, 120, 20);
         airfieldAttributesPanel.add(airfieldAltitudeField);
@@ -187,6 +185,22 @@ public class AddEditAirfieldFrame extends JFrame {
         cancelButton.setBounds(270, 180, 89, 23);
         cancelButton.setBackground(new Color(200,200,200));
         airfieldAttributesPanel.add(cancelButton);
+        
+        JLabel latitudeUnitsLabel = new JLabel("degrees");
+        latitudeUnitsLabel.setBounds(270, 137, 60, 14);
+        airfieldAttributesPanel.add(latitudeUnitsLabel);
+        
+        JLabel longitudeUnitsLabel = new JLabel("degrees");
+        longitudeUnitsLabel.setBounds(270, 112, 60, 14);
+        airfieldAttributesPanel.add(longitudeUnitsLabel);
+        
+        JLabel magneticVariationUnitsLabel = new JLabel("degrees");
+        magneticVariationUnitsLabel.setBounds(270, 87, 60, 14);
+        airfieldAttributesPanel.add(magneticVariationUnitsLabel);
+        
+        airfieldAltitudeUnitsLabel.setText("m");
+        airfieldAltitudeUnitsLabel.setBounds(270, 62, 46, 14);
+        airfieldAttributesPanel.add(airfieldAltitudeUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -220,7 +234,7 @@ public class AddEditAirfieldFrame extends JFrame {
         if (isComplete()){
             String airfieldName = airfieldNameField.getText();
             String designator = designatorField.getText();
-            float airfieldAltitude = Float.parseFloat(airfieldAltitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(0);
+            float airfieldAltitude = Float.parseFloat(airfieldAltitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID);
             float magneticVariation = Float.parseFloat(magneticVariationField.getText());
             float airfieldLatitude = Float.parseFloat(airfieldLatitudeField.getText());
             float airfieldLongitude = Float.parseFloat(airfieldLongitudeField.getText());

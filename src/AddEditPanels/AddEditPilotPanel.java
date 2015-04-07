@@ -2,6 +2,7 @@ package AddEditPanels;
 
 import Communications.Observer;
 import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -48,6 +49,16 @@ public class AddEditPilotPanel extends JFrame {
     private Pilot currentPilot;
     private boolean isEditEntry;
     private Observer parent;
+    private CurrentDataObjectSet currentData;
+    private int flightWeightUnitsID;
+    private JLabel flightWeightUnitsLabel = new JLabel();
+    
+    public void setupUnits()
+    {
+        flightWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("flightWeight");
+        String flightWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(flightWeightUnitsID);
+        flightWeightUnitsLabel.setText(flightWeightUnitsString);
+    }
     
     public void attach(Observer o)
     {
@@ -58,6 +69,9 @@ public class AddEditPilotPanel extends JFrame {
      * Create the frame.
      */
     public AddEditPilotPanel(Pilot editPilot, boolean isEditEntry) {
+        currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        setupUnits();
+        
         if (!isEditEntry || editPilot == null){
             editPilot = new Pilot("", "", "", "", 0, "", "", "", "", "");
         }
@@ -71,7 +85,7 @@ public class AddEditPilotPanel extends JFrame {
         setBounds(100, 100, 500, 500);
         
         JPanel panel = new JPanel();
-        add(panel, BorderLayout.CENTER);
+        getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(null);
 
         JLabel firstNameLabel = new JLabel("First Name: *");
@@ -93,7 +107,7 @@ public class AddEditPilotPanel extends JFrame {
         flightWeightField = new JTextField();
         if (isEditEntry){
 
-            flightWeightField.setText(String.valueOf((currentPilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(0))));
+            flightWeightField.setText(String.valueOf((currentPilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID))));
         }
         flightWeightField.setBounds(160, 83, 110, 20);
         panel.add(flightWeightField);
@@ -309,6 +323,10 @@ public class AddEditPilotPanel extends JFrame {
         cancelButton.setBounds(270, 438, 89, 23);
         cancelButton.setBackground(new Color(200,200,200));
         panel.add(cancelButton);
+        
+        flightWeightUnitsLabel.setText("kg");
+        flightWeightUnitsLabel.setBounds(280, 86, 46, 14);
+        panel.add(flightWeightUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -330,7 +348,7 @@ public class AddEditPilotPanel extends JFrame {
             String optionalInformation = optionalInfoField.getText();
             float weight = 0;
             try {
-                weight = Float.parseFloat(flightWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(0);
+                weight = Float.parseFloat(flightWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID);
             }catch (NumberFormatException e) {
                 weight = -1;
             }

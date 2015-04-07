@@ -47,15 +47,15 @@ public class SailplanePanel extends JPanel implements Observer{
     private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
     private CurrentDataObjectSet currentData;
     JScrollPane sailplaneScrollPane = new JScrollPane();
-    private JLabel emptyWeightUnits = new JLabel();
-    private JLabel maxGrossWeightUnits = new JLabel();
-    private JLabel stallSpeedUnits = new JLabel();
-    private JLabel ballastWeightUnits = new JLabel();
-    private JLabel baggageWeightUnits = new JLabel();
-    private JLabel passengerWeightUnits = new JLabel();
-    private JLabel tensionUnits = new JLabel();
-    private JLabel weakLinkStrengthUnits = new JLabel();
-    private JLabel winchingSpeedUnits = new JLabel();
+    private JLabel emptyWeightUnitsLabel = new JLabel();
+    private JLabel maxGrossWeightUnitsLabel = new JLabel();
+    private JLabel stallSpeedUnitsLabel = new JLabel();
+    private JLabel ballastWeightUnitsLabel = new JLabel();
+    private JLabel baggageWeightUnitsLabel = new JLabel();
+    private JLabel passengerWeightUnitsLabel = new JLabel();
+    private JLabel tensionUnitsLabel = new JLabel();
+    private JLabel weakLinkStrengthUnitsLabel = new JLabel();
+    private JLabel winchingSpeedUnitsLabel = new JLabel();
     
     @Override
     public void update()
@@ -73,39 +73,39 @@ public class SailplanePanel extends JPanel implements Observer{
         
         int emptyWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("emptyWeight");
         String emptyWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(emptyWeightUnitsID);
-        emptyWeightUnits.setText(emptyWeightUnitsString);
+        emptyWeightUnitsLabel.setText(emptyWeightUnitsString);
         
         int maxGrossWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("maxGrossWeight");
         String maxGrossWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(maxGrossWeightUnitsID);
-        maxGrossWeightUnits.setText(maxGrossWeightUnitsString);
+        maxGrossWeightUnitsLabel.setText(maxGrossWeightUnitsString);
         
         int stallSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("stallSpeed");
         String stallSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(stallSpeedUnitsID);
-        stallSpeedUnits.setText(stallSpeedUnitsString);
+        stallSpeedUnitsLabel.setText(stallSpeedUnitsString);
         
         int ballastWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("ballastWeight");
         String ballastWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(ballastWeightUnitsID);
-        ballastWeightUnits.setText(ballastWeightUnitsString);
+        ballastWeightUnitsLabel.setText(ballastWeightUnitsString);
         
         int baggageWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("baggageWeight");
         String baggageWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(baggageWeightUnitsID);
-        baggageWeightUnits.setText(baggageWeightUnitsString);
+        baggageWeightUnitsLabel.setText(baggageWeightUnitsString);
         
         int passengerWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("passengerWeight");
         String passengerWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(passengerWeightUnitsID);
-        passengerWeightUnits.setText(passengerWeightUnitsString);
+        passengerWeightUnitsLabel.setText(passengerWeightUnitsString);
         
         int tensionUnitsID = currentData.getCurrentProfile().getUnitSetting("maxTension");
         String tensionUnitsString = UnitLabelUtilities.tensionUnitIndexToString(tensionUnitsID);
-        tensionUnits.setText(tensionUnitsString);
+        tensionUnitsLabel.setText(tensionUnitsString);
         
         int weakLinkStrengthUnitsID = currentData.getCurrentProfile().getUnitSetting("weakLinkStrength");
         String weakLinkStrengthUnitsString = UnitLabelUtilities.tensionUnitIndexToString(weakLinkStrengthUnitsID);
-        weakLinkStrengthUnits.setText(weakLinkStrengthUnitsString);
+        weakLinkStrengthUnitsLabel.setText(weakLinkStrengthUnitsString);
         
         int winchingSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("winchingSpeed");
         String winchingSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(winchingSpeedUnitsID);
-        winchingSpeedUnits.setText(winchingSpeedUnitsString);
+        winchingSpeedUnitsLabel.setText(winchingSpeedUnitsString);
                
         nNumberField.setText(currentSailplane.getNumber());
         nNumberField.setBackground(Color.GREEN);
@@ -511,45 +511,45 @@ public class SailplanePanel extends JPanel implements Observer{
         editButton.setBounds(289, 0, 89, 23);
         attributesPanel.add(editButton);
         
-        emptyWeightUnits.setText("kg");
-        emptyWeightUnits.setBounds(280, 78, 46, 14);
-        attributesPanel.add(emptyWeightUnits);
+        emptyWeightUnitsLabel.setText("kg");
+        emptyWeightUnitsLabel.setBounds(280, 78, 46, 14);
+        attributesPanel.add(emptyWeightUnitsLabel);
         
-        maxGrossWeightUnits.setText("kg");
-        maxGrossWeightUnits.setBounds(280, 103, 46, 14);
-        attributesPanel.add(maxGrossWeightUnits);
+        maxGrossWeightUnitsLabel.setText("kg");
+        maxGrossWeightUnitsLabel.setBounds(280, 103, 46, 14);
+        attributesPanel.add(maxGrossWeightUnitsLabel);
         
-        stallSpeedUnits.setText("Km/h");
-        stallSpeedUnits.setBounds(280, 128, 46, 14);
-        attributesPanel.add(stallSpeedUnits);
+        stallSpeedUnitsLabel.setText("kph");
+        stallSpeedUnitsLabel.setBounds(280, 128, 46, 14);
+        attributesPanel.add(stallSpeedUnitsLabel);
         
-        ballastWeightUnits.setText("kg");
-        ballastWeightUnits.setBounds(280, 189, 46, 14);
-        attributesPanel.add(ballastWeightUnits);
+        ballastWeightUnitsLabel.setText("kg");
+        ballastWeightUnitsLabel.setBounds(280, 189, 46, 14);
+        attributesPanel.add(ballastWeightUnitsLabel);
         
-        baggageWeightUnits.setText("kg");
-        baggageWeightUnits.setBounds(280, 250, 46, 14);
-        attributesPanel.add(baggageWeightUnits);
+        baggageWeightUnitsLabel.setText("kg");
+        baggageWeightUnitsLabel.setBounds(280, 250, 46, 14);
+        attributesPanel.add(baggageWeightUnitsLabel);
         
-        passengerWeightUnits.setText("kg");
-        passengerWeightUnits.setBounds(617, 189, 46, 14);
-        attributesPanel.add(passengerWeightUnits);
+        passengerWeightUnitsLabel.setText("kg");
+        passengerWeightUnitsLabel.setBounds(617, 189, 46, 14);
+        attributesPanel.add(passengerWeightUnitsLabel);
         
         JLabel cableReleaseAngleUnits = new JLabel("degrees");
         cableReleaseAngleUnits.setBounds(617, 128, 65, 14);
         attributesPanel.add(cableReleaseAngleUnits);
         
-        tensionUnits.setText("N");
-        tensionUnits.setBounds(617, 103, 46, 14);
-        attributesPanel.add(tensionUnits);
+        tensionUnitsLabel.setText("N");
+        tensionUnitsLabel.setBounds(617, 103, 46, 14);
+        attributesPanel.add(tensionUnitsLabel);
         
-        weakLinkStrengthUnits.setText("N");
-        weakLinkStrengthUnits.setBounds(617, 78, 46, 14);
-        attributesPanel.add(weakLinkStrengthUnits);
+        weakLinkStrengthUnitsLabel.setText("N");
+        weakLinkStrengthUnitsLabel.setBounds(617, 78, 46, 14);
+        attributesPanel.add(weakLinkStrengthUnitsLabel);
         
-        winchingSpeedUnits.setText("Km/h");
-        winchingSpeedUnits.setBounds(617, 53, 46, 14);
-        attributesPanel.add(winchingSpeedUnits);
+        winchingSpeedUnitsLabel.setText("kph");
+        winchingSpeedUnitsLabel.setBounds(617, 53, 46, 14);
+        attributesPanel.add(winchingSpeedUnitsLabel);
     }
         
     private javax.swing.JList sailplaneJList;

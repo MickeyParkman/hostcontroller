@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 
 
 
@@ -77,7 +79,7 @@ public class ProfileManagementFrame extends JFrame {
                 profileJList = new javax.swing.JList();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 800, 500);
+		setBounds(100, 100, 1071, 704);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -132,7 +134,6 @@ public class ProfileManagementFrame extends JFrame {
 		});
 		panel.add(cancelButton);
                 
-		
 		tabbedPane.addTab("Pilot", ProfilePilotPanel);
 		tabbedPane.addTab("Glider", ProfileGliderPanel);
 		tabbedPane.addTab("Airfield", ProfileAirfieldPanel);

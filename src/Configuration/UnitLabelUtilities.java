@@ -23,6 +23,8 @@ public class UnitLabelUtilities {
                 return "cm";
             case 4:
                 return "km";
+            case 5:
+                return "mi";
             default:
                 return "";
         }
