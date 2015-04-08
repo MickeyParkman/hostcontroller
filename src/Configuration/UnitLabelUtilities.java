@@ -11,7 +11,7 @@ package Configuration;
  * @author awilliams5
  */
 public class UnitLabelUtilities {
-    public static String lenghtUnitInexToString(int index) {
+    public static String lenghtUnitIndexToString(int index) {
         switch (index) {
             case 0:
                 return "m";
@@ -23,6 +23,8 @@ public class UnitLabelUtilities {
                 return "cm";
             case 4:
                 return "km";
+            case 5:
+                return "mi";
             default:
                 return "";
         }
@@ -35,7 +37,9 @@ public class UnitLabelUtilities {
             case 1:
                 return "ldf";
             case 2: 
-                return "Kgf";
+                return "kgf";
+            case 3:
+                return "dN";
             default:
                 return "";
         } 
@@ -44,9 +48,9 @@ public class UnitLabelUtilities {
     public static String weightUnitIndexToString(int index) {
        switch (index) {
             case 0:
-                return "lbs";
+                return "kg";
             case 1:
-                return "Kg";
+                return "lbs";
             default:
                 return "";
         } 
@@ -55,9 +59,9 @@ public class UnitLabelUtilities {
     public static String velocityUnitIndexToString(int index) {
        switch (index) {
             case 0:
-                return "mph";
+                return "kph";
             case 1:
-                return "Km/h";
+                return "mph";
             case 2: 
                 return "m/s";
             case 3:
@@ -69,9 +73,9 @@ public class UnitLabelUtilities {
     
     public static String tempUnitIndexToString(int index) {
        switch (index) {
-            case 0:
-                return "F";
             case 1:
+                return "F";
+            case 0:
                 return "C";
             default:
                 return "";

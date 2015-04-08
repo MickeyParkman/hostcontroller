@@ -14,27 +14,31 @@ public class UnitConversionRate {
     //Conversion factors from the standard SI unit to the given unit
     
     //Conversion rates for distances from the standard of a Meter
-    public static final double METERS = 1;
-    public static final double FEET = 3.2804;
-    public static final double MILLIMETERS = 1000;
-    public static final double CENTIMETERS = 100;
-    public static final double KILOMETERS = 0.001;
+    public static final float METERS = 1;
+    public static final float FEET = (float) 3.2804;
+    public static final float MILLIMETERS = 1000;
+    public static final float CENTIMETERS = 100;
+    public static final float KILOMETERS = (float) 0.001;
+    public static final float MILES = (float) 0.000621371;
     
     //Conversion rates for tension from the standard of a Newton
-    public static final double NEWTON = 1;
-    public static final double POUND_FORCE = 0.224808943;
-    public static final double KILOGRAM_FORCE = 0.101971621;
+    public static final float NEWTON = 1;
+    public static final float DECANEWTON = (float) 0.1;
+    public static final float POUND_FORCE = (float) 0.224808943;
+    public static final float KILOGRAM_FORCE = (float) 0.101971621;
     
     //Conversion rates for weight from the standard of a Pound
-    public static final double POUND = 1;
-    public static final double KILOGRAM = 0.453592;
+    public static final float POUND = (float) 2.2046244;
+    public static final float KILOGRAM =  1;
     
     //Conversion rates for speed from the standard of km/h
-    public static final double KPH = 1;
-    public static final double MPH = 0.621371;
+    public static final float KPH = 1;
+    public static final float MPH = (float) 0.621371;
+    public static final float MPS = (float) 0.2777778;
+    public static final float KN = (float) 0.539957;
     
     
-    public static double convertTensionUnitIndexToFactor(int index) {
+    public static float convertTensionUnitIndexToFactor(int index) {
         switch (index) {
             case 0:
                 return NEWTON;
@@ -42,13 +46,15 @@ public class UnitConversionRate {
                 return POUND_FORCE;
             case 2:
                 return KILOGRAM_FORCE;
+            case 3:
+                return DECANEWTON;   
             default:
                 return NEWTON;
         }
     }  
     
     
-    public static double convertDistanceUnitIndexToFactor(int index) {
+    public static float convertDistanceUnitIndexToFactor(int index) {
         switch (index) {
             case 0:
                 return METERS;
@@ -60,28 +66,34 @@ public class UnitConversionRate {
                 return CENTIMETERS;
             case 4:
                 return KILOMETERS;
+            case 5:
+                return MILES;
             default:
                 return METERS;
         }
     }    
 
-    public static double convertWeightUnitIndexToFactor(int index) {
+    public static float convertWeightUnitIndexToFactor(int index) {
         switch (index) {
             case 0:
-                return POUND;
-            case 1:
                 return KILOGRAM;
-            default:
+            case 1:
                 return POUND;
+            default:
+                return KILOGRAM;
         }
     }    
     
-    public static double convertSpeedUnitIndexToFactor(int index) {
+    public static float convertSpeedUnitIndexToFactor(int index) {
         switch (index) {
             case 0:
                 return KPH;
             case 1:
                 return MPH;
+            case 2:
+                return MPS; 
+            case 3:
+                return KN;
             default:
                 return KPH;
         }

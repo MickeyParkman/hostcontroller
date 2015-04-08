@@ -1,6 +1,8 @@
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -46,6 +48,46 @@ public class AddEditGlider extends JFrame {
     private Sailplane currentGlider;
     private boolean isEditEntry;
     private Observer parent;
+    private CurrentDataObjectSet currentData;
+    private JLabel emptyWeightUnitsLabel = new JLabel();
+    private JLabel maxGrossWeightUnitsLabel = new JLabel();
+    private JLabel stallSpeedUnitsLabel = new JLabel();
+    private JLabel tensionUnitsLabel = new JLabel();
+    private JLabel weakLinkStrengthUnitsLabel = new JLabel();
+    private JLabel winchingSpeedUnitsLabel = new JLabel();
+    private int emptyWeightUnitsID;
+    private int maxGrossWeightUnitsID;
+    private int stallSpeedUnitsID;
+    private int tensionUnitsID;
+    private int weakLinkStrengthUnitsID;
+    private int winchingSpeedUnitsID;
+    
+    public void setupUnits()
+    {
+        emptyWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("emptyWeight");
+        String emptyWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(emptyWeightUnitsID);
+        emptyWeightUnitsLabel.setText(emptyWeightUnitsString);
+        
+        maxGrossWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("maxGrossWeight");
+        String maxGrossWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(maxGrossWeightUnitsID);
+        maxGrossWeightUnitsLabel.setText(maxGrossWeightUnitsString);
+        
+        stallSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("stallSpeed");
+        String stallSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(stallSpeedUnitsID);
+        stallSpeedUnitsLabel.setText(stallSpeedUnitsString);
+                
+        tensionUnitsID = currentData.getCurrentProfile().getUnitSetting("maxTension");
+        String tensionUnitsString = UnitLabelUtilities.tensionUnitIndexToString(tensionUnitsID);
+        tensionUnitsLabel.setText(tensionUnitsString);
+        
+        weakLinkStrengthUnitsID = currentData.getCurrentProfile().getUnitSetting("weakLinkStrength");
+        String weakLinkStrengthUnitsString = UnitLabelUtilities.tensionUnitIndexToString(weakLinkStrengthUnitsID);
+        weakLinkStrengthUnitsLabel.setText(weakLinkStrengthUnitsString);
+        
+        winchingSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("winchingSpeed");
+        String winchingSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(winchingSpeedUnitsID);
+        winchingSpeedUnitsLabel.setText(winchingSpeedUnitsString);
+    }
     
     public void attach(Observer o)
     {
@@ -57,8 +99,11 @@ public class AddEditGlider extends JFrame {
      * Create the frame.
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
+        currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        setupUnits();
         
         this.isEditEntry = isEditEntry;
+
         if (!isEditEntry || sailplaneEdited == null){
             sailplaneEdited = new Sailplane("", "", 0, 0, 0, 0, 0, 0, 0, false, false, "");
         }
@@ -66,7 +111,7 @@ public class AddEditGlider extends JFrame {
         
         setTitle("Glider");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 650, 242);
+        setBounds(100, 100, 746, 320);
         
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,7 +136,7 @@ public class AddEditGlider extends JFrame {
         
         stallSpeedField = new JTextField();
         if (isEditEntry){
-            stallSpeedField.setText(String.valueOf(currentGlider.getIndicatedStallSpeed()));
+            stallSpeedField.setText(String.valueOf(currentGlider.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
         }
         stallSpeedField.setBounds(160, 83, 110, 20);
         contentPane.add(stallSpeedField);
@@ -99,7 +144,7 @@ public class AddEditGlider extends JFrame {
         
         grossWeightField = new JTextField();
         if (isEditEntry){
-            grossWeightField.setText(String.valueOf(currentGlider.getMaxGrossWeight()));
+            grossWeightField.setText(String.valueOf(currentGlider.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
         }
         grossWeightField.setBounds(160, 58, 110, 20);
         contentPane.add(grossWeightField);
@@ -107,7 +152,7 @@ public class AddEditGlider extends JFrame {
         
         emptyWeightField = new JTextField();
         if (isEditEntry){
-            emptyWeightField.setText(String.valueOf(currentGlider.getEmptyWeight()));
+            emptyWeightField.setText(String.valueOf(currentGlider.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
         }
         emptyWeightField.setBounds(160, 33, 110, 20);
         contentPane.add(emptyWeightField);
@@ -146,7 +191,7 @@ public class AddEditGlider extends JFrame {
         
         weakLinkField = new JTextField();
         if (isEditEntry){
-            weakLinkField.setText(String.valueOf(currentGlider.getMaxWeakLinkStrength()));
+            weakLinkField.setText(String.valueOf(currentGlider.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
         }
         weakLinkField.setBounds(487, 33, 120, 20);
         contentPane.add(weakLinkField);
@@ -154,7 +199,7 @@ public class AddEditGlider extends JFrame {
         
         tensionField = new JTextField();
         if (isEditEntry){
-            tensionField.setText(String.valueOf(currentGlider.getMaxTension()));
+            tensionField.setText(String.valueOf(currentGlider.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
         }
         tensionField.setBounds(487, 58, 120, 20);
         contentPane.add(tensionField);
@@ -170,7 +215,7 @@ public class AddEditGlider extends JFrame {
         
         winchingSpeedField = new JTextField();
         if (isEditEntry){
-            winchingSpeedField.setText(String.valueOf(currentGlider.getMaxWinchingSpeed()));
+            winchingSpeedField.setText(String.valueOf(currentGlider.getMaxWinchingSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
         }
         winchingSpeedField.setBounds(487, 8, 120, 20);
         contentPane.add(winchingSpeedField);
@@ -235,6 +280,28 @@ public class AddEditGlider extends JFrame {
         cancelButton.setBounds(270, 180, 89, 23);
         cancelButton.setBackground(new Color(200,200,200));
         contentPane.add(cancelButton);
+        
+        emptyWeightUnitsLabel.setBounds(280, 36, 46, 14);
+        contentPane.add(emptyWeightUnitsLabel);
+        
+        maxGrossWeightUnitsLabel.setBounds(280, 61, 46, 14);
+        contentPane.add(maxGrossWeightUnitsLabel);
+        
+        stallSpeedUnitsLabel.setBounds(280, 86, 46, 14);
+        contentPane.add(stallSpeedUnitsLabel);
+        
+        winchingSpeedUnitsLabel.setBounds(617, 11, 46, 14);
+        contentPane.add(winchingSpeedUnitsLabel);
+        
+        weakLinkStrengthUnitsLabel.setBounds(617, 36, 46, 14);
+        contentPane.add(weakLinkStrengthUnitsLabel);
+        
+        tensionUnitsLabel.setBounds(617, 61, 46, 14);
+        contentPane.add(tensionUnitsLabel);
+        
+        JLabel releaseAngelUnitsLabel = new JLabel("degrees");
+        releaseAngelUnitsLabel.setBounds(617, 86, 46, 14);
+        contentPane.add(releaseAngelUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -265,13 +332,13 @@ public class AddEditGlider extends JFrame {
     public void submitData(){
         if (isComplete()){
             String nNumber = nNumberField.getText();
-            float emptyWeight = Float.parseFloat(emptyWeightField.getText());
-            float grossWeight = Float.parseFloat(grossWeightField.getText());
-            float stallSpeed = Float.parseFloat(stallSpeedField.getText());
-            float weakLink = Float.parseFloat(weakLinkField.getText());
-            float tension = Float.parseFloat(tensionField.getText());
+            float emptyWeight = (Float.parseFloat(emptyWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID));
+            float grossWeight = Float.parseFloat(grossWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID);
+            float stallSpeed = Float.parseFloat(stallSpeedField.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID);
+            float weakLink = Float.parseFloat(weakLinkField.getText()) / UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID);
+            float tension = Float.parseFloat(tensionField.getText()) / UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID);
             float releaseAngle = Float.parseFloat(releaseAngleField.getText());
-            float winchingSpeed = Float.parseFloat(winchingSpeedField.getText());
+            float winchingSpeed = Float.parseFloat(winchingSpeedField.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID);
             boolean carryBallast = ballastCheckBox.isSelected();
             boolean multipleSeats = multipleSeatsCheckBox.isSelected();
             
@@ -305,6 +372,7 @@ public class AddEditGlider extends JFrame {
                         }
                         DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
                     }
+
                     parent.update();
                     this.dispose();
                 } 

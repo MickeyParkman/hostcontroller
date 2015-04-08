@@ -1,8 +1,9 @@
-//Successful IF AIRFIELD EXISTS IN DB!
 
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Runway;
 import DatabaseUtilities.DatabaseDataObjectUtilities;
@@ -40,6 +41,15 @@ public class AddEditRunwayFrame extends JFrame {
     private Runway currentRunway;
     private boolean isEditEntry;
     private Observer parent;
+    private JLabel runwayAltitudeUnitsLabel = new JLabel(); 
+    private int runwayAltitudeUnitsID;
+    
+    public void setupUnits()
+    {
+        runwayAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("runwayAltitude");
+        String RunwayAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(runwayAltitudeUnitsID);
+        runwayAltitudeUnitsLabel.setText(RunwayAltitudeUnitsString);
+    }
     
     public void attach(Observer o)
     {
@@ -50,8 +60,8 @@ public class AddEditRunwayFrame extends JFrame {
      * Create the frame.
      */
     public AddEditRunwayFrame(Runway editRunway, boolean isEditEntry) {
-        
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+        setupUnits();
 
         if (!isEditEntry || editRunway == null){
             editRunway = new Runway("", "", "", 0, "");
@@ -98,7 +108,7 @@ public class AddEditRunwayFrame extends JFrame {
         altitudeField = new JTextField();
         if (isEditEntry)
         {
-            altitudeField.setText(String.valueOf(editRunway.getAltitude()));
+            altitudeField.setText(String.valueOf(editRunway.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID)));
         }
         altitudeField.setColumns(10);
         altitudeField.setBounds(140, 61, 200, 20);
@@ -157,10 +167,17 @@ public class AddEditRunwayFrame extends JFrame {
         try{
             parentAirfieldLabel .setText("Parent Airfield: " + objectSet.getCurrentAirfield().getDesignator());
         }catch (Exception e){
-            System.out.println("cur Airfield 404 " + e.getMessage());
+            
         }
         parentAirfieldLabel.setBounds(10, 100, 220, 14);
         panel.add(parentAirfieldLabel);
+        
+        JLabel magneticHeadingUnitsLabel = new JLabel("degrees");
+        magneticHeadingUnitsLabel.setBounds(350, 39, 60, 14);
+        panel.add(magneticHeadingUnitsLabel);
+        
+        runwayAltitudeUnitsLabel.setBounds(350, 64, 46, 14);
+        panel.add(runwayAltitudeUnitsLabel);
     }
 
     public void deleteCommand()
@@ -197,7 +214,7 @@ public class AddEditRunwayFrame extends JFrame {
         if (isComplete()){
             String name = nameField.getText();
             String magneticHeading = magneticHeadingField.getText();
-            float altitude = Float.parseFloat(altitudeField.getText());
+            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID);
 
             String parentAirfield = "";
             String parentId = "";
@@ -205,9 +222,10 @@ public class AddEditRunwayFrame extends JFrame {
                 parentAirfield = objectSet.getCurrentAirfield().getDesignator();
                 parentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
-                System.out.println("cur Airfield 404 " + e.getMessage());
+                
             }
             
+
             Runway newRunway = new Runway(name, magneticHeading, parentAirfield, altitude, "");
             newRunway.setId(currentRunway.getId());
             newRunway.setParentId(parentId);

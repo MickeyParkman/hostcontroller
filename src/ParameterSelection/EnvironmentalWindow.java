@@ -117,11 +117,14 @@ public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
     }
     
     public void update(String message){
-        loadEnvironmentalData(message);
+        if(!message.equals(""))
+        {
+            loadEnvironmentalData(message);
         //++curTick;
         //if(curTick == HEARTBEAT_COUNT) {
         //    curTick = 0;
             updateDisplay();
-        //}
+        //}   
+        }
     }
 }

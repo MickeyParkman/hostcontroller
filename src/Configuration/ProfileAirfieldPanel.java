@@ -1,22 +1,214 @@
 package Configuration;
 
-import javax.swing.*;
-import java.awt.*;
+import AddEditPanels.AddEditWinchPosFrame;
+import AddEditPanels.AddEditGliderPosFrame;
+import AddEditPanels.AddEditAirfieldFrame;
+import AddEditPanels.AddEditRunwayFrame;
+import Communications.Observer;
+import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
+import DataObjects.Airfield;
+import DataObjects.GliderPosition;
+import DataObjects.CurrentDataObjectSet;
+import DataObjects.Runway;
+import DataObjects.WinchPosition;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+import javax.swing.border.MatteBorder;
+import javax.swing.JComboBox;
 
 
-public class ProfileAirfieldPanel extends JPanel {
+public class ProfileAirfieldPanel extends JPanel{
+    private javax.swing.JScrollPane airfieldScrollPane;
+    private javax.swing.JScrollPane gliderPositionsScrollPane;
+    private javax.swing.JScrollPane winchPositionsScrollPane;
+    private javax.swing.JScrollPane runwaysScrollPane;
+    private CurrentDataObjectSet currentData;       
+    protected JComboBox airfieldAltitudeComboBox = new JComboBox();
+    protected JComboBox gliderPosAltitudeComboBox = new JComboBox();
+    protected JComboBox runwayAltitudeComboBox = new JComboBox();
+    protected JComboBox winchPosAltitudeComboBox = new JComboBox();
+    
+    /**
+     * Creates new form sailplanePanel
+     */
+    public ProfileAirfieldPanel() {
+        currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        initComponents();
+    }
+    
+    /**
+     * Create the panel.
+     */
+    public void initComponents() {
+        airfieldScrollPane = new javax.swing.JScrollPane();
+        gliderPositionsScrollPane = new javax.swing.JScrollPane();
+        winchPositionsScrollPane = new javax.swing.JScrollPane();
+        runwaysScrollPane = new javax.swing.JScrollPane();
 
-	/**
-	 * Create the panel.
-	 */
-	public ProfileAirfieldPanel() {
-		setLayout(null);
-		
-		JLabel lblAirfieldUnits = new JLabel("Airfield Units");
-		lblAirfieldUnits.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAirfieldUnits.setBounds(173, 147, 100, 14);
-		add(lblAirfieldUnits);
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-	}
+        JPanel panel = new JPanel();
+        add(panel);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        
+        JPanel panel_1 = new JPanel();
+        add(panel_1);
+        panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.PAGE_AXIS));
 
+        JPanel airfieldSubPanel = new JPanel();
+        panel.add(airfieldSubPanel);
+        airfieldSubPanel.setLayout(new BorderLayout(0, 0));
+        airfieldSubPanel.add(airfieldScrollPane, BorderLayout.NORTH);
+        
+        JScrollPane airfieldAttributesPanelScrollPane = new JScrollPane();
+        airfieldSubPanel.add(airfieldAttributesPanelScrollPane, BorderLayout.CENTER);
+        JPanel airfieldAttributesPanel = new JPanel();
+        airfieldAttributesPanel.setBackground(Color.WHITE);
+        airfieldAttributesPanel.setPreferredSize(new Dimension(300, 200));
+        airfieldAttributesPanel.setLayout(null);
+        airfieldAttributesPanelScrollPane.setViewportView(airfieldAttributesPanel);
+        airfieldAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        airfieldAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+        
+        JLabel airfieldAltitudeLabel = new JLabel("Altitude:");
+        airfieldAltitudeLabel.setBounds(10, 104, 84, 14);
+        airfieldAttributesPanel.add(airfieldAltitudeLabel);
+               
+        JLabel airfieldLabel = new JLabel("Airfield");
+        airfieldLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        airfieldLabel.setBounds(10, 20, 100, 22);
+        airfieldAttributesPanel.add(airfieldLabel);
+        
+        airfieldAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
+        airfieldAltitudeComboBox.setBounds(66, 101, 54, 20);
+        airfieldAttributesPanel.add(airfieldAltitudeComboBox);
+        airfieldAltitudeComboBox.addItem("m");
+        airfieldAltitudeComboBox.addItem("ft");
+        airfieldAltitudeComboBox.addItem("km");
+        airfieldAltitudeComboBox.addItem("mi");
+        
+
+        JPanel gliderPostitionSubPanel = new JPanel();
+        gliderPostitionSubPanel.setLayout(new BorderLayout(0, 0));
+        gliderPostitionSubPanel.add(gliderPositionsScrollPane, BorderLayout.NORTH);
+        
+        JScrollPane gliderPosAttributesPanelScrollPane = new JScrollPane();
+        JPanel gliderPositionAttributesPanel = new JPanel();
+        gliderPositionAttributesPanel.setBackground(Color.WHITE);
+        gliderPostitionSubPanel.add(gliderPosAttributesPanelScrollPane, BorderLayout.CENTER);
+        gliderPositionAttributesPanel.setPreferredSize(new Dimension(300, 200));
+        gliderPosAttributesPanelScrollPane.setViewportView(gliderPositionAttributesPanel);
+        gliderPosAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        gliderPosAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+        gliderPositionAttributesPanel.setLayout(null);
+        
+        JLabel gliderPosAltitudeLabel = new JLabel("Altitude:");
+        gliderPosAltitudeLabel.setBounds(10, 78, 46, 14);
+        gliderPositionAttributesPanel.add(gliderPosAltitudeLabel);
+                       
+        JLabel gliderPositionLabel = new JLabel("Glider Position");
+        gliderPositionLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        gliderPositionLabel.setBounds(10, 20, 180, 31);
+        gliderPositionAttributesPanel.add(gliderPositionLabel);
+        
+        gliderPosAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
+        gliderPosAltitudeComboBox.setBounds(66, 75, 54, 20);
+        gliderPositionAttributesPanel.add(gliderPosAltitudeComboBox);
+        gliderPosAltitudeComboBox.addItem("m");
+        gliderPosAltitudeComboBox.addItem("ft");
+        gliderPosAltitudeComboBox.addItem("km");
+        gliderPosAltitudeComboBox.addItem("mi");
+               
+        JPanel runwaySubPanel = new JPanel();
+        panel_1.add(runwaySubPanel);
+        runwaySubPanel.setLayout(new BorderLayout(0, 0));
+        runwaySubPanel.add(runwaysScrollPane, BorderLayout.NORTH);
+        
+        panel_1.add(gliderPostitionSubPanel);
+
+        JPanel runwayAttributesPanel = new JPanel();
+        runwayAttributesPanel.setBackground(Color.WHITE);
+        JScrollPane runwayAttributesPanelScrollPane = new JScrollPane();
+        runwaySubPanel.add(runwayAttributesPanelScrollPane, BorderLayout.CENTER);
+        runwayAttributesPanel.setLayout(null);
+        runwayAttributesPanel.setPreferredSize(new Dimension(300, 200));
+        runwayAttributesPanelScrollPane.setViewportView(runwayAttributesPanel);
+        runwayAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        runwayAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+        
+        JLabel runwayAltitudeLabel = new JLabel("Altitude:");
+        runwayAltitudeLabel.setBounds(10, 103, 66, 14);
+        runwayAttributesPanel.add(runwayAltitudeLabel);
+        
+        JLabel runwayLabel = new JLabel("Runway");
+        runwayLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        runwayLabel.setBounds(10, 20, 140, 31);
+        runwayAttributesPanel.add(runwayLabel);
+        
+        runwayAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
+        runwayAltitudeComboBox.setBounds(66, 100, 54, 20);
+        runwayAttributesPanel.add(runwayAltitudeComboBox);
+        runwayAltitudeComboBox.addItem("m");
+        runwayAltitudeComboBox.addItem("ft");
+        runwayAltitudeComboBox.addItem("km");
+        runwayAltitudeComboBox.addItem("mi");
+        
+        JPanel winchPostitionSubPanel = new JPanel();
+        panel.add(winchPostitionSubPanel);
+        winchPostitionSubPanel.setLayout(new BorderLayout(0, 0));
+        winchPostitionSubPanel.add(winchPositionsScrollPane, BorderLayout.NORTH);
+                
+        JPanel winchPositionAttributesPanel = new JPanel();
+        winchPositionAttributesPanel.setBackground(Color.WHITE);
+        JScrollPane winchPositionAttributesPanelScrollPane = new JScrollPane();
+        winchPostitionSubPanel.add(winchPositionAttributesPanelScrollPane, BorderLayout.CENTER);
+        winchPositionAttributesPanel.setLayout(null);
+        winchPositionAttributesPanel.setPreferredSize(new Dimension(300, 200));
+        winchPositionAttributesPanelScrollPane.setViewportView(winchPositionAttributesPanel);
+        winchPositionAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        winchPositionAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+                
+        JLabel winchPosAltitudeLabel = new JLabel("Altitude:");
+        winchPosAltitudeLabel.setBounds(10, 78, 46, 14);
+        winchPositionAttributesPanel.add(winchPosAltitudeLabel);
+                
+        JLabel winchPositionLabel = new JLabel("Winch Position");
+        winchPositionLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        winchPositionLabel.setBounds(10, 20, 180, 31);
+        winchPositionAttributesPanel.add(winchPositionLabel);
+        
+        winchPosAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
+        winchPosAltitudeComboBox.setBounds(66, 75, 54, 20);
+        winchPositionAttributesPanel.add(winchPosAltitudeComboBox);
+        winchPosAltitudeComboBox.addItem("m");
+        winchPosAltitudeComboBox.addItem("ft");
+        winchPosAltitudeComboBox.addItem("km");
+        winchPosAltitudeComboBox.addItem("mi");
+    }
 }

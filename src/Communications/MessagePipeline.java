@@ -8,8 +8,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
-public class MessagePipeline extends Thread {
+public class MessagePipeline implements Runnable {
     
     private ArrayList<Observer> observers;
     private Socket socket;
@@ -18,6 +19,8 @@ public class MessagePipeline extends Thread {
     private String currentMessage = "";
     private static MessagePipeline instance = null;
     private boolean running = false;
+    private boolean connected = false;
+    private MessageListener listener = new MessageListener();
     private String DEBUGMessageList[] = {"5 100 100 65"
                                         ,"5.1 200 100 50"
                                         ,"5.2 100 500 100"
@@ -29,6 +32,9 @@ public class MessagePipeline extends Thread {
                                         ,"5.8 30 46 56"
                                         ,"5.9 78 46 58"};
     private int curMessageIndex = 0;
+    
+    boolean debugMode = false;
+
     
     public static MessagePipeline getInstance()
     {
@@ -43,16 +49,35 @@ public class MessagePipeline extends Thread {
     
     public void init()
     {
-        boolean DEBUG = true;
-        if(!DEBUG){
-            try {
-                socket = new Socket("147.222.165.75", 32123);
+        running = true;
+    }
+    
+    public boolean connect(String address, int port)
+    {
+        try {
+            if(address.equals("DEBUG"))
+            {
+                debugMode = true;
+            }
+            else
+            {
+                socket = new Socket(address, port);
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 writer = new OutputStreamWriter(socket.getOutputStream());
-            } catch (Exception e) {
-                //e.printStackTrace();
             }
-        }
+            connected = true;
+            System.out.println("Connected");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } 
+    }
+    
+    public void disconnect()
+    {
+        connected = false;
+        currentMessage = "";
     }
     
     public void attach(Observer ob)
@@ -62,10 +87,11 @@ public class MessagePipeline extends Thread {
     
     private void notifyObservers()
     {
-        for(Observer ob : observers)
+        //System.out.println("Notifying");
+        /*for(Observer ob : observers)
         {
             ob.update(currentMessage);
-        }
+        }*/
     }
     
     public void TEMPReadFromSocket()
@@ -85,28 +111,44 @@ public class MessagePipeline extends Thread {
         }*/
     }
     
-    public void TEMPWriteToSocket(String s)
+    public void ReadFromSocket()
     {
         try {
-            writer.write(s);
+            String s = reader.readLine();
+            currentMessage = s;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
     
+    public void TEMPWriteToSocket(String s)
+    {
+        try {
+            writer.write(s);
+        } catch (IOException ex) {
+            //ex.printStackTrace();
+        }
+    }
+    
     public void run()
     {
-        running = true;
         while(running)
         {
-            long startTime = System.currentTimeMillis();
-            long elapsed = 0;
-            while(elapsed < 100) {
-                TEMPReadFromSocket();
-                long endTime = System.currentTimeMillis();
-                elapsed = endTime - startTime;
+            if(connected)
+            {
+                if(debugMode) TEMPReadFromSocket();
+                else ReadFromSocket();
             }
-            notifyObservers();
+            /*else
+            {
+                //if not connected, wait a bit before rechecking
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    //error related to sleeping?
+                }
+            }*/
+            listener.update(currentMessage);
         }
     }
     

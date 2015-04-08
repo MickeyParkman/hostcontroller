@@ -21,12 +21,16 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
+import DataObjects.*;
+import java.util.List;
 
 /**
  *
  * @author dbennett3
  */
 public class DatabaseImporter {
+    
+    private static BufferedReader br;
     
     public static void importDatabase(String zipName) throws ClassNotFoundException, SQLException 
     {
@@ -64,61 +68,94 @@ public class DatabaseImporter {
     }
     
     
-    private static void importTable(Connection connect, String zipName) throws SQLException, FileNotFoundException, IOException {
+    private static void importTable(Connection connect, String zipName) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
         
         ZipFile zip = new ZipFile(new File(zipName));
         ZipInputStream zin = new ZipInputStream(new FileInputStream(zipName));
         for(ZipEntry e; (e = zin.getNextEntry()) != null;) {
 
             String fileName = e.toString();
-            System.out.println(fileName);
+            //System.out.println(fileName);
                        
             InputStream is = zip.getInputStream(e);
             InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
+            br = new BufferedReader(isr);
             
             if(fileName.contains("CAPABILITY")) {
-                System.out.println("Importing to capability");
+                //System.out.println("Importing to capability");
+                //importCapability();
                 
             }else if(fileName.contains("PREFERENCE")) {
-                System.out.println("Importing to preference");
+                //System.out.println("Importing to preference");
                 
             }else if(fileName.contains("AIRFIELD")) {
-                System.out.println("Importing to airfield");
+                //System.out.println("Importing to airfield");
                 
             }
             else if(fileName.contains("GLIDERPOSITION")) {
-                System.out.println("Importing to gliderposition");
+                //System.out.println("Importing to gliderposition");
                 
             }
             else if(fileName.contains("PARACHUTE")) {
-                System.out.println("Importing to parachute");
+                //System.out.println("Importing to parachute");
                 
             }
             else if(fileName.contains("PILOT")) {
                 System.out.println("Importing to pilot");
-                
+                importPilot();
             }
             else if(fileName.contains("PROFILE")) {
-                System.out.println("Importing to profile");
+                //System.out.println("Importing to profile");
                 
             }
             else if(fileName.contains("RUNWAY")) {
-                System.out.println("Importing to runway");
+                //System.out.println("Importing to runway");
                 
             }
+
             else if(fileName.contains("GLIDER")) {
                 System.out.println("Importing to glider");
                 
             }else if(fileName.contains("WINCHPOSITION")) {
-                System.out.println("Importing to winchposition");
+                //System.out.println("Importing to winchposition");
                 
             }
             
-            String s;
-            while((s = br.readLine()) != null) {
-                System.out.println(s);
-            }   
+               
+        }
+    }
+    
+    private static void importCapability() throws IOException {
+        String s;
+        while((s = br.readLine()) != null) {
+            System.out.println(s);
+        }
+    }
+    
+    private static void importPilot() throws IOException, SQLException, ClassNotFoundException {
+        boolean isNewPilot = true;
+        List<Pilot> currentPilots = DatabaseDataObjectUtilities.getPilots();
+        
+        String s;
+        br.readLine();
+        while((s = br.readLine()) != null) {
+            String[] pilotData = s.split(",");
+            System.out.println(pilotData[8]);
+            System.out.println(pilotData[9]);
+            
+            Pilot importer = new Pilot(pilotData[0], pilotData[1], pilotData[2], pilotData[3], Integer.parseInt(pilotData[4]), pilotData[5], pilotData[6], pilotData[7], pilotData[8], pilotData[9]);
+            
+            for(Pilot p: currentPilots)
+            {
+                if(p.pilotEquals(importer))
+                {
+                    isNewPilot = false;
+                    break;
+                }
+            }
+            if(isNewPilot)
+                DatabaseDataObjectUtilities.addPilotToDB(importer);
+            //System.out.println(s);
         }
     }
 }
