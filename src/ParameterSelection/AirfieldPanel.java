@@ -87,29 +87,34 @@ public class AirfieldPanel extends JPanel implements Observer{
     private JLabel gliderPosAltitudeUnits = new JLabel();
     private JLabel runwayAltitudeUnits = new JLabel();
     private JLabel winchPosAltitudeUnits = new JLabel();
+    private int airfieldAltitudeUnitsID;
     private int gliderPosAltitudeUnitsID;
     private int runwayAltitudeUnitsID;
     private int winchPosAltitudeUnitsID;
     
-    @Override
-    public void update(String s)
+    public void setupUnits()
     {
-        int airfieldAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("airfieldAltitude");
-        String airfieldAltitudeUnitsString = UnitLabelUtilities.lenghtUnitInexToString(airfieldAltitudeUnitsID);
+        airfieldAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("airfieldAltitude");
+        String airfieldAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(airfieldAltitudeUnitsID);
         airfieldAltitudeUnits.setText(airfieldAltitudeUnitsString);
 
         gliderPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("gliderPosAltitude");
-        String gliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitInexToString(gliderPosAltitudeUnitsID);
+        String gliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(gliderPosAltitudeUnitsID);
         gliderPosAltitudeUnits.setText(gliderPosAltitudeUnitsString);
 
         runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
-        String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitInexToString(runwayAltitudeUnitsID);
+        String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
         runwayAltitudeUnits.setText(runwayAltitudeUnitsString);
 
         winchPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("winchPosAltitude");
-        String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitInexToString(winchPosAltitudeUnitsID);
+        String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(winchPosAltitudeUnitsID);
         winchPosAltitudeUnits.setText(winchPosAltitudeUnitsString);
-            
+    }
+    
+    @Override
+    public void update(String s)
+    {          
+        setupUnits();
         if(s.equals("1"))
         {
             initAirfieldList();
@@ -190,7 +195,6 @@ public class AirfieldPanel extends JPanel implements Observer{
             initWinchPositionsList();
             winchPositionModel.clear();
             for(Object str: winchPositions){
-                    System.out.println("HERE");
                     winchPositionModel.addElement(str);
             }
             winchPositionsJList.setModel(winchPositionModel);
@@ -209,9 +213,7 @@ public class AirfieldPanel extends JPanel implements Observer{
 
             winchPosLatitudeField.setText(String.valueOf(currentWinchPos.getLatitude()));
             winchPosLatitudeField.setBackground(Color.GREEN);
-        }
-        
-        
+        }     
     }
     
     private Observer getObserver() {
@@ -476,6 +478,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         initGliderPositionsList();
         initRunwaysList();
         initComponents();
+        setupUnits();
     }
     
     /**
@@ -638,7 +641,6 @@ public class AirfieldPanel extends JPanel implements Observer{
         airfieldLabel.setBounds(10, 20, 100, 22);
         airfieldAttributesPanel.add(airfieldLabel);
         
-        airfieldAltitudeUnits.setText("m");
         airfieldAltitudeUnits.setBounds(350, 104, 46, 14);
         airfieldAttributesPanel.add(airfieldAltitudeUnits);
         
@@ -778,7 +780,6 @@ public class AirfieldPanel extends JPanel implements Observer{
         gliderPosLatitudeUnits.setBounds(345, 128, 65, 14);
         gliderPositionAttributesPanel.add(gliderPosLatitudeUnits);
         
-        gliderPosAltitudeUnits.setText("m");
         gliderPosAltitudeUnits.setBounds(345, 78, 46, 14);
         gliderPositionAttributesPanel.add(gliderPosAltitudeUnits);
         
@@ -891,7 +892,6 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwayLabel.setBounds(10, 20, 140, 31);
         runwayAttributesPanel.add(runwayLabel);
         
-        runwayAltitudeUnits.setText("m");
         runwayAltitudeUnits.setBounds(350, 103, 46, 14);
         runwayAttributesPanel.add(runwayAltitudeUnits);
         
@@ -1005,7 +1005,6 @@ public class AirfieldPanel extends JPanel implements Observer{
         winchPositionLabel.setBounds(10, 20, 180, 31);
         winchPositionAttributesPanel.add(winchPositionLabel);
         
-        winchPosAltitudeUnits.setText("m");
         winchPosAltitudeUnits.setBounds(345, 78, 46, 14);
         winchPositionAttributesPanel.add(winchPosAltitudeUnits);
         

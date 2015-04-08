@@ -56,6 +56,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        initializeDefaultProfile();
         topMenu = new JMenuBar();
         mainWindow = new JPanel(new BorderLayout());
         leftSidePanelScenario = new JPanel();
@@ -74,15 +75,14 @@ public class MainWindow extends JFrame {
         upperLeftSidePanelDashboard = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         upperLeftSidePanelWinch = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         createAndShowGUI();
-        initializeDefaultProfile();
-    }
+            }
 
     private void initializeDefaultProfile()
     {
         Profile defaultProfile = new Profile("Default", "{}", "{}"); 
         defaultProfile.setUnitSetting("flightWeight", 0);
         
-        defaultProfile.setUnitSetting("emptyWeight", 1);
+        defaultProfile.setUnitSetting("emptyWeight", 0);
         defaultProfile.setUnitSetting("maxGrossWeight", 0);
         defaultProfile.setUnitSetting("stallSpeed", 0);
         defaultProfile.setUnitSetting("ballastWeight", 0);

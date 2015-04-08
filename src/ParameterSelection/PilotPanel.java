@@ -71,10 +71,19 @@ public class PilotPanel extends JPanel implements Observer{
     private final ButtonGroup capabilityButtonGroup = new ButtonGroup();
     private final ButtonGroup preferenceButtonGroup = new ButtonGroup();
     private JLabel flightWeightUnits = new JLabel();
+    private int flightWeightUnitsID;
+    
+    public void setupUnits()
+    {
+        flightWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("flightWeight");
+        String flightWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(flightWeightUnitsID);
+        flightWeightUnits.setText(flightWeightUnitsString);
+    }
     
     @Override
     public void update()
     {
+        setupUnits();
         initPilotList();
         DefaultListModel pilotModel = new DefaultListModel();
         pilotModel.clear();
@@ -85,11 +94,7 @@ public class PilotPanel extends JPanel implements Observer{
         Pilot currentPilot = currentData.getCurrentPilot();
         pilotJList.setSelectedValue(currentPilot.toString(), true);
         pilotScrollPane.setViewportView(pilotJList);
-        
-        int flightWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("flightWeight");
-        String flightWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(flightWeightUnitsID);
-        flightWeightUnits.setText(flightWeightUnitsString);
-        
+                
         firstNameField.setText((currentPilot.getFirstName()));
         firstNameField.setBackground(Color.GREEN);
 
@@ -255,7 +260,7 @@ public class PilotPanel extends JPanel implements Observer{
             } catch(Exception e) {
                 //TODO respond to error
             }
-    }
+        }
     }
     
     /**
@@ -265,6 +270,7 @@ public class PilotPanel extends JPanel implements Observer{
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         initPilotList();
         initComponents();
+        setupUnits();
     }
     
     /**
@@ -499,7 +505,6 @@ public class PilotPanel extends JPanel implements Observer{
         editButton.setBounds(288, 0, 89, 23);
         attributesPanel.add(editButton);
         
-        flightWeightUnits.setText("kg");
         flightWeightUnits.setBounds(280, 128, 46, 14);
         attributesPanel.add(flightWeightUnits);
         

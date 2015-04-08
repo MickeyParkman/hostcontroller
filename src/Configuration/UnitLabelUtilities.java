@@ -11,7 +11,7 @@ package Configuration;
  * @author awilliams5
  */
 public class UnitLabelUtilities {
-    public static String lenghtUnitInexToString(int index) {
+    public static String lenghtUnitIndexToString(int index) {
         switch (index) {
             case 0:
                 return "m";
@@ -73,9 +73,9 @@ public class UnitLabelUtilities {
     
     public static String tempUnitIndexToString(int index) {
        switch (index) {
-            case 0:
-                return "F";
             case 1:
+                return "F";
+            case 0:
                 return "C";
             default:
                 return "";

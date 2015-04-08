@@ -333,9 +333,6 @@ public class AddEditGlider extends JFrame {
         if (isComplete()){
             String nNumber = nNumberField.getText();
             float emptyWeight = (Float.parseFloat(emptyWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID));
-            System.out.println("ASDFA  " + emptyWeightUnitsID);
-            System.out.println("ASDFA  " + UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID));
-            System.out.println("ASDFA  " + emptyWeight);
             float grossWeight = Float.parseFloat(grossWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID);
             float stallSpeed = Float.parseFloat(stallSpeedField.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID);
             float weakLink = Float.parseFloat(weakLinkField.getText()) / UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID);

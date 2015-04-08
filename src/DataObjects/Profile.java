@@ -23,7 +23,7 @@ public class Profile {
         this.id = id;
         initSettingsFromString(settings, prefs);
     }
-    
+        
     private void initSettingsFromString(String settings, String prefs) {
         if(!settings.equals("{}")) {
             /* settings could be "{'PILOT_WEIGHT':0,'SAILPLANE_WEIGHT':1}" */
@@ -61,6 +61,10 @@ public class Profile {
                 displayPrefs.put(hashId.toUpperCase(), hashValue);
             }
         }
+    }
+    
+    public void setID(String id) {
+        this.id = id;
     }
 
     public void setUnitSetting(String id, int value) {
