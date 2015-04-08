@@ -375,7 +375,7 @@ public class AirfieldPanel extends JPanel implements Observer{
                 currentData.cleafGliderPosition();
                 currentData.clearWinchPosition();
                 
-                runwayNameField.setText(theRunway.getId());
+                runwayNameField.setText(theRunway.getName());
                 runwayNameField.setBackground(Color.GREEN);
                 
                 runwayAltitudeField.setText(String.valueOf(theRunway.getAltitude()));
