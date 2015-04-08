@@ -156,9 +156,10 @@ public class ProfileManagementFrame extends JFrame {
             try{
                 Profile selectedProfile = (Profile)profileJList.getSelectedValue();
                 currentData.setCurrentProfile(selectedProfile);
+                //System.out.println(currentData.getCurrentProfile().getUnitSettingsForStorage());
                 
                 flightWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("flightWeight");
-                System.out.println(currentData.getCurrentProfile().getUnitSetting("flightWeight"));
+                //System.out.println(">>" + currentData.getCurrentProfile().getUnitSetting("flightWeight"));
                 String flightWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(flightWeightUnitsID);
                 ProfilePilotPanel.flightWeightComboBox.setSelectedItem(flightWeightUnitsString);
 

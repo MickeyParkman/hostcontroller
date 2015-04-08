@@ -52,7 +52,7 @@ public class SaveAsNewFrame extends JFrame {
                     public void actionPerformed(ActionEvent arg0) {
                             String profileName = textField.getText();
                             Profile newProfile = currentData.getCurrentProfile();
-                            System.out.println(currentData.getCurrentProfile().getUnitSetting("flightWeight"));
+                            //System.out.println(currentData.getCurrentProfile().getUnitSetting("flightWeight"));
                             newProfile.setID(profileName);
                             currentData.setCurrentProfile(newProfile);
                         try {
