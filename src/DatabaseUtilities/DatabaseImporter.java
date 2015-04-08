@@ -35,7 +35,7 @@ public class DatabaseImporter {
     private static BufferedReader br;
     private static Connection connection;
     
-    public static void importDatabase(String zipName) throws ClassNotFoundException, SQLException 
+    public static void importDatabase(List<String> tableList) throws ClassNotFoundException, SQLException 
     {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
@@ -60,7 +60,7 @@ public class DatabaseImporter {
         }
         
         try {
-            importTable(connection, zipName);
+            importTable(connection, tableList);
         }catch(Exception e) {
             JOptionPane.showMessageDialog(null, "Couldn't import", "Error", JOptionPane.INFORMATION_MESSAGE);
             e.printStackTrace();
@@ -70,10 +70,10 @@ public class DatabaseImporter {
     }
     
     
-    private static void importTable(Connection connect, String zipName) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
+    private static void importTable(Connection connect, List<String> tableList) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
         
-        ZipFile zip = new ZipFile(new File(zipName));
-        ZipInputStream zin = new ZipInputStream(new FileInputStream(zipName));
+        ZipFile zip = new ZipFile(new File(tableList));
+        ZipInputStream zin = new ZipInputStream(new FileInputStream(tableList));
         for(ZipEntry e; (e = zin.getNextEntry()) != null;) {
 
             String fileName = e.toString();
@@ -84,26 +84,37 @@ public class DatabaseImporter {
             br = new BufferedReader(isr);
             
             if(fileName.contains("CAPABILITY")) {
+                System.out.println("Importing capability");
                 importCapability();
             }else if(fileName.contains("PREFERENCE")) {
+                System.out.println("Importing PREFERENCE");
                 importPreference();
             }else if(fileName.contains("AIRFIELD")) {
+                System.out.println("Importing AIRFIELD");
                 importAirfield();
             }else if(fileName.contains("RUNWAY")) {
+                System.out.println("Importing RUNWAY");
                 importRunway();
             }else if(fileName.contains("GLIDERPOSITION")) {
+                System.out.println("Importing GLIDERPOSITION");
                 importGliderPosition();
             }else if(fileName.contains("WINCHPOSITION")) {
+                System.out.println("Importing WINCHPOSITION");
                 importWinchPosition();
             }else if(fileName.contains("PARACHUTE")) {
+                System.out.println("Importing PARACHUTE");
                 importParachute();
             }else if(fileName.contains("PILOT")) {
+                System.out.println("Importing PILOT");
                 importPilot();
             }else if(fileName.contains("PROFILE")) {
+                System.out.println("Importing PROFILE");
                 importProfile();
             }else if(fileName.contains("GLIDER")) {
+                System.out.println("Importing GLIDER");
                 importSailplane();
             }else if(fileName.contains("Messages")) {
+                System.out.println("Importing Messages");
                 importMessages();
             }
             
@@ -164,8 +175,9 @@ public class DatabaseImporter {
         String s;
         while((s = br.readLine()) != null) {
             String[] airfieldData = s.split(",",-1);
-            Airfield importer = new Airfield(airfieldData[0], airfieldData[1], Float.parseFloat(airfieldData[2]), Float.parseFloat(airfieldData[3]), 
-                    Float.parseFloat(airfieldData[4]), Float.parseFloat(airfieldData[5]), airfieldData[6]);
+            Airfield importer = new Airfield(airfieldData[1], airfieldData[2], Float.parseFloat(airfieldData[3]), Float.parseFloat(airfieldData[4]), 
+                    Float.parseFloat(airfieldData[5]), Float.parseFloat(airfieldData[6]), airfieldData[7]);
+            importer.setId(airfieldData[0]);
             try {
                 DatabaseDataObjectUtilities.addAirfieldToDB(importer);
             } catch(SQLIntegrityConstraintViolationException e)
@@ -177,7 +189,9 @@ public class DatabaseImporter {
         String s;
         while((s = br.readLine()) != null) {
             String[] runwayData = s.split(",",-1);
-            Runway importer = new Runway(runwayData[0], runwayData[1], runwayData[2], Float.parseFloat(runwayData[3]), runwayData[6]);
+            Runway importer = new Runway(runwayData[1], runwayData[2], runwayData[3], Float.parseFloat(runwayData[5]), runwayData[6]);
+            importer.setId(runwayData[0]);
+            importer.setParentId(runwayData[4]);
             try {
                 DatabaseDataObjectUtilities.addRunwayToDB(importer);
             } catch(SQLIntegrityConstraintViolationException e)
@@ -189,8 +203,14 @@ public class DatabaseImporter {
         String s;
         while((s = br.readLine()) != null) {
             String[] gliderPositionData = s.split(",",-1);
-            GliderPosition importer = new GliderPosition(gliderPositionData[0], gliderPositionData[1], gliderPositionData[2], Float.parseFloat(gliderPositionData[3]), 
-                    Float.parseFloat(gliderPositionData[4]), Float.parseFloat(gliderPositionData[5]), gliderPositionData[6]);
+            for(String q: gliderPositionData) {
+                System.out.println(q);
+            }
+            GliderPosition importer = new GliderPosition(gliderPositionData[1], gliderPositionData[2], gliderPositionData[4], Float.parseFloat(gliderPositionData[6]), 
+                    Float.parseFloat(gliderPositionData[7]), Float.parseFloat(gliderPositionData[8]), gliderPositionData[9]);
+            importer.setId(gliderPositionData[0]);
+            importer.setAirfieldParentId(gliderPositionData[5]);
+            importer.setRunwayParentId(gliderPositionData[3]);
             try {
                 DatabaseDataObjectUtilities.addGliderPositionToDB(importer);
             } catch(SQLIntegrityConstraintViolationException e)
@@ -202,8 +222,11 @@ public class DatabaseImporter {
         String s;
         while((s = br.readLine()) != null) {
             String[] winchPositionData = s.split(",",-1);
-            WinchPosition importer = new WinchPosition(winchPositionData[0], winchPositionData[1], winchPositionData[2], Float.parseFloat(winchPositionData[3]), 
-                    Float.parseFloat(winchPositionData[4]), Float.parseFloat(winchPositionData[5]), winchPositionData[6]);
+            WinchPosition importer = new WinchPosition(winchPositionData[1], winchPositionData[2], winchPositionData[4], Float.parseFloat(winchPositionData[6]), 
+                    Float.parseFloat(winchPositionData[7]), Float.parseFloat(winchPositionData[8]), winchPositionData[9]);
+            importer.setId(winchPositionData[0]);
+            importer.setAirfieldParentId(winchPositionData[5]);
+            importer.setRunwayParentId(winchPositionData[3]);
             try {
                 DatabaseDataObjectUtilities.addWinchPositionToDB(importer);
             } catch(SQLIntegrityConstraintViolationException e)
@@ -241,9 +264,10 @@ public class DatabaseImporter {
         String s;
         while((s = br.readLine()) != null) {
             String[] gliderData = s.split(",",-1);
-            Sailplane importer = new Sailplane(gliderData[0], gliderData[1], Float.parseFloat(gliderData[2]), Float.parseFloat(gliderData[3]), 
-                    Float.parseFloat(gliderData[4]), Float.parseFloat(gliderData[5]), Float.parseFloat(gliderData[6]), Float.parseFloat(gliderData[7]),
-                    Float.parseFloat(gliderData[8]), Boolean.valueOf(gliderData[9]), Boolean.valueOf(gliderData[10]), gliderData[11]);
+            Sailplane importer = new Sailplane(gliderData[1], gliderData[2], Float.parseFloat(gliderData[3]), Float.parseFloat(gliderData[4]), 
+                    Float.parseFloat(gliderData[5]), Float.parseFloat(gliderData[6]), Float.parseFloat(gliderData[7]), Float.parseFloat(gliderData[8]),
+                    Float.parseFloat(gliderData[9]), Boolean.valueOf(gliderData[10]), Boolean.valueOf(gliderData[11]), gliderData[12]);
+            importer.setId(gliderData[0]);
             try {
                 DatabaseDataObjectUtilities.addSailplaneToDB(importer);
             } catch(SQLIntegrityConstraintViolationException e)

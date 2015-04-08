@@ -2,6 +2,7 @@ package mainhost;
 
 import Configuration.ProfileManagementFrame;
 import Configuration.DatabaseExportFrame;
+import Configuration.DatabaseImportFrame;
 import ParameterSelection.ParameterSelectionPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
@@ -23,6 +24,7 @@ import ParameterSelection.EnvironmentalWindow;
 import ParameterSelection.WinchEditPanel;
 import ParameterSelection.DEBUGWinchEditPanel;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,7 @@ public class MainWindow extends JFrame {
     private ProfileManagementFrame ProfileManagementFrame;
     private FlightDashboard FlightDashboard_;
     private DatabaseExportFrame DatabaseExportFrame;
+    private DatabaseImportFrame DatabaseImportFrame;
     private EnvironmentalWindow EnvironmentalWindow_;
     private CurrentScenario CurrentScenario_;
     private CurrentDataObjectSet currentData;
@@ -202,44 +205,35 @@ public class MainWindow extends JFrame {
         importDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+            
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle("Import");
+                chooser.setApproveButtonText("Select");
+                String filePath = "";
+                String fileName = "";
+                String zipLocation = "";
+                int option = chooser.showOpenDialog(topMenu);
+                if(option == JFileChooser.APPROVE_OPTION) {
+                    File file = chooser.getSelectedFile();
+                    File chosen = chooser.getCurrentDirectory();
+                    filePath = chosen.getPath();
+                    fileName = file.getName();
+                    zipLocation = filePath + "\\" + fileName;
+                    if(!fileName.contains(".zip")) {
+                        zipLocation += ".zip";
+                    }
+                    System.out.println("in try");
+                    System.out.println(zipLocation);
+                    
+                }
                 
-            JFileChooser chooser = new JFileChooser();
-            chooser.setDialogTitle("Import");
-            chooser.setApproveButtonText("Select");
-            String filePath = "";
-            String fileName = "";
-            String zipLocation = "";
-            int option = chooser.showOpenDialog(topMenu);
-            if(option == JFileChooser.APPROVE_OPTION) {
-                File file = chooser.getSelectedFile();
-                File chosen = chooser.getCurrentDirectory();
-                filePath = chosen.getPath();
-                fileName = file.getName();
-                zipLocation = filePath + "\\" + fileName;
-                if(!fileName.contains(".zip"))
-                    zipLocation += ".zip";
-
-                System.out.println(zipLocation);
-                try{
-                    DatabaseImporter.importDatabase(zipLocation);
-                //getFrame().dispose();
-                }catch(Exception e)
-                {
-                    JOptionPane.showMessageDialog(rootPane, "Couldn't export", "Error", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-                        
-                /*      
                 try {
-                    DatabaseImporter.importDatabase("hi");
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    //ParameterSelectionPanel_.update();
+                        DatabaseImportFrame = new DatabaseImportFrame(zipLocation);
+                        DatabaseImportFrame.setVisible(true);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-                */
+                       
             }
         });
 	fileMenu.add(importDBItem);
