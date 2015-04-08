@@ -14,7 +14,7 @@ public class MessageListener implements Observer
     static final int STATE_MESSAGE_ID = 304 * ID_SCALE;             // 0x260
     static final int PARAM_REQUEST_MESSAGE_ID = 312 * ID_SCALE;     // 0x270 
     static final int LAUNCH_PARAM_MESSAGE_ID = 327 * ID_SCALE;      // 0x28e
-    static final int CP_CL_RMT_MESSAGE_ID = 328 * ID_SCALE;     // 0x290
+    static final int CP_CL_RMT_MESSAGE_ID = 328 * ID_SCALE;         // 0x290
     static final int CP_CL_LCL_MESSAGE_ID = 329 * ID_SCALE;         // 0x292
     static final int CP_INPUTS_RMT_MESSAGE_ID = 330 * ID_SCALE;     // 0x294
     static final int CP_INPUTS_LCL_MESSAGE_ID = 331 * ID_SCALE;     // 0x296
@@ -37,8 +37,16 @@ public class MessageListener implements Observer
     static final float secPerTic = 1.0f / ticsPerSec;
 
     private int currentState;
-    //private int lastState;
+    //private int lastState;    
 
+    private int intUnixTime;
+
+    private int activeDrum = 0;
+
+    public double currentUnixTime;
+
+    private DataRelay relay = null;
+    
     //  variables for CIC3 filters, 
     static final int filterOuputsPerSecond = 4;
     
@@ -58,44 +66,39 @@ public class MessageListener implements Observer
     private long[] c2 = new long[NUMBER_CICS];
     private long[] c3 = new long[NUMBER_CICS];
 
+    private int nullMessageCnt = 0;
+    private int cpOutputCnt = 0;
+    
     //  variables, scales, and offsets for last measurements recieved in messages
     private float[] motorTorque = new float[NUMBER_MOTORS];
     private float lastCommandedDrumTorque = 0;   //  composite drum torque commanded (no losses)
     private final float cicTorqueScale = 100;
-    private float filteredCommandedDrumTorque;
 
     private float lastCableTension = 0;
     private final float cicTensionScale = 100;
-    private float filteredCableTension;
 
     private float lastCableSpeed = 0;
-    private final float cicCableSpeedScale = 100;
-    private float filteredCableSpeed;
-    //private final float MotorToCableSpeed = 1.0f / 0.359f;  //  get proper scale factor
+    private final float cicCableSpeedScale = 100;    
 
     private float lastCableAngle = 0;
     private final float cicCableAngleScale = 100;
-    private float filteredCableAngle;
 
     private float lastCableOut = 0;
     private final float cicCableOutScale = 100;
-    private float filteredCableOut;
 
-    private int intUnixTime;
-
-    private int activeDrum = 0;
-
-    public double currentUnixTime;
-
-    private DataRelay relay = null;
-
-    private int nullMessageCnt = 0;
-    private int cpOutputCnt = 0;
+    private float[] filteredData = new float[NUMBER_CICS];
+    private float[] cicScale = new float[NUMBER_CICS];
 
     public MessageListener()
     {
         currentUnixTime = 0.0;
         torqueGain[0] = 7.0f;
+        
+        cicScale[0] = cicTorqueScale;
+        cicScale[1] = cicTensionScale;
+        cicScale[2] = cicCableSpeedScale;
+        cicScale[3] = cicCableAngleScale;
+        cicScale[4] = cicCableOutScale;
     }
 
     //my code will call this function
@@ -109,7 +112,7 @@ public class MessageListener implements Observer
         short status;
 
         //  check for empty string
-        if (msg.equals(""))
+        if (msg.equals("") || (relay != null))
         {
             // System.out.println("Null message received: " + ++nullMessageCnt);
             return;
@@ -134,48 +137,31 @@ public class MessageListener implements Observer
                     status = canIn.get_ubyte(4);
                     if (status != 0)
                     {
-                        //if(relay != null) relay.sendTimeStatus(status, 
+                        //relay.sendTimeStatus(status, 
                         //        intUnixTime);
                     }                        
                 }
-
-                //   0 - torque 1 -  tension, , 2 - cable speed 3 - cable angle, 
+                //   0 - torque, 1 -  tension, 2 - cable speed, 3 - cable angle, 
                 //   4 - cable out        
-                updateIntegrators(0, lastCommandedDrumTorque * cicTorqueScale);
-                updateIntegrators(1, lastCableTension * cicTensionScale);
-                updateIntegrators(2, lastCableSpeed * cicCableSpeedScale);
-                updateIntegrators(3, lastCableAngle * cicCableAngleScale);
-                updateIntegrators(4, lastCableOut * cicCableOutScale);
+                updateIntegrators(0, lastCommandedDrumTorque * cicScale[0]);
+                updateIntegrators(1, lastCableTension * cicScale[1]);
+                updateIntegrators(2, lastCableSpeed * cicScale[2]);
+                updateIntegrators(3, lastCableAngle * cicScale[3]);
+                updateIntegrators(4, lastCableOut * cicScale[4]);
                 if (--downCounter < 0)
                 {
                     downCounter = decimationFactor - 1; //  reset down counter                    
-                    filteredCommandedDrumTorque = updateCombs(0)
-                            * (1.0f / (gainCIC * cicTorqueScale));
-                    filteredCableTension = updateCombs(1)
-                            * (1.0f / (gainCIC * cicTensionScale));
-                    filteredCableSpeed = updateCombs(2)
-                            * (1.0f / (gainCIC * cicCableSpeedScale));
-                    filteredCableAngle = updateCombs(3)
-                            * (1.0f / (gainCIC * cicCableAngleScale));
-                    filteredCableOut = updateCombs(4)
-                            * (1.0f / (gainCIC * cicCableOutScale));
-                    //  send filtered values
-                    /*  need methods for each of these
-                    //  should this be one function call?????
-                     if(relay != null) relay.sendFilteredTension(filteredTension,
-                     groupDelay);
-                     if(relay != null) relay.sendFilteredTorque(filteredTorque,
-                     groupDelay);
-                     if(relay != null) relay.sendFilteredCableSpeed(filteredCableSpeed,
-                     groupDelay);
-                     if(relay != null) relay.sendFilteredCableAngle(filteredCableAngle,
-                     groupDelay);
-                     if(relay != null) relay.sendFilteredCableOut(filteredCableOut,
-                     groupDelay);
-                     */
-                    System.out.println("Filtered Outputs: " + filteredCommandedDrumTorque
-                            + " " + filteredCableTension + " " + filteredCableSpeed
-                            + " " + filteredCableAngle + " " + filteredCableOut);
+                    for (int i = 0; i < NUMBER_CICS; i++)
+                    {
+                        filteredData[i] = updateCombs(i) 
+                                / (gainCIC * cicScale[i]);                       
+                    }
+                    //  send filtered values                    
+                    // relay.sendFilteredData(filteredData, groupDelay);
+                    
+                    System.out.println("Filtered Outputs: " + filteredData[0]
+                            + " " + filteredData[1] + " " + filteredData[2]
+                            + " " + filteredData[3] + " " + filteredData[4]);
                     messageProcessed = true;                    
                 }
             break;
@@ -189,7 +175,7 @@ public class MessageListener implements Observer
                     status = canIn.get_byte(2);
                     System.out.println("Orientation: " + pitch
                         + " " +  roll + " " + magnetic);
-                    //if(relay != null) relay.sendMagneticStatus(status,
+                    //relay.sendMagneticStatus(status,
                     //        pitch, roll, magnetic);                   
                     messageProcessed = true;
                     break;      
@@ -201,14 +187,14 @@ public class MessageListener implements Observer
                 activeDrum = (canIn.get_byte(0) >> 5) & 0x7;
                 System.out.println("State and Active Drum: " + currentState
                         + "  " +  activeDrum);
-                //if(relay != null) relay.sendState(currentState, activeDrum);
+                //relay.sendState(currentState, activeDrum);
                 messageProcessed = true;
                 break;
             }
 
             case PARAM_REQUEST_MESSAGE_ID:
             {
-                //if(relay != null) relay.sendLaunchParameterRequest();
+                //relay.sendLaunchParameterRequest();
                 System.out.println("Launch Parameter Request Message Received");
                 messageProcessed = true;
                 break;
@@ -233,7 +219,7 @@ public class MessageListener implements Observer
                         }
                     } else if (status != 0)
                     {
-                        //if(relay != null) relay.sendDrumStatus(status, messageDrum, 
+                        //relay.sendDrumStatus(status, messageDrum, 
                         //  canIn.get_halffloat(0), canIn.get_halffloat(2), 
                         //  canIn.get_halffloat(4, ));            
                     }
@@ -252,7 +238,7 @@ public class MessageListener implements Observer
                         }
                     } else if(status != 0)
                     {
-                        //if(relay != null) relay.sendTensionStatus(status, 
+                        //relay.sendTensionStatus(status, 
                         //        messageDrum, canIn.get_halffloat(0));            
                     }
                     messageProcessed = true;
@@ -270,7 +256,7 @@ public class MessageListener implements Observer
                         }
                     } else if (status !=0)
                     {
-                        //if(relay != null) relay.CableAngleStatus(status,
+                        //relay.CableAngleStatus(status,
                         //        messageDrum, canIn.get_halffloat(0));
                     }
                     messageProcessed = true;
@@ -295,7 +281,7 @@ public class MessageListener implements Observer
                         //  nothing needed now
                     } else if (status != 0)
                     {
-                        //if(relay != null) relay.sendMotorStatus(status,
+                        //relay.sendMotorStatus(status,
                         //        messageMotor, speed, revolutions,
                         //        temperature);
                     }
@@ -325,7 +311,7 @@ public class MessageListener implements Observer
                     status = canIn.get_byte(5);
                     System.out.println("Battery System: " + voltage
                         + " " +  current + " " + temperature);
-                    //if(relay != null) relay.sendBatteryStatus(status,
+                    //relay.sendBatteryStatus(status,
                     //        messageMotor, voltage, current, temperature);                    messageProcessed = true;
                     messageProcessed = true;
                     break;                    
@@ -345,7 +331,7 @@ public class MessageListener implements Observer
                     status = canIn.get_byte(4);
                     System.out.println("Density Altitude: " + pressure
                         + " " +  temperature + " " + hummidity);
-                    //if(relay != null) relay.sendDensityAltitudeStatus(status,
+                    //relay.sendDensityAltitudeStatus(status,
                     //        pressure, temperature, hummidity);                   
                     messageProcessed = true;
                     break;      
@@ -359,7 +345,7 @@ public class MessageListener implements Observer
                     status = canIn.get_byte(6);
                     System.out.println("Wind: " + direction
                         + " " +  speed + " " + gust);
-                    //if(relay != null) relay.sendWindStatus(status,
+                    //relay.sendWindStatus(status,
                     //        speed, direction);                   
                     messageProcessed = true;
                     break;      
