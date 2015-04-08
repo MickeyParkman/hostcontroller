@@ -14,13 +14,13 @@ package DataObjects;
 public class Runway {
     String id;
     String runwayName;
-    String magneticHeading;
+    float magneticHeading;
     String parent;
     String parentId;
     float altitude;
     String optionalInfo;
     
-    public Runway(String runwayName, String magneticHeading, String parent, float altitude, String optional){
+    public Runway(String runwayName, float magneticHeading, String parent, float altitude, String optional){
        this.runwayName = runwayName;
        this.magneticHeading = magneticHeading;
        this.parent = parent;
@@ -46,7 +46,7 @@ public class Runway {
        return runwayName; 
     }
     
-    public String getMagneticHeading(){
+    public float getMagneticHeading(){
        return magneticHeading; 
     }
     

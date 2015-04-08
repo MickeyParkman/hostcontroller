@@ -183,7 +183,7 @@ public class DatabaseDataObjectUtilities {
                         + "values (?,?,?,?,?,?,?)");
             RunwayInsertStatement.setString(1, theRunway.getId());
             RunwayInsertStatement.setString(2, theRunway.getName());
-            RunwayInsertStatement.setString(3, theRunway.getMagneticHeading());
+            RunwayInsertStatement.setString(3, String.valueOf(theRunway.getMagneticHeading()));
             RunwayInsertStatement.setString(4, theRunway.getParent());
             RunwayInsertStatement.setString(5, theRunway.getParentId());
             RunwayInsertStatement.setString(6, String.valueOf(theRunway.getAltitude()));
@@ -547,11 +547,12 @@ public class DatabaseDataObjectUtilities {
             
             while(theRunways.next()) {
                 String name = theRunways.getString(2);
-                String magneticHeading = theRunways.getString(3);
                 String parent = theRunways.getString(4);
                 
                 float altitude = 0;
+                float magneticHeading = 0;
                 try {
+                    magneticHeading = Float.parseFloat(theRunways.getString(3));
                     altitude = Float.parseFloat(theRunways.getString(6));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data

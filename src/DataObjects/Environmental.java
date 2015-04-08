@@ -15,7 +15,7 @@ public class Environmental {
     String direction;
     float temperature;
     float pressure;
-    float  densityAlitude;
+    float densityAlitude;
     public Environmental(){
         
     }

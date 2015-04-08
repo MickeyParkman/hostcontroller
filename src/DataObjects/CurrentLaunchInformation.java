@@ -1,18 +1,20 @@
+
 package DataObjects;
 
 import Communications.Observer;
-import java.util.ArrayList;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
+import java.util.ArrayList;
 
 /**
  *
- * @author Noah Fujioka
+ * @author Noah
  */
-public class CurrentFlightInformation {
+public class CurrentLaunchInformation {
     
-    private static CurrentFlightInformation instance = null;
+    private static CurrentLaunchInformation instance = null;
     private static CurrentDataObjectSet currentDataObjectSet;
+    private boolean complete;
     private float pilotWeight;
     private int pilotCapacity;
     private int pilotPreference;
@@ -26,6 +28,7 @@ public class CurrentFlightInformation {
     private float airfieldMagneticVariation;
     private float airfieldLatitude;
     private float airfieldLongitude;
+    private float runwayMagneticHeading;
     private float runwayAltitude;
     private float gliderPositionAltitude;
     private float gliderPositionLatitude;
@@ -33,14 +36,32 @@ public class CurrentFlightInformation {
     private float winchPositionAltitude;
     private float winchPositionLatitude;
     private float winchPositionLongitude;
+    private float drumCoreDiameter;
+    private float drumKFactor;
+    private float drumCableLength;
+    private float drumEndOffset;
+    private float drumQuadratureSensor;
+    private float parachuteLift;
+    private float parachuteDrag;
+    private float parachuteWeight; 
+    private float windSpeed;
+    private float windDirection;
+    private float temperature;
+    private float pressure;
+    private float densityAltitude;
+    private float runLength;
+    private float runSlope;
+    private float runHeading;
+    private float gliderLaunchMass;
     private ArrayList<Observer> observers;
     
-    public static CurrentFlightInformation getCurrentFlightInformation()
+    public static CurrentLaunchInformation CurrentLaunchInformation()
     {
         if(instance == null)
         {
-            instance = new CurrentFlightInformation();
+            instance = new CurrentLaunchInformation();
             instance.observers = new ArrayList<Observer>();
+            instance.complete = false;
         }
         return instance;
     }
@@ -68,6 +89,7 @@ public class CurrentFlightInformation {
         instance.airfieldMagneticVariation = currentDataObjectSet.getCurrentAirfield().getMagneticVariation();
         instance.airfieldLatitude = currentDataObjectSet.getCurrentAirfield().getLatitude();
         instance.airfieldLongitude = currentDataObjectSet.getCurrentAirfield().getLongitude();
+        instance.runwayMagneticHeading = currentDataObjectSet.getCurrentRunway().getMagneticHeading();
         instance.runwayAltitude = currentDataObjectSet.getCurrentRunway().getAltitude();
         instance.gliderPositionAltitude = currentDataObjectSet.getCurrentGliderPosition().getAltitude();
         instance.gliderPositionLatitude = currentDataObjectSet.getCurrentGliderPosition().getLatitude();
@@ -91,7 +113,7 @@ public class CurrentFlightInformation {
     }
     
     //use with caution!!!
-    //this will clear the current loaded information.
+    //this will clear the current loaded objects.
     public static void Clear()
     {
         instance = null;
@@ -101,7 +123,12 @@ public class CurrentFlightInformation {
     {
         return(instance != null);
     }
-    //Clears
+    
+    public static boolean IsReady()
+    {
+        return(instance.complete);
+    }
+
     public void clearPilotWeight()
     {
         if(instance != null) instance.pilotWeight = -1;
@@ -167,6 +194,11 @@ public class CurrentFlightInformation {
         if(instance != null) instance.airfieldLongitude = -1;
         instance.notifyObservers();
     }
+    public void clearRunwayMagneticHeading()
+    {
+        if(instance != null) instance.runwayMagneticHeading = -1;
+        instance.notifyObservers();
+    }
     public void clearRunwayAltitude()
     {
         if(instance != null) instance.runwayAltitude = -1;
@@ -202,6 +234,71 @@ public class CurrentFlightInformation {
         if(instance != null) instance.winchPositionLongitude = -1;
         instance.notifyObservers();
     }
+    public void clearDrumCoreDiameter()
+    {
+        if(instance != null) instance.drumCoreDiameter = -1;
+        instance.notifyObservers();
+    }
+    public void clearDrumKFactor()
+    {
+        if(instance != null) instance.drumKFactor = -1;
+        instance.notifyObservers();
+    }
+    public void clearDrumCableLength()
+    {
+        if(instance != null) instance.drumCableLength = -1;
+        instance.notifyObservers();
+    }
+    public void clearDrumEndOffset()
+    {
+        if(instance != null) instance.drumEndOffset = -1;
+        instance.notifyObservers();
+    }
+    public void clearDrumQuadratureSensor()
+    {
+        if(instance != null) instance.drumQuadratureSensor = -1;
+        instance.notifyObservers();
+    }
+    public void clearParachuteLift()
+    {
+        if(instance != null) instance.parachuteLift = -1;
+        instance.notifyObservers();
+    }
+    public void clearParachuteDrag()
+    {
+        if(instance != null) instance.parachuteDrag = -1;
+        instance.notifyObservers();
+    }
+    public void clearParachuteWeight()
+    {
+        if(instance != null) instance.parachuteWeight = -1;
+        instance.notifyObservers();
+    }
+    public void clearWindSpeed()
+    {
+        if(instance != null) instance.windSpeed = -1;
+        instance.notifyObservers();
+    }
+    public void clearWindDirection()
+    {
+        if(instance != null) instance.windDirection = -1;
+        instance.notifyObservers();
+    }
+    public void clearTemperature()
+    {
+        if(instance != null) instance.temperature = -1;
+        instance.notifyObservers();
+    }
+    public void clearPressure()
+    {
+        if(instance != null) instance.pressure = -1;
+        instance.notifyObservers();
+    }
+    public void clearDensityAltitude()
+    {
+        if(instance != null) instance.densityAltitude = -1;
+        instance.notifyObservers();
+    }
     public void setPilotWeight(float newPilotWeight)
     {
         if(instance != null)
@@ -210,7 +307,6 @@ public class CurrentFlightInformation {
         }
     instance.notifyObservers();
     }
-    //Setters
     public void setPilotCapacity(int newPilotCapacity)
     {
         if(instance != null)
@@ -307,6 +403,14 @@ public class CurrentFlightInformation {
         }
     instance.notifyObservers();
     }
+    public void setRunwayMagneticHeading(float newRunwayMagneticHeading)
+    {
+        if(instance != null)
+        {
+            instance.runwayMagneticHeading = newRunwayMagneticHeading;
+        }
+    instance.notifyObservers();
+    }
     public void setRunwayAltitude(float newRunwayAltitude)
     {
         if(instance != null)
@@ -363,7 +467,110 @@ public class CurrentFlightInformation {
         }
     instance.notifyObservers();
     }
-    //Getters
+    public void setDrumCoreDiameter(float newDrumCoreDiameter)
+    {
+        if(instance != null)
+        {
+            instance.drumCoreDiameter = newDrumCoreDiameter;
+        }
+    instance.notifyObservers();
+    }
+    public void setDrumKFactor(float newDrumKFactor)
+    {
+        if(instance != null)
+        {
+            instance.drumKFactor = newDrumKFactor;
+        }
+    instance.notifyObservers();
+    }
+    public void setDrumCableLength(float newDrumCableLength)
+    {
+        if(instance != null)
+        {
+            instance.drumCableLength = newDrumCableLength;
+        }
+    instance.notifyObservers();
+    }
+    public void setDrumEndOffset(float newDrumEndOffset)
+    {
+        if(instance != null)
+        {
+            instance.drumEndOffset = newDrumEndOffset;
+        }
+    instance.notifyObservers();
+    }
+    public void setDrumQuadratureSensor(float newDrumQuadratureSensor)
+    {
+        if(instance != null)
+        {
+            instance.drumQuadratureSensor = newDrumQuadratureSensor;
+        }
+    instance.notifyObservers();
+    }
+    public void setParachuteLift(float newParachuteLift)
+    {
+        if(instance != null)
+        {
+            instance.parachuteLift = newParachuteLift;
+        }
+    instance.notifyObservers();
+    }
+    public void setParachuteDrag(float newParachuteDrag)
+    {
+        if(instance != null)
+        {
+            instance.parachuteDrag = newParachuteDrag;
+        }
+    instance.notifyObservers();
+    }
+    public void setParachuteWeight(float newParachuteWeight)
+    {
+        if(instance != null)
+        {
+            instance.parachuteWeight = newParachuteWeight;
+        }
+    instance.notifyObservers();
+    }
+    public void setWindSpeed(float newWindSpeed)
+    {
+        if(instance != null)
+        {
+            instance.windSpeed = newWindSpeed;
+        }
+    instance.notifyObservers();
+    }
+    public void setWindDirection(float newWindDirection)
+    {
+        if(instance != null)
+        {
+            instance.windDirection = newWindDirection;
+        }
+    instance.notifyObservers();
+    }
+    public void setTemperature(float newTemperature)
+    {
+        if(instance != null)
+        {
+            instance.temperature = newTemperature;
+        }
+    instance.notifyObservers();
+    }
+    public void setPressure(float newPressure)
+    {
+        if(instance != null)
+        {
+            instance.pressure = newPressure;
+        }
+    instance.notifyObservers();
+    }
+    public void setDensityAltitude(float newDensityAltitude)
+    {
+        if(instance != null)
+        {
+            instance.densityAltitude = newDensityAltitude;
+        }
+    instance.notifyObservers();
+    }
     public float getPilotWeight()
     {
         if(instance == null)
@@ -507,6 +714,17 @@ public class CurrentFlightInformation {
             return instance.airfieldLongitude;
         }
     }
+    public float getRunwayMagneticHeading()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.runwayMagneticHeading;
+        }
+    }
     public float getRunwayAltitude()
     {
         if(instance == null)
@@ -584,4 +802,148 @@ public class CurrentFlightInformation {
             return instance.winchPositionLongitude;
         }
     }
+    public float getDrumCoreDiameter()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.drumCoreDiameter;
+        }
+    }
+    public float getDrumKFactor()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.drumKFactor;
+        }
+    }
+    public float getDrumCableLength()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.drumCableLength;
+        }
+    }
+    public float getDrumEndOffset()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.drumEndOffset;
+        }
+    }
+    public float getDrumQuadratureSensor()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.drumQuadratureSensor;
+        }
+    }
+    public float getParachuteLift()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.parachuteLift;
+        }
+    }
+    public float getParachuteDrag()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.parachuteDrag;
+        }
+    }
+    public float getParachuteWeight()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.parachuteWeight;
+        }
+    }
+    public float getWindSpeed()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.windSpeed;
+        }
+    }
+    public float getWindDirection()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.windDirection;
+        }
+    }
+    public float getTemperature()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.temperature;
+        }
+    }
+    public float getPressure()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.pressure;
+        }
+    }
+    public float getDensityAltitude()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.densityAltitude;
+        }
+    }
+
 }

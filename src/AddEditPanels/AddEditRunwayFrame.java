@@ -64,7 +64,7 @@ public class AddEditRunwayFrame extends JFrame {
         setupUnits();
 
         if (!isEditEntry || editRunway == null){
-            editRunway = new Runway("", "", "", 0, "");
+            editRunway = new Runway("", 0, "", 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentRunway = editRunway;
@@ -94,7 +94,7 @@ public class AddEditRunwayFrame extends JFrame {
         altitudeLabel.setBounds(10, 64, 106, 14);
         panel.add(altitudeLabel);
 
-        magneticHeadingField = new JTextField(currentRunway.getMagneticHeading());
+        magneticHeadingField = new JTextField(String.valueOf(currentRunway.getMagneticHeading()));
         magneticHeadingField.setColumns(10);
         magneticHeadingField.setBounds(140, 36, 200, 20);
         panel.add(magneticHeadingField);
@@ -213,7 +213,7 @@ public class AddEditRunwayFrame extends JFrame {
     protected void submitData(){
         if (isComplete()){
             String name = nameField.getText();
-            String magneticHeading = magneticHeadingField.getText();
+            float magneticHeading = Float.parseFloat(magneticHeadingField.getText());
             float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID);
 
             String parentAirfield = "";

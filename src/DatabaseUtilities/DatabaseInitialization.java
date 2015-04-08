@@ -405,7 +405,7 @@ public class DatabaseInitialization {
         String createRunwayString = "CREATE TABLE Runway "
                 + "(runway_id VARCHAR(8), "
                 + "runway_name VARCHAR(30), "
-                + "magnetic_heading VARCHAR(10), "
+                + "magnetic_heading FLOAT, "
                 + "parent VARCHAR(30), "
                 + "parent_id VARCHAR(8), "
                 + "altitude FLOAT, "
