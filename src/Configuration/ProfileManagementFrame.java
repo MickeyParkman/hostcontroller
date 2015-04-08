@@ -13,12 +13,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.util.Random;
+import Communications.Observer;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 
 
 
 public class ProfileManagementFrame extends JFrame {
+    private Observer parent;
     private JPanel contentPane;
     private ProfilePilotPanel ProfilePilotPanel;
     private ProfileGliderPanel ProfileGliderPanel;
@@ -59,6 +61,11 @@ public class ProfileManagementFrame extends JFrame {
     private int baggageWeightUnitsID;
     private int passengerWeightUnitsID;
 
+    public void setParent(Observer p)
+    {
+        parent = p;
+    }
+    
     public void getUnitsForProfile()
     {
         flightWeightUnits = (String)ProfilePilotPanel.flightWeightComboBox.getSelectedItem();
@@ -95,6 +102,8 @@ public class ProfileManagementFrame extends JFrame {
         currentProfile_.setUnitSetting("stallSpeed", UnitConversionToIndexUtilities.tensionUnitStringToIndex(stallSpeedUnits));
         currentProfile_.setUnitSetting("winchingSpeed", UnitConversionToIndexUtilities.velocityUnitStringToIndex(maxWinchingSpeedUnits));
         currentData.setCurrentProfile(currentProfile_);
+        parent.update();
+        //System.out.println(currentData.getCurrentProfile().getUnitSettingsForStorage());
     }
 
     public void saveAsNewButtonClicked()
@@ -316,6 +325,7 @@ public class ProfileManagementFrame extends JFrame {
         contentPane.add(panel, BorderLayout.SOUTH);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
+       
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

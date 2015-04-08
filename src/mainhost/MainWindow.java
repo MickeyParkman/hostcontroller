@@ -295,6 +295,7 @@ public class MainWindow extends JFrame {
         	@Override
         	public void actionPerformed(ActionEvent event) {
                     ProfileManagementFrame = new ProfileManagementFrame();
+                    ProfileManagementFrame.setParent(ParameterSelectionPanel_);
                     ProfileManagementFrame.setVisible(true);
         	}
     	});

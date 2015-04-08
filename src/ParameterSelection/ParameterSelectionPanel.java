@@ -1,5 +1,6 @@
 package ParameterSelection;
 
+import Communications.Observer;
 import java.awt.CardLayout;
 
 /*
@@ -12,7 +13,7 @@ import java.awt.CardLayout;
  *
  * @author dbennett3
  */
-public class ParameterSelectionPanel extends javax.swing.JPanel {
+public class ParameterSelectionPanel extends javax.swing.JPanel implements Observer {
 
     private final static String[] tabNames = {"PILOT","GLIDER","AIRFIELD","DRUM"};
     
@@ -60,6 +61,16 @@ public class ParameterSelectionPanel extends javax.swing.JPanel {
 
         
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void update(String s){};
+    
+    public void update()
+    {
+        pilotPanel.update();
+        sailplanePanel.update();
+        airfieldPanel.update();
+        drumPanel.update();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private PilotPanel pilotPanel;
