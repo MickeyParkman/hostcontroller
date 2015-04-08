@@ -2,6 +2,8 @@
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.GliderPosition;
 import DatabaseUtilities.DatabaseEntryEdit;
@@ -36,6 +38,15 @@ public class AddEditGliderPosFrame extends JFrame {
     private GliderPosition currentGliderPos;
     private boolean isEditEntry;
     private Observer parent;
+    private JLabel gliderPosAltitudeUnitsLabel = new JLabel(); 
+    private int gliderPosAltitudeUnitsID;
+    
+    public void setupUnits()
+    {
+        gliderPosAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("gliderPosAltitude");
+        String GliderPosAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(gliderPosAltitudeUnitsID);
+        gliderPosAltitudeUnitsLabel.setText(GliderPosAltitudeUnitsString);
+    }
     
     public void attach(Observer o)
     {
@@ -47,7 +58,7 @@ public class AddEditGliderPosFrame extends JFrame {
      */
     public AddEditGliderPosFrame(GliderPosition editGliderPos, boolean isEditEntry) {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-
+        setupUnits();
 
         if (!isEditEntry || editGliderPos == null){
             editGliderPos = new GliderPosition("", "", "", 0, 0, 0, "");
@@ -101,7 +112,7 @@ public class AddEditGliderPosFrame extends JFrame {
 
         altitudeField = new JTextField();
         if (isEditEntry){
-            altitudeField.setText(String.valueOf(currentGliderPos.getAltitude()));
+            altitudeField.setText(String.valueOf(currentGliderPos.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
         }
         altitudeField.setColumns(10);
         altitudeField.setBounds(135, 36, 200, 20);
@@ -129,7 +140,7 @@ public class AddEditGliderPosFrame extends JFrame {
         parentRunwayLabel.setBounds(10, 151, 220, 14);
         panel.add(parentRunwayLabel);
         try{
-        JLabel parentRunwayNameLabel = new JLabel(objectSet.getCurrentRunway().getId());
+        JLabel parentRunwayNameLabel = new JLabel(objectSet.getCurrentRunway().getName());
         parentRunwayNameLabel.setBounds(135, 151, 220, 14);
         panel.add(parentRunwayNameLabel);
         }catch(Exception e){
@@ -185,6 +196,17 @@ public class AddEditGliderPosFrame extends JFrame {
                 dispose();
             }
         });
+        
+        JLabel latitudeUnitsLabel = new JLabel("degrees");
+        latitudeUnitsLabel.setBounds(345, 89, 60, 14);
+        panel.add(latitudeUnitsLabel);
+        
+        JLabel longitudeUnitsLabel = new JLabel("degrees");
+        longitudeUnitsLabel.setBounds(345, 64, 60, 14);
+        panel.add(longitudeUnitsLabel);
+        
+        gliderPosAltitudeUnitsLabel.setBounds(345, 39, 46, 14);
+        panel.add(gliderPosAltitudeUnitsLabel);
     }
 	
     public void deleteCommand(){
@@ -219,7 +241,7 @@ public class AddEditGliderPosFrame extends JFrame {
     protected void submitData(){
         if (isComplete()){
             String gliderPosId = nameField.getText();
-            float altitude = Float.parseFloat(altitudeField.getText());
+            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID);
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             

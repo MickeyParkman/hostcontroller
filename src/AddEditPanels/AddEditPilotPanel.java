@@ -1,6 +1,8 @@
 package AddEditPanels;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
+import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
 import DatabaseUtilities.DatabaseEntryDelete;
@@ -47,6 +49,16 @@ public class AddEditPilotPanel extends JFrame {
     private Pilot currentPilot;
     private boolean isEditEntry;
     private Observer parent;
+    private CurrentDataObjectSet currentData;
+    private int flightWeightUnitsID;
+    private JLabel flightWeightUnitsLabel = new JLabel();
+    
+    public void setupUnits()
+    {
+        flightWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("flightWeight");
+        String flightWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(flightWeightUnitsID);
+        flightWeightUnitsLabel.setText(flightWeightUnitsString);
+    }
     
     public void attach(Observer o)
     {
@@ -57,6 +69,9 @@ public class AddEditPilotPanel extends JFrame {
      * Create the frame.
      */
     public AddEditPilotPanel(Pilot editPilot, boolean isEditEntry) {
+        currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        setupUnits();
+        
         if (!isEditEntry || editPilot == null){
             editPilot = new Pilot("", "", "", "", 0, "", "", "", "", "");
         }
@@ -70,7 +85,7 @@ public class AddEditPilotPanel extends JFrame {
         setBounds(100, 100, 500, 500);
         
         JPanel panel = new JPanel();
-        add(panel, BorderLayout.CENTER);
+        getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(null);
 
         JLabel firstNameLabel = new JLabel("First Name: *");
@@ -92,7 +107,7 @@ public class AddEditPilotPanel extends JFrame {
         flightWeightField = new JTextField();
         if (isEditEntry){
 
-            flightWeightField.setText(String.valueOf(editPilot.getWeight()));
+            flightWeightField.setText(String.valueOf((currentPilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID))));
         }
         flightWeightField.setBounds(160, 83, 110, 20);
         panel.add(flightWeightField);
@@ -220,7 +235,7 @@ public class AddEditPilotPanel extends JFrame {
         panel.add(emergencyContactPhoneField);
         emergencyContactPhoneField.setColumns(10);
         
-        JLabel medInfoLabel = new JLabel("Primary Physician:");
+        /*JLabel medInfoLabel = new JLabel("Primary Physician:");
         medInfoLabel.setBounds(244, 205, 117, 14);
         panel.add(medInfoLabel);
         
@@ -255,7 +270,7 @@ public class AddEditPilotPanel extends JFrame {
         
         JLabel medInfoPhoneLabel = new JLabel("Phone:");
         medInfoPhoneLabel.setBounds(267, 255, 46, 14);
-        panel.add(medInfoPhoneLabel);
+        panel.add(medInfoPhoneLabel);*/
         
         JLabel additionalInformationLabel = new JLabel("Additional Information:");
         additionalInformationLabel.setBounds(10, 300, 152, 14);
@@ -308,6 +323,9 @@ public class AddEditPilotPanel extends JFrame {
         cancelButton.setBounds(270, 438, 89, 23);
         cancelButton.setBackground(new Color(200,200,200));
         panel.add(cancelButton);
+        
+        flightWeightUnitsLabel.setBounds(280, 86, 46, 14);
+        panel.add(flightWeightUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -324,12 +342,12 @@ public class AddEditPilotPanel extends JFrame {
             String middleName = middleNameField.getText();
             String emergencyContact = emergencyContactNameField.getText() +
                     "%" + emergencyContactPhoneField.getText();
-            String medicalInformation = medInfoNameField.getText() +
-                    "%" + medInfoPhoneField.getText();
+            //String medicalInformation = medInfoNameField.getText() +
+            //        "%" + medInfoPhoneField.getText();
             String optionalInformation = optionalInfoField.getText();
             float weight = 0;
             try {
-                weight = Float.parseFloat(flightWeightField.getText());
+                weight = Float.parseFloat(flightWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID);
             }catch (NumberFormatException e) {
                 weight = -1;
             }
@@ -339,14 +357,14 @@ public class AddEditPilotPanel extends JFrame {
             String newPilotId = currentPilot.getPilotId();
             Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
                         weight, capability, preference, emergencyContact,
-                        medicalInformation, optionalInformation);
+                        "", optionalInformation);
             
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
                 ObjectSet.setCurrentPilot(newPilot);
                 Object[] options = {"One-time Launch", "Save to Database"};
                 int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider Position for a one-time launch or save it to the database?",
                     "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                System.out.println(choice);
+                
                 if (choice == 0){
                     parent.update();
                     dispose();
@@ -370,8 +388,8 @@ public class AddEditPilotPanel extends JFrame {
                 }
             }catch(SQLException e1) {
                 e1.printStackTrace();
-                if(e1.getErrorCode() == 30000)
-                    System.out.println(e1.getMessage());
+                //if(e1.getErrorCode() == 30000)
+                    
                     //JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);

@@ -123,7 +123,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         gliderPosButton = new JButton("Select Glider Position");
         winchPosButton = new JButton("Select Winch Position");
         drumButton = new JButton("Select Drum");
-        clearButton = new JButton("Clear All");
+        clearButton = new JButton("Clear All Selections");
         
         this.setPreferredSize(new Dimension(200,350));
         this.setBorder(BorderFactory.createLineBorder(Color.black));

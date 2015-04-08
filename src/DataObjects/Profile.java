@@ -23,7 +23,7 @@ public class Profile {
         this.id = id;
         initSettingsFromString(settings, prefs);
     }
-    
+        
     private void initSettingsFromString(String settings, String prefs) {
         if(!settings.equals("{}")) {
             /* settings could be "{'PILOT_WEIGHT':0,'SAILPLANE_WEIGHT':1}" */
@@ -31,7 +31,7 @@ public class Profile {
             settings = settings.replace("}","");
             String[] settingsArray = settings.split(","); //["'PILOT_WEIGHT':0"]
             
-            System.out.println("asdfas" + settings + "asdfasfasdfs");
+            //System.out.println("asdfas" + settings + "asdfasfasdfs");
             for (String setting : settingsArray) {
                 int hashValue = 0;
                 String[] settingArray = setting.split(":");
@@ -62,22 +62,26 @@ public class Profile {
             }
         }
     }
+    
+    public void setID(String id) {
+        this.id = id;
+    }
 
     public void setUnitSetting(String id, int value) {
-        unitSettings.put(id, value);
+        unitSettings.put(id.toUpperCase(), value);
     }   
 
     public void setDisplayPref(String id, int value) {
-        displayPrefs.put(id, value);
+        displayPrefs.put(id.toUpperCase(), value);
     }
 
     public int getUnitSetting(String id) {
-        if (unitSettings.containsKey(id)) return unitSettings.get(id);
+        if (unitSettings.containsKey(id.toUpperCase())) return unitSettings.get(id.toUpperCase());
         else return -1;
     }
   
     public int getDisplayPref(String id) {
-        if (displayPrefs.containsKey(id)) return displayPrefs.get(id);
+        if (displayPrefs.containsKey(id.toUpperCase())) return displayPrefs.get(id.toUpperCase());
         else return -1;
     }
 

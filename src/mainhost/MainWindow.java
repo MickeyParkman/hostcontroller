@@ -5,6 +5,7 @@ import Configuration.DatabaseExportFrame;
 import ParameterSelection.ParameterSelectionPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.Profile;
 import DatabaseUtilities.DatabaseImporter;
 import javax.swing.*;
 import java.awt.Dimension;   
@@ -57,6 +58,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        initializeDefaultProfile();
         topMenu = new JMenuBar();
         mainWindow = new JPanel(new BorderLayout());
         leftSidePanelScenario = new JPanel();
@@ -75,8 +77,31 @@ public class MainWindow extends JFrame {
         upperLeftSidePanelDashboard = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         upperLeftSidePanelWinch = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         createAndShowGUI();
-    }
+            }
 
+    private void initializeDefaultProfile()
+    {
+        Profile defaultProfile = new Profile("Default", "{}", "{}"); 
+        defaultProfile.setUnitSetting("flightWeight", 0);
+        
+        defaultProfile.setUnitSetting("emptyWeight", 0);
+        defaultProfile.setUnitSetting("maxGrossWeight", 0);
+        defaultProfile.setUnitSetting("stallSpeed", 0);
+        defaultProfile.setUnitSetting("ballastWeight", 0);
+        defaultProfile.setUnitSetting("baggageWeight", 0);
+        defaultProfile.setUnitSetting("passengerWeight", 0);
+        defaultProfile.setUnitSetting("maxTension", 0);
+        defaultProfile.setUnitSetting("weakLinkStrength", 0);
+        defaultProfile.setUnitSetting("winchingSpeed", 0);
+        
+        defaultProfile.setUnitSetting("airfieldAltitude", 0);
+        defaultProfile.setUnitSetting("gliderPosAltitude", 0);
+        defaultProfile.setUnitSetting("runwayAltitude", 0);
+        defaultProfile.setUnitSetting("winchPosAltitude", 0);
+        
+        currentData.setCurrentProfile(defaultProfile);
+    }
+    
     private void createAndShowGUI() {
         //setupMainWindow();
         //setepMenu();
@@ -264,22 +289,6 @@ public class MainWindow extends JFrame {
         
 //EDIT MENU
         //editMenu.add(editAddMenu);
-        
-        JMenuItem addNewEntryItem = new JMenuItem("Add Database Entry");
-        addNewEntryItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-            }
-        });        
-	editMenu.add(addNewEntryItem);
-        
-        JMenuItem editDBItem = new JMenuItem("Edit Database Entry");
-        editDBItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-            }
-        });
-	editMenu.add(editDBItem);
 
     	JMenuItem preferencesItem = new JMenuItem("Manage Profiles");
     	preferencesItem.addActionListener(new ActionListener() {
