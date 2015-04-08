@@ -97,6 +97,7 @@ public class CurrentLaunchInformation {
         instance.winchPositionAltitude = currentDataObjectSet.getCurrentWinchPosition().getAltitude();
         instance.winchPositionLatitude = currentDataObjectSet.getCurrentWinchPosition().getLatitude();
         instance.winchPositionLongitude = currentDataObjectSet.getCurrentWinchPosition().getLongitude();
+        instance.complete = true;
     }
     
     public void attach(Observer ob)
@@ -128,7 +129,12 @@ public class CurrentLaunchInformation {
     {
         return(instance.complete);
     }
-
+    
+    //functions to determine derived values
+    public static float calculateRunLength(){
+        return 0;
+    }
+    
     public void clearPilotWeight()
     {
         if(instance != null) instance.pilotWeight = -1;

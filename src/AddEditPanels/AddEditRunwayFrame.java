@@ -94,7 +94,11 @@ public class AddEditRunwayFrame extends JFrame {
         altitudeLabel.setBounds(10, 64, 106, 14);
         panel.add(altitudeLabel);
 
-        magneticHeadingField = new JTextField(String.valueOf(currentRunway.getMagneticHeading()));
+        magneticHeadingField = new JTextField();
+        if (isEditEntry)
+        {
+            magneticHeadingField.setText(String.valueOf(currentRunway.getMagneticHeading()));
+        }
         magneticHeadingField.setColumns(10);
         magneticHeadingField.setBounds(140, 36, 200, 20);
         panel.add(magneticHeadingField);
