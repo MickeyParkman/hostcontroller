@@ -2,6 +2,7 @@ package mainhost;
 
 import Configuration.ProfileManagementFrame;
 import Configuration.DatabaseExportFrame;
+import Configuration.DatabaseImportFrame;
 import ParameterSelection.ParameterSelectionPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
@@ -23,7 +24,11 @@ import ParameterSelection.CurrentScenario;
 import ParameterSelection.EnvironmentalWindow;
 import ParameterSelection.WinchEditPanel;
 import ParameterSelection.DEBUGWinchEditPanel;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
@@ -51,6 +56,7 @@ public class MainWindow extends JFrame {
     private ProfileManagementFrame ProfileManagementFrame;
     private FlightDashboard FlightDashboard_;
     private DatabaseExportFrame DatabaseExportFrame;
+    private DatabaseImportFrame DatabaseImportFrame;
     private EnvironmentalWindow EnvironmentalWindow_;
     private CurrentScenario CurrentScenario_;
     private CurrentDataObjectSet currentData;
@@ -226,13 +232,32 @@ public class MainWindow extends JFrame {
         importDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                try {
-                    DatabaseImporter.importDatabase("hi");
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle("Import");
+                chooser.setApproveButtonText("Select");
+                String filePath = "";
+                String fileName = "";
+                String zipLocation = "";
+                int option = chooser.showOpenDialog(topMenu);
+                if(option == JFileChooser.APPROVE_OPTION) {
+                    File file = chooser.getSelectedFile();
+                    File chosen = chooser.getCurrentDirectory();
+                    filePath = chosen.getPath();
+                    fileName = file.getName();
+                    zipLocation = filePath + "\\" + fileName;
+                    if(!fileName.contains(".zip")) {
+                        zipLocation += ".zip";
+                    }                    
                 }
+                
+                try {
+                        DatabaseImportFrame = new DatabaseImportFrame(zipLocation);
+                        DatabaseImportFrame.setVisible(true);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                       
             }
         });
 	fileMenu.add(importDBItem);
