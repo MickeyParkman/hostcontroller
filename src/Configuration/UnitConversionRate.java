@@ -28,8 +28,8 @@ public class UnitConversionRate {
     public static final float KILOGRAM_FORCE = (float) 0.101971621;
     
     //Conversion rates for weight from the standard of a Pound
-    public static final float POUND = 1;
-    public static final float KILOGRAM = (float) 0.453592;
+    public static final float POUND = (float) 2.2046244;
+    public static final float KILOGRAM =  1;
     
     //Conversion rates for speed from the standard of km/h
     public static final float KPH = 1;

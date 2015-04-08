@@ -205,7 +205,6 @@ public class AddEditGliderPosFrame extends JFrame {
         longitudeUnitsLabel.setBounds(345, 64, 60, 14);
         panel.add(longitudeUnitsLabel);
         
-        gliderPosAltitudeUnitsLabel.setText("m");
         gliderPosAltitudeUnitsLabel.setBounds(345, 39, 46, 14);
         panel.add(gliderPosAltitudeUnitsLabel);
     }

@@ -134,7 +134,7 @@ public class AddEditWinchPosFrame extends JFrame {
         ParentAirfieldNameLabel.setBounds(135, 126, 220, 14);
         panel.add(ParentAirfieldNameLabel);
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            
         }
 
         JLabel parentRunwayLabel = new JLabel("Parent Runway: ");
@@ -145,7 +145,7 @@ public class AddEditWinchPosFrame extends JFrame {
         parentRunwayNameLabel.setBounds(135, 151, 220, 14);
         panel.add(parentRunwayNameLabel);
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            
         }
         
 
@@ -200,7 +200,6 @@ public class AddEditWinchPosFrame extends JFrame {
         longitudeUnitsLabel.setBounds(345, 64, 60, 14);
         panel.add(longitudeUnitsLabel);
         
-        winchPosAltitudeUnitsLabel.setText("m");
         winchPosAltitudeUnitsLabel.setBounds(345, 39, 46, 14);
         panel.add(winchPosAltitudeUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
@@ -258,7 +257,7 @@ public class AddEditWinchPosFrame extends JFrame {
                 airfieldParent = objectSet.getCurrentAirfield().getDesignator();
                 airfieldParentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
-                System.out.println("cur runway 404 " + e.getMessage());
+                
             }
             
             WinchPosition newWinchPos = new WinchPosition(winchPosId, 
@@ -271,8 +270,7 @@ public class AddEditWinchPosFrame extends JFrame {
                 objectSet.setCurrentWinchPosition(newWinchPos);
                 Object[] options = {"One-time Launch", "Save to Database"};
                 int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Winch Position for a one-time launch or save it to the database?",
-                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                System.out.println(choice);
+                    "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);     
                 if (choice == 0){
                     parent.update("4");
                     this.dispose();

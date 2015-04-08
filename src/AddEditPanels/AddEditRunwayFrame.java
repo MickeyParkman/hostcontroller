@@ -1,4 +1,3 @@
-//Successful IF AIRFIELD EXISTS IN DB!
 
 package AddEditPanels;
 
@@ -168,7 +167,7 @@ public class AddEditRunwayFrame extends JFrame {
         try{
             parentAirfieldLabel .setText("Parent Airfield: " + objectSet.getCurrentAirfield().getDesignator());
         }catch (Exception e){
-            System.out.println("cur Airfield 404 " + e.getMessage());
+            
         }
         parentAirfieldLabel.setBounds(10, 100, 220, 14);
         panel.add(parentAirfieldLabel);
@@ -177,7 +176,6 @@ public class AddEditRunwayFrame extends JFrame {
         magneticHeadingUnitsLabel.setBounds(350, 39, 60, 14);
         panel.add(magneticHeadingUnitsLabel);
         
-        runwayAltitudeUnitsLabel.setText("m");
         runwayAltitudeUnitsLabel.setBounds(350, 64, 46, 14);
         panel.add(runwayAltitudeUnitsLabel);
     }
@@ -224,7 +222,7 @@ public class AddEditRunwayFrame extends JFrame {
                 parentAirfield = objectSet.getCurrentAirfield().getDesignator();
                 parentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
-                System.out.println("cur Airfield 404 " + e.getMessage());
+                
             }
             
 

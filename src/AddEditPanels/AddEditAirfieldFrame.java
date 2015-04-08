@@ -198,7 +198,6 @@ public class AddEditAirfieldFrame extends JFrame {
         magneticVariationUnitsLabel.setBounds(270, 87, 60, 14);
         airfieldAttributesPanel.add(magneticVariationUnitsLabel);
         
-        airfieldAltitudeUnitsLabel.setText("m");
         airfieldAltitudeUnitsLabel.setBounds(270, 62, 46, 14);
         airfieldAttributesPanel.add(airfieldAltitudeUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {

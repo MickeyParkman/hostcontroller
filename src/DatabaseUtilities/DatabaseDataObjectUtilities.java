@@ -649,7 +649,7 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theWinchPositions = stmt.executeQuery("SELECT glider_position_id, name, runway_parent, runway_parent_id, airfield_parent, airfield_parent_id, altitude, latitude, longitude, optional_info "
+            ResultSet theWinchPositions = stmt.executeQuery("SELECT winch_position_id, name, runway_parent, runway_parent_id, airfield_parent, airfield_parent_id, altitude, latitude, longitude, optional_info "
                 + "FROM WinchPosition ORDER BY name");
             List positions = new ArrayList<WinchPosition>();
             

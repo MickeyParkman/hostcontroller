@@ -64,27 +64,27 @@ public class AddEditGlider extends JFrame {
     
     public void setupUnits()
     {
-        int emptyWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("emptyWeight");
+        emptyWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("emptyWeight");
         String emptyWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(emptyWeightUnitsID);
         emptyWeightUnitsLabel.setText(emptyWeightUnitsString);
         
-        int maxGrossWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("maxGrossWeight");
+        maxGrossWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("maxGrossWeight");
         String maxGrossWeightUnitsString = UnitLabelUtilities.weightUnitIndexToString(maxGrossWeightUnitsID);
         maxGrossWeightUnitsLabel.setText(maxGrossWeightUnitsString);
         
-        int stallSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("stallSpeed");
+        stallSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("stallSpeed");
         String stallSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(stallSpeedUnitsID);
         stallSpeedUnitsLabel.setText(stallSpeedUnitsString);
                 
-        int tensionUnitsID = currentData.getCurrentProfile().getUnitSetting("maxTension");
+        tensionUnitsID = currentData.getCurrentProfile().getUnitSetting("maxTension");
         String tensionUnitsString = UnitLabelUtilities.tensionUnitIndexToString(tensionUnitsID);
         tensionUnitsLabel.setText(tensionUnitsString);
         
-        int weakLinkStrengthUnitsID = currentData.getCurrentProfile().getUnitSetting("weakLinkStrength");
+        weakLinkStrengthUnitsID = currentData.getCurrentProfile().getUnitSetting("weakLinkStrength");
         String weakLinkStrengthUnitsString = UnitLabelUtilities.tensionUnitIndexToString(weakLinkStrengthUnitsID);
         weakLinkStrengthUnitsLabel.setText(weakLinkStrengthUnitsString);
         
-        int winchingSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("winchingSpeed");
+        winchingSpeedUnitsID = currentData.getCurrentProfile().getUnitSetting("winchingSpeed");
         String winchingSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(winchingSpeedUnitsID);
         winchingSpeedUnitsLabel.setText(winchingSpeedUnitsString);
     }
@@ -281,27 +281,21 @@ public class AddEditGlider extends JFrame {
         cancelButton.setBackground(new Color(200,200,200));
         contentPane.add(cancelButton);
         
-        emptyWeightUnitsLabel.setText("kg");
         emptyWeightUnitsLabel.setBounds(280, 36, 46, 14);
         contentPane.add(emptyWeightUnitsLabel);
         
-        maxGrossWeightUnitsLabel.setText("kg");
         maxGrossWeightUnitsLabel.setBounds(280, 61, 46, 14);
         contentPane.add(maxGrossWeightUnitsLabel);
         
-        stallSpeedUnitsLabel.setText("kph");
         stallSpeedUnitsLabel.setBounds(280, 86, 46, 14);
         contentPane.add(stallSpeedUnitsLabel);
         
-        winchingSpeedUnitsLabel.setText("kph");
         winchingSpeedUnitsLabel.setBounds(617, 11, 46, 14);
         contentPane.add(winchingSpeedUnitsLabel);
         
-        weakLinkStrengthUnitsLabel.setText("N");
         weakLinkStrengthUnitsLabel.setBounds(617, 36, 46, 14);
         contentPane.add(weakLinkStrengthUnitsLabel);
         
-        tensionUnitsLabel.setText("N");
         tensionUnitsLabel.setBounds(617, 61, 46, 14);
         contentPane.add(tensionUnitsLabel);
         
@@ -338,7 +332,10 @@ public class AddEditGlider extends JFrame {
     public void submitData(){
         if (isComplete()){
             String nNumber = nNumberField.getText();
-            float emptyWeight = Float.parseFloat(emptyWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID);
+            float emptyWeight = (Float.parseFloat(emptyWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID));
+            System.out.println("ASDFA  " + emptyWeightUnitsID);
+            System.out.println("ASDFA  " + UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID));
+            System.out.println("ASDFA  " + emptyWeight);
             float grossWeight = Float.parseFloat(grossWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID);
             float stallSpeed = Float.parseFloat(stallSpeedField.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID);
             float weakLink = Float.parseFloat(weakLinkField.getText()) / UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID);

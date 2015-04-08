@@ -125,6 +125,8 @@ public class SailplanePanel extends JPanel implements Observer{
         grossWeightField.setText(String.valueOf(currentSailplane.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
         grossWeightField.setBackground(Color.GREEN);
 
+        System.out.println("asefr    " + emptyWeightUnitsID);
+        System.out.println("asefr    " + UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID));
         emptyWeightField.setText(String.valueOf(currentSailplane.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
         emptyWeightField.setBackground(Color.GREEN);
 

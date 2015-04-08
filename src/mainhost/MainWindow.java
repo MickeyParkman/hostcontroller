@@ -83,11 +83,11 @@ public class MainWindow extends JFrame {
         defaultProfile.setUnitSetting("flightWeight", 0);
         
         defaultProfile.setUnitSetting("emptyWeight", 1);
-        defaultProfile.setUnitSetting("maxGrossWeight", 1);
+        defaultProfile.setUnitSetting("maxGrossWeight", 0);
         defaultProfile.setUnitSetting("stallSpeed", 0);
-        defaultProfile.setUnitSetting("ballastWeight", 1);
-        defaultProfile.setUnitSetting("baggageWeight", 1);
-        defaultProfile.setUnitSetting("passengerWeight", 1);
+        defaultProfile.setUnitSetting("ballastWeight", 0);
+        defaultProfile.setUnitSetting("baggageWeight", 0);
+        defaultProfile.setUnitSetting("passengerWeight", 0);
         defaultProfile.setUnitSetting("maxTension", 0);
         defaultProfile.setUnitSetting("weakLinkStrength", 0);
         defaultProfile.setUnitSetting("winchingSpeed", 0);

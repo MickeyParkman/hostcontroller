@@ -95,19 +95,19 @@ public class AirfieldPanel extends JPanel implements Observer{
     public void update(String s)
     {
         int airfieldAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("airfieldAltitude");
-        String airfieldAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(airfieldAltitudeUnitsID);
+        String airfieldAltitudeUnitsString = UnitLabelUtilities.lenghtUnitInexToString(airfieldAltitudeUnitsID);
         airfieldAltitudeUnits.setText(airfieldAltitudeUnitsString);
 
         gliderPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("gliderPosAltitude");
-        String gliderPosAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(gliderPosAltitudeUnitsID);
+        String gliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitInexToString(gliderPosAltitudeUnitsID);
         gliderPosAltitudeUnits.setText(gliderPosAltitudeUnitsString);
 
         runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
-        String runwayAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(runwayAltitudeUnitsID);
+        String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitInexToString(runwayAltitudeUnitsID);
         runwayAltitudeUnits.setText(runwayAltitudeUnitsString);
 
         winchPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("winchPosAltitude");
-        String winchPosAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(winchPosAltitudeUnitsID);
+        String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitInexToString(winchPosAltitudeUnitsID);
         winchPosAltitudeUnits.setText(winchPosAltitudeUnitsString);
             
         if(s.equals("1"))
@@ -190,6 +190,7 @@ public class AirfieldPanel extends JPanel implements Observer{
             initWinchPositionsList();
             winchPositionModel.clear();
             for(Object str: winchPositions){
+                    System.out.println("HERE");
                     winchPositionModel.addElement(str);
             }
             winchPositionsJList.setModel(winchPositionModel);
@@ -400,13 +401,13 @@ public class AirfieldPanel extends JPanel implements Observer{
                 
                 gliderPositionModel.removeAllElements();
                 for(GliderPosition str: gliderPositions){
-                    if(str.getRunwayParent().equals(theRunway.getId()))
+                    if(str.getRunwayParentId().equals(theRunway.getId()))
                         gliderPositionModel.addElement(str);
                 }
                 
                 winchPositionModel.removeAllElements();
                 for(WinchPosition str: winchPositions){
-                    if(str.getRunwayParent().equals(theRunway.getId()))
+                    if(str.getRunwayParentId().equals(theRunway.getId()))
                         winchPositionModel.addElement(str);
                 }
 

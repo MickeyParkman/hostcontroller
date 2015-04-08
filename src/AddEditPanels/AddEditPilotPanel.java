@@ -324,7 +324,6 @@ public class AddEditPilotPanel extends JFrame {
         cancelButton.setBackground(new Color(200,200,200));
         panel.add(cancelButton);
         
-        flightWeightUnitsLabel.setText("kg");
         flightWeightUnitsLabel.setBounds(280, 86, 46, 14);
         panel.add(flightWeightUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
@@ -365,7 +364,7 @@ public class AddEditPilotPanel extends JFrame {
                 Object[] options = {"One-time Launch", "Save to Database"};
                 int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider Position for a one-time launch or save it to the database?",
                     "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                System.out.println(choice);
+                
                 if (choice == 0){
                     parent.update();
                     dispose();
@@ -389,8 +388,8 @@ public class AddEditPilotPanel extends JFrame {
                 }
             }catch(SQLException e1) {
                 e1.printStackTrace();
-                if(e1.getErrorCode() == 30000)
-                    System.out.println(e1.getMessage());
+                //if(e1.getErrorCode() == 30000)
+                    
                     //JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
