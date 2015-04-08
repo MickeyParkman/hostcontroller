@@ -51,40 +51,19 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
     
     private void initTableList() throws IOException
     {
-        System.out.println(zipName);
         ZipFile zip = new ZipFile(new File(zipName));
         ZipInputStream zin = new ZipInputStream(new FileInputStream(zipName));
         for(ZipEntry e; (e = zin.getNextEntry()) != null;) {
             String fileName = e.toString();
             fileNames.add(fileName);
-            names.add(fileName);
-            //names.add(fileName);
-            /*
-            if(fileName.contains("CAPABILITY")) {
-                names.add("CAPABILITY");
-            }else if(fileName.contains("PREFERENCE")) {
-                names.add("PREFERENCE");
-            }else if(fileName.contains("AIRFIELD")) {
-                names.add("AIRFIELD");
-            }else if(fileName.contains("RUNWAY")) {
-                names.add("RUNWAY");
-            }else if(fileName.contains("GLIDERPOSITION")) {
-                names.add("GLIDERPOSITION");
-            }else if(fileName.contains("WINCHPOSITION")) {
-                names.add("WINCHPOSITION");
-            }else if(fileName.contains("PARACHUTE")) {
-                names.add("PARACHUTE");
-            }else if(fileName.contains("PILOT")) {
-                names.add("PILOT");
-            }else if(fileName.contains("PROFILE")) {
-                names.add("PROFILE");
-            }else if(fileName.contains("GLIDER")) {
-                names.add("GLIDER");
-            }else if(fileName.contains("Messages")) {
-                names.add("Messages");
-            }
-            */
+            names.add(GetNameFromFile(fileName));
         }
+    }
+    
+    private String GetNameFromFile(String s)
+    {
+        String[] split = s.split("_");
+        return split[1];
     }
     
     private JFrame getFrame()
@@ -128,21 +107,17 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
                     public void actionPerformed(ActionEvent arg0) {
                         
                         List<String> selectedTables = new ArrayList<String>();
-                        selectedTables = TableList.getSelectedValuesList();
                         
                         int[] selectedIndices;
                         selectedIndices = TableList.getSelectedIndices();
 
-                        for(String p : selectedTables) {
-                            System.out.println(p);
-                        }
                         
                         for(int i : selectedIndices) {
-                            System.out.println(fileNames.get(i));
+                            selectedTables.add(fileNames.get(i));
                         }
 
                         try{
-                            DatabaseImporter.importDatabase(fileNames);
+                            DatabaseImporter.importDatabase(zipName, selectedTables);
                             getFrame().dispose();
                         }catch(Exception e)
                         {

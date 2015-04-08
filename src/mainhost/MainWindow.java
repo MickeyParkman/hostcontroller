@@ -221,10 +221,7 @@ public class MainWindow extends JFrame {
                     zipLocation = filePath + "\\" + fileName;
                     if(!fileName.contains(".zip")) {
                         zipLocation += ".zip";
-                    }
-                    System.out.println("in try");
-                    System.out.println(zipLocation);
-                    
+                    }                    
                 }
                 
                 try {

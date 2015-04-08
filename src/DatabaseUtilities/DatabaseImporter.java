@@ -35,7 +35,7 @@ public class DatabaseImporter {
     private static BufferedReader br;
     private static Connection connection;
     
-    public static void importDatabase(List<String> tableList) throws ClassNotFoundException, SQLException 
+    public static void importDatabase(String zipName, List<String> importList) throws ClassNotFoundException, SQLException 
     {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
@@ -60,22 +60,24 @@ public class DatabaseImporter {
         }
         
         try {
-            importTable(connection, tableList);
+            importTable(connection, zipName, importList);
         }catch(Exception e) {
             JOptionPane.showMessageDialog(null, "Couldn't import", "Error", JOptionPane.INFORMATION_MESSAGE);
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         
         
     }
     
     
-    private static void importTable(Connection connect, List<String> tableList) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
+    private static void importTable(Connection connect, String zipName, List<String> importList) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
         
-        ZipFile zip = new ZipFile(new File(tableList));
-        ZipInputStream zin = new ZipInputStream(new FileInputStream(tableList));
+        ZipFile zip = new ZipFile(new File(zipName));
+        ZipInputStream zin = new ZipInputStream(new FileInputStream(zipName));
         for(ZipEntry e; (e = zin.getNextEntry()) != null;) {
 
+            //System.out.println(importList);
+            
             String fileName = e.toString();
             //System.out.println(fileName);
                        
@@ -83,39 +85,41 @@ public class DatabaseImporter {
             InputStreamReader isr = new InputStreamReader(is);
             br = new BufferedReader(isr);
             
-            if(fileName.contains("CAPABILITY")) {
-                System.out.println("Importing capability");
-                importCapability();
-            }else if(fileName.contains("PREFERENCE")) {
-                System.out.println("Importing PREFERENCE");
-                importPreference();
-            }else if(fileName.contains("AIRFIELD")) {
-                System.out.println("Importing AIRFIELD");
-                importAirfield();
-            }else if(fileName.contains("RUNWAY")) {
-                System.out.println("Importing RUNWAY");
-                importRunway();
-            }else if(fileName.contains("GLIDERPOSITION")) {
-                System.out.println("Importing GLIDERPOSITION");
-                importGliderPosition();
-            }else if(fileName.contains("WINCHPOSITION")) {
-                System.out.println("Importing WINCHPOSITION");
-                importWinchPosition();
-            }else if(fileName.contains("PARACHUTE")) {
-                System.out.println("Importing PARACHUTE");
-                importParachute();
-            }else if(fileName.contains("PILOT")) {
-                System.out.println("Importing PILOT");
-                importPilot();
-            }else if(fileName.contains("PROFILE")) {
-                System.out.println("Importing PROFILE");
-                importProfile();
-            }else if(fileName.contains("GLIDER")) {
-                System.out.println("Importing GLIDER");
-                importSailplane();
-            }else if(fileName.contains("Messages")) {
-                System.out.println("Importing Messages");
-                importMessages();
+            if(importList.contains(fileName)) {
+                if(fileName.contains("CAPABILITY")) {
+                    //System.out.println("Importing CAPABILITY");
+                    importCapability();
+                }else if(fileName.contains("PREFERENCE")) {
+                    //System.out.println("Importing PREFERENCE");
+                    importPreference();
+                }else if(fileName.contains("AIRFIELD")) {
+                    //System.out.println("Importing AIRFIELD");
+                    importAirfield();
+                }else if(fileName.contains("RUNWAY")) {
+                    //System.out.println("Importing RUNWAY");
+                    importRunway();
+                }else if(fileName.contains("GLIDERPOSITION")) {
+                    //System.out.println("Importing GLIDERPOSITION");
+                    importGliderPosition();
+                }else if(fileName.contains("WINCHPOSITION")) {
+                    //System.out.println("Importing WINCHPOSITION");
+                    importWinchPosition();
+                }else if(fileName.contains("PARACHUTE")) {
+                    //System.out.println("Importing PARACHUTE");
+                    importParachute();
+                }else if(fileName.contains("PILOT")) {
+                    //System.out.println("Importing PILOT");
+                    importPilot();
+                }else if(fileName.contains("PROFILE")) {
+                    //System.out.println("Importing PROFILE");
+                    importProfile();
+                }else if(fileName.contains("SAILPLANE")) {
+                    //System.out.println("Importing SAILPLANE");
+                    importSailplane();
+                }else if(fileName.contains("Messages")) {
+                    //System.out.println("Importing Messages");
+                    importMessages();
+                }
             }
             
                
@@ -203,9 +207,6 @@ public class DatabaseImporter {
         String s;
         while((s = br.readLine()) != null) {
             String[] gliderPositionData = s.split(",",-1);
-            for(String q: gliderPositionData) {
-                System.out.println(q);
-            }
             GliderPosition importer = new GliderPosition(gliderPositionData[1], gliderPositionData[2], gliderPositionData[4], Float.parseFloat(gliderPositionData[6]), 
                     Float.parseFloat(gliderPositionData[7]), Float.parseFloat(gliderPositionData[8]), gliderPositionData[9]);
             importer.setId(gliderPositionData[0]);
