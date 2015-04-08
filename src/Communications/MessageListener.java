@@ -14,7 +14,7 @@ public class MessageListener implements Observer
     static final int STATE_MESSAGE_ID = 304 * ID_SCALE;             // 0x260
     static final int PARAM_REQUEST_MESSAGE_ID = 312 * ID_SCALE;     // 0x270 
     static final int LAUNCH_PARAM_MESSAGE_ID = 327 * ID_SCALE;      // 0x28e
-        static final int CP_CL_RMT_MESSAGE_ID = 328 * ID_SCALE;     // 0x290
+    static final int CP_CL_RMT_MESSAGE_ID = 328 * ID_SCALE;     // 0x290
     static final int CP_CL_LCL_MESSAGE_ID = 329 * ID_SCALE;         // 0x292
     static final int CP_INPUTS_RMT_MESSAGE_ID = 330 * ID_SCALE;     // 0x294
     static final int CP_INPUTS_LCL_MESSAGE_ID = 331 * ID_SCALE;     // 0x296
