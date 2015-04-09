@@ -44,10 +44,11 @@ public class MessagePipeline implements Runnable {
             instance = new MessagePipeline();
             instance.observers = new ArrayList<>();
             instance.init();
-            listener.attachRelay(relay);
+            instance.listener.attachRelay(instance.relay);
         }
         return instance;
     }
+   
     
     public void init()
     {
