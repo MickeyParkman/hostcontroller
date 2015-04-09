@@ -92,6 +92,9 @@ public class DatabaseImporter {
                 }else if(fileName.contains("PREFERENCE")) {
                     //System.out.println("Importing PREFERENCE");
                     importPreference();
+                }else if(fileName.contains("GLIDER")) {
+                    //System.out.println("Importing PREFERENCE");
+                    importGlider();
                 }else if(fileName.contains("AIRFIELD")) {
                     //System.out.println("Importing AIRFIELD");
                     importAirfield();
@@ -158,6 +161,22 @@ public class DatabaseImporter {
                 insertStatement.setString(2, capabilityData[1]);
                 insertStatement.executeUpdate();
                 insertStatement.close();               
+            }catch(Exception e)
+            {   }
+        }
+    }
+    
+    private static void importGlider() throws IOException {
+        String s;
+        while((s = br.readLine()) != null) {
+            String[] gliderData = s.split(",", -1);
+            Sailplane importer = new Sailplane(gliderData[1], "", Float.parseFloat(gliderData[3]),
+                    Float.parseFloat(gliderData[4]), Float.parseFloat(gliderData[5]), Float.parseFloat(gliderData[6]), 
+                    Float.parseFloat(gliderData[7]), Float.parseFloat(gliderData[8]), Float.parseFloat(gliderData[9]),
+                    Boolean.parseBoolean(gliderData[10]), Boolean.parseBoolean(gliderData[11]), gliderData[12]);
+            importer.setId(gliderData[0]);
+            try {
+                DatabaseDataObjectUtilities.addSailplaneToDB(importer);
             }catch(Exception e)
             {   }
         }

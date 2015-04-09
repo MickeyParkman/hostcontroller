@@ -6,6 +6,7 @@
 
 package DashboardInterface;
 
+import java.awt.Color;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
@@ -151,6 +152,8 @@ public class SystemsStatus extends javax.swing.JPanel {
             }
         });
         add(jLabel12, new AbsoluteConstraints(170, 90, -1, -1));
+        
+        ChangeTextColor(1,1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -213,6 +216,69 @@ public class SystemsStatus extends javax.swing.JPanel {
         Gateway ten = new Gateway();
         ten.setVisible(true);
     }//GEN-LAST:event_jLabel15MouseClicked
+    
+    
+    /**
+     * 
+     * @param id        id of the label to be changed   1 - 15
+     * @param choice    color to be changed to
+     *                  0 green, 1 yellow, 2 red
+     */
+    private void ChangeTextColor(int id, int choice) {
+        Color color = new Color(0, 0, 0);
+        switch(choice) {
+            case 0:
+                color = new Color(0, 153, 0);
+                break;
+            case 1:
+                color = new Color(255, 226, 26);
+                break;
+            case 2:
+                color = new Color(211, 15, 10);
+                break;
+            default:
+                color = new Color(0, 153, 0);
+                break;
+        }
+        switch(id) {
+            case 1:
+                jLabel1.setForeground(color);
+                break;
+            case 2:
+                jLabel2.setForeground(color);
+                break;
+            case 6:
+                jLabel6.setForeground(color);
+                break;
+            case 7:
+                jLabel7.setForeground(color);
+                break;
+            case 8:
+                jLabel8.setForeground(color);
+                break;
+            case 9:
+                jLabel9.setForeground(color);
+                break;
+            case 10:
+                jLabel10.setForeground(color);
+                break;
+            case 11:
+                jLabel11.setForeground(color);
+                break;
+            case 12:
+                jLabel12.setForeground(color);
+                break;
+            case 13:
+                jLabel13.setForeground(color);
+                break;
+            case 14:
+                jLabel14.setForeground(color);
+                break;
+            case 15:
+                jLabel15.setForeground(color);
+                break;
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
