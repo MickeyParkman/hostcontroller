@@ -93,6 +93,7 @@ public class ProfileManagementFrame extends JFrame {
         if(profileJList.getSelectedIndex() >= 0){
             Profile selectedProfile = (Profile)profileJList.getSelectedValue();
             currentData.setCurrentProfile(selectedProfile);
+            parent.update();
         }
         dispose();
     }
@@ -148,6 +149,7 @@ public class ProfileManagementFrame extends JFrame {
         SaveAsNewFrame = new SaveAsNewFrame();
         SaveAsNewFrame.setParent(getCurrentProfileManagementFrame());
         SaveAsNewFrame.setVisible(true);
+        parent.update();
     }
 
     private void initProfileList() 
