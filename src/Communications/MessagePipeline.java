@@ -21,6 +21,7 @@ public class MessagePipeline implements Runnable {
     private boolean running = false;
     private boolean connected = false;
     private MessageListener listener = new MessageListener();
+    private DataRelay relay = new DataRelay();
     private String DEBUGMessageList[] = {"5 100 100 65"
                                         ,"5.1 200 100 50"
                                         ,"5.2 100 500 100"
@@ -43,6 +44,7 @@ public class MessagePipeline implements Runnable {
             instance = new MessagePipeline();
             instance.observers = new ArrayList<>();
             instance.init();
+            listener.attachRelay(relay);
         }
         return instance;
     }
