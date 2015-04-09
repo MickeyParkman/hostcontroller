@@ -34,11 +34,11 @@ public class UnitConversionToIndexUtilities {
        switch (unit) {
             case "N":
                 return 0;
-            case "ldf":
+            case "lbf":
                 return 1;
             case "kgf": 
                 return 2;
-            case "dN":
+            case "daN":
                 return 3;
             default:
                 return 0;

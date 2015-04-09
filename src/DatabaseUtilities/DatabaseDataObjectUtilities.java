@@ -330,7 +330,7 @@ public class DatabaseDataObjectUtilities {
             ProfileInsertStatement.setString(3, theProfile.getDisplayPrefsForStorage());
             ProfileInsertStatement.executeUpdate();
             ProfileInsertStatement.close();
-            System.out.println(theProfile.getID() + ": " + theProfile.getUnitSettingsForStorage());
+            //System.out.println(theProfile.getID() + ": " + theProfile.getUnitSettingsForStorage());
         }catch(SQLException e) {
             throw e;
         }
