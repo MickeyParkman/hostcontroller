@@ -14,6 +14,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.util.Random;
 import Communications.Observer;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DatabaseUtilities.DatabaseEntryEdit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 
@@ -83,6 +87,15 @@ public class ProfileManagementFrame extends JFrame {
         baggageWeightUnits = (String)ProfileGliderPanel.baggageWeightComboBox.getSelectedItem();
         passengerWeightUnits = (String)ProfileGliderPanel.passengerWeightComboBox.getSelectedItem();         
     }
+    
+    public void selectButtonClicked()
+    {
+        if(profileJList.getSelectedIndex() >= 0){
+            Profile selectedProfile = (Profile)profileJList.getSelectedValue();
+            currentData.setCurrentProfile(selectedProfile);
+        }
+        dispose();
+    }
 
     public void saveButtonClicked()
     {
@@ -103,6 +116,12 @@ public class ProfileManagementFrame extends JFrame {
         currentProfile_.setUnitSetting("winchingSpeed", UnitConversionToIndexUtilities.velocityUnitStringToIndex(maxWinchingSpeedUnits));
         currentData.setCurrentProfile(currentProfile_);
         parent.update();
+        try {
+            DatabaseEntryEdit.UpdateEntry(currentProfile_); 
+        } catch (Exception e) {
+            e.printStackTrace();
+            //do nothing for now...
+        }
         //System.out.println(currentData.getCurrentProfile().getUnitSettingsForStorage());
     }
 
@@ -325,6 +344,14 @@ public class ProfileManagementFrame extends JFrame {
         contentPane.add(panel, BorderLayout.SOUTH);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
+        JButton selectButton = new JButton("Set as Current Profile");
+        selectButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    selectButtonClicked();
+                    }
+        });
+        selectButton.setBackground(new Color(200,200,200));
+        panel.add(selectButton);
        
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
