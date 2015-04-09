@@ -123,9 +123,9 @@ public class ProfileGliderPanel extends JPanel{
         weakLinkStrengthComboBox.setBounds(440, 60, 54, 20);
         weakLinkStrengthComboBox.setMaximumSize(new Dimension(32767, 20));
         weakLinkStrengthComboBox.addItem("N");
-        weakLinkStrengthComboBox.addItem("ldf");
-        weakLinkStrengthComboBox.addItem("kdf");
-        weakLinkStrengthComboBox.addItem("dN");
+        weakLinkStrengthComboBox.addItem("lbf");
+        weakLinkStrengthComboBox.addItem("kgf");
+        weakLinkStrengthComboBox.addItem("daN");
 
         maxWinchingSpeedComboBox.setBounds(440, 34, 54, 20);
         maxWinchingSpeedComboBox.setMaximumSize(new Dimension(32767, 20));
@@ -140,9 +140,9 @@ public class ProfileGliderPanel extends JPanel{
         maxTensionComboBox.setBounds(440, 86, 54, 20);
         maxTensionComboBox.setMaximumSize(new Dimension(32767, 20));
         maxTensionComboBox.addItem("N");
-        maxTensionComboBox.addItem("ldf");
-        maxTensionComboBox.addItem("kdf");
-        maxTensionComboBox.addItem("dN");
+        maxTensionComboBox.addItem("lbf");
+        maxTensionComboBox.addItem("kgf");
+        maxTensionComboBox.addItem("daN");
 
         JLabel ballastWeightLabel = new JLabel("Ballast Weight:");
         ballastWeightLabel.setBounds(9, 159, 117, 14);
