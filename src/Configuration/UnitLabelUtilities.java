@@ -35,11 +35,11 @@ public class UnitLabelUtilities {
             case 0:
                 return "N";
             case 1:
-                return "ldf";
+                return "lbf";
             case 2: 
                 return "kgf";
             case 3:
-                return "dN";
+                return "daN";
             default:
                 return "";
         } 

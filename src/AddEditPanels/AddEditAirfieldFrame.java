@@ -51,7 +51,7 @@ public class AddEditAirfieldFrame extends JFrame {
     public void setupUnits()
     {
         airfieldAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("airfieldAltitude");
-        String airfieldAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(airfieldAltitudeUnitsID);
+        String airfieldAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(airfieldAltitudeUnitsID);
         airfieldAltitudeUnitsLabel.setText(airfieldAltitudeUnitsString);
     }
     

@@ -44,7 +44,7 @@ public class AddEditGliderPosFrame extends JFrame {
     public void setupUnits()
     {
         gliderPosAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("gliderPosAltitude");
-        String GliderPosAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(gliderPosAltitudeUnitsID);
+        String GliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(gliderPosAltitudeUnitsID);
         gliderPosAltitudeUnitsLabel.setText(GliderPosAltitudeUnitsString);
     }
     
