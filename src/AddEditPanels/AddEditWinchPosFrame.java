@@ -43,7 +43,7 @@ public class AddEditWinchPosFrame extends JFrame {
     public void setupUnits()
     {
         winchPosAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("winchPosAltitude");
-        String winchPosAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(winchPosAltitudeUnitsID);
+        String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(winchPosAltitudeUnitsID);
         winchPosAltitudeUnitsLabel.setText(winchPosAltitudeUnitsString);
     }
     

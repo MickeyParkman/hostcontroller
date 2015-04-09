@@ -47,7 +47,7 @@ public class AddEditRunwayFrame extends JFrame {
     public void setupUnits()
     {
         runwayAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("runwayAltitude");
-        String RunwayAltitudeUnitsString = UnitLabelUtilities.weightUnitIndexToString(runwayAltitudeUnitsID);
+        String RunwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
         runwayAltitudeUnitsLabel.setText(RunwayAltitudeUnitsString);
     }
     
