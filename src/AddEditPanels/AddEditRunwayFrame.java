@@ -305,6 +305,13 @@ public class AddEditRunwayFrame extends JFrame {
         if (emptyFields){
             throw new Exception("");
         }
+        
+        Float.parseFloat(magneticHeading);
+        Float.parseFloat(altitude);
+    }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(rootPane, "Please input correct numerical values", "Error", JOptionPane.INFORMATION_MESSAGE);
+            //ew = new ErrWindow("Please input correct numerical values");
+            return false;
     }catch(Exception e){
         JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
         //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());

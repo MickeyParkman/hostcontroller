@@ -212,7 +212,7 @@ public class DatabaseImporter {
         String s;
         while((s = br.readLine()) != null) {
             String[] runwayData = s.split(",",-1);
-            Runway importer = new Runway(runwayData[1], runwayData[2], runwayData[3], Float.parseFloat(runwayData[5]), runwayData[6]);
+            Runway importer = new Runway(runwayData[1], Float.parseFloat(runwayData[2]), runwayData[3], Float.parseFloat(runwayData[5]), runwayData[6]);
             importer.setId(runwayData[0]);
             importer.setParentId(runwayData[4]);
             try {

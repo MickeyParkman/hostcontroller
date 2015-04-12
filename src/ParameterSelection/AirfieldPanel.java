@@ -160,14 +160,9 @@ public class AirfieldPanel extends JPanel implements Observer{
             try
             {
                 runwaysJList.setSelectedValue(currentRunway.toString(), true);
-                runwaysScrollPane.setViewportView(runwaysJList); 
-            runwaysJList.setSelectedValue(currentRunway.toString(), true);
-            runwaysScrollPane.setViewportView(runwaysJList); 
+                runwaysScrollPane.setViewportView(runwaysJList);  
             
-            runwayNameField.setText(currentRunway.getName());
-            runwayNameField.setBackground(Color.GREEN);
-
-                runwayNameField.setText(currentRunway.getId());
+                runwayNameField.setText(currentRunway.getName());
                 runwayNameField.setBackground(Color.GREEN);
 
                 runwayAltitudeField.setText(String.valueOf(currentRunway.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID)));
