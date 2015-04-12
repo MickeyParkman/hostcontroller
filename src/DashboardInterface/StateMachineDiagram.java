@@ -1,4 +1,4 @@
-package glasscontrolpanel;
+package DashboardInterface;
 
 //TODO: remove import *s
 import javax.swing.*;
@@ -31,16 +31,16 @@ public class StateMachineDiagram extends javax.swing.JPanel {
     
     private void loadPictures()
     {
-        statePics.put(0, new ImageIcon(getClass().getResource("/glasscontrolpanel/safe.png")));
-        statePics.put(1, new ImageIcon(getClass().getResource("/glasscontrolpanel/prep.png")));
-        statePics.put(2, new ImageIcon(getClass().getResource("/glasscontrolpanel/armed.png")));
-        statePics.put(3, new ImageIcon(getClass().getResource("/glasscontrolpanel/profile.png")));
-        statePics.put(4, new ImageIcon(getClass().getResource("/glasscontrolpanel/ramp.png")));
-        statePics.put(5, new ImageIcon(getClass().getResource("/glasscontrolpanel/constant.png")));
-        statePics.put(6, new ImageIcon(getClass().getResource("/glasscontrolpanel/recovery.png")));
-        statePics.put(7, new ImageIcon(getClass().getResource("/glasscontrolpanel/retrieve.png")));
-        statePics.put(14, new ImageIcon(getClass().getResource("/glasscontrolpanel/stop.png")));
-        statePics.put(15, new ImageIcon(getClass().getResource("/glasscontrolpanel/abort.png")));
+        statePics.put(0, new ImageIcon(getClass().getResource("/DashboardInterface/images/safe.png")));
+        statePics.put(1, new ImageIcon(getClass().getResource("/DashboardInterface/images/prep.png")));
+        statePics.put(2, new ImageIcon(getClass().getResource("/DashboardInterface/images/armed.png")));
+        statePics.put(3, new ImageIcon(getClass().getResource("/DashboardInterface/images/profile.png")));
+        statePics.put(4, new ImageIcon(getClass().getResource("/DashboardInterface/images/ramp.png")));
+        statePics.put(5, new ImageIcon(getClass().getResource("/DashboardInterface/images/constant.png")));
+        statePics.put(6, new ImageIcon(getClass().getResource("/DashboardInterface/images/recovery.png")));
+        statePics.put(7, new ImageIcon(getClass().getResource("/DashboardInterface/images/retrieve.png")));
+        statePics.put(14, new ImageIcon(getClass().getResource("/DashboardInterface/images/stop.png")));
+        statePics.put(15, new ImageIcon(getClass().getResource("/DashboardInterface/images/abort.png")));
     }
     
     @SuppressWarnings("unchecked")

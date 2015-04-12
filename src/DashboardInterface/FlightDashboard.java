@@ -29,7 +29,7 @@ public class FlightDashboard extends javax.swing.JPanel
     private JPanel dialSquare;
     private JPanel dialPane;
     private JPanel systemPane;
-    private JPanel diagramPane;
+    private StateMachineDiagram diagramPane;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -60,7 +60,7 @@ public class FlightDashboard extends javax.swing.JPanel
         dialPane.setLayout(new GridBagLayout());
         //dialPane.setBorder(BorderFactory.createLineBorder(Color.black));
         systemPane = new JPanel();
-        diagramPane = new StateMachinePanel();
+        diagramPane = new StateMachineDiagram();
         
         dialSquare = new JPanel(new BorderLayout()) {
             @Override
