@@ -117,53 +117,56 @@ public class SailplanePanel extends JPanel implements Observer{
         }
         sailplaneJList.setModel(sailplaneModel);
         Sailplane currentSailplane = currentData.getCurrentSailplane();
-        sailplaneJList.setSelectedValue(currentSailplane.toString(), true);
-        sailplaneScrollPane.setViewportView(sailplaneJList);
-               
-        nNumberField.setText(currentSailplane.getNumber());
-        nNumberField.setBackground(Color.GREEN);
+        try{
+            sailplaneJList.setSelectedValue(currentSailplane.toString(), true);
+            sailplaneScrollPane.setViewportView(sailplaneJList);
 
-        weakLinkField.setText(String.valueOf(currentSailplane.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
-        weakLinkField.setBackground(Color.GREEN);
+            nNumberField.setText(currentSailplane.getNumber());
+            nNumberField.setBackground(Color.GREEN);
 
-        tensionField.setText(String.valueOf(currentSailplane.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
-        tensionField.setBackground(Color.GREEN);
+            weakLinkField.setText(String.valueOf(currentSailplane.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
+            weakLinkField.setBackground(Color.GREEN);
 
-        releaseAngleField.setText(String.valueOf(currentSailplane.getCableReleaseAngle()));
-        releaseAngleField.setBackground(Color.GREEN);
+            tensionField.setText(String.valueOf(currentSailplane.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
+            tensionField.setBackground(Color.GREEN);
 
-        stallSpeedField.setText(String.valueOf(currentSailplane.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
-        stallSpeedField.setBackground(Color.GREEN);
+            releaseAngleField.setText(String.valueOf(currentSailplane.getCableReleaseAngle()));
+            releaseAngleField.setBackground(Color.GREEN);
 
-        grossWeightField.setText(String.valueOf(currentSailplane.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
-        grossWeightField.setBackground(Color.GREEN);
+            stallSpeedField.setText(String.valueOf(currentSailplane.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
+            stallSpeedField.setBackground(Color.GREEN);
 
-        emptyWeightField.setText(String.valueOf(currentSailplane.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
-        emptyWeightField.setBackground(Color.GREEN);
+            grossWeightField.setText(String.valueOf(currentSailplane.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
+            grossWeightField.setBackground(Color.GREEN);
 
-        winchingSpeedField.setText(String.valueOf(currentSailplane.getMaxWinchingSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
-        winchingSpeedField.setBackground(Color.GREEN);
+            emptyWeightField.setText(String.valueOf(currentSailplane.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
+            emptyWeightField.setBackground(Color.GREEN);
 
-        if(currentSailplane.getCarryBallast())
-        {
-            ballastField.setEnabled(true);
-            ballastField.setBackground(Color.WHITE);
+            winchingSpeedField.setText(String.valueOf(currentSailplane.getMaxWinchingSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
+            winchingSpeedField.setBackground(Color.GREEN);
+
+            if(currentSailplane.getCarryBallast())
+            {
+                ballastField.setEnabled(true);
+                ballastField.setBackground(Color.WHITE);
+            }
+            if(!currentSailplane.getCarryBallast())
+            {
+                ballastField.setEnabled(false);
+                ballastField.setBackground(Color.LIGHT_GRAY);
+            }
+            if(currentSailplane.getMultipleSeats())
+            {
+                passengerWeightField.setEnabled(true);
+                passengerWeightField.setBackground(Color.WHITE);
+            }
+            if(!currentSailplane.getMultipleSeats())
+            {
+                passengerWeightField.setEnabled(false);
+                passengerWeightField.setBackground(Color.LIGHT_GRAY);
+            }
         }
-        if(!currentSailplane.getCarryBallast())
-        {
-            ballastField.setEnabled(false);
-            ballastField.setBackground(Color.LIGHT_GRAY);
-        }
-        if(currentSailplane.getMultipleSeats())
-        {
-            passengerWeightField.setEnabled(true);
-            passengerWeightField.setBackground(Color.WHITE);
-        }
-        if(!currentSailplane.getMultipleSeats())
-        {
-            passengerWeightField.setEnabled(false);
-            passengerWeightField.setBackground(Color.LIGHT_GRAY);
-        }
+        catch(Exception e){}
     }
     
     private Observer getObserver() {

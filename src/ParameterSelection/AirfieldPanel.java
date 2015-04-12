@@ -124,26 +124,29 @@ public class AirfieldPanel extends JPanel implements Observer{
             }
             airfieldJList.setModel(airfieldModel);
             Airfield currentAirfield = currentData.getCurrentAirfield();
-            airfieldJList.setSelectedValue(currentAirfield.toString(), true);
-            airfieldScrollPane.setViewportView(airfieldJList); 
-           
-            airfieldNameField.setText(currentAirfield.getName());
-            airfieldNameField.setBackground(Color.GREEN);
+            try{
+                airfieldJList.setSelectedValue(currentAirfield.toString(), true);
+                airfieldScrollPane.setViewportView(airfieldJList); 
 
-            designatorField.setText(String.valueOf(currentAirfield.getDesignator()));
-            designatorField.setBackground(Color.GREEN);
+                airfieldNameField.setText(currentAirfield.getName());
+                airfieldNameField.setBackground(Color.GREEN);
 
-            airfieldAltitudeField.setText(String.valueOf(currentAirfield.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
-            airfieldAltitudeField.setBackground(Color.GREEN);
+                designatorField.setText(String.valueOf(currentAirfield.getDesignator()));
+                designatorField.setBackground(Color.GREEN);
 
-            magneticVariationField.setText(String.valueOf(currentAirfield.getMagneticVariation()));
-            magneticVariationField.setBackground(Color.GREEN);
+                airfieldAltitudeField.setText(String.valueOf(currentAirfield.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
+                airfieldAltitudeField.setBackground(Color.GREEN);
 
-            airfieldLongitudeField.setText(String.valueOf(currentAirfield.getLongitude()));
-            airfieldLongitudeField.setBackground(Color.GREEN);
+                magneticVariationField.setText(String.valueOf(currentAirfield.getMagneticVariation()));
+                magneticVariationField.setBackground(Color.GREEN);
 
-            airfieldLatitudeField.setText(String.valueOf(currentAirfield.getLatitude()));
-            airfieldLatitudeField.setBackground(Color.GREEN);
+                airfieldLongitudeField.setText(String.valueOf(currentAirfield.getLongitude()));
+                airfieldLongitudeField.setBackground(Color.GREEN);
+
+                airfieldLatitudeField.setText(String.valueOf(currentAirfield.getLatitude()));
+                airfieldLatitudeField.setBackground(Color.GREEN);
+            }
+            catch(Exception e){}
         }
         else if(s.equals("2"))
         {
@@ -154,17 +157,26 @@ public class AirfieldPanel extends JPanel implements Observer{
             }
             runwaysJList.setModel(runwaysModel);
             Runway currentRunway = currentData.getCurrentRunway();
+            try
+            {
+                runwaysJList.setSelectedValue(currentRunway.toString(), true);
+                runwaysScrollPane.setViewportView(runwaysJList); 
             runwaysJList.setSelectedValue(currentRunway.toString(), true);
             runwaysScrollPane.setViewportView(runwaysJList); 
             
             runwayNameField.setText(currentRunway.getName());
             runwayNameField.setBackground(Color.GREEN);
 
-            runwayAltitudeField.setText(String.valueOf(currentRunway.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID)));
-            runwayAltitudeField.setBackground(Color.GREEN);
+                runwayNameField.setText(currentRunway.getId());
+                runwayNameField.setBackground(Color.GREEN);
 
-            magneticHeadingField.setText(String.valueOf(currentRunway.getMagneticHeading()));
-            magneticHeadingField.setBackground(Color.GREEN);
+                runwayAltitudeField.setText(String.valueOf(currentRunway.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID)));
+                runwayAltitudeField.setBackground(Color.GREEN);
+
+                magneticHeadingField.setText(String.valueOf(currentRunway.getMagneticHeading()));
+                magneticHeadingField.setBackground(Color.GREEN); 
+            }
+            catch(Exception e){}
         }
         else if(s.equals("3"))
         {
@@ -175,20 +187,24 @@ public class AirfieldPanel extends JPanel implements Observer{
             }
             gliderPositionsJList.setModel(gliderPositionModel);
             GliderPosition currentGliderPosition = currentData.getCurrentGliderPosition();
-            gliderPositionsJList.setSelectedValue(currentGliderPosition.toString(), true);
-            gliderPositionsScrollPane.setViewportView(gliderPositionsJList); 
-            
-            gliderPosNameField.setText(currentGliderPosition.getGliderPositionId());
-            gliderPosNameField.setBackground(Color.GREEN);
+            try
+            {
+                gliderPositionsJList.setSelectedValue(currentGliderPosition.toString(), true);
+                gliderPositionsScrollPane.setViewportView(gliderPositionsJList); 
 
-            gliderPosAltitudeField.setText(String.valueOf(currentGliderPosition.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
-            gliderPosAltitudeField.setBackground(Color.GREEN);
+                gliderPosNameField.setText(currentGliderPosition.getGliderPositionId());
+                gliderPosNameField.setBackground(Color.GREEN);
 
-            gliderPosLongitudeField.setText(String.valueOf(currentGliderPosition.getLongitude()));
-            gliderPosLongitudeField.setBackground(Color.GREEN);
+                gliderPosAltitudeField.setText(String.valueOf(currentGliderPosition.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
+                gliderPosAltitudeField.setBackground(Color.GREEN);
 
-            gliderPosLatitudeField.setText(String.valueOf(currentGliderPosition.getLatitude()));
-            gliderPosLatitudeField.setBackground(Color.GREEN);
+                gliderPosLongitudeField.setText(String.valueOf(currentGliderPosition.getLongitude()));
+                gliderPosLongitudeField.setBackground(Color.GREEN);
+
+                gliderPosLatitudeField.setText(String.valueOf(currentGliderPosition.getLatitude()));
+                gliderPosLatitudeField.setBackground(Color.GREEN);
+            }
+            catch(Exception e){}
         }
         else
         {
@@ -199,20 +215,24 @@ public class AirfieldPanel extends JPanel implements Observer{
             }
             winchPositionsJList.setModel(winchPositionModel);
             WinchPosition currentWinchPos = currentData.getCurrentWinchPosition();
-            winchPositionsJList.setSelectedValue(currentWinchPos.toString(), true);
-            winchPositionsScrollPane.setViewportView(winchPositionsJList); 
-            
-            winchPosNameField.setText(currentWinchPos.getName());
-            winchPosNameField.setBackground(Color.GREEN);
+            try
+            {
+                winchPositionsJList.setSelectedValue(currentWinchPos.toString(), true);
+                winchPositionsScrollPane.setViewportView(winchPositionsJList); 
 
-            winchPosAltitudeField.setText(String.valueOf(currentWinchPos.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID)));
-            winchPosAltitudeField.setBackground(Color.GREEN);
+                winchPosNameField.setText(currentWinchPos.getName());
+                winchPosNameField.setBackground(Color.GREEN);
 
-            winchPosLongitudeField.setText(String.valueOf(currentWinchPos.getLongitude()));
-            winchPosLongitudeField.setBackground(Color.GREEN);
+                winchPosAltitudeField.setText(String.valueOf(currentWinchPos.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID)));
+                winchPosAltitudeField.setBackground(Color.GREEN);
 
-            winchPosLatitudeField.setText(String.valueOf(currentWinchPos.getLatitude()));
-            winchPosLatitudeField.setBackground(Color.GREEN);
+                winchPosLongitudeField.setText(String.valueOf(currentWinchPos.getLongitude()));
+                winchPosLongitudeField.setBackground(Color.GREEN);
+
+                winchPosLatitudeField.setText(String.valueOf(currentWinchPos.getLatitude()));
+                winchPosLatitudeField.setBackground(Color.GREEN); 
+            }
+            catch(Exception e){}
         }     
     }
     
@@ -1045,6 +1065,6 @@ public class AirfieldPanel extends JPanel implements Observer{
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -90,6 +90,32 @@ public class DatabaseEntryEdit
         Update(updateString);
     }
     
+    public static void UpdateEntry(Profile theProfile) throws Exception
+    {
+        String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
+        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
+        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        } catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            PreparedStatement ProfileInsertStatement = connect.prepareStatement(
+                "UPDATE Profile SET unitSettings = ?, displayPrefs = ? WHERE id = ?");
+            ProfileInsertStatement.setString(3, theProfile.getID());
+            ProfileInsertStatement.setString(1, theProfile.getUnitSettingsForStorage());
+            ProfileInsertStatement.setString(2, theProfile.getDisplayPrefsForStorage());
+            ProfileInsertStatement.executeUpdate();
+            ProfileInsertStatement.close();
+            //System.out.println(theProfile.getID() + ": " + theProfile.getUnitSettingsForStorage());
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
     /**
      * updates the sailplane table in the database with the new sailplane data in the object passed in
      * 

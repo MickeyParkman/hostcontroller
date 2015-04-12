@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class RecentLaunchSelections {
     private static RecentLaunchSelections instance = null;
+    private static CurrentDataObjectSet currentDataObjectSet;
     private ArrayList<Pilot> recentPilot;
     private ArrayList<Sailplane> recentSailplane;
     private ArrayList<Profile> recentProfile;
@@ -36,6 +37,16 @@ public class RecentLaunchSelections {
     }
     
     public void addCurrentToRecentLaunchSelections(){
+        currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+        instance.addRecentPilot(currentDataObjectSet.getCurrentPilot());
+        instance.addRecentSailplane(currentDataObjectSet.getCurrentSailplane());
+        instance.addRecentProfile(currentDataObjectSet.getCurrentProfile());
+        instance.addRecentRunway(currentDataObjectSet.getCurrentRunway());
+        instance.addRecentWinchPosition(currentDataObjectSet.getCurrentWinchPosition());
+        instance.addRecentGliderPosition(currentDataObjectSet.getCurrentGliderPosition());
+        instance.addRecentWinch(currentDataObjectSet.getCurrentWinch());
+        instance.addRecentAirfield(currentDataObjectSet.getCurrentAirfield());
+        instance.addRecentDrum(currentDataObjectSet.getCurrentDrum());
         
     }
     

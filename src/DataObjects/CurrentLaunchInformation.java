@@ -1,17 +1,17 @@
-
 package DataObjects;
 
 import Communications.Observer;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
 import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  *
  * @author Noah
  */
 public class CurrentLaunchInformation {
-    
+    public static final float RADIUS_OF_EARTH = 6378100; // in meters
     private static CurrentLaunchInformation instance = null;
     private static CurrentDataObjectSet currentDataObjectSet;
     private boolean complete;
@@ -131,7 +131,33 @@ public class CurrentLaunchInformation {
     }
     
     //functions to determine derived values
-    public static float calculateRunLength(){
+    public static float calculateRunLength(float gliderAltitude, float gliderLatitiude, float gliderLongitude,
+                                           float winchAltitude, float winchLatitiude, float winchLongitude){
+        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitiude + gliderLatitiude)/2));
+        double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitiude - gliderLatitiude));
+        double altitudeChange = winchAltitude - gliderAltitude;
+        float length = (float)Math.sqrt((xRun * xRun) + (yRise * yRise) + (altitudeChange * altitudeChange));
+        return length;
+    }
+    
+    public static float calculateRunSlope(float gliderAltitude, float gliderLatitiude, float gliderLongitude,
+                                           float winchAltitude, float winchLatitiude, float winchLongitude){
+        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitiude + gliderLatitiude)/2));
+        double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitiude - gliderLatitiude));
+        double altitudeChange = winchAltitude - gliderAltitude;
+        float slope = (float)(Math.asin(altitudeChange / Math.sqrt((xRun * xRun) + (yRise * yRise))));
+        return slope;
+    }
+    
+    public static float calculateMagneticHeading(float gliderLatitiude, float gliderLongitude,
+                                                 float winchLatitiude, float winchLongitude){
+        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitiude + gliderLatitiude)/2));
+        double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitiude - gliderLatitiude));
+        float angle = (float)(Math.atan2(xRun, yRise));
+        return angle;
+    }
+    
+    public static float calculateGliderLaunchMass(float pilotWeight, float gliderEmptyWeight, float glider){
         return 0;
     }
     
