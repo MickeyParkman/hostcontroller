@@ -3,8 +3,8 @@ package DataObjects;
 import Communications.Observer;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
+import ParameterSelection.SailplanePanel;
 import java.util.ArrayList;
-import java.lang.Math;
 
 /**
  *
@@ -13,7 +13,8 @@ import java.lang.Math;
 public class CurrentLaunchInformation {
     public static final float RADIUS_OF_EARTH = 6378100; // in meters
     private static CurrentLaunchInformation instance = null;
-    private static CurrentDataObjectSet currentDataObjectSet;
+    private CurrentDataObjectSet currentDataObjectSet;
+    private SailplanePanel gliderPanel;
     private boolean complete;
     private float pilotWeight;
     private int pilotCapacity;
@@ -55,7 +56,17 @@ public class CurrentLaunchInformation {
     private float gliderLaunchMass;
     private ArrayList<Observer> observers;
     
-    public static CurrentLaunchInformation CurrentLaunchInformation()
+    public static void main(String args[]){
+        //For logical testing
+        CurrentLaunchInformation test = getCurrentLaunchInformation();
+        System.out.println("Runlen:" + String.valueOf(CurrentLaunchInformation.calculateRunLength(RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH)));
+        System.out.println("RunSlope:" + String.valueOf(CurrentLaunchInformation.calculateRunSlope(RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH)));
+        System.out.println("RunHeading:" + String.valueOf(CurrentLaunchInformation.calculateMagneticHeading(RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH)));
+        System.out.println("TotalWeight:" + String.valueOf(CurrentLaunchInformation.calculateGliderLaunchMass(RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH)));
+    
+    }
+    
+    public static CurrentLaunchInformation getCurrentLaunchInformation()
     {
         if(instance == null)
         {
@@ -130,6 +141,11 @@ public class CurrentLaunchInformation {
         return(instance.complete);
     }
     
+    //Register glider panel with the singleton
+    public void setSailplanePanel(SailplanePanel gliderPanel){
+        this.gliderPanel = gliderPanel;
+    }
+    
     //functions to determine derived values
     public static float calculateRunLength(float gliderAltitude, float gliderLatitiude, float gliderLongitude,
                                            float winchAltitude, float winchLatitiude, float winchLongitude){
@@ -157,9 +173,11 @@ public class CurrentLaunchInformation {
         return angle;
     }
     
-    public static float calculateGliderLaunchMass(float pilotWeight, float gliderEmptyWeight, float glider){
-        return 0;
+    public static float calculateGliderLaunchMass(float pilotWeight, float gliderEmptyWeight, float gliderBallast, float gliderBaggage, float passengerWeight){
+        return (pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
     }
+    
+    
     
     public void clearPilotWeight()
     {
