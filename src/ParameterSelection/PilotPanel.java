@@ -15,22 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import java.awt.Font;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
@@ -49,12 +40,12 @@ public class PilotPanel extends JPanel implements Observer{
     private JTextField emergencyContactPhoneField;
     private JTextField medInfoNameField;
     private JTextField medInfoPhoneField;
-    private JRadioButton studentRadioButton;
-    private JRadioButton proficientRadioButton;
-    private JRadioButton advancedRadioButton;
-    private JRadioButton mildRadioButton;
-    private JRadioButton nominalRadioButton;
-    private JRadioButton performanceRadioButton;
+    private JLabel studentLabel;
+    private JLabel proficientLabel;
+    private JLabel advancedLabel;
+    private JLabel mildLabel;
+    private JLabel nominalLabel;
+    private JLabel performanceLabel;
     private JTextArea optionalInfoField;
     private JLabel PilotLabel;
     private JButton addNewButton;
@@ -147,13 +138,43 @@ public class PilotPanel extends JPanel implements Observer{
             flightWeightField.setText(String.valueOf((currentPilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID))));
             flightWeightField.setBackground(Color.GREEN);
 
-            studentRadioButton.setSelected(currentPilot.getCapability().equals("Student"));
-            proficientRadioButton.setSelected(currentPilot.getCapability().equals("Proficient"));
-            advancedRadioButton.setSelected(currentPilot.getCapability().equals("Advanced"));
-
-            mildRadioButton.setSelected(currentPilot.getPreference().equals("Mild"));
-            nominalRadioButton.setSelected(currentPilot.getPreference().equals("Nominal"));
-            performanceRadioButton.setSelected(currentPilot.getPreference().equals("Performance"));
+            if(currentPilot.getCapability().equals("Student"))
+            {
+                studentLabel.setEnabled(true);
+                proficientLabel.setEnabled(false);
+                advancedLabel.setEnabled(false);
+            }
+            if(currentPilot.getCapability().equals("Proficient"))
+            {
+                studentLabel.setEnabled(false);
+                proficientLabel.setEnabled(true);
+                advancedLabel.setEnabled(false);
+            }
+            if(currentPilot.getCapability().equals("Advanced"))
+            {
+                studentLabel.setEnabled(false);
+                proficientLabel.setEnabled(false);
+                advancedLabel.setEnabled(true);
+            }
+            
+            if(currentPilot.getPreference().equals("Mild"))
+            {
+                mildLabel.setEnabled(true);
+                nominalLabel.setEnabled(false);
+                performanceLabel.setEnabled(false);
+            }
+            if(currentPilot.getPreference().equals("Nominal"))
+            {
+                mildLabel.setEnabled(false);
+                nominalLabel.setEnabled(true);
+                performanceLabel.setEnabled(false);
+            }
+            if(currentPilot.getPreference().equals("Performance"))
+            {
+                mildLabel.setEnabled(false);
+                nominalLabel.setEnabled(false);
+                performanceLabel.setEnabled(true);
+            }
 
             optionalInfoField.setText((currentPilot.getOptionalInfo()));
         }
@@ -252,13 +273,43 @@ public class PilotPanel extends JPanel implements Observer{
                 flightWeightField.setText(String.valueOf((int)(thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
                 flightWeightField.setBackground(Color.GREEN);
 
-                studentRadioButton.setSelected(thePilot.getCapability().equals("Student"));
-                proficientRadioButton.setSelected(thePilot.getCapability().equals("Proficient"));
-                advancedRadioButton.setSelected(thePilot.getCapability().equals("Advanced"));
+                if(thePilot.getCapability().equals("Student"))
+                {
+                    studentLabel.setEnabled(true);
+                    proficientLabel.setEnabled(false);
+                    advancedLabel.setEnabled(false);
+                }
+                if(thePilot.getCapability().equals("Proficient"))
+                {
+                    studentLabel.setEnabled(false);
+                    proficientLabel.setEnabled(true);
+                    advancedLabel.setEnabled(false);
+                }
+                if(thePilot.getCapability().equals("Advanced"))
+                {
+                    studentLabel.setEnabled(false);
+                    proficientLabel.setEnabled(false);
+                    advancedLabel.setEnabled(true);
+                }
 
-                mildRadioButton.setSelected(thePilot.getPreference().equals("Mild"));
-                nominalRadioButton.setSelected(thePilot.getPreference().equals("Nominal"));
-                performanceRadioButton.setSelected(thePilot.getPreference().equals("Performance"));
+                if(thePilot.getPreference().equals("Mild"))
+                {
+                    mildLabel.setEnabled(true);
+                    nominalLabel.setEnabled(false);
+                    performanceLabel.setEnabled(false);
+                }
+                if(thePilot.getPreference().equals("Nominal"))
+                {
+                    mildLabel.setEnabled(false);
+                    nominalLabel.setEnabled(true);
+                    performanceLabel.setEnabled(false);
+                }
+                if(thePilot.getPreference().equals("Performance"))
+                {
+                    mildLabel.setEnabled(false);
+                    nominalLabel.setEnabled(false);
+                    performanceLabel.setEnabled(true);
+                }
 
                 optionalInfoField.setText((thePilot.getOptionalInfo()));
             } catch(Exception e) {
@@ -366,45 +417,39 @@ public class PilotPanel extends JPanel implements Observer{
         CapabilityLabel.setBounds(10, 174, 69, 14);
         attributesPanel.add(CapabilityLabel);
         
-        studentRadioButton = new JRadioButton("Student");
-        capabilityButtonGroup.add(studentRadioButton);
-        studentRadioButton.setBackground(Color.WHITE);
-        studentRadioButton.setBounds(85, 170, 109, 23);
-        attributesPanel.add(studentRadioButton);
+        studentLabel = new JLabel("Student");
+        studentLabel.setEnabled(false);
+        studentLabel.setBounds(85, 170, 109, 23);
+        attributesPanel.add(studentLabel);
         
-        proficientRadioButton = new JRadioButton("Proficient");
-        capabilityButtonGroup.add(proficientRadioButton);
-        proficientRadioButton.setBackground(Color.WHITE);
-        proficientRadioButton.setBounds(85, 195, 109, 23);
-        attributesPanel.add(proficientRadioButton);
+        proficientLabel = new JLabel("Proficient");
+        proficientLabel.setEnabled(false);
+        proficientLabel.setBounds(85, 195, 109, 23);
+        attributesPanel.add(proficientLabel);
         
-        advancedRadioButton = new JRadioButton("Advanced");
-        capabilityButtonGroup.add(advancedRadioButton);
-        advancedRadioButton.setBackground(Color.WHITE);
-        advancedRadioButton.setBounds(85, 220, 109, 23);
-        attributesPanel.add(advancedRadioButton);
+        advancedLabel = new JLabel("Advanced");
+        advancedLabel.setEnabled(false);
+        advancedLabel.setBounds(85, 220, 109, 23);
+        attributesPanel.add(advancedLabel);
         
         JLabel preferenceLabel = new JLabel("Preference:");
         preferenceLabel.setBounds(245, 174, 69, 14);
         attributesPanel.add(preferenceLabel);
         
-        mildRadioButton = new JRadioButton("Mild");
-        preferenceButtonGroup.add(mildRadioButton);
-        mildRadioButton.setBackground(Color.WHITE);
-        mildRadioButton.setBounds(320, 170, 109, 23);
-        attributesPanel.add(mildRadioButton);
+        mildLabel = new JLabel("Mild");
+        mildLabel.setEnabled(false);
+        mildLabel.setBounds(320, 170, 109, 23);
+        attributesPanel.add(mildLabel);
         
-        nominalRadioButton = new JRadioButton("Nominal");
-        preferenceButtonGroup.add(nominalRadioButton);
-        nominalRadioButton.setBackground(Color.WHITE);
-        nominalRadioButton.setBounds(320, 195, 109, 23);
-        attributesPanel.add(nominalRadioButton);
+        nominalLabel = new JLabel("Nominal");
+        nominalLabel.setEnabled(false);
+        nominalLabel.setBounds(320, 195, 109, 23);
+        attributesPanel.add(nominalLabel);
         
-        performanceRadioButton = new JRadioButton("Performance");
-        preferenceButtonGroup.add(performanceRadioButton);
-        performanceRadioButton.setBackground(Color.WHITE);
-        performanceRadioButton.setBounds(320, 220, 109, 23);
-        attributesPanel.add(performanceRadioButton);
+        performanceLabel = new JLabel("Performance");
+        performanceLabel.setEnabled(false);
+        performanceLabel.setBounds(320, 220, 109, 23);
+        attributesPanel.add(performanceLabel);
         
         emergencyContactLabel.setText("Emergency Contact:");
         emergencyContactLabel.setBounds(10, 284, 117, 14);

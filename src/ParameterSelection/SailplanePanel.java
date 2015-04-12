@@ -3,28 +3,22 @@ package ParameterSelection;
 import AddEditPanels.AddEditGlider;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
-
 import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
-
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.FlowLayout;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -41,6 +35,9 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import DataObjects.CurrentLaunchInformation;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 public class SailplanePanel extends JPanel implements Observer{
@@ -65,6 +62,40 @@ public class SailplanePanel extends JPanel implements Observer{
     private int ballastWeightUnitsID;
     private int baggageWeightUnitsID;
     private int passengerWeightUnitsID;
+    private JCheckBox baggageCheckBox;
+    private javax.swing.JList sailplaneJList;
+    private JTextField stallSpeedField;
+    private JTextField grossWeightField;
+    private JTextField emptyWeightField;
+    private JTextField nNumberField;
+    private JTextField ballastField;
+    private JTextField weakLinkField;
+    private JTextField tensionField;
+    private JTextField releaseAngleField;
+    private JTextField passengerWeightField;
+    private JTextField winchingSpeedField;
+    private JTextField baggageField;
+    private CurrentLaunchInformation launchInfo;
+    
+    public String getbaggageField()
+    {
+        return(baggageField.getText());
+    }
+    
+    public String getballastField()
+    {
+        return(ballastField.getText());
+    }
+    
+    public String getpassengerWeightField()
+    {
+        return(passengerWeightField.getText());
+    }
+    
+    public Boolean getbaggageCheckBox()
+    {
+        return(baggageCheckBox.isSelected());
+    }
     
     public void setupUnits()
     {
@@ -194,7 +225,7 @@ public class SailplanePanel extends JPanel implements Observer{
         winchingSpeedField.setBackground(Color.WHITE);
     }
     
-    private void sailplaneJListMouseClicked(java.awt.event.MouseEvent evt) 
+    private void sailplaneJListSelectionChanged(ListSelectionEvent listSelectionEvent) 
     {
         if(sailplaneJList.getSelectedIndex() >= 0){
             try{
@@ -266,6 +297,8 @@ public class SailplanePanel extends JPanel implements Observer{
      */
     public SailplanePanel() {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        launchInfo = CurrentLaunchInformation.getCurrentLaunchInformation();
+        launchInfo.setSailplanePanel(this);
         initSailPlaneList();
         initComponents();
         setupUnits();
@@ -286,9 +319,9 @@ public class SailplanePanel extends JPanel implements Observer{
         }
         sailplaneJList.setModel(sailplaneModel);
         sailplaneJList.setSelectedIndex(0);
-        sailplaneJList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sailplaneJListMouseClicked(evt);
+        sailplaneJList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                sailplaneJListSelectionChanged(listSelectionEvent);
             }
         });
 
@@ -432,7 +465,8 @@ public class SailplanePanel extends JPanel implements Observer{
         winchingSpeedField.setColumns(10);
         winchingSpeedField.setText("No Glider Selected");
         
-        JCheckBox baggageCheckBox = new JCheckBox("Baggage?");
+        baggageCheckBox = new JCheckBox();
+        baggageCheckBox.setText("Baggage?");
         baggageCheckBox.setBackground(Color.WHITE);
         baggageCheckBox.addItemListener(new ItemListener() {
             @Override
@@ -524,20 +558,7 @@ public class SailplanePanel extends JPanel implements Observer{
         winchingSpeedUnitsLabel.setBounds(617, 53, 46, 14);
         attributesPanel.add(winchingSpeedUnitsLabel);
     }
-        
-    private javax.swing.JList sailplaneJList;
-    private JTextField stallSpeedField;
-    private JTextField grossWeightField;
-    private JTextField emptyWeightField;
-    private JTextField nNumberField;
-    private JTextField ballastField;
-    private JTextField weakLinkField;
-    private JTextField tensionField;
-    private JTextField releaseAngleField;
-    private JTextField passengerWeightField;
-    private JTextField winchingSpeedField;
-    private JTextField baggageField;
-    
+            
     @Override
     public void update(String msg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
