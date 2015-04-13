@@ -62,6 +62,7 @@ public class LaunchGraph extends JPanel {
     private int maxTensionMarker = 950;
     
      public LaunchGraph(String title) {
+        setBackground(Color.WHITE);
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
         chartPanel.setPreferredSize(new java.awt.Dimension(1000, 270));
         add(chartPanel);

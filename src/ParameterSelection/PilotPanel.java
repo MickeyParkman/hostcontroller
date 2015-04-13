@@ -28,7 +28,8 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.MatteBorder;
 import Configuration.UnitLabelUtilities;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class PilotPanel extends JPanel implements Observer{
     private javax.swing.JList pilotJList;
@@ -218,7 +219,7 @@ public class PilotPanel extends JPanel implements Observer{
         optionalInfoField.setText("No Pilot Selected");
 }
     
-    private void pilotJListMouseClicked(java.awt.event.MouseEvent evt) {
+    private void pilotJListSelectionChanged(ListSelectionEvent listSelectionEvent) {
         if(pilotJList.getSelectedIndex() >= 0){
             try{
                 Pilot thePilot = (Pilot)pilotJList.getSelectedValue();
@@ -270,7 +271,7 @@ public class PilotPanel extends JPanel implements Observer{
                 medInfoPhoneField.setText(medInfoPhone);
                 medInfoPhoneField.setBackground(Color.GREEN);*/
 
-                flightWeightField.setText(String.valueOf((int)(thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(DatabaseUnitSelectionUtilities.getPilotWeightUnit()))));
+                flightWeightField.setText(String.valueOf((thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID))));
                 flightWeightField.setBackground(Color.GREEN);
 
                 if(thePilot.getCapability().equals("Student"))
@@ -343,12 +344,12 @@ public class PilotPanel extends JPanel implements Observer{
         }
         pilotJList.setModel(pilotModel);
 
-        pilotJList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pilotJListMouseClicked(evt);
+        pilotJList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                pilotJListSelectionChanged(listSelectionEvent);
             }
         });
-
+        pilotJList.setSelectedIndex(-1);
         pilotScrollPane.setViewportView(pilotJList);
 
         JPanel attributesPanel = new JPanel();

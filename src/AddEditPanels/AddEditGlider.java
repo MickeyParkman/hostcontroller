@@ -300,7 +300,7 @@ public class AddEditGlider extends JFrame {
         contentPane.add(tensionUnitsLabel);
         
         JLabel releaseAngelUnitsLabel = new JLabel("degrees");
-        releaseAngelUnitsLabel.setBounds(617, 86, 46, 14);
+        releaseAngelUnitsLabel.setBounds(617, 86, 60, 14);
         contentPane.add(releaseAngelUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
             @Override

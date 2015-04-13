@@ -36,20 +36,20 @@ public class AddEditRunwayFrame extends JFrame {
     private JPanel contentPane;
     private JTextField magneticHeadingField;
     private JTextField nameField;
-    private JTextField altitudeField;
+    //private JTextField altitudeField;
     private CurrentDataObjectSet objectSet;
     private Runway currentRunway;
     private boolean isEditEntry;
     private Observer parent;
-    private JLabel runwayAltitudeUnitsLabel = new JLabel(); 
-    private int runwayAltitudeUnitsID;
+    //private JLabel runwayAltitudeUnitsLabel = new JLabel(); 
+    //private int runwayAltitudeUnitsID;
     
-    public void setupUnits()
+    /*public void setupUnits()
     {
         runwayAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("runwayAltitude");
         String RunwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
         runwayAltitudeUnitsLabel.setText(RunwayAltitudeUnitsString);
-    }
+    }*/
     
     public void attach(Observer o)
     {
@@ -61,7 +61,7 @@ public class AddEditRunwayFrame extends JFrame {
      */
     public AddEditRunwayFrame(Runway editRunway, boolean isEditEntry) {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
-        setupUnits();
+        //setupUnits();
 
         if (!isEditEntry || editRunway == null){
             editRunway = new Runway("", 0, "", 0, "");
@@ -89,10 +89,10 @@ public class AddEditRunwayFrame extends JFrame {
         magneticHeadingLabel.setBounds(10, 39, 106, 14);
         panel.add(magneticHeadingLabel);
 
-        JLabel altitudeLabel = new JLabel("Altitude:");
+        //JLabel altitudeLabel = new JLabel("Altitude:");
 
-        altitudeLabel.setBounds(10, 64, 106, 14);
-        panel.add(altitudeLabel);
+        //altitudeLabel.setBounds(10, 64, 106, 14);
+        //panel.add(altitudeLabel);
 
         magneticHeadingField = new JTextField();
         if (isEditEntry)
@@ -109,14 +109,14 @@ public class AddEditRunwayFrame extends JFrame {
         nameField.setBounds(140, 11, 200, 20);
         panel.add(nameField);
 
-        altitudeField = new JTextField();
+        /*altitudeField = new JTextField();
         if (isEditEntry)
         {
             altitudeField.setText(String.valueOf(editRunway.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID)));
         }
         altitudeField.setColumns(10);
         altitudeField.setBounds(140, 61, 200, 20);
-        panel.add(altitudeField);
+        panel.add(altitudeField);*/
 
         JButton submitButton = new JButton("Submit");
         submitButton.setBounds(0, 229, 89, 23);
@@ -180,8 +180,8 @@ public class AddEditRunwayFrame extends JFrame {
         magneticHeadingUnitsLabel.setBounds(350, 39, 60, 14);
         panel.add(magneticHeadingUnitsLabel);
         
-        runwayAltitudeUnitsLabel.setBounds(350, 64, 46, 14);
-        panel.add(runwayAltitudeUnitsLabel);
+        //runwayAltitudeUnitsLabel.setBounds(350, 64, 46, 14);
+        //panel.add(runwayAltitudeUnitsLabel);
     }
 
     public void deleteCommand()
@@ -207,18 +207,18 @@ public class AddEditRunwayFrame extends JFrame {
     public void clearData(){
         nameField.setText("");
         magneticHeadingField.setText("");
-        altitudeField.setText("");
+        //altitudeField.setText("");
 
         nameField.setBackground(Color.WHITE);
         magneticHeadingField.setBackground(Color.WHITE);
-        altitudeField.setBackground(Color.WHITE);
+        //altitudeField.setBackground(Color.WHITE);
     }
     
     protected void submitData(){
         if (isComplete()){
             String name = nameField.getText();
             float magneticHeading = Float.parseFloat(magneticHeadingField.getText());
-            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID);
+            //float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID);
 
             String parentAirfield = "";
             String parentId = "";
@@ -230,7 +230,7 @@ public class AddEditRunwayFrame extends JFrame {
             }
             
 
-            Runway newRunway = new Runway(name, magneticHeading, parentAirfield, altitude, "");
+            Runway newRunway = new Runway(name, magneticHeading, parentAirfield, 0, "");
             newRunway.setId(currentRunway.getId());
             newRunway.setParentId(parentId);
             try{
@@ -281,10 +281,10 @@ public class AddEditRunwayFrame extends JFrame {
         boolean emptyFields = false;
         String name = nameField.getText();
         String magneticHeading = magneticHeadingField.getText();
-        String altitude = altitudeField.getText();
+        //String altitude = altitudeField.getText();
         nameField.setBackground(Color.WHITE);
         magneticHeadingField.setBackground(Color.WHITE);
-        altitudeField.setBackground(Color.WHITE);
+        //altitudeField.setBackground(Color.WHITE);
 
         if(name.isEmpty())
         {
@@ -296,18 +296,18 @@ public class AddEditRunwayFrame extends JFrame {
             magneticHeadingField.setBackground(Color.PINK);
             emptyFields = true;
         }
-        if(altitude.isEmpty())
+        /*if(altitude.isEmpty())
         {
             altitudeField.setBackground(Color.PINK);
             emptyFields = true;
-        }
+        }*/
 
         if (emptyFields){
             throw new Exception("");
         }
         
         Float.parseFloat(magneticHeading);
-        Float.parseFloat(altitude);
+        //Float.parseFloat(altitude);
     }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(rootPane, "Please input correct numerical values", "Error", JOptionPane.INFORMATION_MESSAGE);
             //ew = new ErrWindow("Please input correct numerical values");
