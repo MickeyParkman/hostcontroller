@@ -14,7 +14,7 @@ package DataObjects;
 public class GliderPosition {
     
     String id;
-    String positionId;
+    String positionName;
     String runwayParent;
     String runwayParentId;
     String airfieldParent;
@@ -24,8 +24,8 @@ public class GliderPosition {
     float longitude;
     String optionalInfo;
     
-    public GliderPosition(String id, String runwayParent, String airfieldParent, float altitude, float latitude, float longitude, String optional){
-       this.positionId = id;
+    public GliderPosition(String name, String runwayParent, String airfieldParent, float altitude, float latitude, float longitude, String optional){
+       this.positionName = name;
        this.runwayParent = runwayParent;
        this.airfieldParent = airfieldParent;
        this.altitude = altitude;
@@ -47,7 +47,7 @@ public class GliderPosition {
         id = newId;
     }
     public String getGliderPositionId() {
-        return positionId;
+        return positionName;
     }
         
     public String getRunwayParent(){
@@ -103,7 +103,7 @@ public class GliderPosition {
     }
 
     public String toString() {
-        return positionId;
+        return positionName;
     }
 }
 

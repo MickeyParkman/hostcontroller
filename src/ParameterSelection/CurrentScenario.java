@@ -6,6 +6,7 @@
 package ParameterSelection;
 import DataObjects.*;
 import Communications.Observer;
+import Configuration.ProfileManagementFrame;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Johnny White
@@ -24,6 +26,26 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
     private CurrentDataObjectSet data;
     private CardLayout selectionLayout_;
     private ParameterSelectionPanel ParameterSelectionPanel_;
+    private JLabel airfieldLabel;
+    private JLabel gliderLabel;
+    private JLabel runwayLabel;
+    private JLabel positionLabel;
+    private JLabel winchposLabel;
+    private JLabel pilotNameLabel;
+    private JLabel TitleLabel;
+    private JLabel drumLabel;
+    private JLabel profileLabel;
+    private JButton pilotButton; 
+    private JButton gliderButton; 
+    private JButton airfieldButton; 
+    private JButton runwayButton; 
+    private JButton gliderPosButton; 
+    private JButton winchPosButton; 
+    private JButton drumButton;
+    private JButton clearButton;
+    private JButton profileButton;
+    private ProfileManagementFrame ProfileManagementFrame;
+    
     /**
      * Creates new form CurrentScenario
      */
@@ -43,8 +65,9 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         Airfield airfield = data.getCurrentAirfield();
         GliderPosition position = data.getCurrentGliderPosition();
         Runway runway = data.getCurrentRunway();
-        WinchPosition winch = data.getCurrentWinchPosition();   
+        WinchPosition winch = data.getCurrentWinchPosition(); 
         Drum drum = data.getCurrentDrum();
+        Profile profile = data.getCurrentProfile();
         
         if(pilot == null) {
             pilotNameLabel.setText("NO PILOT");
@@ -101,6 +124,14 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             drumLabel.setText(drum.toString());    
             drumLabel.setForeground(new Color(0,128,0));  
         }
+        
+        if(profile == null) {
+            profileLabel.setText("Default Profile"); 
+            profileLabel.setForeground(Color.RED);
+        } else {
+            profileLabel.setText(profile.toString());    
+            profileLabel.setForeground(new Color(0,128,0));  
+        }
     }
     
     
@@ -114,6 +145,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         winchposLabel = new JLabel();
         pilotNameLabel = new JLabel();
         drumLabel = new JLabel();
+        profileLabel = new JLabel();
         TitleLabel = new JLabel("Current Scenario");
         TitleLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
         pilotButton = new JButton("Select Pilot");
@@ -124,6 +156,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         winchPosButton = new JButton("Select Winch Position");
         drumButton = new JButton("Select Drum");
         clearButton = new JButton("Clear All Selections");
+        profileButton = new JButton("Select Profile");
         
         this.setPreferredSize(new Dimension(200,350));
         this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -204,6 +237,17 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         	}
         });
         
+        profileButton.setMinimumSize(new Dimension(200, 20));
+        profileButton.setMaximumSize(new Dimension(200, 20));
+        profileButton.setBackground(new Color(200,200,200));
+        profileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                ProfileManagementFrame = new ProfileManagementFrame();
+                ProfileManagementFrame.setParent(ParameterSelectionPanel_);
+                ProfileManagementFrame.setVisible(true);
+            }
+        });
         
         clearButton.setMinimumSize(new Dimension(200, 20));
         clearButton.setMaximumSize(new Dimension(200, 20));
@@ -211,15 +255,18 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                ParameterSelectionPanel_.clear();
-                data.cleafGliderPosition();
-                data.clearAirfield();
-                data.clearGlider();
-                data.clearPilot();
-                data.clearRunway();
-                data.clearWinchPosition();
-                data.clearDrum();
-                
+                int choice = JOptionPane.showConfirmDialog (null, "Are you sure you want to clear the current launch scenario?", "Warning",JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION){
+                    ParameterSelectionPanel_.clear();
+                    data.cleafGliderPosition();
+                    data.clearAirfield();
+                    data.clearGlider();
+                    data.clearPilot();
+                    data.clearRunway();
+                    data.clearWinchPosition();
+                    data.clearDrum();
+                }
+                else{}
             }
         });
         
@@ -239,26 +286,10 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         this.add(winchPosButton);
         this.add(drumLabel);
         this.add(drumButton);
-        this.add(new JLabel(" "));
+        this.add(profileLabel);
+        this.add(profileButton);
         this.add(clearButton);
     }                      
-
-    private JLabel airfieldLabel;
-    private JLabel gliderLabel;
-    private JLabel runwayLabel;
-    private JLabel positionLabel;
-    private JLabel winchposLabel;
-    private JLabel pilotNameLabel;
-    private JLabel TitleLabel;
-    private JLabel drumLabel;
-    private JButton pilotButton; 
-    private JButton gliderButton; 
-    private JButton airfieldButton; 
-    private JButton runwayButton; 
-    private JButton gliderPosButton; 
-    private JButton winchPosButton; 
-    private JButton drumButton;
-    private JButton clearButton;
 
     public void update() {
        loadScenario();
