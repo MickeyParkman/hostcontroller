@@ -10,121 +10,48 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import Communications.Observer;
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 
 /**
  *
  * @author Johnny White
  */
-public class EnvironmentalWindow extends javax.swing.JPanel implements Observer{
+public class EnvironmentalWindow extends javax.swing.JPanel {
 
     private MessagePipeline pipe;
-    private final int HEARTBEAT_COUNT = 1;
-    private float curTick;
-    private float temp;
-    private float density;
-    private float pressure;
-    private float speed;
+    private ArrayList<EnvironmentalWidget> widgets;
     
     public EnvironmentalWindow() {
-        temp = 0;
-        density = 0;
-        pressure = 0;
-        speed = 0;
-        curTick = 0;
-        initComponents();
         pipe = MessagePipeline.getInstance();
-        pipe.attach(this);
-        loadEnvironmentalData("0 0 0 0");
-        updateDisplay();
+        widgets = new ArrayList<>();
+        addWidget("Launch Weight", true, false);
+        addWidget("Run Length", true, false);
+        addWidget("Run Direction", true, false);
+        addWidget("Run Slope", true, false);
+        addWidget("Wind Direction", true, true);
+        addWidget("Avg. Wind Speed", true, true);
+        addWidget("Gust Wind Speed", true, true);
+        addWidget("Head Wind Component", true, true);
+        addWidget("Cross Wind Component", true, true);
+        addWidget("Density Altitude", true, true);
+        addWidget("Temperature", true, true);
+        addWidget("Humidity", true, true);
+        addWidget("Pressure", true, true);
+        //setLayout(new FlowLayout());
+        init();
     }
-               
-    public void loadEnvironmentalData(String message)
+    
+    private void addWidget(String name, boolean hasField, boolean canEdit)
     {
-        String mParts[] = message.split(" ");
-        density += Float.parseFloat(mParts[0]);
-        temp += Float.parseFloat(mParts[1]);
-        speed += Float.parseFloat(mParts[2]);
-        pressure += Float.parseFloat(mParts[3]);
-
+        widgets.add(new EnvironmentalWidget(name, hasField, canEdit));
     }
     
-    private void updateDisplay() {
-        temp /= HEARTBEAT_COUNT;
-        density /= HEARTBEAT_COUNT;
-        pressure /= HEARTBEAT_COUNT;
-        speed /= HEARTBEAT_COUNT;
-        altdensityLabel.setText(String.valueOf(density) + " kg/m^3");
-        pressureLabel.setText(String.valueOf(pressure) + " N/m^2");
-        temperatureLabel.setText(String.valueOf(temp) + " ° C");
-        windspeedLabel.setText(String.valueOf(speed) + " mph");
-        temp = 0;
-        density = 0;
-        pressure = 0;
-        speed = 0;
-    }     
-        
-    
-    private void initComponents() {
-        this.setPreferredSize(new Dimension (200, 400));
-        this.setBackground(Color.WHITE);
-        EnvLabel = new javax.swing.JLabel();
-        WNDSPDLabel = new javax.swing.JLabel();
-        TEMPLabel = new javax.swing.JLabel();
-        PRSSRLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        windspeedLabel = new javax.swing.JLabel();
-        temperatureLabel = new javax.swing.JLabel();
-        pressureLabel = new javax.swing.JLabel();
-        altdensityLabel = new javax.swing.JLabel();
-
-        EnvLabel.setText("Environmental Data");
-
-        WNDSPDLabel.setText("Wind Speed");
-
-        TEMPLabel.setText("Temperature");
-
-        PRSSRLabel.setText("Pressure");
-
-        jLabel1.setText("Altitude Density");
-        
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        this.add(EnvLabel);
-        this.add(WNDSPDLabel);
-        this.add(windspeedLabel);
-        this.add(PRSSRLabel);
-        this.add(pressureLabel);
-        this.add(TEMPLabel);
-        this.add(temperatureLabel);
-        this.add(jLabel1);
-        this.add(altdensityLabel);
-    }                      
-
-
-    // Variables declaration - do not modify                     
-    private javax.swing.JLabel EnvLabel;
-    private javax.swing.JLabel PRSSRLabel;
-    private javax.swing.JLabel TEMPLabel;
-    private javax.swing.JLabel WNDSPDLabel;
-    private javax.swing.JLabel altdensityLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel pressureLabel;
-    private javax.swing.JLabel temperatureLabel;
-    private javax.swing.JLabel windspeedLabel;
-    // End of variables declaration                   
-
-    public void update() {
-       // loadEnvironmentalData();
-    }
-    
-    public void update(String message){
-        if(!message.equals(""))
+    private void init()
+    {
+        for(EnvironmentalWidget ew : widgets)
         {
-            loadEnvironmentalData(message);
-        //++curTick;
-        //if(curTick == HEARTBEAT_COUNT) {
-        //    curTick = 0;
-            updateDisplay();
-        //}   
+            add(ew);
         }
     }
 }

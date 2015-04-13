@@ -1,5 +1,6 @@
 package DashboardInterface;
 
+import Communications.MessagePipeline;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -90,6 +91,9 @@ public class FlightDashboard extends javax.swing.JPanel
         //dialSquare.setBorder(BorderFactory.createLineBorder(Color.black));
         
         dial = new TensionSpeedDial(dialSquare);
+        //we want to listen for speed and tension
+        MessagePipeline.getDataRelay().attach("TENSION", dial);
+        MessagePipeline.getDataRelay().attach("SPEED", dial);
         dialSquare.add(dial, BorderLayout.CENTER);
         health = new SystemsStatus();
         graph = new LaunchGraph("title");
