@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class RecentLaunchSelections {
     private static RecentLaunchSelections instance = null;
-    private static CurrentDataObjectSet currentDataObjectSet;
+    private CurrentDataObjectSet currentDataObjectSet;
     private List<String> recentPilot;
     private List<String> recentSailplane;
     private List<String> recentProfile;
@@ -220,13 +220,14 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentPilot.size()) || (recentPilotList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentPilot.size()) && (recentPilotList.size() < 5); index++){
                     for (int index2 = 0; (index2 < pilots.size()); index2++){
-                        if (pilots.get(index2).getPilotId() == instance.recentPilot.get(index)){
+                        if (pilots.get(index2).getPilotId().equals(instance.recentPilot.get(index))){
                             recentPilotList.add(pilots.get(index2));
                         }
                     }
                 }
+                
                 return recentPilotList;
             }
         }catch(SQLException e) {
@@ -247,9 +248,9 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentSailplane.size()) || (recentSailplaneList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentSailplane.size()) && (recentSailplaneList.size() < 5); index++){
                     for (int index2 = 0; (index2 < sailplanes.size()); index2++){
-                        if (sailplanes.get(index2).getId() == instance.recentSailplane.get(index)){
+                        if (sailplanes.get(index2).getId().equals(instance.recentSailplane.get(index))){
                             recentSailplaneList.add(sailplanes.get(index2));
                         }
                     }
@@ -274,9 +275,9 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentProfile.size()) || (recentProfileList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentProfile.size()) && (recentProfileList.size() < 5); index++){
                     for (int index2 = 0; (index2 < profiles.size()); index2++){
-                        if (profiles.get(index2).getId() == instance.recentProfile.get(index)){
+                        if (profiles.get(index2).getId().equals(instance.recentProfile.get(index))){
                             recentProfileList.add(profiles.get(index2));
                         }
                     }
@@ -301,9 +302,9 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentRunway.size()) || (recentRunwayList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentRunway.size()) && (recentRunwayList.size() < 5); index++){
                     for (int index2 = 0; (index2 < runways.size()); index2++){
-                        if (runways.get(index2).getId() == instance.recentRunway.get(index)){
+                        if (runways.get(index2).getId().equals(instance.recentRunway.get(index))){
                             recentRunwayList.add(runways.get(index2));
                         }
                     }
@@ -328,9 +329,9 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentWinchPosition.size()) || (recentWinchPositionList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentWinchPosition.size()) && (recentWinchPositionList.size() < 5); index++){
                     for (int index2 = 0; (index2 < winchPositions.size()); index2++){
-                        if (winchPositions.get(index2).getId() == instance.recentWinchPosition.get(index)){
+                        if (winchPositions.get(index2).getId().equals(instance.recentWinchPosition.get(index))){
                             recentWinchPositionList.add(winchPositions.get(index2));
                         }
                     }
@@ -355,9 +356,9 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentGliderPosition.size()) || (recentGliderPositionList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentGliderPosition.size()) && (recentGliderPositionList.size() < 5); index++){
                     for (int index2 = 0; (index2 < gliderPositions.size()); index2++){
-                        if (gliderPositions.get(index2).getId() == instance.recentGliderPosition.get(index)){
+                        if (gliderPositions.get(index2).getId().equals(instance.recentGliderPosition.get(index))){
                             recentGliderPositionList.add(gliderPositions.get(index2));
                         }
                     }
@@ -382,9 +383,9 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentWinch.size()) || (recentWinchList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentWinch.size()) && (recentWinchList.size() < 5); index++){
                     for (int index2 = 0; (index2 < winchs.size()); index2++){
-                        if (winchs.get(index2).getId() == instance.recentWinch.get(index)){
+                        if (winchs.get(index2).getId().equals(instance.recentWinch.get(index))){
                             recentWinchList.add(winchs.get(index2));
                         }
                     }
@@ -409,9 +410,9 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentAirfield.size()) || (recentAirfieldList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentAirfield.size()) && (recentAirfieldList.size() < 5); index++){
                     for (int index2 = 0; (index2 < airfields.size()); index2++){
-                        if (airfields.get(index2).getId() == instance.recentAirfield.get(index)){
+                        if (airfields.get(index2).getId().equals(instance.recentAirfield.get(index))){
                             recentAirfieldList.add(airfields.get(index2));
                         }
                     }
@@ -436,9 +437,9 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentDrum.size()) || (recentDrumList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentDrum.size()) && (recentDrumList.size() < 5); index++){
                     for (int index2 = 0; (index2 < drums.size()); index2++){
-                        if (drums.get(index2).getId() == instance.recentDrum.get(index)){
+                        if (drums.get(index2).getId().equals(instance.recentDrum.get(index)){
                             recentDrumList.add(drums.get(index2));
                         }
                     }
