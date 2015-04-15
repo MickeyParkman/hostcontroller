@@ -68,7 +68,10 @@ public class ParameterSelectionPanel extends javax.swing.JPanel implements Obser
     {
         pilotPanel.update();
         sailplanePanel.update();
-        airfieldPanel.update();
+        airfieldPanel.update("1");
+        airfieldPanel.update("2");
+        airfieldPanel.update("3");
+        airfieldPanel.update("4");
         drumPanel.update();
     }
 

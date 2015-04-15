@@ -205,9 +205,9 @@ public class MainHost extends javax.swing.JFrame {
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        try {
+        /*try {
             //DatabaseUtilities.DatabaseInitialization.deleteDB();
-            DatabaseUtilities.DatabaseInitialization.initDatabase();
+            //DatabaseUtilities.DatabaseInitialization.initDatabase();
         }catch(ClassNotFoundException e1) {
             JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
         }catch(SQLException e2) {
@@ -222,17 +222,18 @@ public class MainHost extends javax.swing.JFrame {
         //WindowTester wt = new WindowTester();
         //wt.run();
         //WindowTester.run();
+        */
     }//GEN-LAST:event_button3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        
+        /* Set the Nimbus look and feel      //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -245,14 +246,14 @@ public class MainHost extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 CommPortConnection comm = new CommPortConnection();
                 //MessagePipeline pipeline = new MessagePipeline(comm);
                 try {
-                    DatabaseUtilities.DatabaseInitialization.initDatabase();
+                    //DatabaseUtilities.DatabaseInitialization.initDatabase();
                 }catch(ClassNotFoundException e1) {
                     JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
                 }catch(SQLException e2) {
@@ -267,6 +268,7 @@ public class MainHost extends javax.swing.JFrame {
                 //frame.setVisible(true);
             }
         });
+                */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

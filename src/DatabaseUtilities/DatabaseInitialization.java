@@ -1,5 +1,6 @@
 package DatabaseUtilities;
 
+import ParameterSelection.ParameterSelectionPanel;
 import java.sql.*;
 import javax.swing.JOptionPane;
 /**
@@ -14,7 +15,7 @@ public class DatabaseInitialization {
     * @throws ClassNotFoundException if the classes for the Apache Derby database can't be found
     * @throws SQLException if an issue arises while creating the tables
     */
-    public static void initDatabase() throws ClassNotFoundException, SQLException {
+    public static void initDatabase(ParameterSelectionPanel psp) throws ClassNotFoundException, SQLException {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
         String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
@@ -251,6 +252,7 @@ public class DatabaseInitialization {
             //JOptionPane.showMessageDialog(null, e.getMessage());
             //throw e;
         }
+        psp.update();
         connection.close();
     }
     
