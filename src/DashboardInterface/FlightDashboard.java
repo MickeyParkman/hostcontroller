@@ -1,5 +1,6 @@
 package DashboardInterface;
 
+import Communications.MessagePipeline;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -54,7 +55,7 @@ public class FlightDashboard extends javax.swing.JPanel
         
         graphPane = new javax.swing.JPanel();
         dialPane = new JPanel();
-        
+        this.setBackground(Color.WHITE);
         //dialPane.setLayout(new BorderLayout());
         
         dialPane.setLayout(new GridBagLayout());
@@ -87,9 +88,12 @@ public class FlightDashboard extends javax.swing.JPanel
             }
         };
         
+        dialSquare.setBackground(Color.WHITE);
         //dialSquare.setBorder(BorderFactory.createLineBorder(Color.black));
-        
         dial = new TensionSpeedDial(dialSquare);
+        //we want to listen for speed and tension
+        MessagePipeline.getDataRelay().attach("TENSION", dial);
+        MessagePipeline.getDataRelay().attach("SPEED", dial);
         dialSquare.add(dial, BorderLayout.CENTER);
         health = new SystemsStatus();
         graph = new LaunchGraph("title");
@@ -100,8 +104,10 @@ public class FlightDashboard extends javax.swing.JPanel
         graphPane.add(graph);
         //dialPane.add(dial, BorderLayout.CENTER);
         dialPane.add(dialSquare);
+        dialPane.setBackground(Color.WHITE);
         systemPane.add(health);
-        
+        systemPane.setBackground(Color.WHITE);
+        graphPane.setBackground(Color.WHITE);
         layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

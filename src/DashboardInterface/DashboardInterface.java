@@ -141,7 +141,7 @@ public class DashboardInterface extends javax.swing.JFrame {
     */
     
     public void updateDisplay(InternalMessage internalMsg) {
-        dial.dialUpdate(internalMsg.getTension(), internalMsg.getCableSpeed());
+        //dial.dialUpdate(internalMsg.getTension(), internalMsg.getCableSpeed());
         float height = (float)(internalMsg.getCableOut() * Math.sin(internalMsg.getCableAngle()));
         // long time = (long) internalMsg.getTimestamp() * 1000;
         long time = (long) (internalMsg.getElaspedTime() * -1000);

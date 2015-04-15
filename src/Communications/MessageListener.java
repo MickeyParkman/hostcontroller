@@ -112,7 +112,7 @@ public class MessageListener implements Observer
         short status;
 
         //  check for empty string
-        if (msg.equals("") || (relay != null))
+        if (msg.equals("") || (relay == null))
         {
             // System.out.println("Null message received: " + ++nullMessageCnt);
             return;
@@ -157,11 +157,11 @@ public class MessageListener implements Observer
                                 / (gainCIC * cicScale[i]);                       
                     }
                     //  send filtered values                    
-                    // relay.sendFilteredData(filteredData, groupDelay);
+                    relay.sendFilteredData(filteredData, groupDelay);
                     
-                    System.out.println("Filtered Outputs: " + filteredData[0]
-                            + " " + filteredData[1] + " " + filteredData[2]
-                            + " " + filteredData[3] + " " + filteredData[4]);
+                    //System.out.println("Filtered Outputs: " + filteredData[0]
+                    //        + " " + filteredData[1] + " " + filteredData[2]
+                    //        + " " + filteredData[3] + " " + filteredData[4]);
                     messageProcessed = true;                    
                 }
             break;
@@ -187,7 +187,7 @@ public class MessageListener implements Observer
                 activeDrum = (canIn.get_byte(0) >> 5) & 0x7;
                 System.out.println("State and Active Drum: " + currentState
                         + "  " +  activeDrum);
-                //relay.sendState(currentState, activeDrum);
+                relay.sendState(currentState, activeDrum);
                 messageProcessed = true;
                 break;
             }

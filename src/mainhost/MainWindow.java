@@ -7,33 +7,21 @@ import ParameterSelection.ParameterSelectionPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Profile;
-import DatabaseUtilities.DatabaseImporter;
 import javax.swing.*;
 import java.awt.Dimension;   
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.GridLayout;
 import java.awt.Color;
-import java.sql.SQLException;
 import javax.swing.BoxLayout;
-import DatabaseUtilities.DatabaseInitialization;
 import ParameterSelection.CurrentScenario;
 import ParameterSelection.EnvironmentalWindow;
-import ParameterSelection.WinchEditPanel;
 import ParameterSelection.DEBUGWinchEditPanel;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.border.LineBorder;
 import Communications.MessagePipeline;
-import java.awt.Component;
 
 public class MainWindow extends JFrame {
     private String version = "2.0.1";
@@ -192,28 +180,31 @@ public class MainWindow extends JFrame {
 //FILE MENU
         JMenuItem setupDBItem = new JMenuItem("Setup Database");
         setupDBItem.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent event) {
-                try 
-                {
-                    //DatabaseUtilities.DatabaseInitialization.deleteDB();
-                    DatabaseUtilities.DatabaseInitialization.initDatabase();
-                }
-                catch(ClassNotFoundException e1) 
-                {
-                    JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
-                }
-                catch(SQLException e2) 
-                {
-                    if(e2.getErrorCode() == 30000) 
+                int choice = JOptionPane.showConfirmDialog (null, "This will clear all databases. Are you sure you want to proceed?", "Warning",JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION){
+                    try 
                     {
-                        JOptionPane.showMessageDialog(null, "Database Already Exists");
+                        //DatabaseUtilities.DatabaseInitialization.deleteDB();
+                        DatabaseUtilities.DatabaseInitialization.initDatabase();
                     }
-                    else 
-                    { 
-                        JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
+                    catch(ClassNotFoundException e1) 
+                    {
+                        JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
+                    }
+                    catch(SQLException e2) 
+                    {
+                        if(e2.getErrorCode() == 30000) 
+                        {
+                            JOptionPane.showMessageDialog(null, "Database Already Exists");
+                        }
+                        else 
+                        { 
+                            JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
+                        }
                     }
                 }
+                else{}
             }
         });
 	fileMenu.add(setupDBItem);

@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import javax.imageio.ImageIO;
+import Communications.Observer;
 
 /**
  *
@@ -14,7 +15,7 @@ import javax.imageio.ImageIO;
  * @modifications: Johnny White
  * @modifications: Jacob Troxel
  */
-public class StateMachineDiagram extends javax.swing.JPanel {
+public class StateMachineDiagram extends javax.swing.JPanel implements Observer {
 
     JTextField last = new JTextField();
     
@@ -64,4 +65,23 @@ public class StateMachineDiagram extends javax.swing.JPanel {
     private javax.swing.JLabel stateLabel;
     private HashMap<Integer,ImageIcon> statePics;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update() {
+    }
+
+    @Override
+    public void update(String msg) {
+        if(!msg.equals(""))
+        {
+            System.out.println(msg);
+            String mParts[] = msg.split(";");
+            switch (mParts[0])
+            {
+                case "STATE":
+                    //updateState(Integer.parseInt(mParts[1]));
+                    break;
+            }
+        }
+    }
 }
