@@ -389,7 +389,6 @@ public class AddEditGlider extends JFrame {
     }
     
     public boolean isComplete(){
-        ErrWindow ew;
         try
         {
             boolean emptyFields = false;
@@ -469,7 +468,6 @@ public class AddEditGlider extends JFrame {
             return false;
         }catch(Exception e){
             JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
-            ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
             return false;
         }
         return true;
