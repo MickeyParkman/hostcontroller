@@ -14,12 +14,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.util.Random;
 import Communications.Observer;
-import DatabaseUtilities.DatabaseDataObjectUtilities;
 import DatabaseUtilities.DatabaseEntryEdit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -80,7 +75,7 @@ public class ProfileManagementFrame extends JFrame {
         flightWeightUnits = (String)ProfilePilotPanel.flightWeightComboBox.getSelectedItem();
         airfieldAltitudeUnits = (String)ProfileAirfieldPanel.airfieldAltitudeComboBox.getSelectedItem();
         gliderPosAltitudeUnits = (String)ProfileAirfieldPanel.gliderPosAltitudeComboBox.getSelectedItem();
-        runwayAltitudeUnits = (String)ProfileAirfieldPanel.runwayAltitudeComboBox.getSelectedItem();
+        //runwayAltitudeUnits = (String)ProfileAirfieldPanel.runwayAltitudeComboBox.getSelectedItem();
         winchPosAltitudeUnits = (String)ProfileAirfieldPanel.winchPosAltitudeComboBox.getSelectedItem();
         emptyWeightUnits = (String)ProfileGliderPanel.emptyWeightComboBox.getSelectedItem();
         maxGrossWeightUnits = (String)ProfileGliderPanel.maxGrossWeightComboBox.getSelectedItem();
@@ -118,7 +113,8 @@ public class ProfileManagementFrame extends JFrame {
         currentProfile_.setUnitSetting("winchPosAltitude", UnitConversionToIndexUtilities.lenghtUnitStringToIndex(winchPosAltitudeUnits));
         currentProfile_.setUnitSetting("runwayAltitude", UnitConversionToIndexUtilities.lenghtUnitStringToIndex(runwayAltitudeUnits));
         currentProfile_.setUnitSetting("maxTension", UnitConversionToIndexUtilities.tensionUnitStringToIndex(maxTensionUnits));
-        currentProfile_.setUnitSetting("stallSpeed", UnitConversionToIndexUtilities.tensionUnitStringToIndex(stallSpeedUnits));
+        currentProfile_.setUnitSetting("weakLinkStrength", UnitConversionToIndexUtilities.tensionUnitStringToIndex(weakLinkStrengthUnits));
+        currentProfile_.setUnitSetting("stallSpeed", UnitConversionToIndexUtilities.velocityUnitStringToIndex(stallSpeedUnits));
         currentProfile_.setUnitSetting("winchingSpeed", UnitConversionToIndexUtilities.velocityUnitStringToIndex(maxWinchingSpeedUnits));
         currentData.setCurrentProfile(currentProfile_);
         parent.update();
@@ -148,6 +144,7 @@ public class ProfileManagementFrame extends JFrame {
         newProfile.setUnitSetting("winchPosAltitude", 0);
         newProfile.setUnitSetting("runwayAltitude", 0);
         newProfile.setUnitSetting("maxTension", 0);
+        newProfile.setUnitSetting("weakLinkStrength", 0);
         newProfile.setUnitSetting("stallSpeed", 0);
         newProfile.setUnitSetting("winchingSpeed", 0);
         currentData.setCurrentProfile(newProfile);
@@ -174,6 +171,7 @@ public class ProfileManagementFrame extends JFrame {
         newProfile.setUnitSetting("winchPosAltitude", UnitConversionToIndexUtilities.lenghtUnitStringToIndex(winchPosAltitudeUnits));
         newProfile.setUnitSetting("runwayAltitude", UnitConversionToIndexUtilities.lenghtUnitStringToIndex(runwayAltitudeUnits));
         newProfile.setUnitSetting("maxTension", UnitConversionToIndexUtilities.tensionUnitStringToIndex(maxTensionUnits));
+        newProfile.setUnitSetting("weakLinkStrength", UnitConversionToIndexUtilities.tensionUnitStringToIndex(weakLinkStrengthUnits));
         newProfile.setUnitSetting("stallSpeed", UnitConversionToIndexUtilities.tensionUnitStringToIndex(stallSpeedUnits));
         newProfile.setUnitSetting("winchingSpeed", UnitConversionToIndexUtilities.velocityUnitStringToIndex(maxWinchingSpeedUnits));
         currentData.setCurrentProfile(newProfile);
@@ -232,9 +230,9 @@ public class ProfileManagementFrame extends JFrame {
                 String gliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(gliderPosAltitudeUnitsID);
                 ProfileAirfieldPanel.gliderPosAltitudeComboBox.setSelectedItem(gliderPosAltitudeUnitsString);
 
-                runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
-                String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
-                ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem(runwayAltitudeUnitsString);
+                //runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
+                //String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
+                //ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem(runwayAltitudeUnitsString);
 
                 winchPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("winchPosAltitude");
                 String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(winchPosAltitudeUnitsID);
@@ -306,9 +304,9 @@ public class ProfileManagementFrame extends JFrame {
         String gliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(gliderPosAltitudeUnitsID);
         ProfileAirfieldPanel.gliderPosAltitudeComboBox.setSelectedItem(gliderPosAltitudeUnitsString);
 
-        runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
-        String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
-        ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem(runwayAltitudeUnitsString);
+        //runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
+        //String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
+        //ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem(runwayAltitudeUnitsString);
 
         winchPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("winchPosAltitude");
         String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(winchPosAltitudeUnitsID);
@@ -437,7 +435,7 @@ public class ProfileManagementFrame extends JFrame {
                     ProfilePilotPanel.flightWeightComboBox.setSelectedItem("kg");
                     ProfileAirfieldPanel.airfieldAltitudeComboBox.setSelectedItem("m");
                     ProfileAirfieldPanel.gliderPosAltitudeComboBox.setSelectedItem("m");
-                    ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem("m");
+                    ProfileAirfieldPanel.runwayMagneticHeadingComboBox.setSelectedItem("true");
                     ProfileAirfieldPanel.winchPosAltitudeComboBox.setSelectedItem("m");
                     ProfileGliderPanel.emptyWeightComboBox.setSelectedItem("kg");
                     ProfileGliderPanel.maxGrossWeightComboBox.setSelectedItem("kg");
@@ -466,8 +464,7 @@ public class ProfileManagementFrame extends JFrame {
         tabbedPane.addTab("Pilot", ProfilePilotPanel);
         tabbedPane.addTab("Glider", ProfileGliderPanel);
         tabbedPane.addTab("Airfield", ProfileAirfieldPanel);
-        tabbedPane.addTab("Display", ProfileDisplayPanel);
         tabbedPane.addTab("Other", ProfileOtherPanel);
+        tabbedPane.addTab("Display", ProfileDisplayPanel);  
     }
-
 }

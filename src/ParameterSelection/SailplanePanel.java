@@ -224,6 +224,7 @@ public class SailplanePanel extends JPanel implements Observer{
         emptyWeightField.setBackground(Color.WHITE);
         winchingSpeedField.setText("No Glider Selected");
         winchingSpeedField.setBackground(Color.WHITE);
+        editButton.setEnabled(false);
     }
     
     private void sailplaneJListSelectionChanged(ListSelectionEvent listSelectionEvent) 
@@ -320,7 +321,6 @@ public class SailplanePanel extends JPanel implements Observer{
             sailplaneModel.addElement(str);
         }
         sailplaneJList.setModel(sailplaneModel);
-        sailplaneJList.setSelectedIndex(0);
         sailplaneJList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 sailplaneJListSelectionChanged(listSelectionEvent);

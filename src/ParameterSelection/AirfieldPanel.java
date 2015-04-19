@@ -78,6 +78,14 @@ public class AirfieldPanel extends JPanel implements Observer{
     private JTextField winchPosParentAirfieldField;
     private JTextField winchPosParentRunwayField;
     private CurrentDataObjectSet currentData;
+    private JButton airfieldEditButton;
+    private JButton runwayEditButton;
+    private JButton gliderPosEditButton;
+    private JButton winchPosEditButton;
+    private JButton airfieldAddNewButton;
+    private JButton runwayAddNewButton;
+    private JButton gliderPosAddNewButton;
+    private JButton winchPosAddNewButton;
     private JLabel airfieldAltitudeUnits = new JLabel();
     private JLabel gliderPosAltitudeUnits = new JLabel();
     private JLabel runwayAltitudeUnits = new JLabel();
@@ -307,6 +315,13 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwaysModel.removeAllElements();
         winchPositionModel.removeAllElements();
         gliderPositionModel.removeAllElements();
+        airfieldEditButton.setEnabled(false);
+        runwayEditButton.setEnabled(false);
+        gliderPosEditButton.setEnabled(false);
+        winchPosEditButton.setEnabled(false);
+        runwayAddNewButton.setEnabled(false);
+        gliderPosAddNewButton.setEnabled(false);
+        winchPosAddNewButton.setEnabled(false);
     }
             
     private void airfieldJListSelectionChanged(ListSelectionEvent listSelectionEvent) 
@@ -368,11 +383,12 @@ public class AirfieldPanel extends JPanel implements Observer{
                         runwaysModel.addElement(str);
                 }
                 runwaysJList.setModel(runwaysModel);
-                runwaysScrollPane.setViewportView(runwaysJList);
-                
+                runwaysScrollPane.setViewportView(runwaysJList); 
             } catch(Exception e) {
                 //TODO respond to error
             }
+            airfieldEditButton.setEnabled(true);
+            runwayAddNewButton.setEnabled(true);
         }
     }
     
@@ -422,10 +438,12 @@ public class AirfieldPanel extends JPanel implements Observer{
                     if(str.getRunwayParentId().equals(theRunway.getId()))
                         winchPositionModel.addElement(str);
                 }
-
             } catch(Exception e) {
                 //TODO respond to error
             }
+            runwayEditButton.setEnabled(true);
+            gliderPosAddNewButton.setEnabled(true);
+            winchPosAddNewButton.setEnabled(true);
         }
     }
     
@@ -450,6 +468,7 @@ public class AirfieldPanel extends JPanel implements Observer{
             } catch(Exception e) {
                 //TODO respond to error
             }
+            gliderPosEditButton.setEnabled(true);
         }
     }
     
@@ -471,10 +490,10 @@ public class AirfieldPanel extends JPanel implements Observer{
                 
                 winchPosLatitudeField.setText(String.valueOf(theWinchPosition.getLatitude()));
                 winchPosLatitudeField.setBackground(Color.GREEN);
-                
             } catch(Exception e) {
                 //TODO respond to error
             }
+            winchPosEditButton.setEnabled(true);
         }
     }
     
@@ -620,7 +639,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         airfieldLatitudeField.setColumns(10);
         airfieldLatitudeField.setText("No Airfield Selected");
         
-        JButton airfieldAddNewButton = new JButton("Add New");
+        airfieldAddNewButton = new JButton("Add New");
         airfieldAddNewButton.setBackground(new Color(200,200,200));
         airfieldAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
@@ -632,7 +651,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         airfieldAddNewButton.setBounds(200, 0, 89, 23);
         airfieldAttributesPanel.add(airfieldAddNewButton);
         
-        JButton airfieldEditButton = new JButton("Edit");
+        airfieldEditButton = new JButton("Edit");
         airfieldEditButton.setBackground(new Color(200,200,200));
         airfieldEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -642,6 +661,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         	}
         });
         airfieldEditButton.setBounds(288, 0, 89, 23);
+        airfieldEditButton.setEnabled(false);
         airfieldAttributesPanel.add(airfieldEditButton);
         
         JLabel airfieldLabel = new JLabel("Airfield");
@@ -751,7 +771,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         gliderPosNameField.setColumns(10);
         gliderPosNameField.setText("No Winch Position Selected");
         
-        JButton gliderPosAddNewButton = new JButton("Add New");
+        gliderPosAddNewButton = new JButton("Add New");
         gliderPosAddNewButton.setBackground(new Color(200,200,200));
         gliderPosAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -761,9 +781,10 @@ public class AirfieldPanel extends JPanel implements Observer{
         	}
         });
         gliderPosAddNewButton.setBounds(200, 0, 89, 23);
+        gliderPosAddNewButton.setEnabled(false);
         gliderPositionAttributesPanel.add(gliderPosAddNewButton);
         
-        JButton gliderPosEditButton = new JButton("Edit");
+        gliderPosEditButton = new JButton("Edit");
         gliderPosEditButton.setBackground(new Color(200,200,200));
         gliderPosEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -773,6 +794,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         	}
         });
         gliderPosEditButton.setBounds(288, 0, 89, 23);
+        gliderPosEditButton.setEnabled(false);
         gliderPositionAttributesPanel.add(gliderPosEditButton);
         
         JLabel gliderPositionLabel = new JLabel("Glider Position");
@@ -869,7 +891,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwayAttributesPanel.add(runwayParentAirfieldField);
         runwayParentAirfieldField.setColumns(10);*/
         
-        JButton runwayEditButton = new JButton("Edit");
+        runwayEditButton = new JButton("Edit");
         runwayEditButton.setBackground(new Color(200,200,200));
         runwayEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -879,9 +901,10 @@ public class AirfieldPanel extends JPanel implements Observer{
         	}
         });
         runwayEditButton.setBounds(288, 0, 89, 23);
+        runwayEditButton.setEnabled(false);
         runwayAttributesPanel.add(runwayEditButton);
         
-        JButton runwayAddNewButton = new JButton("Add New");
+        runwayAddNewButton = new JButton("Add New");
         runwayAddNewButton.setBackground(new Color(200,200,200));
         runwayAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -891,6 +914,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         	}
         });
         runwayAddNewButton.setBounds(200, 0, 89, 23);
+        runwayAddNewButton.setEnabled(false);
         runwayAttributesPanel.add(runwayAddNewButton);
         
         JLabel runwayLabel = new JLabel("Runway");
@@ -981,7 +1005,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         winchPositionAttributesPanel.add(winchPosLatitudeField);
         winchPosLatitudeField.setText("No Winch Position Selected");
         
-        JButton winchPosAddNewButton = new JButton("Add New");
+        winchPosAddNewButton = new JButton("Add New");
         winchPosAddNewButton.setBackground(new Color(200,200,200));
         winchPosAddNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -991,9 +1015,10 @@ public class AirfieldPanel extends JPanel implements Observer{
         	}
         });
         winchPosAddNewButton.setBounds(200, 0, 89, 23);
+        winchPosAddNewButton.setEnabled(false);
         winchPositionAttributesPanel.add(winchPosAddNewButton);
         
-        JButton winchPosEditButton = new JButton("Edit");
+        winchPosEditButton = new JButton("Edit");
         winchPosEditButton.setBackground(new Color(200,200,200));
         winchPosEditButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -1003,6 +1028,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         	}
         });
         winchPosEditButton.setBounds(288, 0, 89, 23);
+        winchPosEditButton.setEnabled(false);
         winchPositionAttributesPanel.add(winchPosEditButton);
         
         JLabel winchPositionLabel = new JLabel("Winch Position");
