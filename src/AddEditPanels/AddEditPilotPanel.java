@@ -422,7 +422,6 @@ public class AddEditPilotPanel extends JFrame {
     
     public boolean isComplete()
     {
-        ErrWindow ew;
         try
         {
             boolean emptyFields = false;

@@ -1,11 +1,8 @@
 package Configuration;
 
 import javax.swing.JPanel;
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
-import java.awt.Insets;
 import java.awt.Dimension;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;

@@ -66,6 +66,21 @@ public class UnitConversionToIndexUtilities {
                 return 2;
             case "kn":
                 return 3;
+            case "kts":
+                return 4;
+            default:
+                return 0;
+        } 
+    }
+    
+    public static int degreesUnitStringToIndex(String unit) {
+       switch (unit) {
+            case "true":
+                return 0;
+            case "magnetic":
+                return 1;
+            case "relative":
+                return 2;
             default:
                 return 0;
         } 
@@ -73,10 +88,10 @@ public class UnitConversionToIndexUtilities {
     
     public static int tempUnitStringToIndex(String unit) {
        switch (unit) {
-            case "F":
-                return 1;
             case "C":
                 return 0;
+            case "F":
+                return 1;
             default:
                 return 0;
         } 
@@ -84,12 +99,18 @@ public class UnitConversionToIndexUtilities {
     
     public static int pressureUnitStringToIndex(String unit) {
        switch (unit) {
-            case "psi":
-                return 1;
-            case "Mp":
-                return 1;
-            case "Kp": 
+            case "hPa": 
                 return 0;
+            case "kPa":
+                return 1;
+            case "psi":
+                return 2;
+            case "bar":
+                return 3;
+            case "millibar":
+                return 4; 
+            case "atm":
+                return 5; 
             default:
                 return 0;
         } 
