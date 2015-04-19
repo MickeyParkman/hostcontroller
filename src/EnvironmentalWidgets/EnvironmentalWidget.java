@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ParameterSelection;
+package EnvironmentalWidgets;
 
 import java.awt.BorderLayout;
 import javax.swing.JCheckBox;
@@ -23,23 +23,29 @@ import javax.swing.event.ChangeListener;
  *
  * @author jtroxel
  */
-public class EnvironmentalWidget extends JPanel implements Observer {
+public abstract class EnvironmentalWidget extends JPanel implements Observer {
     private JLabel title;
-    private JTextField field;
+    protected JTextField field;
+    protected JLabel unit;
     private JCheckBox isEditable;
+    protected int unitId;
     
     public EnvironmentalWidget(String titleIn, boolean hasField, boolean canEdit)
     {
         setBackground(Color.WHITE);
         JPanel fieldPanel = new JPanel();
+        JPanel titlePanel = new JPanel();
         fieldPanel.setBackground(Color.WHITE);
-        fieldPanel.setLayout(new BorderLayout());
+        fieldPanel.setLayout(new BorderLayout());        
+        titlePanel.setBackground(Color.WHITE);
+        titlePanel.setLayout(new BorderLayout());
         title = new JLabel(titleIn);
+        unit = new JLabel();
         field = new JTextField();
         field.setBorder(new MatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
         field.setEditable(false);
         field.setBackground(Color.WHITE);
-        field.setPreferredSize(new Dimension(120, 20));
+        field.setPreferredSize(new Dimension(80, 20));
         isEditable = new JCheckBox();
         isEditable.setBackground(Color.WHITE);
         isEditable.addItemListener(new ItemListener(){
@@ -54,18 +60,23 @@ public class EnvironmentalWidget extends JPanel implements Observer {
                 {
                     field.setEditable(false);
                     field.setBorder(new MatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+                    update();
                 }
             }
         });
         setLayout(new BorderLayout());
+        titlePanel.setPreferredSize(new Dimension(185,20));
+        fieldPanel.setPreferredSize(new Dimension(185,20));
         //setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
-        setPreferredSize(new Dimension(185, 37));
-        add(title, BorderLayout.PAGE_START);
+        //setPreferredSize(new Dimension(185, 37));
+        titlePanel.add(title, BorderLayout.LINE_START);
         fieldPanel.add(field, BorderLayout.LINE_START);
-        if(canEdit) fieldPanel.add(isEditable, BorderLayout.CENTER); 
+        fieldPanel.add(unit, BorderLayout.CENTER);
+        if(canEdit) titlePanel.add(isEditable, BorderLayout.LINE_END);
+        add(titlePanel, BorderLayout.PAGE_START);
         if(hasField)
         {
-            add(fieldPanel);
+            add(fieldPanel, BorderLayout.PAGE_END);
         }
     }
     
@@ -75,10 +86,10 @@ public class EnvironmentalWidget extends JPanel implements Observer {
     }
 
     @Override
-    public void update() {
-    }
+    public abstract void update();
 
     @Override
-    public void update(String msg) {
-    }
+    public abstract void update(String msg);
+    
+    public abstract void setupUnits();
 }

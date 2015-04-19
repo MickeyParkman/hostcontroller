@@ -91,7 +91,7 @@ public class UnitLabelUtilities {
             case 2: 
                 return "Kp";
             default:
-                return "";
+                return "psi";
         } 
     }
 }
