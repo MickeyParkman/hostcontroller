@@ -50,6 +50,9 @@ public class CurrentLaunchInformation {
     private float parachuteWeight; 
     private float windSpeed;
     private float windDirection;
+    private float windDegreeOffset;
+    private float headwindComponent;
+    private float crosswindComponent;
     private float temperature;
     private float pressure;
     private float densityAltitude;
@@ -129,6 +132,12 @@ public class CurrentLaunchInformation {
             instance.winchPositionLatitude = currentDataObjectSet.getCurrentWinchPosition().getLatitude();
             instance.winchPositionLongitude = currentDataObjectSet.getCurrentWinchPosition().getLongitude();
             
+            instance.gliderBaggage = 0;
+            instance.gliderBallast = 0;
+            instance.passengerWeight = 0;
+            instance.temperature = 0;
+            instance.pressure = 0;
+            
             instance.densityAltitude = calculateDensityAltitude(instance.temperature, instance.pressure);
             instance.runLength = calculateRunLength(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
                                            instance.winchPositionAltitude, instance.winchPositionLatitude, instance.winchPositionLongitude);
@@ -138,7 +147,10 @@ public class CurrentLaunchInformation {
                                            instance.winchPositionLatitude, instance.winchPositionLongitude);
             instance.gliderLaunchMass = calculateGliderLaunchMass(instance.pilotWeight, instance.gliderEmptyWeight,
                                             instance.gliderBallast, instance.gliderBaggage, instance.passengerWeight);
-           
+            instance.windDegreeOffset = calculateRelativeDirection(instance.runHeading, instance.windDirection);
+            instance.headwindComponent = calculateHeadwind(instance.windDegreeOffset, instance.windSpeed);
+            instance.crosswindComponent = calculateCrosswind(instance.windDegreeOffset, instance.windSpeed);
+            
             instance.complete = true;
             }catch (NumberFormatException e){
                 System.out.println("Error when updating capability/preference");

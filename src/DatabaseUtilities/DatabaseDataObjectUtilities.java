@@ -16,6 +16,7 @@ import DataObjects.DrumParameters;
 import DataObjects.Parachute;
 import DataObjects.WinchPosition;
 import DataObjects.Profile;
+import DataObjects.FlightSummary;
 import DataObjects.CurrentDataObjectSet;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
@@ -338,9 +339,10 @@ public class DatabaseDataObjectUtilities {
     }
     
         /**
-     * Adds the relevant data for a profile to the database
+     * Adds the relevant data for a Launch to the database based on the current loaded information
      * 
-     * @param theProfile the profile to add to the database
+     * @param startTime the start of the launch
+     * @param endTime the end of the launch
      * @throws SQLException if table cannot be accessed
      * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
      */
@@ -412,17 +414,97 @@ public class DatabaseDataObjectUtilities {
                         + "glider_position_latitude, "
                         + "glider_position_longitude, "
                         + "glider_position_optional_info, "
+                        + "winch_position_id, "
+                        + "winch_position_name, "
+                        + "winch_position_runway_parent, "
+                        + "winch_position_runway_parent_id, "
+                        + "winch_position_airfield_parent, "
+                        + "winch_position_airfield_parent_id, "
+                        + "winch_position_altitude, "
+                        + "winch_position_latitude, "
+                        + "winch_position_longitude, "
+                        + "winch_position_optional_info, "
                         + "parachute_id, "
                         + "parachute_lift, "
                         + "parachute_drag, "
                         + "parachute_weight) "
-                        + "values (?,?,?)");
+                        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+                        + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+                        + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            CurrentDataObjectSet currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             PreviousLaunchesInfoInsertStatement.setString(1, String.valueOf(startTime));
             PreviousLaunchesInfoInsertStatement.setString(2, String.valueOf(endTime));
-            PreviousLaunchesInfoInsertStatement.setString(3, "");
+            PreviousLaunchesInfoInsertStatement.setString(3, currentDataObjectSet.getCurrentProfile().getID());
+            PreviousLaunchesInfoInsertStatement.setString(4, currentDataObjectSet.getCurrentProfile().getUnitSettingsForStorage());
+            PreviousLaunchesInfoInsertStatement.setString(5, currentDataObjectSet.getCurrentProfile().getDisplayPrefsForStorage());
+            PreviousLaunchesInfoInsertStatement.setString(6, currentDataObjectSet.getCurrentPilot().getPilotId());
+            PreviousLaunchesInfoInsertStatement.setString(7, currentDataObjectSet.getCurrentPilot().getFirstName());
+            PreviousLaunchesInfoInsertStatement.setString(8, currentDataObjectSet.getCurrentPilot().getLastName());
+            PreviousLaunchesInfoInsertStatement.setString(9, currentDataObjectSet.getCurrentPilot().getMiddleName());
+            PreviousLaunchesInfoInsertStatement.setString(10, String.valueOf(currentDataObjectSet.getCurrentPilot().getWeight()));
+            PreviousLaunchesInfoInsertStatement.setString(11, String.valueOf(Capability.convertCapabilityStringToNum(currentDataObjectSet.getCurrentPilot().getCapability())));
+            PreviousLaunchesInfoInsertStatement.setString(12, String.valueOf(Preference.convertPreferenceStringToNum(currentDataObjectSet.getCurrentPilot().getPreference())));
+            PreviousLaunchesInfoInsertStatement.setString(13, currentDataObjectSet.getCurrentPilot().getEmergencyContact());
+            PreviousLaunchesInfoInsertStatement.setString(14, currentDataObjectSet.getCurrentPilot().getMedInfo());
+            PreviousLaunchesInfoInsertStatement.setString(15, currentDataObjectSet.getCurrentPilot().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(16, currentDataObjectSet.getCurrentSailplane().getId());
+            PreviousLaunchesInfoInsertStatement.setString(17, currentDataObjectSet.getCurrentSailplane().getNumber());
+            PreviousLaunchesInfoInsertStatement.setString(18, currentDataObjectSet.getCurrentSailplane().getType());
+            PreviousLaunchesInfoInsertStatement.setString(19, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxGrossWeight()));
+            PreviousLaunchesInfoInsertStatement.setString(20, String.valueOf(currentDataObjectSet.getCurrentSailplane().getEmptyWeight()));
+            PreviousLaunchesInfoInsertStatement.setString(21, String.valueOf(currentDataObjectSet.getCurrentSailplane().getIndicatedStallSpeed()));
+            PreviousLaunchesInfoInsertStatement.setString(22, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxWinchingSpeed()));
+            PreviousLaunchesInfoInsertStatement.setString(23, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxWeakLinkStrength()));
+            PreviousLaunchesInfoInsertStatement.setString(24, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxTension()));
+            PreviousLaunchesInfoInsertStatement.setString(25, String.valueOf(currentDataObjectSet.getCurrentSailplane().getCableReleaseAngle()));
+            PreviousLaunchesInfoInsertStatement.setString(26, String.valueOf(currentDataObjectSet.getCurrentSailplane().storeCarryBallast()));
+            PreviousLaunchesInfoInsertStatement.setString(27, String.valueOf(currentDataObjectSet.getCurrentSailplane().storeMultipleSeats()));
+            PreviousLaunchesInfoInsertStatement.setString(28, currentDataObjectSet.getCurrentSailplane().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(29, "SETBALLAST"); //Set Ballast
+            PreviousLaunchesInfoInsertStatement.setString(30, "SETBAGGAGE"); //Set Baggage
+            PreviousLaunchesInfoInsertStatement.setString(31, "SETPASSENGERWEIGHT"); //Set passenger weight
+            PreviousLaunchesInfoInsertStatement.setString(32, currentDataObjectSet.getCurrentAirfield().getId());
+            PreviousLaunchesInfoInsertStatement.setString(33, currentDataObjectSet.getCurrentAirfield().getName());
+            PreviousLaunchesInfoInsertStatement.setString(34, currentDataObjectSet.getCurrentAirfield().getDesignator());
+            PreviousLaunchesInfoInsertStatement.setString(35, String.valueOf(currentDataObjectSet.getCurrentAirfield().getAltitude()));
+            PreviousLaunchesInfoInsertStatement.setString(36, String.valueOf(currentDataObjectSet.getCurrentAirfield().getMagneticVariation()));
+            PreviousLaunchesInfoInsertStatement.setString(37, String.valueOf(currentDataObjectSet.getCurrentAirfield().getLatitude()));
+            PreviousLaunchesInfoInsertStatement.setString(38, String.valueOf(currentDataObjectSet.getCurrentAirfield().getLongitude()));
+            PreviousLaunchesInfoInsertStatement.setString(39, currentDataObjectSet.getCurrentAirfield().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(40, currentDataObjectSet.getCurrentRunway().getId());
+            PreviousLaunchesInfoInsertStatement.setString(41, currentDataObjectSet.getCurrentRunway().getName());
+            PreviousLaunchesInfoInsertStatement.setString(42, String.valueOf(currentDataObjectSet.getCurrentRunway().getMagneticHeading()));
+            PreviousLaunchesInfoInsertStatement.setString(43, currentDataObjectSet.getCurrentRunway().getParent());
+            PreviousLaunchesInfoInsertStatement.setString(44, currentDataObjectSet.getCurrentRunway().getParentId());
+            PreviousLaunchesInfoInsertStatement.setString(45, String.valueOf(currentDataObjectSet.getCurrentRunway().getAltitude()));
+            PreviousLaunchesInfoInsertStatement.setString(46, currentDataObjectSet.getCurrentRunway().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(47, currentDataObjectSet.getCurrentGliderPosition().getId());
+            PreviousLaunchesInfoInsertStatement.setString(48, currentDataObjectSet.getCurrentGliderPosition().getGliderPositionId());
+            PreviousLaunchesInfoInsertStatement.setString(49, currentDataObjectSet.getCurrentGliderPosition().getRunwayParent());
+            PreviousLaunchesInfoInsertStatement.setString(50, currentDataObjectSet.getCurrentGliderPosition().getRunwayParentId());
+            PreviousLaunchesInfoInsertStatement.setString(51, currentDataObjectSet.getCurrentGliderPosition().getAirfieldParent());
+            PreviousLaunchesInfoInsertStatement.setString(52, currentDataObjectSet.getCurrentGliderPosition().getAirfieldParentId());
+            PreviousLaunchesInfoInsertStatement.setString(53, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getAltitude()));
+            PreviousLaunchesInfoInsertStatement.setString(54, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getLatitude()));
+            PreviousLaunchesInfoInsertStatement.setString(55, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getLongitude()));
+            PreviousLaunchesInfoInsertStatement.setString(56, currentDataObjectSet.getCurrentGliderPosition().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(57, currentDataObjectSet.getCurrentWinchPosition().getId());
+            PreviousLaunchesInfoInsertStatement.setString(58, currentDataObjectSet.getCurrentWinchPosition().getName());
+            PreviousLaunchesInfoInsertStatement.setString(59, currentDataObjectSet.getCurrentWinchPosition().getRunwayParent());
+            PreviousLaunchesInfoInsertStatement.setString(60, currentDataObjectSet.getCurrentWinchPosition().getRunwayParentId());
+            PreviousLaunchesInfoInsertStatement.setString(61, currentDataObjectSet.getCurrentWinchPosition().getAirfieldParent());
+            PreviousLaunchesInfoInsertStatement.setString(62, currentDataObjectSet.getCurrentWinchPosition().getAirfieldParentId());
+            PreviousLaunchesInfoInsertStatement.setString(63, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getAltitude()));
+            PreviousLaunchesInfoInsertStatement.setString(64, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getLatitude()));
+            PreviousLaunchesInfoInsertStatement.setString(65, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getLongitude()));
+            PreviousLaunchesInfoInsertStatement.setString(66, currentDataObjectSet.getCurrentWinchPosition().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(67, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getParachuteNumber()));
+            PreviousLaunchesInfoInsertStatement.setString(68, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getLift()));
+            PreviousLaunchesInfoInsertStatement.setString(69, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getDrag()));
+            PreviousLaunchesInfoInsertStatement.setString(70, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getWeight()));
+            
             PreviousLaunchesInfoInsertStatement.executeUpdate();
             PreviousLaunchesInfoInsertStatement.close();
-            //System.out.println(theProfile.getID() + ": " + theProfile.getUnitSettingsForStorage());
         }catch(SQLException e) {
             throw e;
         }
@@ -877,6 +959,93 @@ public class DatabaseDataObjectUtilities {
         }
     }    
     
+    /**
+     * Pulls the summary list of flights from the database
+     * 
+     * @return the list of flights in the database
+     * @throws SQLException if the table in the database can't be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
+     */
+    
+    public static List<FlightSummary> getFlights() throws SQLException, ClassNotFoundException {        
+        try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Statement stmt = connect.createStatement();
+            ResultSet theFlights = stmt.executeQuery("SELECT start_timestamp, pilot_id, "
+                    + "pilot_first_name, pilot_last_name, glider_n_number "
+                    + "FROM PreviousLaunchesInfo ORDER BY start_timestamp");
+            List flights = new ArrayList<FlightSummary>();
+            
+            while(theFlights.next()) {
+                String startTimestamp = theFlights.getString(1); 
+                String pilotId = theFlights.getString(2);
+                String pilotFirstName = theFlights.getString(3);
+                String pilotLastName = theFlights.getString(4);
+                String gliderNnumber = theFlights.getString(5);
+                
+                FlightSummary newFlight = new FlightSummary(startTimestamp, pilotId, 
+                        pilotFirstName, pilotLastName, gliderNnumber);
+                flights.add(newFlight);
+            }
+            theFlights.close();
+            stmt.close();
+            connect.close();
+            return flights;
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * sets currentDataObjectSet to the given flight
+     * 
+     * @return the list of flights in the database
+     * @throws SQLException if the table in the database can't be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
+     */
+    
+    public static void setCurrentDataObjectSetToFlight(FlightSummary flightInformation) throws SQLException, ClassNotFoundException {        
+        try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Statement stmt = connect.createStatement();
+            ResultSet theFlight = stmt.executeQuery("SELECT * "
+                    + "FROM PreviousLaunchesInfo WHERE start_timestamp = '" + flightInformation.getStartTimestamp() + "' "
+                    + "AND pilot_id = '" + flightInformation.getPilotId() + "' ");
+            
+            while(theFlight.next()) {
+                String startTimestamp = theFlight.getString(1); 
+                String pilotId = theFlight.getString(2);
+                String pilotFirstName = theFlight.getString(3);
+                String pilotLastName = theFlight.getString(4);
+                String gliderNnumber = theFlight.getString(5);
+                
+                FlightSummary newFlight = new FlightSummary(startTimestamp, pilotId, 
+                        pilotFirstName, pilotLastName, gliderNnumber);
+            }
+            theFlight.close();
+            stmt.close();
+            connect.close();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+    
     public static List<String> getTables() throws SQLException, ClassNotFoundException {        
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
@@ -1004,8 +1173,5 @@ public class DatabaseDataObjectUtilities {
         return true;            
     }
 
-    public static List<GliderPosition> getPositions() {
-        List positions = new ArrayList<GliderPosition>();
-        return positions;
-    }
+
 }
