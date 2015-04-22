@@ -12,7 +12,7 @@ package EnvironmentalWidgets;
 public class HeadWindComponentWidget extends EnvironmentalWidget {
 
     public HeadWindComponentWidget() {
-        super("Headwind Component", true, true);
+        super("Headwind Component", true, false);
     }
 
     @Override

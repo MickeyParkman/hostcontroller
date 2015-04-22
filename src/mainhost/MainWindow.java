@@ -93,7 +93,8 @@ public class MainWindow extends JFrame {
         defaultProfile.setUnitSetting("runwayAltitude", 0);
         defaultProfile.setUnitSetting("winchPosAltitude", 0);
         
-        defaultProfile.setUnitSetting("pressureWidgetUnits", 2);
+        defaultProfile.setUnitSetting("pressureWidget", 0);
+        defaultProfile.setUnitSetting("launchWeightWidget",0);
         
         currentData.setCurrentProfile(defaultProfile);
     }

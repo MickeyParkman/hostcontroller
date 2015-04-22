@@ -12,7 +12,7 @@ package EnvironmentalWidgets;
 public class CrossWindComponentWidget extends EnvironmentalWidget {
 
     public CrossWindComponentWidget() {
-        super("Crosswind Component", true, true);
+        super("Crosswind Component", true, false);
     }
 
     @Override
