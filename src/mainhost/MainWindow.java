@@ -93,8 +93,17 @@ public class MainWindow extends JFrame {
         defaultProfile.setUnitSetting("runwayMagneticHeading", 0);
         defaultProfile.setUnitSetting("winchPosAltitude", 0);
         
-        defaultProfile.setUnitSetting("pressureWidget", 0);
-        defaultProfile.setUnitSetting("launchWeightWidget",0);
+        defaultProfile.setUnitSetting("avgWindSpeed", 0);
+        defaultProfile.setUnitSetting("crosswind", 0);
+        defaultProfile.setUnitSetting("gustWindSpeed", 0);
+        defaultProfile.setUnitSetting("headwind", 0);
+        defaultProfile.setUnitSetting("launchWeight", 0);
+        defaultProfile.setUnitSetting("densityAltitude", 0);
+        defaultProfile.setUnitSetting("runLength", 0);
+        defaultProfile.setUnitSetting("pressure", 0);
+        defaultProfile.setUnitSetting("temperature", 0);
+        defaultProfile.setUnitSetting("runDirection", 0);
+        defaultProfile.setUnitSetting("windDirection", 0);
         
         currentData.setCurrentProfile(defaultProfile);
     }
