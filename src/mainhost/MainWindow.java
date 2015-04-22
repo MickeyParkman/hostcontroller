@@ -90,7 +90,7 @@ public class MainWindow extends JFrame {
         
         defaultProfile.setUnitSetting("airfieldAltitude", 0);
         defaultProfile.setUnitSetting("gliderPosAltitude", 0);
-        defaultProfile.setUnitSetting("runwayAltitude", 0);
+        defaultProfile.setUnitSetting("runwayMagneticHeading", 0);
         defaultProfile.setUnitSetting("winchPosAltitude", 0);
         
         defaultProfile.setUnitSetting("pressureWidgetUnits", 2);
