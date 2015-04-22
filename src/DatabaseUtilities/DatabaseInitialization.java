@@ -148,7 +148,7 @@ public class DatabaseInitialization {
             createRecentLaunches(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
             //throw e;
         }
         //Build the PreviousLaunchesInfo table
@@ -156,7 +156,7 @@ public class DatabaseInitialization {
             createPreviousLaunchesInfo(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
             //throw e;
         }
         
@@ -480,7 +480,7 @@ public class DatabaseInitialization {
                 + "(parachute_id INT, "
                 + "lift FLOAT, "
                 + "drag FLOAT, "
-                + "weight INT, "
+                + "weight FLOAT, "
                 + "PRIMARY KEY (parachute_id))";
         try (Statement createParachuteTableStatement = connect.createStatement()) {
             createParachuteTableStatement.execute(createParachuteString);
@@ -498,9 +498,9 @@ public class DatabaseInitialization {
     private static void createRecentLaunches(Connection connect) throws SQLException {
         String createRecentLaunchesString = "CREATE TABLE RecentLaunches"
                 + "(timestamp BIGINT, "
-                + "pilot_id VARCHAR(30), "
-                + "n_number VARCHAR(30), "
-                + "PRIMARY KEY (timestamp, pilot_id, n_number), "
+                + "pilot_id VARCHAR(8) "
+                + "glider_n_number VARCHAR(30), "
+                + "PRIMARY KEY (timestamp, pilot_id, glider_n_number), "
                 + "FOREIGN KEY (pilot_id) REFERENCES Pilot (pilot_id))"; 
         try (Statement createRecentLaunchesTableStatement = connect.createStatement()) {
             createRecentLaunchesTableStatement.execute(createRecentLaunchesString);
@@ -522,42 +522,67 @@ public class DatabaseInitialization {
                 + "end_timestamp BIGINT, "
                 + "profile_id VARCHAR(30), "
                 + "unit_settings VARCHAR(1000), "
-                + "display_prefs VARCHAR(1000), " //Guessing at min number of chars
-                + "pilot_name VARCHAR(30), "
-                + "weight FLOAT, "
-                + "capability INT, "
-                + "preference INT, "
-                + "emergency_contact_info VARCHAR(100), "
-                + "emergency_medical_info VARCHAR(150), "
-                + "n_number VARCHAR(30), "
-                + "type VARCHAR(30), "
-                + "owner VARCHAR(30), "
-                + "contact_info VARCHAR(60), "
-                + "max_gross_weight FLOAT, "
-                + "empty_weight FLOAT, "
-                + "indicated_stall_speed FLOAT, "
-                + "max_winching_speed FLOAT, "
-                + "max_weak_link_strength FLOAT, "
-                + "max_tension FLOAT, "
+                + "display_prefs VARCHAR(1000), "
+                + "pilot_id VARCHAR(8), "
+                + "pilot_first_name VARCHAR(30), "
+                + "pilot_last_name VARCHAR(30), "
+                + "pilot_middle_name VARCHAR(30), "
+                + "pilot_flight_weight FLOAT, "
+                + "pilot_capability INT, "
+                + "pilot_preference INT, "
+                + "pilot_emergency_contact_info VARCHAR(100), "
+                + "pilot_emergency_medical_info VARCHAR(150), "
+                + "pilot_optional_info VARCHAR(150), "
+                + "glider_id VARCHAR(8), "
+                + "glider_n_number VARCHAR(30),"
+                + "glider_type VARCHAR(30),"
+                + "glider_max_gross_weight FLOAT,"
+                + "glider_empty_weight FLOAT,"
+                + "glider_indicated_stall_speed FLOAT,"
+                + "glider_max_winching_speed FLOAT,"
+                + "glider_max_weak_link_strength FLOAT,"
+                + "glider_max_tension FLOAT,"
+                + "glider_cable_release_angle FLOAT, "
+                + "glider_carry_ballast INT, "
+                + "glider_multiple_seats INT, "
+                + "glider_optional_info VARCHAR(150), "
+                + "glider_ballast FLOAT, "
+                + "glider_baggage FLOAT, "
+                + "glider_passenger_weight FLOAT, "
+                + "airfield_id VARCHAR(8), "
                 + "airfield_name VARCHAR(30), "
-                + "designator VARCHAR(20), "
-                + "location VARCHAR(20), "
-                + "altitude FLOAT, "
-                + "magnetic_variation VARCHAR(20), "
-                + "runway_name VARCHAR(30),"          //Used in Runway Object 
-                + "magnetic_heading VARCHAR(10),"     //Used in Runway Object 
-                + "position_name VARCHAR(30),"        //Used in Position Object 
-                + "position_maximumLength FLOAT, "    //Used in Position Object
-                + "position_slope FLOAT, "            //Used in Position Object
-                + "position_centerline_offset FLOAT, " //Used in Position Object
-                + "parachute_number INT, "
-                + "lift FLOAT, "
-                + "drag FLOAT, "                
-                + "FOREIGN KEY (capability) REFERENCES Capability (capability_id), "
-                + "FOREIGN KEY (preference) REFERENCES Preference (preference_id), "
-                + "FOREIGN KEY (start_timestamp, pilot_name, n_number) "
-                + "REFERENCES RecentLaunches(timestamp, pilot_id, n_number), "
-                + "PRIMARY KEY (start_timestamp, pilot_name, n_number))";
+                + "airfield_designator VARCHAR(30), "
+                + "airfield_altitude VARCHAR(20), "
+                + "airfield_magnetic_variation VARCHAR(20), "
+                + "airfield_latitude FLOAT, "
+                + "airfield_longitude FLOAT, "
+                + "airfield_optional_info VARCHAR(150), "
+                + "runway_id VARCHAR(8), "
+                + "runway_name VARCHAR(30), "
+                + "runway_magnetic_heading FLOAT, "
+                + "runway_parent VARCHAR(30), "
+                + "runway_parent_id VARCHAR(8), "
+                + "runway_altitude FLOAT, "
+                + "runway_optional_info VARCHAR(150), "
+                + "glider_position_id VARCHAR(8), "
+                + "glider_position_position_id VARCHAR(30), "
+                + "glider_position_runway_parent VARCHAR(30), "
+                + "glider_position_runway_parent_id VARCHAR(8), "
+                + "glider_position_airfield_parent VARCHAR(30), "
+                + "glider_position_airfield_parent_id VARCHAR(8), "
+                + "glider_position_altitude FLOAT, "
+                + "glider_position_latitude FLOAT, "
+                + "glider_position_longitude FLOAT, "
+                + "glider_position_optional_info VARCHAR(150), "
+                + "parachute_id INT, "
+                + "parachute_lift FLOAT, "
+                + "parachute_drag FLOAT, "
+                + "parachute_weight FLOAT, "             
+                + "FOREIGN KEY (pilot_capability) REFERENCES Capability (capability_id), "
+                + "FOREIGN KEY (pilot_preference) REFERENCES Preference (preference_id), "
+                + "FOREIGN KEY (start_timestamp, pilot_id, glider_n_number) "
+                + "REFERENCES RecentLaunches(timestamp, pilot_id, glider_n_number), "
+                + "PRIMARY KEY (start_timestamp, pilot_id, glider_n_number))";
         try (Statement createPastLaunchesInfoTableStatement = connect.createStatement()) {
             createPastLaunchesInfoTableStatement.execute(createPastLaunchesInfo);
         }catch(SQLException e) {

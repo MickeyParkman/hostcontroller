@@ -16,6 +16,7 @@ import DataObjects.DrumParameters;
 import DataObjects.Parachute;
 import DataObjects.WinchPosition;
 import DataObjects.Profile;
+import DataObjects.CurrentDataObjectSet;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
 import java.sql.*;
@@ -330,6 +331,97 @@ public class DatabaseDataObjectUtilities {
             ProfileInsertStatement.setString(3, theProfile.getDisplayPrefsForStorage());
             ProfileInsertStatement.executeUpdate();
             ProfileInsertStatement.close();
+            //System.out.println(theProfile.getID() + ": " + theProfile.getUnitSettingsForStorage());
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+        /**
+     * Adds the relevant data for a profile to the database
+     * 
+     * @param theProfile the profile to add to the database
+     * @throws SQLException if table cannot be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
+     */
+    public static void addLaunchToDB(int startTime, int endTime) throws SQLException, ClassNotFoundException {
+        //Check for DB drivers
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            PreparedStatement PreviousLaunchesInfoInsertStatement = connect.prepareStatement(
+                "INSERT INTO PreviousLaunchesInfo("
+                        + "start_timestamp, "
+                        + "end_timestamp, "
+                        + "profile_id, "
+                        + "unit_settings, "
+                        + "display_prefs, "
+                        + "pilot_id, "
+                        + "pilot_first_name, "
+                        + "pilot_last_name, "
+                        + "pilot_middle_name, "
+                        + "pilot_flight_weight, "
+                        + "pilot_capability, "
+                        + "pilot_preference, "
+                        + "pilot_emergency_contact_info, "
+                        + "pilot_emergency_medical_info, "
+                        + "pilot_optional_info, "
+                        + "glider_id, "
+                        + "glider_n_number,"
+                        + "glider_type,"
+                        + "glider_max_gross_weight,"
+                        + "glider_empty_weight,"
+                        + "glider_indicated_stall_speed,"
+                        + "glider_max_winching_speed,"
+                        + "glider_max_weak_link_strength,"
+                        + "glider_max_tension,"
+                        + "glider_cable_release_angle, "
+                        + "glider_carry_ballast, "
+                        + "glider_multiple_seats, "
+                        + "glider_optional_info, "
+                        + "glider_ballast, "
+                        + "glider_baggage, "
+                        + "glider_passenger_weight, "
+                        + "airfield_id, "
+                        + "airfield_name, "
+                        + "airfield_designator, "
+                        + "airfield_altitude, "
+                        + "airfield_magnetic_variation, "
+                        + "airfield_latitude, "
+                        + "airfield_longitude, "
+                        + "airfield_optional_info, "
+                        + "runway_id, "
+                        + "runway_name, "
+                        + "runway_magnetic_heading, "
+                        + "runway_parent, "
+                        + "runway_parent_id, "
+                        + "runway_altitude, "
+                        + "runway_optional_info, "
+                        + "glider_position_id, "
+                        + "glider_position_position_id, "
+                        + "glider_position_runway_parent, "
+                        + "glider_position_runway_parent_id, "
+                        + "glider_position_airfield_parent, "
+                        + "glider_position_airfield_parent_id, "
+                        + "glider_position_altitude, "
+                        + "glider_position_latitude, "
+                        + "glider_position_longitude, "
+                        + "glider_position_optional_info, "
+                        + "parachute_id, "
+                        + "parachute_lift, "
+                        + "parachute_drag, "
+                        + "parachute_weight) "
+                        + "values (?,?,?)");
+            PreviousLaunchesInfoInsertStatement.setString(1, String.valueOf(startTime));
+            PreviousLaunchesInfoInsertStatement.setString(2, String.valueOf(endTime));
+            PreviousLaunchesInfoInsertStatement.setString(3, "");
+            PreviousLaunchesInfoInsertStatement.executeUpdate();
+            PreviousLaunchesInfoInsertStatement.close();
             //System.out.println(theProfile.getID() + ": " + theProfile.getUnitSettingsForStorage());
         }catch(SQLException e) {
             throw e;
