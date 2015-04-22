@@ -76,25 +76,35 @@ public class MainWindow extends JFrame {
     private void initializeDefaultProfile()
     {
         Profile defaultProfile = new Profile("Default", "{}", "{}"); 
-        defaultProfile.setUnitSetting("flightWeight", 0);
+        defaultProfile.setUnitSetting("flightWeight", 1);
         
-        defaultProfile.setUnitSetting("emptyWeight", 0);
-        defaultProfile.setUnitSetting("maxGrossWeight", 0);
-        defaultProfile.setUnitSetting("stallSpeed", 0);
-        defaultProfile.setUnitSetting("ballastWeight", 0);
-        defaultProfile.setUnitSetting("baggageWeight", 0);
-        defaultProfile.setUnitSetting("passengerWeight", 0);
-        defaultProfile.setUnitSetting("maxTension", 0);
-        defaultProfile.setUnitSetting("weakLinkStrength", 0);
-        defaultProfile.setUnitSetting("winchingSpeed", 0);
+        defaultProfile.setUnitSetting("emptyWeight", 1);
+        defaultProfile.setUnitSetting("maxGrossWeight", 1);
+        defaultProfile.setUnitSetting("stallSpeed", 1);
+        defaultProfile.setUnitSetting("ballastWeight", 1);
+        defaultProfile.setUnitSetting("baggageWeight", 1);
+        defaultProfile.setUnitSetting("passengerWeight", 1);
+        defaultProfile.setUnitSetting("maxTension", 1);
+        defaultProfile.setUnitSetting("weakLinkStrength", 1);
+        defaultProfile.setUnitSetting("winchingSpeed", 1);
         
-        defaultProfile.setUnitSetting("airfieldAltitude", 0);
-        defaultProfile.setUnitSetting("gliderPosAltitude", 0);
-        defaultProfile.setUnitSetting("runwayMagneticHeading", 0);
-        defaultProfile.setUnitSetting("winchPosAltitude", 0);
+        defaultProfile.setUnitSetting("airfieldAltitude", 1);
+        defaultProfile.setUnitSetting("gliderPosAltitude", 1);
+        defaultProfile.setUnitSetting("runwayMagneticHeading", 1);
+        defaultProfile.setUnitSetting("winchPosAltitude", 1);
         
-        defaultProfile.setUnitSetting("pressureWidgetUnits", 2);
-        
+        defaultProfile.setUnitSetting("avgWindSpeed", 1);
+        defaultProfile.setUnitSetting("crosswind", 1);
+        defaultProfile.setUnitSetting("gustWindSpeed", 1);
+        defaultProfile.setUnitSetting("headwind", 1);
+        defaultProfile.setUnitSetting("launchWeight", 1);
+        defaultProfile.setUnitSetting("densityAltitude", 1);
+        defaultProfile.setUnitSetting("runLength", 1);
+        defaultProfile.setUnitSetting("pressure", 4);
+        defaultProfile.setUnitSetting("temperature", 1);
+        defaultProfile.setUnitSetting("runDirection", 1);
+        defaultProfile.setUnitSetting("windDirection", 1);
+                
         currentData.setCurrentProfile(defaultProfile);
     }
     
@@ -308,7 +318,7 @@ public class MainWindow extends JFrame {
 //EDIT MENU
         //editMenu.add(editAddMenu);
 
-    	JMenuItem preferencesItem = new JMenuItem("Manage Profiles");
+    	JMenuItem preferencesItem = new JMenuItem("Operator Profiles");
     	preferencesItem.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {

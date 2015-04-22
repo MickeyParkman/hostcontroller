@@ -79,11 +79,10 @@ public class ProfileAirfieldPanel extends JPanel{
         airfieldAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
         airfieldAltitudeComboBox.setBounds(120, 101, 86, 20);
         airfieldAttributesPanel.add(airfieldAltitudeComboBox);
-        airfieldAltitudeComboBox.addItem("m");
         airfieldAltitudeComboBox.addItem("ft");
+        airfieldAltitudeComboBox.addItem("m");
         airfieldAltitudeComboBox.addItem("km");
         airfieldAltitudeComboBox.addItem("mi");
-        
 
         JPanel gliderPostitionSubPanel = new JPanel();
         gliderPostitionSubPanel.setLayout(new BorderLayout(0, 0));
@@ -111,8 +110,8 @@ public class ProfileAirfieldPanel extends JPanel{
         gliderPosAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
         gliderPosAltitudeComboBox.setBounds(120, 75, 86, 20);
         gliderPositionAttributesPanel.add(gliderPosAltitudeComboBox);
-        gliderPosAltitudeComboBox.addItem("m");
         gliderPosAltitudeComboBox.addItem("ft");
+        gliderPosAltitudeComboBox.addItem("m");
         gliderPosAltitudeComboBox.addItem("km");
         gliderPosAltitudeComboBox.addItem("mi");
                
@@ -133,7 +132,7 @@ public class ProfileAirfieldPanel extends JPanel{
         runwayAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
         runwayAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         
-        JLabel runwayAltitudeLabel = new JLabel("Magnetic Heading:");
+        JLabel runwayAltitudeLabel = new JLabel("Heading:");
         runwayAltitudeLabel.setBounds(10, 103, 100, 14);
         runwayAttributesPanel.add(runwayAltitudeLabel);
         
@@ -145,9 +144,9 @@ public class ProfileAirfieldPanel extends JPanel{
         runwayMagneticHeadingComboBox.setMaximumSize(new Dimension(32767, 20));
         runwayMagneticHeadingComboBox.setBounds(120, 100, 86, 20);
         runwayAttributesPanel.add(runwayMagneticHeadingComboBox);
-        runwayMagneticHeadingComboBox.addItem("true");
         runwayMagneticHeadingComboBox.addItem("magnetic");
-        
+        runwayMagneticHeadingComboBox.addItem("true");
+                
         JPanel winchPostitionSubPanel = new JPanel();
         panel.add(winchPostitionSubPanel);
         winchPostitionSubPanel.setLayout(new BorderLayout(0, 0));
@@ -175,8 +174,8 @@ public class ProfileAirfieldPanel extends JPanel{
         winchPosAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
         winchPosAltitudeComboBox.setBounds(120, 75, 86, 20);
         winchPositionAttributesPanel.add(winchPosAltitudeComboBox);
-        winchPosAltitudeComboBox.addItem("m");
         winchPosAltitudeComboBox.addItem("ft");
+        winchPosAltitudeComboBox.addItem("m");
         winchPosAltitudeComboBox.addItem("km");
         winchPosAltitudeComboBox.addItem("mi");
     }

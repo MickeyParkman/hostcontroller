@@ -118,8 +118,8 @@ public class AddEditGlider extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel nNumberLabel = new JLabel("N Number:");
-        nNumberLabel.setBounds(10, 11, 86, 14);
+        JLabel nNumberLabel = new JLabel("Registration Number:");
+        nNumberLabel.setBounds(10, 11, 125, 14);
         contentPane.add(nNumberLabel);
         
         JLabel emptyWeightLabel = new JLabel("Empty Weight:");
