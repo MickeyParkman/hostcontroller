@@ -20,6 +20,7 @@ public class HumidityWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("humidity"));
     }
 
     @Override

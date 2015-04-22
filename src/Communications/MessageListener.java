@@ -327,12 +327,11 @@ public class MessageListener implements Observer
                 {
                     float pressure = canIn.get_halffloat(0);
                     float temperature = (float) canIn.get_byte(2);
-                    float hummidity = (float) canIn.get_byte(3);
+                    float humidity = (float) canIn.get_byte(3);
                     status = canIn.get_byte(4);
                     System.out.println("Density Altitude: " + pressure
-                        + " " +  temperature + " " + hummidity);
-                    //relay.sendDensityAltitudeStatus(status,
-                    //        pressure, temperature, hummidity);                   
+                        + " " +  temperature + " " + humidity);
+                    relay.sendDensityAltitudeStatus(status, pressure, temperature, humidity);                   
                     messageProcessed = true;
                     break;      
                 }
@@ -345,8 +344,7 @@ public class MessageListener implements Observer
                     status = canIn.get_byte(6);
                     System.out.println("Wind: " + direction
                         + " " +  speed + " " + gust);
-                    //relay.sendWindStatus(status,
-                    //        speed, direction);                   
+                    relay.sendWindStatus(status,speed, direction, gust);                   
                     messageProcessed = true;
                     break;      
                 }                

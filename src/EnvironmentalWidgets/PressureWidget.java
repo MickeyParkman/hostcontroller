@@ -19,7 +19,7 @@ public class PressureWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
-        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("PRESSURE"));
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("pressure"));
     }
 
     @Override

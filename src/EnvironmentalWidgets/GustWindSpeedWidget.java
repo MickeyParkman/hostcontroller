@@ -20,6 +20,7 @@ public class GustWindSpeedWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("gustspeed"));
     }
 
     @Override
