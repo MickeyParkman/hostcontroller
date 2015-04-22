@@ -25,9 +25,9 @@ public class CurrentLaunchInformation {
     private float gliderMaxWinchingSpeed;
     private float gliderMaxWeakLinkStrength;
     private float gliderMaxTension;
-    private float gliderBallast;//not set yet
-    private float gliderBaggage;//
-    private float passengerWeight;//
+    private float gliderBallast;
+    private float gliderBaggage;
+    private float passengerWeight;
     private float airfieldAltitude;
     private float airfieldMagneticVariation;
     private float airfieldLatitude;
@@ -132,9 +132,16 @@ public class CurrentLaunchInformation {
             instance.winchPositionLatitude = currentDataObjectSet.getCurrentWinchPosition().getLatitude();
             instance.winchPositionLongitude = currentDataObjectSet.getCurrentWinchPosition().getLongitude();
             
-            instance.gliderBaggage = 0;
-            instance.gliderBallast = 0;
-            instance.passengerWeight = 0;
+            if (gliderPanel != null){
+                instance.gliderBaggage = Float.parseFloat(gliderPanel.getbaggageField());
+                instance.gliderBallast = Float.parseFloat(gliderPanel.getballastField());
+                if (gliderPanel.getbaggageCheckBox()){
+                    instance.passengerWeight = Float.parseFloat(gliderPanel.getpassengerWeightField());
+                }
+                else {
+                    instance.passengerWeight = 0;
+                }
+            }
             instance.temperature = 0;
             instance.pressure = 0;
             
@@ -1068,6 +1075,72 @@ public class CurrentLaunchInformation {
         else
         {
             return instance.densityAltitude;
+        }
+    }
+    public float getRunDirection()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.runLength;
+        }
+    }
+    public float getRunSlope()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.runSlope;
+        }
+    }
+    public float getRunHeading()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.runHeading;
+        }
+    }
+    public float getGliderLaunchMass()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.gliderLaunchMass;
+        }
+    }
+    public float getHeadwindComponent()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.headwindComponent;
+        }
+    }
+        public float getCrosswindComponent()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.crosswindComponent;
         }
     }
 
