@@ -47,6 +47,10 @@ public class Drum {
         return numLaunches;
     }
     
+    public Parachute getParachute() {
+        return para;
+    }
+    
     public void setParachute(Parachute parachute) {
         para = parachute;
     }
