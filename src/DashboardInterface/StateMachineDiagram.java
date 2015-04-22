@@ -79,7 +79,7 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
             switch (mParts[0])
             {
                 case "STATE":
-                    //updateState(Integer.parseInt(mParts[1]));
+                    updateState(Integer.parseInt(mParts[1]));
                     break;
             }
         }

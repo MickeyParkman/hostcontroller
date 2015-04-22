@@ -20,6 +20,7 @@ public class WindDirectionWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("winddirection"));
     }
 
     @Override
