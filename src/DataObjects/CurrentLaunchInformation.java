@@ -56,10 +56,10 @@ public class CurrentLaunchInformation {
     private float temperature;
     private float pressure;
     private float densityAltitude;
-    private float runLength;//need getters
+    private float runLength;
     private float runSlope;
     private float runHeading;
-    private float gliderLaunchMass;//add extra environ comps
+    private float gliderLaunchMass;
     private ArrayList<Observer> observers;
     
     public static void main(String args[]){
