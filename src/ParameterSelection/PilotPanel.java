@@ -229,6 +229,7 @@ public class PilotPanel extends JPanel implements Observer{
         capabilityButtonGroup.clearSelection();
         preferenceButtonGroup.clearSelection();
         optionalInfoField.setText("No Pilot Selected");
+        editButton.setEnabled(false);
 }
     
     private void pilotJListSelectionChanged(ListSelectionEvent listSelectionEvent) {
@@ -328,6 +329,7 @@ public class PilotPanel extends JPanel implements Observer{
             } catch(Exception e) {
                 //TODO respond to error
             }
+            editButton.setEnabled(true);
         }
     }
     
@@ -565,6 +567,7 @@ public class PilotPanel extends JPanel implements Observer{
         	}
         });
         editButton.setBounds(288, 0, 89, 23);
+        editButton.setEnabled(false);
         attributesPanel.add(editButton);
         
         flightWeightUnits.setBounds(280, 128, 46, 14);

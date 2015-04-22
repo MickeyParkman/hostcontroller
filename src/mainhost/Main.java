@@ -6,10 +6,7 @@
 
 package mainhost;
 
-import Communications.CommPortConnection;
-import Communications.FileDummyConnection;
 import Communications.MessagePipeline;
-import Communications.SocketConnection;
 import DataObjects.Pilot;
 import DataObjects.Sailplane;
 import ParameterSelection.Capability;

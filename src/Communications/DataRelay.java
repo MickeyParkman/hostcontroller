@@ -1,5 +1,6 @@
 package Communications;
 
+import DataObjects.CurrentDataObjectSet;
 import java.util.ArrayList;
 
 public class DataRelay
@@ -60,6 +61,7 @@ public class DataRelay
 
     public void sendFilteredData(float[] data, float groupDelay)
     {
+        //CurrentDataObjectSet.getCurrentDataObjectSet().forceUpdate();
         //0-torque, 1-tension, 2-cable_speed, 3-cable_angle, 4-cable_out
         for(Observer o : TensionListeners)
         {

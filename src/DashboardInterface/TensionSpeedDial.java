@@ -166,6 +166,7 @@ public class TensionSpeedDial extends JPanel implements Observer {
                         width = 200;
                         
                         JFreeChart jfreechart = new JFreeChart(dialplot);
+                        jfreechart.setBackgroundPaint(Color.WHITE);
                         ChartPanel chartpanel = new ChartPanel(jfreechart);
                         chartpanel.setPreferredSize(new Dimension(width, width));
                         

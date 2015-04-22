@@ -275,7 +275,6 @@ public class AddEditRunwayFrame extends JFrame {
 
     public boolean isComplete()
     {
-    ErrWindow ew;
     try
     {
         boolean emptyFields = false;

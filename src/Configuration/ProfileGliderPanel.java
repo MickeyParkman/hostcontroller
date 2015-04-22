@@ -1,57 +1,16 @@
 package Configuration;
 
-import AddEditPanels.AddEditGlider;
 import DataObjects.CurrentDataObjectSet;
-import DataObjects.Sailplane;
-
 import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JCheckBox;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-
 import java.awt.Font;
-
-import javax.swing.JButton;
-
-import Communications.Observer;
-import Configuration.UnitConversionRate;
-import Configuration.UnitLabelUtilities;
-import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 
 public class ProfileGliderPanel extends JPanel{
@@ -113,6 +72,7 @@ public class ProfileGliderPanel extends JPanel{
         stallSpeedComboBox.addItem("mph");
         stallSpeedComboBox.addItem("m/s");
         stallSpeedComboBox.addItem("kn");
+        stallSpeedComboBox.addItem("kts");
 
         JLabel weakLinkStrengthLabel = new JLabel("Max Weak Link Strength:");
         weakLinkStrengthLabel.setBounds(280, 63, 150, 14);
@@ -133,6 +93,7 @@ public class ProfileGliderPanel extends JPanel{
         maxWinchingSpeedComboBox.addItem("mph");
         maxWinchingSpeedComboBox.addItem("m/s");
         maxWinchingSpeedComboBox.addItem("kn");
+        maxWinchingSpeedComboBox.addItem("kts");
 
         JLabel maxTensionLabel = new JLabel("Max Tension:");
         maxTensionLabel.setBounds(280, 89, 150, 14);

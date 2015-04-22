@@ -88,7 +88,7 @@ public class FlightDashboard extends javax.swing.JPanel
             }
         };
         
-        dialSquare.setBackground(Color.WHITE);
+        //dialSquare.setBackground(Color.BLUE);
         //dialSquare.setBorder(BorderFactory.createLineBorder(Color.black));
         dial = new TensionSpeedDial(dialSquare);
         //we want to listen for speed and tension
