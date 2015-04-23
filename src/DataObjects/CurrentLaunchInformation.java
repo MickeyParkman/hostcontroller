@@ -1,6 +1,7 @@
 package DataObjects;
 
 import Communications.Observer;
+import EnvironmentalWidgets.CurrentWidgetDataSet;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
 import ParameterSelection.SailplanePanel;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Noah
  */
-public class CurrentLaunchInformation {
+public class CurrentLaunchInformation implements Observer{
     public static final float RADIUS_OF_EARTH = 6378100; // in meters
     private static CurrentLaunchInformation instance = null;
     private CurrentDataObjectSet currentDataObjectSet;
@@ -92,20 +93,32 @@ public class CurrentLaunchInformation {
     
     }
     
+    private CurrentLaunchInformation(){
+        currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+        currentDataObjectSet.attach(getObserver());
+    }
+    
     public static CurrentLaunchInformation getCurrentLaunchInformation()
     {
         if(instance == null)
         {
             instance = new CurrentLaunchInformation();
+            instance.update();
             instance.observers = new ArrayList<Observer>();
             instance.complete = false;
         }
         return instance;
     }
     
-    public void updateCurrentFlightInformation()
+    private Observer getObserver() {
+        return this;
+    }
+    
+    @Override
+    public void update()
     {
         try{
+            System.out.println("updatedCurLanInfo");
             currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             instance.pilotWeight = currentDataObjectSet.getCurrentPilot().getWeight();
             int capability = Capability.convertCapabilityStringToNum(currentDataObjectSet.getCurrentPilot().getCapability());
@@ -142,8 +155,11 @@ public class CurrentLaunchInformation {
                     instance.passengerWeight = 0;
                 }
             }
-            instance.temperature = 0;
-            instance.pressure = 0;
+            CurrentWidgetDataSet environmentalData = CurrentWidgetDataSet.getInstance();
+            
+            instance.temperature = Float.parseFloat(environmentalData.getValue("Temperature"));
+            instance.pressure = Float.parseFloat(environmentalData.getValue("Pressure"));
+            instance.windSpeed = Float.parseFloat(environmentalData.getValue("Avg. Wind Speed"));
             
             instance.densityAltitude = calculateDensityAltitude(instance.temperature, instance.pressure);
             instance.runLength = calculateRunLength(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
@@ -1143,5 +1159,9 @@ public class CurrentLaunchInformation {
             return instance.crosswindComponent;
         }
     }
-
+        
+    @Override
+    public void update(String msg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

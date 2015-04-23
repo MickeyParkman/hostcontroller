@@ -1027,16 +1027,128 @@ public class DatabaseDataObjectUtilities {
             ResultSet theFlight = stmt.executeQuery("SELECT * "
                     + "FROM PreviousLaunchesInfo WHERE start_timestamp = '" + flightInformation.getStartTimestamp() + "' "
                     + "AND pilot_id = '" + flightInformation.getPilotId() + "' ");
-            
+            CurrentDataObjectSet currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             while(theFlight.next()) {
-                String startTimestamp = theFlight.getString(1); 
-                String pilotId = theFlight.getString(2);
-                String pilotFirstName = theFlight.getString(3);
-                String pilotLastName = theFlight.getString(4);
-                String gliderNnumber = theFlight.getString(5);
+                //Create Profile
+                String profileName = theFlight.getString(3);
+                String[] names = profileName.split("\\s+"); 
+                String unitSettings = theFlight.getString(4);
+                String displayPrefs = theFlight.getString(5);
+                Profile newProfile = new Profile(profileName, unitSettings, displayPrefs);
+                currentDataObjectSet.setCurrentProfile(newProfile);
                 
-                FlightSummary newFlight = new FlightSummary(startTimestamp, pilotId, 
-                        pilotFirstName, pilotLastName, gliderNnumber);
+                //Create Pilot
+                String pilotId = theFlight.getString(6);
+                String pilotFirstName = theFlight.getString(7);
+                String pilotLastName = theFlight.getString(8);
+                String pilotMiddleName = theFlight.getString(9);
+                
+                float pilotWeight = 0; 
+                int pilotCapability = 1;
+                int pilotPreference = 1;
+                try {
+                    pilotWeight = Float.parseFloat(theFlight.getString(10));
+                    pilotCapability = Integer.parseInt(theFlight.getString(11));
+                    pilotPreference = Integer.parseInt(theFlight.getString(12));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
+                Pilot newPilot = new Pilot(pilotId, pilotFirstName, pilotLastName, pilotMiddleName, pilotWeight , 
+                        Capability.convertCapabilityNumToString(pilotCapability), Preference.convertPreferenceNumToString(pilotPreference), 
+                        theFlight.getString(13), theFlight.getString(14), theFlight.getString(15));
+                currentDataObjectSet.setCurrentPilot(newPilot);
+                
+                //Create Glider
+                String gliderNNumber = theFlight.getString(17);
+                String gliderType = theFlight.getString(18);
+                float gliderMaxGrossWeight = 0; 
+                float gliderEmptyWeight = 0;
+                float gliderStallSpeed = 0;
+                float gliderMaxWinchingSpeed = 0;
+                float gliderMaxWeakLinkStrength = 0;
+                float gliderMaxTension = 0;
+                float gliderCableAngle = 0;
+                try {
+                    gliderMaxGrossWeight = Float.parseFloat(theFlight.getString(19));
+                    gliderEmptyWeight = Float.parseFloat(theFlight.getString(20));
+                    gliderStallSpeed = Float.parseFloat(theFlight.getString(21));
+                    gliderMaxWinchingSpeed = Float.parseFloat(theFlight.getString(22));
+                    gliderMaxWeakLinkStrength = Float.parseFloat(theFlight.getString(23));
+                    gliderMaxTension = Float.parseFloat(theFlight.getString(24));
+                    gliderCableAngle = Float.parseFloat(theFlight.getString(25));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
+                boolean ballast = false;
+                boolean multipleSeats = false;
+                try{
+                    ballast = Sailplane.returnCarryBallast(Integer.parseInt(theFlight.getString(26)));
+                    multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theFlight.getString(27)));
+                }catch(NumberFormatException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error reading ballast in reading from DB");
+                }
+                
+                Sailplane newSailplane = new Sailplane(gliderNNumber, gliderType,
+                        gliderMaxGrossWeight, gliderEmptyWeight, gliderStallSpeed, gliderMaxWinchingSpeed, 
+                        gliderMaxWeakLinkStrength, gliderMaxTension, gliderCableAngle, ballast, multipleSeats, theFlight.getString(28));
+                newSailplane.setId(theFlight.getString(16));
+                currentDataObjectSet.setCurrentGlider(newSailplane);
+                
+                //SOMEHOW SET THE SAILPLANE EXTRA INFO
+                
+                //Create Airfield
+                String airfieldName = theFlight.getString(33);
+                String airfieldDesignator = theFlight.getString(34);
+                
+                float airfieldAltitude = 0;
+                float airfieldMagneticVariation = 0;
+                float airfieldLatitude = 0;
+                float airfieldLongitude = 0;
+                try {
+                    airfieldAltitude = Float.parseFloat(theFlight.getString(35));
+                    airfieldMagneticVariation = Float.parseFloat(theFlight.getString(36));
+                    airfieldLatitude = Float.parseFloat(theFlight.getString(37));
+                    airfieldLongitude = Float.parseFloat(theFlight.getString(38));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
+                
+                String airfieldOptional = theFlight.getString(39);
+                
+                Airfield newAirfield = new Airfield(airfieldName, airfieldDesignator, airfieldAltitude, airfieldMagneticVariation,
+                        airfieldLatitude, airfieldLongitude, airfieldOptional);
+                newAirfield.setId(theFlight.getString(32));
+                currentDataObjectSet.setCurrentAirfield(newAirfield);
+                
+                //Create Runway
+                String runwayName = theFlight.getString(41);
+                String runwayParent = theFlight.getString(43);
+                
+                float runwayAltitude = 0;
+                float runwayMagneticHeading = 0;
+                try {
+                    runwayMagneticHeading = Float.parseFloat(theFlight.getString(42));
+                    runwayAltitude = Float.parseFloat(theFlight.getString(45));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
+                
+                String optional = theFlight.getString(46);
+                          
+                Runway newRunway = new Runway(runwayName, runwayMagneticHeading, runwayParent, runwayAltitude, optional);
+                newRunway.setId(theFlight.getString(40));
+                newRunway.setParentId(theFlight.getString(44));
+                currentDataObjectSet.setCurrentRunway(newRunway);
+                
+                //Create Glider Position
+                
+                
+                
             }
             theFlight.close();
             stmt.close();
