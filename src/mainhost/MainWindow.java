@@ -4,6 +4,7 @@ import Configuration.ProfileManagementFrame;
 import Configuration.DatabaseExportFrame;
 import Configuration.DatabaseImportFrame;
 import ParameterSelection.ParameterSelectionPanel;
+import ParameterSelection.RecentLaunchesPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Profile;
@@ -70,6 +71,9 @@ public class MainWindow extends JFrame {
         upperLeftSidePanelScenario = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         upperLeftSidePanelDashboard = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         upperLeftSidePanelWinch = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
+        lowerLeftSidePanelScenario = new RecentLaunchesPanel();
+        lowerLeftSidePanelDashboard = new RecentLaunchesPanel();
+        lowerLeftSidePanelWinch = new RecentLaunchesPanel();
         createAndShowGUI();
             }
 
@@ -136,21 +140,12 @@ public class MainWindow extends JFrame {
         
         //TODO (jtroxel) move all side panels into their respective panels, since they are tied to them
         // RSP can stay with main window IF static.
-        lowerLeftSidePanelScenario = new JPanel();
-        lowerLeftSidePanelScenario.setPreferredSize(new Dimension(200,WIDTH));
-        lowerLeftSidePanelScenario.setBackground(Color.WHITE);
         leftSidePanelScenario.add(upperLeftSidePanelScenario);
         leftSidePanelScenario.add(lowerLeftSidePanelScenario);
         
-        lowerLeftSidePanelDashboard = new JPanel();
-        lowerLeftSidePanelDashboard.setPreferredSize(new Dimension(200,WIDTH));
-        lowerLeftSidePanelDashboard.setBackground(Color.WHITE);
         leftSidePanelDashboard.add(upperLeftSidePanelDashboard);
         leftSidePanelDashboard.add(lowerLeftSidePanelDashboard);
         
-        lowerLeftSidePanelWinch = new JPanel();
-        lowerLeftSidePanelWinch.setPreferredSize(new Dimension(200,WIDTH));
-        lowerLeftSidePanelWinch.setBackground(Color.WHITE);
         leftSidePanelWinch.add(upperLeftSidePanelWinch);
         leftSidePanelWinch.add(lowerLeftSidePanelWinch);
                 

@@ -24,26 +24,37 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class RecentLaunchList extends javax.swing.JPanel implements Observer {
+public class RecentLaunchesPanel extends javax.swing.JPanel implements Observer {
 
-    private List<FlightSummary> recentFlights = new ArrayList<FlightSummary>();
+    private List<FlightSummary> recentFlights;
     private CurrentDataObjectSet data;
-    JScrollPane RecentLaunchScrollPane = new JScrollPane();
+    JScrollPane RecentLaunchScrollPane;
     private javax.swing.JList RecentLaunchJList;
-    private JLabel stuff;
+    private JLabel listTitle;
     
-    private void initList() {
+    public RecentLaunchesPanel() {
+        recentFlights = new ArrayList<FlightSummary>();
+        RecentLaunchScrollPane = new JScrollPane();
+        RecentLaunchJList = new javax.swing.JList();
+        listTitle = new JLabel("Replay List");
+        
+        this.setLayout(new BorderLayout(0, 0));
+        this.setBackground(Color.WHITE);
+        this.add(listTitle, BorderLayout.NORTH);
+        this.add(RecentLaunchScrollPane, BorderLayout.WEST);
+        
         try{
             recentFlights = DatabaseUtilities.DatabaseDataObjectUtilities.getFlights();
+            recentFlights.add(new FlightSummary("timstampp", "foo", "firs", "stuff", "last"));
+            recentFlights.add(new FlightSummary("info2", "foo", "john", "stuff", "doe"));
+            recentFlights.add(new FlightSummary("info3", "foo", "bar", "stuff", "things"));
+            recentFlights.add(new FlightSummary("info4", "foo", "bar", "stuff", "things"));
         }catch(SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException ex) {
 
         }
         
-        setLayout(new BorderLayout(0, 0));
-        
-        add(RecentLaunchScrollPane, BorderLayout.NORTH);
         DefaultListModel recentFlightsModel = new DefaultListModel();
         for(Object str: recentFlights){
                 recentFlightsModel.addElement(str);
@@ -58,9 +69,7 @@ public class RecentLaunchList extends javax.swing.JPanel implements Observer {
         RecentLaunchScrollPane.setViewportView(RecentLaunchJList);
         RecentLaunchScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
         RecentLaunchScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-        RecentLaunchScrollPane.setLayout(null);
-
-        this.setBackground(Color.WHITE);
+        //RecentLaunchScrollPane.setLayout(null);
         
         /*
         pilotButton.setMinimumSize(new Dimension(200, 20));
@@ -72,8 +81,7 @@ public class RecentLaunchList extends javax.swing.JPanel implements Observer {
         	}
         });*/
         
-        
-        this.add(RecentLaunchScrollPane);
+        //this.add(new JLabel("Working"));
     }                      
 
     public void update() {
