@@ -49,7 +49,7 @@ public class CurrentLaunchInformation implements Observer{
     private float parachuteLift;
     private float parachuteDrag;
     private float parachuteWeight; 
-    private float windSpeed;
+    private float averageWindSpeed;
     private float windDirection;
     private float windDegreeOffset;
     private float headwindComponent;
@@ -74,7 +74,7 @@ public class CurrentLaunchInformation implements Observer{
         float runDir = CurrentLaunchInformation.calculateHeading(gliderLat, gliderLon, winchLat, winchLon);
         float windDir = CurrentLaunchInformation.calculateHeading(gliderLat, gliderLon, winchLat, winchLon) +25;
         float relativeDir = CurrentLaunchInformation.calculateRelativeDirection(runDir, windDir);
-        float windSpeed = 5;
+        float averageWindSpeed = 5;
         float headWind = 3;
         float crossWind = 4;
         float temp = 90;
@@ -83,8 +83,8 @@ public class CurrentLaunchInformation implements Observer{
         System.out.println("WindDir:" + String.valueOf(CurrentLaunchInformation.calculateWindDirection(runDir, headWind, crossWind)));
         System.out.println("WindSpeed:" + String.valueOf(CurrentLaunchInformation.calculateWindSpeed(headWind, crossWind)));
         System.out.println("RelativeDir:" + String.valueOf(relativeDir));
-        System.out.println("HeadwindComp:" + String.valueOf(CurrentLaunchInformation.calculateHeadwind(relativeDir, windSpeed)));
-        System.out.println("CrosswindComp:" + String.valueOf(CurrentLaunchInformation.calculateCrosswind(relativeDir, windSpeed)));
+        System.out.println("HeadwindComp:" + String.valueOf(CurrentLaunchInformation.calculateHeadwind(relativeDir, averageWindSpeed)));
+        System.out.println("CrosswindComp:" + String.valueOf(CurrentLaunchInformation.calculateCrosswind(relativeDir, averageWindSpeed)));
         System.out.println("DensityAltitude:" + String.valueOf(CurrentLaunchInformation.calculateDensityAltitude(temp, pressure)));
         System.out.println("Runlen:" + String.valueOf(CurrentLaunchInformation.calculateRunLength(gliderAlt, gliderLat, gliderLon, winchAlt, winchLat, winchLon)));
         System.out.println("RunSlope:" + String.valueOf(CurrentLaunchInformation.calculateRunSlope(gliderAlt, gliderLat, gliderLon, winchAlt, winchLat, winchLon)));
@@ -158,7 +158,7 @@ public class CurrentLaunchInformation implements Observer{
             
             instance.temperature = Float.parseFloat(environmentalData.getValue("Temperature"));
             instance.pressure = Float.parseFloat(environmentalData.getValue("Pressure"));
-            instance.windSpeed = Float.parseFloat(environmentalData.getValue("Avg. Wind Speed"));
+            instance.averageWindSpeed = Float.parseFloat(environmentalData.getValue("Avg. Wind Speed"));
             
             instance.densityAltitude = calculateDensityAltitude(instance.temperature, instance.pressure);
             instance.runLength = calculateRunLength(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
@@ -170,8 +170,8 @@ public class CurrentLaunchInformation implements Observer{
             instance.gliderLaunchMass = calculateGliderLaunchMass(instance.pilotWeight, instance.gliderEmptyWeight,
                                             instance.gliderBallast, instance.gliderBaggage, instance.passengerWeight);
             instance.windDegreeOffset = calculateRelativeDirection(instance.runHeading, instance.windDirection);
-            instance.headwindComponent = calculateHeadwind(instance.windDegreeOffset, instance.windSpeed);
-            instance.crosswindComponent = calculateCrosswind(instance.windDegreeOffset, instance.windSpeed);
+            instance.headwindComponent = calculateHeadwind(instance.windDegreeOffset, instance.averageWindSpeed);
+            instance.crosswindComponent = calculateCrosswind(instance.windDegreeOffset, instance.averageWindSpeed);
             
             instance.complete = true;
             }catch (NumberFormatException e){
@@ -250,20 +250,20 @@ public class CurrentLaunchInformation implements Observer{
         return (windDirection - runDirection);
     }
     
-    public static float calculateHeadwind(float degreeChange, float windSpeed){
-        return (float) (windSpeed * Math.sin(Math.toRadians(degreeChange)));
+    public static float calculateHeadwind(float degreeChange, float averageWindSpeed){
+        return (float) (averageWindSpeed * Math.sin(Math.toRadians(degreeChange)));
     }
     
-    public static float calculateCrosswind(float degreeChange, float windSpeed){
-        return (float) (windSpeed * Math.cos(Math.toRadians(degreeChange)));
+    public static float calculateCrosswind(float degreeChange, float averageWindSpeed){
+        return (float) (averageWindSpeed * Math.cos(Math.toRadians(degreeChange)));
     }
     
-    public static float calculateWindDirection(float runDirection, float headwindSpeed, float crosswindSpeed){
-        return runDirection + (float) Math.toDegrees(Math.atan2(crosswindSpeed, headwindSpeed));
+    public static float calculateWindDirection(float runDirection, float headaverageWindSpeed, float crossaverageWindSpeed){
+        return runDirection + (float) Math.toDegrees(Math.atan2(crossaverageWindSpeed, headaverageWindSpeed));
     }
     
-    public static float calculateWindSpeed(float headwindSpeed, float crosswindSpeed){
-        return (float) Math.sqrt((headwindSpeed * headwindSpeed) + (crosswindSpeed * crosswindSpeed));
+    public static float calculateWindSpeed(float headaverageWindSpeed, float crossaverageWindSpeed){
+        return (float) Math.sqrt((headaverageWindSpeed * headaverageWindSpeed) + (crossaverageWindSpeed * crossaverageWindSpeed));
     }
     
     public static float calculateDensityAltitude(float temperature, float pressure){
@@ -421,9 +421,9 @@ public class CurrentLaunchInformation implements Observer{
         if(instance != null) instance.parachuteWeight = -1;
         instance.notifyObservers();
     }
-    public void clearWindSpeed()
+    public void clearAverageWindSpeed()
     {
-        if(instance != null) instance.windSpeed = -1;
+        if(instance != null) instance.averageWindSpeed = -1;
         instance.notifyObservers();
     }
     public void clearWindDirection()
@@ -682,11 +682,11 @@ public class CurrentLaunchInformation implements Observer{
     {
         if(instance != null)
         {
-            instance.windSpeed = newWindSpeed;
+            instance.averageWindSpeed = newWindSpeed;
         }
     instance.notifyObservers();
     }
-    public void setWindDirection(float newWindDirection)
+    public void setAverageWindDirection(float newWindDirection)
     {
         if(instance != null)
         {
@@ -1037,7 +1037,7 @@ public class CurrentLaunchInformation implements Observer{
             return instance.parachuteWeight;
         }
     }
-    public float getWindSpeed()
+    public float getAverageWindSpeed()
     {
         if(instance == null)
         {
@@ -1045,7 +1045,7 @@ public class CurrentLaunchInformation implements Observer{
         }
         else
         {
-            return instance.windSpeed;
+            return instance.averageWindSpeed;
         }
     }
     public float getWindDirection()
