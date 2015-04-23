@@ -5,6 +5,9 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitLabelUtilities;
+import DataObjects.CurrentDataObjectSet;
+
 /**
  *
  * @author jtroxel
@@ -17,6 +20,7 @@ public class WindDirectionWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("winddirection"));
     }
 
     @Override
@@ -25,6 +29,8 @@ public class WindDirectionWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
+        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("winddirection");
+        unit.setText(" degrees " + UnitLabelUtilities.degreesUnitIndexToString(unitId));
     }
     
 }

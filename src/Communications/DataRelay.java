@@ -2,6 +2,7 @@ package Communications;
 
 import DataObjects.CurrentDataObjectSet;
 import java.util.ArrayList;
+import EnvironmentalWidgets.CurrentWidgetDataSet;
 
 public class DataRelay
 {
@@ -11,15 +12,31 @@ public class DataRelay
     private ArrayList<Observer> CableAngleListeners;
     private ArrayList<Observer> CableOutListeners;    
     private ArrayList<Observer> StateListeners;
+    private boolean newLaunch;
             
     public DataRelay()
     {
+        newLaunch = true;
         TensionListeners = new ArrayList<>();
         TorqueListeners = new ArrayList<>();
         CableSpeedListeners = new ArrayList<>();
         CableAngleListeners = new ArrayList<>();
         CableOutListeners = new ArrayList<>();
         StateListeners = new ArrayList<>();
+    }
+    
+    public void sendLaunchParameterRequest()
+    {
+        if(newLaunch)
+        {
+            //get the data again...
+        }
+        MessagePipeline.getInstance().WriteToSocket("");
+    }
+    
+    public void setNewLaunch(boolean nl)
+    {
+        newLaunch = nl;
     }
     
     public void attach(String type, Observer o)
@@ -83,5 +100,21 @@ public class DataRelay
         {
             o.update("OUT;"+String.valueOf(data[4]));
         }
+    }
+    
+    public void sendDensityAltitudeStatus(float status, float pressure, float temperature, float humidity)
+    {
+        CurrentWidgetDataSet data = CurrentWidgetDataSet.getInstance();
+        data.setValue("pressure", pressure+"");
+        data.setValue("temperature", temperature+"");
+        data.setValue("humidity", humidity+"");
+    }
+    
+    public void sendWindStatus(float status, float speed, float direction, float gust)
+    {
+        CurrentWidgetDataSet data = CurrentWidgetDataSet.getInstance();
+        data.setValue("windspeed", speed+"");
+        data.setValue("winddirection", direction+"");
+        data.setValue("gustspeed", gust+"");
     }
 }

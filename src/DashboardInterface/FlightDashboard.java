@@ -62,6 +62,7 @@ public class FlightDashboard extends javax.swing.JPanel
         //dialPane.setBorder(BorderFactory.createLineBorder(Color.black));
         systemPane = new JPanel();
         diagramPane = new StateMachineDiagram();
+        diagramPane.setBackground(Color.WHITE);
         
         dialSquare = new JPanel(new BorderLayout()) {
             @Override

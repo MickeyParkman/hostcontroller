@@ -156,11 +156,13 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         winchPosButton = new JButton("Select Winch Position");
         drumButton = new JButton("Select Drum");
         clearButton = new JButton("Clear All Selections");
-        profileButton = new JButton("Select Profile");
+        profileButton = new JButton("Select Operator Profile");
         
         this.setPreferredSize(new Dimension(200,350));
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setBackground(Color.WHITE);
+        
+        
         
         pilotButton.setMinimumSize(new Dimension(200, 20));
         pilotButton.setMaximumSize(new Dimension(200, 20));
@@ -269,7 +271,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
                 else{}
             }
         });
-        
+
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(TitleLabel);
         this.add(pilotNameLabel);
@@ -286,9 +288,9 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         this.add(winchPosButton);
         this.add(drumLabel);
         this.add(drumButton);
+        this.add(clearButton);
         this.add(profileLabel);
         this.add(profileButton);
-        this.add(clearButton);
     }                      
 
     public void update() {

@@ -63,7 +63,7 @@ public class CurrentLaunchInformation implements Observer{
     private float gliderLaunchMass;
     private ArrayList<Observer> observers;
     
-    public static void main(String args[]){
+    /*public static void main(String args[]){
         //For logical testing
         float gliderLat = 47.665808f;
         float gliderLon = -117.413895f;
@@ -91,7 +91,7 @@ public class CurrentLaunchInformation implements Observer{
         System.out.println("RunHeading:" + String.valueOf(CurrentLaunchInformation.calculateHeading(gliderLat, gliderLon, winchLat, winchLon)));
         System.out.println("TotalWeight:" + String.valueOf(CurrentLaunchInformation.calculateGliderLaunchMass(1, 2, 3, 4, 5)));
     
-    }
+    }*/
     
     private CurrentLaunchInformation(){
         currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();

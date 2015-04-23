@@ -19,7 +19,7 @@ public class PressureWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
-        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("PRESSURE"));
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("pressure"));
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PressureWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("pressureWidgetUnits");
+        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("pressure");
         unit.setText(" " + UnitLabelUtilities.pressureUnitIndexToString(unitId));
     }
     
