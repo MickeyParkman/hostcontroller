@@ -88,11 +88,11 @@ public class AirfieldPanel extends JPanel implements Observer{
     private JButton winchPosAddNewButton;
     private JLabel airfieldAltitudeUnits = new JLabel();
     private JLabel gliderPosAltitudeUnits = new JLabel();
-    private JLabel runwayAltitudeUnits = new JLabel();
     private JLabel winchPosAltitudeUnits = new JLabel();
+    private JLabel magneticHeadingUnits = new JLabel();
     private int airfieldAltitudeUnitsID;
     private int gliderPosAltitudeUnitsID;
-    private int runwayAltitudeUnitsID;
+    private int runwayMagneticHeadingUnitsID;
     private int winchPosAltitudeUnitsID;
     
     public void setupUnits()
@@ -105,9 +105,9 @@ public class AirfieldPanel extends JPanel implements Observer{
         String gliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(gliderPosAltitudeUnitsID);
         gliderPosAltitudeUnits.setText(gliderPosAltitudeUnitsString);
 
-        //runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
-        //String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
-        //runwayAltitudeUnits.setText(runwayAltitudeUnitsString);
+        runwayMagneticHeadingUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayMagneticHeading");
+        String runwayMagneticHeadingUnitsString = UnitLabelUtilities.degreesUnitIndexToString(runwayMagneticHeadingUnitsID);
+        magneticHeadingUnits.setText("degrees " + runwayMagneticHeadingUnitsString);
 
         winchPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("winchPosAltitude");
         String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(winchPosAltitudeUnitsID);
@@ -168,11 +168,16 @@ public class AirfieldPanel extends JPanel implements Observer{
                 runwayNameField.setText(currentRunway.getName());
                 runwayNameField.setBackground(Color.GREEN);
 
-                //runwayAltitudeField.setText(String.valueOf(currentRunway.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID)));
-                //runwayAltitudeField.setBackground(Color.GREEN);
-
-                magneticHeadingField.setText(String.valueOf(currentRunway.getMagneticHeading()));
-                magneticHeadingField.setBackground(Color.GREEN); 
+                if(runwayMagneticHeadingUnitsID == 1)
+                {
+                    magneticHeadingField.setText(String.valueOf(currentRunway.getMagneticHeading() + currentData.getCurrentAirfield().getMagneticVariation()));
+                    magneticHeadingField.setBackground(Color.GREEN); 
+                }
+                else
+                {
+                    magneticHeadingField.setText(String.valueOf(currentRunway.getMagneticHeading()));
+                    magneticHeadingField.setBackground(Color.GREEN); 
+                }
             }
             catch(Exception e){}
         }
@@ -404,11 +409,16 @@ public class AirfieldPanel extends JPanel implements Observer{
                 runwayNameField.setText(theRunway.getName());
                 runwayNameField.setBackground(Color.GREEN);
                 
-                //runwayAltitudeField.setText(String.valueOf(theRunway.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID)));
-                //runwayAltitudeField.setBackground(Color.GREEN);
-                
-                magneticHeadingField.setText(String.valueOf(theRunway.getMagneticHeading()));
-                magneticHeadingField.setBackground(Color.GREEN);
+                if(runwayMagneticHeadingUnitsID == 1)
+                {
+                    magneticHeadingField.setText(String.valueOf(theRunway.getMagneticHeading() + currentData.getCurrentAirfield().getMagneticVariation()));
+                    magneticHeadingField.setBackground(Color.GREEN); 
+                }
+                else
+                {
+                    magneticHeadingField.setText(String.valueOf(theRunway.getMagneticHeading()));
+                    magneticHeadingField.setBackground(Color.GREEN); 
+                }
                 
                 gliderPosNameField.setText("No Glider Position Selected");
                 gliderPosNameField.setBackground(Color.WHITE);
@@ -844,7 +854,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         runwayNameLabel.setBounds(10, 53, 106, 14);
         runwayAttributesPanel.add(runwayNameLabel);
         
-        JLabel magneticHeadingLabel = new JLabel("Magnetic Heading:");
+        JLabel magneticHeadingLabel = new JLabel("Heading:");
         magneticHeadingLabel.setBounds(10, 78, 106, 14);
         runwayAttributesPanel.add(magneticHeadingLabel);
         
@@ -925,9 +935,9 @@ public class AirfieldPanel extends JPanel implements Observer{
         //runwayAltitudeUnits.setBounds(350, 103, 46, 14);
         //runwayAttributesPanel.add(runwayAltitudeUnits);
         
-        JLabel label = new JLabel("degrees");
-        label.setBounds(350, 78, 65, 14);
-        runwayAttributesPanel.add(label);
+        magneticHeadingUnits.setText("degrees " + "magnetic");
+        magneticHeadingUnits.setBounds(350, 78, 125, 14);
+        runwayAttributesPanel.add(magneticHeadingUnits);
         
         runwaysJList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {

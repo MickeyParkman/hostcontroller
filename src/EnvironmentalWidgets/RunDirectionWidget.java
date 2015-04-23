@@ -29,7 +29,7 @@ public class RunDirectionWidget extends EnvironmentalWidget {
     @Override
     public void setupUnits() {
         unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("rundirection");
-        unit.setText(" " + UnitLabelUtilities.degreesUnitIndexToString(unitId));
+        unit.setText(" degrees " + UnitLabelUtilities.degreesUnitIndexToString(unitId));
     }
     
 }

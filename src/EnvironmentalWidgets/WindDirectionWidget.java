@@ -30,7 +30,7 @@ public class WindDirectionWidget extends EnvironmentalWidget {
     @Override
     public void setupUnits() {
         unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("winddirection");
-        unit.setText(" " + UnitLabelUtilities.degreesUnitIndexToString(unitId));
+        unit.setText(" degrees " + UnitLabelUtilities.degreesUnitIndexToString(unitId));
     }
     
 }

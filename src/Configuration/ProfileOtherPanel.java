@@ -54,25 +54,26 @@ public class ProfileOtherPanel extends JPanel{
         launchWeightLabel.setBounds(9, 37, 90, 14);
         launchWeightComboBox.setBounds(150, 34, 86, 20);
         launchWeightComboBox.setMaximumSize(new Dimension(32767, 20));
-        launchWeightComboBox.addItem("kg");
         launchWeightComboBox.addItem("lbs");
-
+        launchWeightComboBox.addItem("kg");
+        
         JLabel runLengthLabel = new JLabel("Run Length:");
         runLengthLabel.setBounds(9, 63, 117, 14);
 
         runLengthComboBox.setBounds(150, 60, 86, 20);
         runLengthComboBox.setMaximumSize(new Dimension(32767, 20));
-        runLengthComboBox.addItem("kg");
-        runLengthComboBox.addItem("lbs");
-
+        runLengthComboBox.addItem("ft");
+        runLengthComboBox.addItem("m");
+        runLengthComboBox.addItem("km");
+        runLengthComboBox.addItem("mi");
+        
         JLabel indicatedStallSpeedLabel = new JLabel("Run Direction:");
         indicatedStallSpeedLabel.setBounds(9, 89, 140, 14);
 
         runDirectionComboBox.setBounds(150, 86, 86, 20);
         runDirectionComboBox.setMaximumSize(new Dimension(32767, 20));
-        runDirectionComboBox.addItem("true");
         runDirectionComboBox.addItem("magnetic");
-        runDirectionComboBox.addItem("relative");
+        runDirectionComboBox.addItem("true");
 
         JLabel crosswindLabel = new JLabel("Crosswind Component:");
         crosswindLabel.setBounds(280, 63, 150, 14);
@@ -82,15 +83,16 @@ public class ProfileOtherPanel extends JPanel{
 
         crosswindComboBox.setBounds(440, 60, 86, 20);
         crosswindComboBox.setMaximumSize(new Dimension(32767, 20));
-        crosswindComboBox.addItem("N");
-        crosswindComboBox.addItem("lbf");
-        crosswindComboBox.addItem("kgf");
-        crosswindComboBox.addItem("daN");
+        crosswindComboBox.addItem("mph");
+        crosswindComboBox.addItem("kph");
+        crosswindComboBox.addItem("m/s");
+        crosswindComboBox.addItem("kn");
+        crosswindComboBox.addItem("kts");
 
         headwindComboBox.setBounds(440, 34, 86, 20);
         headwindComboBox.setMaximumSize(new Dimension(32767, 20));
-        headwindComboBox.addItem("kph");
         headwindComboBox.addItem("mph");
+        headwindComboBox.addItem("kph");
         headwindComboBox.addItem("m/s");
         headwindComboBox.addItem("kn");
         headwindComboBox.addItem("kts");
@@ -100,8 +102,8 @@ public class ProfileOtherPanel extends JPanel{
 
         densityAltitudeComboBox.setBounds(440, 86, 86, 20);
         densityAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
-        densityAltitudeComboBox.addItem("m");
         densityAltitudeComboBox.addItem("ft");
+        densityAltitudeComboBox.addItem("m");
         densityAltitudeComboBox.addItem("km");
         densityAltitudeComboBox.addItem("mi");
         unitsPanel.setLayout(null);
@@ -133,15 +135,15 @@ public class ProfileOtherPanel extends JPanel{
         
         windDirectionComboBox.setMaximumSize(new Dimension(32767, 20));
         windDirectionComboBox.setBounds(150, 114, 86, 20);
-        windDirectionComboBox.addItem("true");
         windDirectionComboBox.addItem("magnetic");
+        windDirectionComboBox.addItem("true");
         windDirectionComboBox.addItem("relative");
         unitsPanel.add(windDirectionComboBox);
         
         avgWindSpeedComboBox.setMaximumSize(new Dimension(32767, 20));
         avgWindSpeedComboBox.setBounds(150, 140, 86, 20);
-        avgWindSpeedComboBox.addItem("kph");
         avgWindSpeedComboBox.addItem("mph");
+        avgWindSpeedComboBox.addItem("kph");
         avgWindSpeedComboBox.addItem("m/s");
         avgWindSpeedComboBox.addItem("kn");
         avgWindSpeedComboBox.addItem("kts");
@@ -157,17 +159,17 @@ public class ProfileOtherPanel extends JPanel{
         
         temperatureComboBox.setMaximumSize(new Dimension(32767, 20));
         temperatureComboBox.setBounds(440, 114, 86, 20);
-        temperatureComboBox.addItem("C");
         temperatureComboBox.addItem("F");
+        temperatureComboBox.addItem("C");
         unitsPanel.add(temperatureComboBox);
         
         pressureComboBox.setMaximumSize(new Dimension(32767, 20));
         pressureComboBox.setBounds(440, 143, 86, 20);
+        pressureComboBox.addItem("millibar");
+        pressureComboBox.addItem("psi");
         pressureComboBox.addItem("hPa");
         pressureComboBox.addItem("kPa");
-        pressureComboBox.addItem("psi");
         pressureComboBox.addItem("bar");
-        pressureComboBox.addItem("millibar");
         pressureComboBox.addItem("atm");
         unitsPanel.add(pressureComboBox);
         
@@ -177,8 +179,8 @@ public class ProfileOtherPanel extends JPanel{
         
         gustWindSpeedComboBox.setMaximumSize(new Dimension(32767, 20));
         gustWindSpeedComboBox.setBounds(150, 168, 86, 20);
-        gustWindSpeedComboBox.addItem("kph");
         gustWindSpeedComboBox.addItem("mph");
+        gustWindSpeedComboBox.addItem("kph");
         gustWindSpeedComboBox.addItem("m/s");
         gustWindSpeedComboBox.addItem("kn");
         gustWindSpeedComboBox.addItem("kts");

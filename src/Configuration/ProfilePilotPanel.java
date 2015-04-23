@@ -23,8 +23,8 @@ public class ProfilePilotPanel extends JPanel {
 
             flightWeightComboBox.setSize(new Dimension(0, 20));
             flightWeightComboBox.setMaximumSize(new Dimension(32767, 20));
-            flightWeightComboBox.addItem("kg");
             flightWeightComboBox.addItem("lbs");
+            flightWeightComboBox.addItem("kg");
             GroupLayout groupLayout = new GroupLayout(this);
             groupLayout.setHorizontalGroup(
                     groupLayout.createParallelGroup(Alignment.LEADING)
