@@ -118,7 +118,6 @@ public class CurrentLaunchInformation implements Observer{
     public void update()
     {
         try{
-            System.out.println("updatedCurLanInfo");
             currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             instance.pilotWeight = currentDataObjectSet.getCurrentPilot().getWeight();
             int capability = Capability.convertCapabilityStringToNum(currentDataObjectSet.getCurrentPilot().getCapability());
