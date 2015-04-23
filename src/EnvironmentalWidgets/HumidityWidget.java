@@ -5,6 +5,9 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitLabelUtilities;
+import DataObjects.CurrentDataObjectSet;
+
 /**
  *
  * @author jtroxel
@@ -25,6 +28,8 @@ public class HumidityWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
+        //unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("humidity");
+        unit.setText(" %");
     }
     
 }

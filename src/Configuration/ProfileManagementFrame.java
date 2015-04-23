@@ -177,31 +177,33 @@ public class ProfileManagementFrame extends JFrame {
         Random randomId = new Random();
         String temp = String.valueOf(randomId.nextInt(100000000));
         Profile newProfile = new Profile(temp,"{}","{}");
-        newProfile.setUnitSetting("flightWeight", 0);
-        newProfile.setUnitSetting("emptyWeight", 0);
-        newProfile.setUnitSetting("maxGrossWeight", 0);
-        newProfile.setUnitSetting("ballastWeight", 0);
-        newProfile.setUnitSetting("baggageWeight", 0);
-        newProfile.setUnitSetting("passengerWeight", 0);
-        newProfile.setUnitSetting("airfieldAltitude", 0);
-        newProfile.setUnitSetting("gliderPosAltitude", 0);
-        newProfile.setUnitSetting("winchPosAltitude", 0);
-        newProfile.setUnitSetting("runwayMagneticHeading", 0);
-        newProfile.setUnitSetting("maxTension", 0);
-        newProfile.setUnitSetting("weakLinkStrength", 0);
-        newProfile.setUnitSetting("stallSpeed", 0);
-        newProfile.setUnitSetting("winchingSpeed", 0);
-        newProfile.setUnitSetting("avgWindSpeed", 0);
-        newProfile.setUnitSetting("crosswind", 0);
-        newProfile.setUnitSetting("densityAltitude", 0);
-        newProfile.setUnitSetting("gustWindSpeed", 0);
-        newProfile.setUnitSetting("headwind", 0);
-        newProfile.setUnitSetting("launchWeight", 0);
-        newProfile.setUnitSetting("pressure", 0);
-        newProfile.setUnitSetting("runDirection", 0);
-        newProfile.setUnitSetting("runLength", 0);
-        newProfile.setUnitSetting("temperature", 0);
-        newProfile.setUnitSetting("windDirection", 0);
+        
+        newProfile.setUnitSetting("flightWeight", 1);
+        newProfile.setUnitSetting("emptyWeight", 1);
+        newProfile.setUnitSetting("maxGrossWeight", 1);
+        newProfile.setUnitSetting("stallSpeed", 1);
+        newProfile.setUnitSetting("ballastWeight", 1);
+        newProfile.setUnitSetting("baggageWeight", 1);
+        newProfile.setUnitSetting("passengerWeight", 1);
+        newProfile.setUnitSetting("maxTension", 1);
+        newProfile.setUnitSetting("weakLinkStrength", 1);
+        newProfile.setUnitSetting("winchingSpeed", 1);
+        newProfile.setUnitSetting("airfieldAltitude", 1);
+        newProfile.setUnitSetting("gliderPosAltitude", 1);
+        newProfile.setUnitSetting("runwayMagneticHeading", 1);
+        newProfile.setUnitSetting("winchPosAltitude", 1);
+        newProfile.setUnitSetting("avgWindSpeed", 1);
+        newProfile.setUnitSetting("crosswind", 1);
+        newProfile.setUnitSetting("gustWindSpeed", 1);
+        newProfile.setUnitSetting("headwind", 1);
+        newProfile.setUnitSetting("launchWeight", 1);
+        newProfile.setUnitSetting("densityAltitude", 1);
+        newProfile.setUnitSetting("runLength", 1);
+        newProfile.setUnitSetting("pressure", 4);
+        newProfile.setUnitSetting("temperature", 1);
+        newProfile.setUnitSetting("runDirection", 1);
+        newProfile.setUnitSetting("windDirection", 1);
+        
         currentData.setCurrentProfile(newProfile);
         SaveAsNewFrame = new SaveAsNewFrame();
         SaveAsNewFrame.setParent(getCurrentProfileManagementFrame());
@@ -384,6 +386,7 @@ public class ProfileManagementFrame extends JFrame {
                 
                 saveButton.setEnabled(true);
                 saveAsNewButton.setEnabled(true);
+                parent.update();
             } catch(Exception e) {
                 //TODO respond to error
             }

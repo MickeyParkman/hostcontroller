@@ -271,17 +271,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
                 else{}
             }
         });
-        profileButton.setMinimumSize(new Dimension(200, 20));
-        profileButton.setMaximumSize(new Dimension(200, 20));
-        profileButton.setBackground(new Color(200,200,200));
-        profileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ProfileManagementFrame = new ProfileManagementFrame();
-                ProfileManagementFrame.setParent(ParameterSelectionPanel_);
-                ProfileManagementFrame.setVisible(true);
-            }
-        });
+
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(TitleLabel);
         this.add(pilotNameLabel);

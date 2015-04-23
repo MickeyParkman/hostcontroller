@@ -56,7 +56,7 @@ public class CurrentLaunchInformation {
     private float gliderLaunchMass;
     private ArrayList<Observer> observers;
     
-    public static void main(String args[]){
+    /*public static void main(String args[]){
         //For logical testing
         CurrentLaunchInformation test = getCurrentLaunchInformation();
         System.out.println("Runlen:" + String.valueOf(CurrentLaunchInformation.calculateRunLength(RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH)));
@@ -64,7 +64,7 @@ public class CurrentLaunchInformation {
         System.out.println("RunHeading:" + String.valueOf(CurrentLaunchInformation.calculateMagneticHeading(RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH)));
         System.out.println("TotalWeight:" + String.valueOf(CurrentLaunchInformation.calculateGliderLaunchMass(RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH, RADIUS_OF_EARTH)));
     
-    }
+    }*/
     
     public static CurrentLaunchInformation getCurrentLaunchInformation()
     {
