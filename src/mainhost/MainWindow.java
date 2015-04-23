@@ -167,7 +167,7 @@ public class MainWindow extends JFrame {
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);
 
         mainWindow.add(statusLabel, BorderLayout.PAGE_END);
-        statusLabel.setText("LOADED");
+        statusLabel.setText(" ");
 
         getContentPane().add(mainWindow);
         pack();
@@ -231,7 +231,7 @@ public class MainWindow extends JFrame {
         });
 	fileMenu.add(exportDBItem);
         
-        JMenuItem importDBItem = new JMenuItem("Import From Database");
+        JMenuItem importDBItem = new JMenuItem("Import From File");
         importDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -265,7 +265,7 @@ public class MainWindow extends JFrame {
         });
 	fileMenu.add(importDBItem);
  
-        JMenuItem connectMenuItem = new JMenuItem("Connect to Server");
+        JMenuItem connectMenuItem = new JMenuItem("Connect to Winch");
         connectMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -294,7 +294,7 @@ public class MainWindow extends JFrame {
         });
 	fileMenu.add(connectMenuItem);
         
-        JMenuItem disconnectMenuItem = new JMenuItem("Disconnect from Server");
+        JMenuItem disconnectMenuItem = new JMenuItem("Disconnect from Winch");
         disconnectMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
