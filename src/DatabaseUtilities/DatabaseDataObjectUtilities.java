@@ -892,12 +892,12 @@ public class DatabaseDataObjectUtilities {
                 
                 float lift = 0;
                 float drag = 0;
-                int weight = 0;
+                float weight = 0;
                 try {
                     id = Integer.parseInt(theParachutes.getString(1));
                     lift = Float.parseFloat(theParachutes.getString(2));
                     drag = Float.parseFloat(theParachutes.getString(3));
-                    weight = Integer.parseInt(theParachutes.getString(4));
+                    weight = Float.parseFloat(theParachutes.getString(4));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -1138,17 +1138,86 @@ public class DatabaseDataObjectUtilities {
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String optional = theFlight.getString(46);
+                String runwayOptional = theFlight.getString(46);
                           
-                Runway newRunway = new Runway(runwayName, runwayMagneticHeading, runwayParent, runwayAltitude, optional);
+                Runway newRunway = new Runway(runwayName, runwayMagneticHeading, runwayParent, runwayAltitude, runwayOptional);
                 newRunway.setId(theFlight.getString(40));
                 newRunway.setParentId(theFlight.getString(44));
                 currentDataObjectSet.setCurrentRunway(newRunway);
                 
                 //Create Glider Position
+                String gliderPositionId = theFlight.getString(48);
+                String gliderPositionRunwayParent = theFlight.getString(49);
+                String gliderPositionAirfieldParent = theFlight.getString(51);
                 
+                float gliderPositionAltitude = 0;
+                float gliderPositionLatitude = 0;
+                float gliderPositionLongitude = 0;
+                try {
+                    gliderPositionAltitude = Float.parseFloat(theFlight.getString(53));
+                    gliderPositionLatitude = Float.parseFloat(theFlight.getString(54));
+                    gliderPositionLongitude = Float.parseFloat(theFlight.getString(55));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
                 
+                String gliderPositionOptional = theFlight.getString(56);
+                          
+                GliderPosition newGliderPosition = new GliderPosition(gliderPositionId, 
+                        gliderPositionRunwayParent, gliderPositionAirfieldParent, 
+                        gliderPositionAltitude, gliderPositionLatitude, gliderPositionLongitude, gliderPositionOptional);
+                newGliderPosition.setId(theFlight.getString(47));
+                newGliderPosition.setRunwayParentId(theFlight.getString(50));
+                newGliderPosition.setAirfieldParentId(theFlight.getString(52));
                 
+                //Create Winch Position
+                String winchPositionName = theFlight.getString(58);
+                String winchPositionRunwayParent = theFlight.getString(59);
+                String winchPositionAirfieldParent = theFlight.getString(61);
+                
+                float winchPositionAltitude = 0;
+                float winchPositionLatitude = 0;
+                float winchPositionLongitude = 0;
+                try {
+                    winchPositionAltitude = Float.parseFloat(theFlight.getString(63));
+                    winchPositionLatitude = Float.parseFloat(theFlight.getString(64));
+                    winchPositionLongitude = Float.parseFloat(theFlight.getString(65));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
+                
+                String winchPositionOptional = theFlight.getString(66);
+                          
+                WinchPosition newWinchPosition = new WinchPosition(winchPositionName,
+                        winchPositionRunwayParent, winchPositionAirfieldParent,
+                        winchPositionAltitude, winchPositionLatitude,
+                        winchPositionLongitude, winchPositionOptional);
+                newWinchPosition.setId(theFlight.getString(57));
+                newWinchPosition.setRunwayParentId(theFlight.getString(60));
+                newWinchPosition.setAirfieldParentId(theFlight.getString(62));
+                currentDataObjectSet.setCurrentWinchPosition(newWinchPosition);
+                
+                //INSERT STUFF TO CREATE DRUM N WINCH FIRST
+                //Create Parachute
+                int id = 0;
+                
+                float lift = 0;
+                float drag = 0;
+                float weight = 0;
+                try {
+                    id = Integer.parseInt(theFlight.getString(67));
+                    lift = Float.parseFloat(theFlight.getString(68));
+                    drag = Float.parseFloat(theFlight.getString(69));
+                    weight = Float.parseFloat(theFlight.getString(70));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
+               
+                Parachute newParachute = new Parachute(id, lift, drag, weight);
+                currentDataObjectSet.getCurrentDrum().setParachute(newParachute);
             }
             theFlight.close();
             stmt.close();
