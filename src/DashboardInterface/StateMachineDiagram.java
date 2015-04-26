@@ -27,8 +27,18 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
         MessagePipeline.getDataRelay();
     }
     
-    public void updateState(int state){
-        
+    public ImageIcon getScaledImage(ImageIcon icon, int width, int height)
+    {
+        Image stateImg = icon.getImage();
+        BufferedImage scaledImage = new BufferedImage(stateImg.getWidth(null), stateImg.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics g = scaledImage.createGraphics();
+        g.drawImage(scaledImage, 0, 0, width, height, null);
+        ImageIcon result = new ImageIcon(scaledImage);
+        return result;
+    }
+    
+    public void updateState(int state)
+    {
         stateLabel.setIcon(statePics.get(state));
     }
     
@@ -76,7 +86,7 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
     public void update(String msg) {
         if(!msg.equals(""))
         {
-            System.out.println(msg);
+            //System.out.println(msg);
             String mParts[] = msg.split(";");
             switch (mParts[0])
             {

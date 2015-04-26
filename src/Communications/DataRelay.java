@@ -68,6 +68,7 @@ public class DataRelay
 
     public void sendState(int currentState, int activeDrum)
     {
+        //System.out.println("STATE:" + currentState);
         for(Observer o : StateListeners)
         {
             o.update("STATE;"+String.valueOf(currentState));
@@ -116,5 +117,43 @@ public class DataRelay
         data.setValue("windspeed", speed+"");
         data.setValue("winddirection", direction+"");
         data.setValue("gustspeed", gust+"");
+    }
+    
+    public void forwardMessage(String msg)
+    {
+        String[] parts = msg.split(";");
+        switch(parts[0])
+        {
+            case "TENSION":
+                for(Observer o : TensionListeners)
+                {
+                    o.update(msg);
+                }
+                break;
+            case "TORQUE":
+                for(Observer o : TorqueListeners)
+                {
+                    o.update(msg);
+                }
+                break;
+            case "SPEED":
+                for(Observer o : CableSpeedListeners)
+                {
+                    o.update(msg);
+                }
+                break;
+            case "ANGLE":
+                for(Observer o : CableAngleListeners)
+                {
+                    o.update(msg);
+                }
+                break;
+            case "OUT":
+                for(Observer o : CableOutListeners)
+                {
+                    o.update(msg);
+                }  
+                break;
+        }
     }
 }

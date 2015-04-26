@@ -158,9 +158,9 @@ public class MessageListener implements Observer
                     //  send filtered values                    
                     relay.sendFilteredData(filteredData, groupDelay);
                     
-                    System.out.println("Filtered Outputs: " + filteredData[0]
-                            + " " + filteredData[1] + " " + filteredData[2]
-                            + " " + filteredData[3] + " " + filteredData[4]);                    
+                    //System.out.println("Filtered Outputs: " + filteredData[0]
+                    //        + " " + filteredData[1] + " " + filteredData[2]
+                    //        + " " + filteredData[3] + " " + filteredData[4]);                    
                 }
             return;
             }
@@ -171,8 +171,8 @@ public class MessageListener implements Observer
                     float roll = canIn.get_halffloat(2);
                     float magnetic = canIn.get_halffloat(4);
                     status = canIn.get_byte(2);
-                    System.out.println("Orientation: " + pitch
-                        + " " +  roll + " " + magnetic);
+                    //System.out.println("Orientation: " + pitch
+                        //+ " " +  roll + " " + magnetic);
                     //relay.sendMagneticStatus(status,
                     //        pitch, roll, magnetic);                   
                     return;      
