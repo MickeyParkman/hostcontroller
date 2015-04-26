@@ -45,7 +45,7 @@ public class TensionSpeedDial extends JPanel implements Observer {
 
     private void updateSpeed(double speed)
     {
-        speed = speed * 0.539957;
+        speed = speed * 1.94384449;
         dataset1.setValue(speed);
     }
 
@@ -76,16 +76,16 @@ public class TensionSpeedDial extends JPanel implements Observer {
         DialTextAnnotation dialtextannotation = new DialTextAnnotation("Tension (lbf)");
         dialtextannotation.setFont(new Font("Dialog", 1, 12));
         dialtextannotation.setPaint(Color.RED);
-        dialtextannotation.setRadius(0.44999999999999996D);
+        dialtextannotation.setRadius(0.47999999999999996D);
         dialplot.addLayer(dialtextannotation);
 
         DialTextAnnotation dialtextannotation2 = new DialTextAnnotation("Speed (kts)");
         dialtextannotation2.setFont(new Font("Dialog", 1, 12));
         dialtextannotation2.setPaint(Color.BLUE);
-        dialtextannotation2.setRadius(0.68999999999999996D);
+        dialtextannotation2.setRadius(0.78999999999999996D);
         dialplot.addLayer(dialtextannotation2);
 
-        DialValueIndicator dialvalueindicator = new DialValueIndicator(0);
+        /*DialValueIndicator dialvalueindicator = new DialValueIndicator(0);
         dialvalueindicator.setFont(new Font("Dialog", 0, 10));
         dialvalueindicator.setOutlinePaint(Color.BLACK);
         dialvalueindicator.setRadius(0.84999999999999998D);
@@ -97,7 +97,7 @@ public class TensionSpeedDial extends JPanel implements Observer {
         dialvalueindicator1.setOutlinePaint(Color.BLACK);
         dialvalueindicator1.setRadius(0.60999999999999998D);
         dialvalueindicator1.setAngle(-90D);
-        dialplot.addLayer(dialvalueindicator1);
+        dialplot.addLayer(dialvalueindicator1);*/
 
         StandardDialScale standarddialscale = new StandardDialScale(0D, 90D, -120D, -300D, 10D, 4);
         standarddialscale.setTickRadius(0.88D);
