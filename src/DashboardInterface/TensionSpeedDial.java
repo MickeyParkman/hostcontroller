@@ -39,11 +39,13 @@ public class TensionSpeedDial extends JPanel implements Observer {
 
     private void updateTension(double tension)
     {
+        tension = tension * 0.224808943;
         dataset2.setValue(tension);
     }
 
     private void updateSpeed(double speed)
     {
+        speed = speed * 0.539957;
         dataset1.setValue(speed);
     }
 
@@ -121,7 +123,7 @@ public class TensionSpeedDial extends JPanel implements Observer {
         pointer.setFillPaint(Color.BLUE);
         dialplot.addPointer(pointer);
         
-        org.jfree.chart.plot.dial.DialPointer.Pointer pin = new org.jfree.chart.plot.dial.DialPointer.Pointer(0);
+        org.jfree.chart.plot.dial.DialPointer.Pointer pin = new org.jfree.chart.plot.dial.DialPointer.Pointer(1);
         pin.setRadius(0.55000000000000004D);
         pin.setFillPaint(Color.RED);
         dialplot.addPointer(pin);

@@ -15,17 +15,17 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 
 public class ProfileOtherPanel extends JPanel{
     private CurrentDataObjectSet currentData;
-    protected JComboBox launchWeightComboBox = new JComboBox();
-    protected JComboBox runLengthComboBox = new JComboBox();
-    protected JComboBox runDirectionComboBox = new JComboBox();
-    protected JComboBox crosswindComboBox = new JComboBox();
-    protected JComboBox headwindComboBox = new JComboBox();
-    protected JComboBox densityAltitudeComboBox = new JComboBox();
-    protected JComboBox gustWindSpeedComboBox = new JComboBox();
-    protected JComboBox pressureComboBox = new JComboBox();
-    protected JComboBox temperatureComboBox = new JComboBox();
-    protected JComboBox avgWindSpeedComboBox = new JComboBox();
-    protected JComboBox windDirectionComboBox = new JComboBox();
+    protected JComboBox launchWeightComboBox;
+    protected JComboBox runLengthComboBox;
+    protected JComboBox runDirectionComboBox;
+    protected JComboBox crosswindComboBox;
+    protected JComboBox headwindComboBox;
+    protected JComboBox densityAltitudeComboBox;
+    protected JComboBox gustWindSpeedComboBox;
+    protected JComboBox pressureComboBox;
+    protected JComboBox temperatureComboBox;
+    protected JComboBox avgWindSpeedComboBox;
+    protected JComboBox windDirectionComboBox;
       
     /**
      * Creates new form sailplanePanel
@@ -39,6 +39,18 @@ public class ProfileOtherPanel extends JPanel{
      * Create the panel.
      */
     public void initComponents() {
+        launchWeightComboBox = new JComboBox();
+        runLengthComboBox = new JComboBox();
+        runDirectionComboBox = new JComboBox();
+        crosswindComboBox = new JComboBox();
+        headwindComboBox = new JComboBox();
+        densityAltitudeComboBox = new JComboBox();
+        gustWindSpeedComboBox = new JComboBox();
+        pressureComboBox = new JComboBox();
+        temperatureComboBox = new JComboBox();
+        avgWindSpeedComboBox = new JComboBox();
+        windDirectionComboBox = new JComboBox();
+        
         setLayout(new BorderLayout(0, 0));
 
         JPanel unitsPanel = new JPanel();
@@ -56,6 +68,7 @@ public class ProfileOtherPanel extends JPanel{
         launchWeightComboBox.setMaximumSize(new Dimension(32767, 20));
         launchWeightComboBox.addItem("lbs");
         launchWeightComboBox.addItem("kg");
+        launchWeightComboBox.setEnabled(false);
         
         JLabel runLengthLabel = new JLabel("Run Length:");
         runLengthLabel.setBounds(9, 63, 117, 14);
@@ -66,6 +79,7 @@ public class ProfileOtherPanel extends JPanel{
         runLengthComboBox.addItem("m");
         runLengthComboBox.addItem("km");
         runLengthComboBox.addItem("mi");
+        runLengthComboBox.setEnabled(false);
         
         JLabel indicatedStallSpeedLabel = new JLabel("Run Direction:");
         indicatedStallSpeedLabel.setBounds(9, 89, 140, 14);
@@ -74,6 +88,7 @@ public class ProfileOtherPanel extends JPanel{
         runDirectionComboBox.setMaximumSize(new Dimension(32767, 20));
         runDirectionComboBox.addItem("magnetic");
         runDirectionComboBox.addItem("true");
+        runDirectionComboBox.setEnabled(false);
 
         JLabel crosswindLabel = new JLabel("Crosswind Component:");
         crosswindLabel.setBounds(280, 63, 150, 14);
@@ -83,19 +98,21 @@ public class ProfileOtherPanel extends JPanel{
 
         crosswindComboBox.setBounds(440, 60, 86, 20);
         crosswindComboBox.setMaximumSize(new Dimension(32767, 20));
+        crosswindComboBox.addItem("kts");
         crosswindComboBox.addItem("mph");
         crosswindComboBox.addItem("kph");
         crosswindComboBox.addItem("m/s");
         crosswindComboBox.addItem("kn");
-        crosswindComboBox.addItem("kts");
+        crosswindComboBox.setEnabled(false);
 
         headwindComboBox.setBounds(440, 34, 86, 20);
         headwindComboBox.setMaximumSize(new Dimension(32767, 20));
+        headwindComboBox.addItem("kts");
         headwindComboBox.addItem("mph");
         headwindComboBox.addItem("kph");
         headwindComboBox.addItem("m/s");
         headwindComboBox.addItem("kn");
-        headwindComboBox.addItem("kts");
+        headwindComboBox.setEnabled(false);
 
         JLabel densityAltitudeLabel = new JLabel("Density Altitude:");
         densityAltitudeLabel.setBounds(280, 89, 150, 14);
@@ -106,6 +123,8 @@ public class ProfileOtherPanel extends JPanel{
         densityAltitudeComboBox.addItem("m");
         densityAltitudeComboBox.addItem("km");
         densityAltitudeComboBox.addItem("mi");
+        densityAltitudeComboBox.setEnabled(false);
+        
         unitsPanel.setLayout(null);
         unitsPanel.add(launchWeightLabel);
         unitsPanel.add(runLengthLabel);
@@ -138,15 +157,17 @@ public class ProfileOtherPanel extends JPanel{
         windDirectionComboBox.addItem("magnetic");
         windDirectionComboBox.addItem("true");
         windDirectionComboBox.addItem("relative");
+        windDirectionComboBox.setEnabled(false);
         unitsPanel.add(windDirectionComboBox);
         
         avgWindSpeedComboBox.setMaximumSize(new Dimension(32767, 20));
         avgWindSpeedComboBox.setBounds(150, 140, 86, 20);
+        avgWindSpeedComboBox.addItem("kts");
         avgWindSpeedComboBox.addItem("mph");
         avgWindSpeedComboBox.addItem("kph");
         avgWindSpeedComboBox.addItem("m/s");
         avgWindSpeedComboBox.addItem("kn");
-        avgWindSpeedComboBox.addItem("kts");
+        avgWindSpeedComboBox.setEnabled(false);
         unitsPanel.add(avgWindSpeedComboBox);
         
         JLabel pressureLabel = new JLabel("Pressure:");
@@ -161,6 +182,7 @@ public class ProfileOtherPanel extends JPanel{
         temperatureComboBox.setBounds(440, 114, 86, 20);
         temperatureComboBox.addItem("F");
         temperatureComboBox.addItem("C");
+        temperatureComboBox.setEnabled(false);
         unitsPanel.add(temperatureComboBox);
         
         pressureComboBox.setMaximumSize(new Dimension(32767, 20));
@@ -171,6 +193,7 @@ public class ProfileOtherPanel extends JPanel{
         pressureComboBox.addItem("kPa");
         pressureComboBox.addItem("bar");
         pressureComboBox.addItem("atm");
+        pressureComboBox.setEnabled(false);
         unitsPanel.add(pressureComboBox);
         
         JLabel gustWindSpeedLabel = new JLabel("Gust Wind Speed:");
@@ -179,11 +202,12 @@ public class ProfileOtherPanel extends JPanel{
         
         gustWindSpeedComboBox.setMaximumSize(new Dimension(32767, 20));
         gustWindSpeedComboBox.setBounds(150, 168, 86, 20);
+        gustWindSpeedComboBox.addItem("kts");
         gustWindSpeedComboBox.addItem("mph");
         gustWindSpeedComboBox.addItem("kph");
         gustWindSpeedComboBox.addItem("m/s");
         gustWindSpeedComboBox.addItem("kn");
-        gustWindSpeedComboBox.addItem("kts");
+        gustWindSpeedComboBox.setEnabled(false);
         unitsPanel.add(gustWindSpeedComboBox);
         add(unitsPanelScrollPane);
         

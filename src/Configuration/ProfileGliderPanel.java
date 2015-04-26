@@ -15,15 +15,15 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 
 public class ProfileGliderPanel extends JPanel{
     private CurrentDataObjectSet currentData;
-    protected JComboBox emptyWeightComboBox = new JComboBox();
-    protected JComboBox maxGrossWeightComboBox = new JComboBox();
-    protected JComboBox stallSpeedComboBox = new JComboBox();
-    protected JComboBox weakLinkStrengthComboBox = new JComboBox();
-    protected JComboBox maxWinchingSpeedComboBox = new JComboBox();
-    protected JComboBox maxTensionComboBox = new JComboBox();
-    protected JComboBox ballastWeightComboBox = new JComboBox();
-    protected JComboBox baggageWeightComboBox = new JComboBox();
-    protected JComboBox passengerWeightComboBox = new JComboBox();
+    protected JComboBox emptyWeightComboBox;
+    protected JComboBox maxGrossWeightComboBox;
+    protected JComboBox stallSpeedComboBox;
+    protected JComboBox weakLinkStrengthComboBox;
+    protected JComboBox maxWinchingSpeedComboBox;
+    protected JComboBox maxTensionComboBox;
+    protected JComboBox ballastWeightComboBox;
+    protected JComboBox baggageWeightComboBox;
+    protected JComboBox passengerWeightComboBox;
       
     /**
      * Creates new form sailplanePanel
@@ -37,6 +37,16 @@ public class ProfileGliderPanel extends JPanel{
      * Create the panel.
      */
     public void initComponents() {
+        emptyWeightComboBox = new JComboBox();
+        maxGrossWeightComboBox = new JComboBox();
+        stallSpeedComboBox = new JComboBox();
+        weakLinkStrengthComboBox = new JComboBox();
+        maxWinchingSpeedComboBox = new JComboBox();
+        maxTensionComboBox = new JComboBox();
+        ballastWeightComboBox = new JComboBox();
+        baggageWeightComboBox = new JComboBox();
+        passengerWeightComboBox = new JComboBox();
+        
         setLayout(new BorderLayout(0, 0));
 
         JPanel unitsPanel = new JPanel();
@@ -54,6 +64,7 @@ public class ProfileGliderPanel extends JPanel{
         emptyWeightComboBox.setMaximumSize(new Dimension(32767, 20));
         emptyWeightComboBox.addItem("lbs");
         emptyWeightComboBox.addItem("kg");
+        emptyWeightComboBox.setEnabled(false);
 
         JLabel maxGrossWeightLabel = new JLabel("Max Gross Weight:");
         maxGrossWeightLabel.setBounds(9, 63, 117, 14);
@@ -62,17 +73,19 @@ public class ProfileGliderPanel extends JPanel{
         maxGrossWeightComboBox.setMaximumSize(new Dimension(32767, 20));
         maxGrossWeightComboBox.addItem("lbs");
         maxGrossWeightComboBox.addItem("kg");
+        maxGrossWeightComboBox.setEnabled(false);
         
         JLabel indicatedStallSpeedLabel = new JLabel("Indicated Stall Speed:");
         indicatedStallSpeedLabel.setBounds(9, 89, 140, 14);
 
         stallSpeedComboBox.setBounds(150, 86, 54, 20);
         stallSpeedComboBox.setMaximumSize(new Dimension(32767, 20));
+        stallSpeedComboBox.addItem("kts");
         stallSpeedComboBox.addItem("mph");
         stallSpeedComboBox.addItem("kph");
         stallSpeedComboBox.addItem("m/s");
         stallSpeedComboBox.addItem("kn");
-        stallSpeedComboBox.addItem("kts");
+        stallSpeedComboBox.setEnabled(false);
 
         JLabel weakLinkStrengthLabel = new JLabel("Max Weak Link Strength:");
         weakLinkStrengthLabel.setBounds(280, 63, 150, 14);
@@ -86,14 +99,16 @@ public class ProfileGliderPanel extends JPanel{
         weakLinkStrengthComboBox.addItem("N");
         weakLinkStrengthComboBox.addItem("kgf");
         weakLinkStrengthComboBox.addItem("daN");
+        weakLinkStrengthComboBox.setEnabled(false);
 
         maxWinchingSpeedComboBox.setBounds(440, 34, 54, 20);
         maxWinchingSpeedComboBox.setMaximumSize(new Dimension(32767, 20));
+        maxWinchingSpeedComboBox.addItem("kts");
         maxWinchingSpeedComboBox.addItem("mph");
         maxWinchingSpeedComboBox.addItem("kph");
         maxWinchingSpeedComboBox.addItem("m/s");
         maxWinchingSpeedComboBox.addItem("kn");
-        maxWinchingSpeedComboBox.addItem("kts");
+        maxWinchingSpeedComboBox.setEnabled(false);
 
         JLabel maxTensionLabel = new JLabel("Max Tension:");
         maxTensionLabel.setBounds(280, 89, 150, 14);
@@ -104,6 +119,7 @@ public class ProfileGliderPanel extends JPanel{
         maxTensionComboBox.addItem("N");
         maxTensionComboBox.addItem("kgf");
         maxTensionComboBox.addItem("daN");
+        maxTensionComboBox.setEnabled(false);
 
         JLabel ballastWeightLabel = new JLabel("Ballast Weight:");
         ballastWeightLabel.setBounds(9, 159, 117, 14);
@@ -118,16 +134,19 @@ public class ProfileGliderPanel extends JPanel{
         ballastWeightComboBox.setMaximumSize(new Dimension(32767, 20));
         ballastWeightComboBox.addItem("lbs");
         ballastWeightComboBox.addItem("kg");
+        ballastWeightComboBox.setEnabled(false);
 
         baggageWeightComboBox.setBounds(150, 194, 54, 20);
         baggageWeightComboBox.setMaximumSize(new Dimension(32767, 20));
         baggageWeightComboBox.addItem("lbs");
         baggageWeightComboBox.addItem("kg");
+        baggageWeightComboBox.setEnabled(false);
         
         passengerWeightComboBox.setBounds(440, 156, 54, 20);
         passengerWeightComboBox.setMaximumSize(new Dimension(32767, 20));
         passengerWeightComboBox.addItem("lbs");
         passengerWeightComboBox.addItem("kg");
+        passengerWeightComboBox.setEnabled(false);
                         
         JLabel label_11 = new JLabel("");
         label_11.setBounds(668, 40, 0, 0);
