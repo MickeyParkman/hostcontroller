@@ -19,12 +19,18 @@ import Communications.Observer;
 public class StateMachineDiagram extends javax.swing.JPanel implements Observer {
 
     JTextField last = new JTextField();
+    private FlightDashboard parent;
     
     public StateMachineDiagram() {
         statePics = new HashMap<>();
         loadPictures();
         initComponents();
         MessagePipeline.getDataRelay();
+    }
+    
+    public void setParent(FlightDashboard f)
+    {   
+        parent = f;
     }
     
     private ImageIcon getScaledImage(ImageIcon img, int w)
@@ -41,6 +47,16 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
     
     public void updateState(int state)
     {
+        if(state == 0 || state == 14 || state == 6 || state == 7)
+        {
+            //length shown
+            parent.ToggleDial(1);
+        }
+        else
+        {
+            parent.ToggleDial(0);
+            //tension
+        }
         stateLabel.setIcon(statePics.get(state));
     }
     

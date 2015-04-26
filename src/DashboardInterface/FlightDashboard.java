@@ -66,6 +66,7 @@ public class FlightDashboard extends javax.swing.JPanel
         
         systemPane = new JPanel();
         diagramPane = new StateMachineDiagram();
+        diagramPane.setParent(this);
         diagramPane.setBackground(Color.WHITE);
         //diagramPane.setPreferredSize(new Dimension(400,100));
         
