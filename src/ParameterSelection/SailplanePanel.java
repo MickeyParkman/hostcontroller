@@ -400,6 +400,11 @@ public class SailplanePanel extends JPanel implements Observer{
         ballastField.setEnabled(false);
         ballastField.setBounds(160, 186, 110, 20);
         attributesPanel.add(ballastField);
+        ballastField.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    updateLaunchInfo(ballastField);
+        	}
+        });
         ballastField.setBackground(Color.LIGHT_GRAY);
         ballastField.setColumns(10);
         
@@ -455,6 +460,11 @@ public class SailplanePanel extends JPanel implements Observer{
         passengerWeightField.setEnabled(false);
         passengerWeightField.setBounds(487, 186, 120, 20);
         attributesPanel.add(passengerWeightField);
+        passengerWeightField.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    updateLaunchInfo(passengerWeightField);
+        	}
+        });
         passengerWeightField.setColumns(10);
         passengerWeightField.setBackground(Color.LIGHT_GRAY);
         
@@ -497,6 +507,11 @@ public class SailplanePanel extends JPanel implements Observer{
         baggageField.setEnabled(false);
         baggageField.setBounds(160, 247, 110, 20);
         attributesPanel.add(baggageField);
+        baggageField.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    updateLaunchInfo(baggageField);
+        	}
+        });
         baggageField.setColumns(10);
         baggageField.setBackground(Color.LIGHT_GRAY);
         
@@ -560,6 +575,15 @@ public class SailplanePanel extends JPanel implements Observer{
         
         winchingSpeedUnitsLabel.setBounds(617, 53, 46, 14);
         attributesPanel.add(winchingSpeedUnitsLabel);
+    }
+    
+    private void updateLaunchInfo(JTextField textField){
+        try{
+            Float.parseFloat(textField.getText());
+            textField.setBackground(Color.GREEN);
+        }catch(NumberFormatException e){
+            textField.setBackground(Color.PINK);
+        }
     }
             
     @Override
