@@ -50,6 +50,8 @@ public class FlightDashboard extends javax.swing.JPanel
         
         systemPane = new JPanel();
         diagramPane = new StateMachineDiagram();
+        diagramPane.setBackground(Color.WHITE);
+        //diagramPane.setPreferredSize(new Dimension(400,100));
         
         dialSquare = new JPanel(new BorderLayout()) {
             @Override
@@ -78,8 +80,11 @@ public class FlightDashboard extends javax.swing.JPanel
         
         dial = new CableOutSpeedDial(dialSquare);
         //we want to listen for speed and tension
+        MessagePipeline.getInstance();
         MessagePipeline.getDataRelay().attach("OUT", dial);
         MessagePipeline.getDataRelay().attach("SPEED", dial);
+        MessagePipeline.getDataRelay().attach("STATE", diagramPane);
+
         dialSquare.add(dial, BorderLayout.CENTER);
         health = new SystemsStatus();
         graph = new LaunchGraph("title");

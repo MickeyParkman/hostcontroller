@@ -151,6 +151,7 @@ public class TensionSpeedDial extends JPanel implements Observer {
     public void update(String msg) {
         if(!msg.equals(""))
         {
+            System.out.println(msg);
             String mParts[] = msg.split(";");
             switch (mParts[0])
             {

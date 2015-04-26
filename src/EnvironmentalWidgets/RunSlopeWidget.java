@@ -29,7 +29,7 @@ public class RunSlopeWidget extends EnvironmentalWidget {
     @Override
     public void setupUnits() {
         unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("runslope");
-        unit.setText(" degrees ");
+        unit.setText(" degrees");
     }
     
 }

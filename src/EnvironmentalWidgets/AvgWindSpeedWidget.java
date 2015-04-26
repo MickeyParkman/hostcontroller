@@ -24,6 +24,7 @@ public class AvgWindSpeedWidget extends EnvironmentalWidget {
 
     @Override
     public void update(String msg) {
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("windspeed"));
     }
 
     @Override

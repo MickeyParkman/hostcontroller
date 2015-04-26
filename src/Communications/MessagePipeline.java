@@ -1,6 +1,7 @@
 package Communications;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -15,7 +16,8 @@ public class MessagePipeline implements Runnable {
     private ArrayList<Observer> observers;
     private Socket socket;
     private BufferedReader reader;
-    private OutputStreamWriter writer;
+    private BufferedWriter writer;
+    //private OutputStreamWriter writer;
     private String currentMessage = "";
     private static MessagePipeline instance = null;
     private boolean running = false;
@@ -71,7 +73,7 @@ public class MessagePipeline implements Runnable {
             {
                 socket = new Socket(address, port);
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                writer = new OutputStreamWriter(socket.getOutputStream());
+                writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             }
             connected = true;
             System.out.println("Connected");
@@ -136,6 +138,15 @@ public class MessagePipeline implements Runnable {
         } catch (IOException ex) {
             //ex.printStackTrace();
         }
+    }
+    
+    public void WriteToSocket(String s)
+    {
+        try {
+            writer.write(s);
+        } catch (IOException ex) {
+            //ex.printStackTrace();
+        }       
     }
     
     public void run()
