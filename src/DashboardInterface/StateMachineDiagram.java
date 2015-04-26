@@ -27,14 +27,16 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
         MessagePipeline.getDataRelay();
     }
     
-    public ImageIcon getScaledImage(ImageIcon icon, int width, int height)
+    private ImageIcon getScaledImage(ImageIcon img, int w)
     {
-        Image stateImg = icon.getImage();
-        BufferedImage scaledImage = new BufferedImage(stateImg.getWidth(null), stateImg.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics g = scaledImage.createGraphics();
-        g.drawImage(scaledImage, 0, 0, width, height, null);
-        ImageIcon result = new ImageIcon(scaledImage);
-        return result;
+        float ratio = (float)(w) / img.getIconWidth();
+        int h = (int) (img.getIconHeight() * ratio);
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(img.getImage(), 0, 0, w, h, null);
+        g2.dispose();
+        return new ImageIcon(resizedImg);
     }
     
     public void updateState(int state)
@@ -44,16 +46,16 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
     
     private void loadPictures()
     {
-        statePics.put(0, new ImageIcon(getClass().getResource("/DashboardInterface/images/safe.png")));
-        statePics.put(1, new ImageIcon(getClass().getResource("/DashboardInterface/images/prep.png")));
-        statePics.put(2, new ImageIcon(getClass().getResource("/DashboardInterface/images/armed.png")));
-        statePics.put(3, new ImageIcon(getClass().getResource("/DashboardInterface/images/profile.png")));
-        statePics.put(4, new ImageIcon(getClass().getResource("/DashboardInterface/images/ramp.png")));
-        statePics.put(5, new ImageIcon(getClass().getResource("/DashboardInterface/images/constant.png")));
-        statePics.put(6, new ImageIcon(getClass().getResource("/DashboardInterface/images/recovery.png")));
-        statePics.put(7, new ImageIcon(getClass().getResource("/DashboardInterface/images/retrieve.png")));
-        statePics.put(14, new ImageIcon(getClass().getResource("/DashboardInterface/images/stop.png")));
-        statePics.put(15, new ImageIcon(getClass().getResource("/DashboardInterface/images/abort.png")));
+        statePics.put(0, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/safe.png")),500));
+        statePics.put(1, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/prep.png")),500));
+        statePics.put(2, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/armed.png")),500));
+        statePics.put(3, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/profile.png")),500));
+        statePics.put(4, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/ramp.png")),500));
+        statePics.put(5, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/constant.png")),500));
+        statePics.put(6, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/recovery.png")),500));
+        statePics.put(7, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/retrieve.png")),500));
+        statePics.put(14, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/stop.png")),500));
+        statePics.put(15, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/abort.png")),500));
     }
     
     @SuppressWarnings("unchecked")
