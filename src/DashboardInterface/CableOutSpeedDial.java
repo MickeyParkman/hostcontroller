@@ -41,11 +41,13 @@ public class CableOutSpeedDial extends JPanel implements Observer
 
     private void updateCableOut(double cableOut)
     {
+        cableOut = cableOut * 3.2804;
         dataset2.setValue(cableOut);
     }
 
     private void updateSpeed(double speed)
     {
+        speed = speed * 0.539957;
         dataset1.setValue(speed);
     }
 
@@ -122,7 +124,7 @@ public class CableOutSpeedDial extends JPanel implements Observer
         pointer.setFillPaint(Color.BLUE);
         dialplot.addPointer(pointer);
         
-        org.jfree.chart.plot.dial.DialPointer.Pointer pin = new org.jfree.chart.plot.dial.DialPointer.Pointer(0);
+        org.jfree.chart.plot.dial.DialPointer.Pointer pin = new org.jfree.chart.plot.dial.DialPointer.Pointer(1);
         pin.setRadius(0.55000000000000004D);
         pin.setFillPaint(new Color(36,130,9));
         dialplot.addPointer(pin);

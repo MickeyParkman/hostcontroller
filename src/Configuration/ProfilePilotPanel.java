@@ -11,12 +11,13 @@ import java.awt.Color;
 
 
 public class ProfilePilotPanel extends JPanel {
-    protected JComboBox flightWeightComboBox = new JComboBox();
+    protected JComboBox flightWeightComboBox;
 
     /**
      * Create the panel.
      */
     public ProfilePilotPanel() {
+        flightWeightComboBox = new JComboBox();
         setBackground(Color.WHITE);
 
         JLabel flightWeightLabel = new JLabel("Flight Weight:");
@@ -25,6 +26,7 @@ public class ProfilePilotPanel extends JPanel {
         flightWeightComboBox.setMaximumSize(new Dimension(32767, 20));
         flightWeightComboBox.addItem("lbs");
         flightWeightComboBox.addItem("kg");
+        flightWeightComboBox.setEnabled(false);
 
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
