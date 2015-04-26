@@ -579,6 +579,7 @@ public class SailplanePanel extends JPanel implements Observer{
     
     private void updateLaunchInfo(JTextField textField){
         try{
+            launchInfo.update("Manual Entry");
             Float.parseFloat(textField.getText());
             textField.setBackground(Color.GREEN);
         }catch(NumberFormatException e){
