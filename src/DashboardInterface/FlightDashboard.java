@@ -93,8 +93,11 @@ public class FlightDashboard extends javax.swing.JPanel
         //dialSquare.setBorder(BorderFactory.createLineBorder(Color.black));
         dial = new TensionSpeedDial(dialSquare);
         //we want to listen for speed and tension
+        MessagePipeline.getInstance();
         MessagePipeline.getDataRelay().attach("TENSION", dial);
         MessagePipeline.getDataRelay().attach("SPEED", dial);
+        MessagePipeline.getDataRelay().attach("STATE", diagramPane);
+
         dialSquare.add(dial, BorderLayout.CENTER);
         health = new SystemsStatus();
         graph = new LaunchGraph("title");

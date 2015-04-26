@@ -1,6 +1,7 @@
 package DashboardInterface;
 
 //TODO: remove import *s
+import Communications.MessagePipeline;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,6 +24,7 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
         statePics = new HashMap<>();
         loadPictures();
         initComponents();
+        MessagePipeline.getDataRelay();
     }
     
     public void updateState(int state){

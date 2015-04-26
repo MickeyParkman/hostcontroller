@@ -64,8 +64,8 @@ public class TensionSpeedDial extends JPanel implements Observer {
                 parent = parentIn;
                 dataset1 = new DefaultValueDataset(0D);
                 dataset2 = new DefaultValueDataset(0D);
-                pipe = MessagePipeline.getInstance();
-                pipe.attach(this);
+                //pipe = MessagePipeline.getInstance();
+                //pipe.attach(this);
                 DialPlot dialplot = new DialPlot();
                 dialplot.setView(0.0D, 0.0D, 1.0D, 1.0D);
                 dialplot.setDataset(0, dataset1);
