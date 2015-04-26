@@ -134,8 +134,6 @@ public class MainWindow extends JFrame {
         rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         rightSidePanel.setBackground(Color.WHITE);
         
-        //TODO (jtroxel) move all side panels into their respective panels, since they are tied to them
-        // RSP can stay with main window IF static.
         lowerLeftSidePanelScenario = new JPanel();
         lowerLeftSidePanelScenario.setPreferredSize(new Dimension(200,WIDTH));
         lowerLeftSidePanelScenario.setBackground(Color.WHITE);

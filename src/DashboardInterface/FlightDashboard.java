@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
  */
 public class FlightDashboard extends javax.swing.JPanel
 {
-    private TensionSpeedDial dial;
+    private CableOutSpeedDial dial;
     private SystemsStatus health;
     private LaunchGraph graph;
     private JPanel contentPane;
@@ -31,13 +31,6 @@ public class FlightDashboard extends javax.swing.JPanel
     private JPanel dialPane;
     private JPanel systemPane;
     private StateMachineDiagram diagramPane;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
     
     public FlightDashboard()
     {
@@ -45,21 +38,16 @@ public class FlightDashboard extends javax.swing.JPanel
     }
     
     private void initComponents()
-    {
-        
-        //dial.dialUpdate(1125.0, 25.0);
-        //dial.setSize(20, 20);
-        
+    {       
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         
         graphPane = new javax.swing.JPanel();
         dialPane = new JPanel();
         this.setBackground(Color.WHITE);
-        //dialPane.setLayout(new BorderLayout());
         
         dialPane.setLayout(new GridBagLayout());
-        //dialPane.setBorder(BorderFactory.createLineBorder(Color.black));
+        
         systemPane = new JPanel();
         diagramPane = new StateMachineDiagram();
         
@@ -88,21 +76,15 @@ public class FlightDashboard extends javax.swing.JPanel
             }
         };
         
-        //dialSquare.setBackground(Color.BLUE);
-        //dialSquare.setBorder(BorderFactory.createLineBorder(Color.black));
-        dial = new TensionSpeedDial(dialSquare);
+        dial = new CableOutSpeedDial(dialSquare);
         //we want to listen for speed and tension
-        MessagePipeline.getDataRelay().attach("TENSION", dial);
+        MessagePipeline.getDataRelay().attach("OUT", dial);
         MessagePipeline.getDataRelay().attach("SPEED", dial);
         dialSquare.add(dial, BorderLayout.CENTER);
         health = new SystemsStatus();
         graph = new LaunchGraph("title");
-        
-        //dial.dialUpdate(1125.0, 25.0);
-        //dial.setSize(20, 20);
-        
+                
         graphPane.add(graph);
-        //dialPane.add(dial, BorderLayout.CENTER);
         dialPane.add(dialSquare);
         dialPane.setBackground(Color.WHITE);
         systemPane.add(health);
@@ -138,8 +120,5 @@ public class FlightDashboard extends javax.swing.JPanel
         );
         
         this.add(contentPane);
-        //this.add(graph);
-        //this.add(dial);
-        //this.add(health);
     }
 }

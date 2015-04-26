@@ -158,7 +158,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         clearButton = new JButton("Clear All Selections");
         profileButton = new JButton("Select Operator Profile");
         
-        this.setPreferredSize(new Dimension(200,350));
+        this.setPreferredSize(new Dimension(200,400));
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setBackground(Color.WHITE);
         
@@ -289,6 +289,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         this.add(drumLabel);
         this.add(drumButton);
         this.add(clearButton);
+        this.add(new JLabel(" "));
         this.add(profileLabel);
         this.add(profileButton);
     }                      
