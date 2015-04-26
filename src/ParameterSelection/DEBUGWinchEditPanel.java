@@ -84,14 +84,14 @@ public class DEBUGWinchEditPanel extends JPanel {
         DEBUGWinch = new Winch("Winch #1", "Primary Winch for Spokane Gliding Team", (float)2.0);
         Drive drive = new Drive("Drive #1");
         Drum drum1 = new Drum("Drum #1", (float)1.0, (float)1.0, (float)1000.0);
-        Parachute p1 = new Parachute("Green Parachute", 0, (float)0.5, (float)0.5, 25);
+        Parachute p1 = new Parachute("Green Parachute", 0, (float)0.5, (float)0.5, (float)25);
         drum1.setParachute(p1);
         drive.addDrum(drum1);
         drive.addDrum(new Drum("Drum #2", (float)2.0, (float)2.0, (float)2000.0));
         DEBUGWinch.addDrive(drive);
         
         DEBUGWinch.addParachute(p1);
-        DEBUGWinch.addParachute(new Parachute("Red Parachute", 1, (float)0.77, (float)0.67, 55));
-        DEBUGWinch.addParachute(new Parachute("Blue Parachute", 2, (float)0.23, (float)0.34, 35));
+        DEBUGWinch.addParachute(new Parachute("Red Parachute", 1, (float)0.77, (float)0.67, (float)55));
+        DEBUGWinch.addParachute(new Parachute("Blue Parachute", 2, (float)0.23, (float)0.34, (float)35));
     }
 }
