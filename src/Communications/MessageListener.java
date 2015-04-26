@@ -32,7 +32,7 @@ public class MessageListener implements Observer
     private final int NUMBER_MOTORS = 1;
     private float[] torqueGain = new float[NUMBER_MOTORS];
 
-    //static final int HEARTBEAT_COUNT_ID = 60;                //%d only
+    
     static final int ticsPerSec = 16;   //  should be power of 2
     static final float secPerTic = 1.0f / ticsPerSec;
 
@@ -121,7 +121,6 @@ public class MessageListener implements Observer
         CanCnvt canIn = new CanCnvt();//I believe this is the correct call
         canIn.convert_msgtobin(msg);
 
-        boolean messageProcessed = false;
         switch (canIn.id)
         {
             case TIME_MESSAGE_ID:
@@ -159,12 +158,11 @@ public class MessageListener implements Observer
                     //  send filtered values                    
                     relay.sendFilteredData(filteredData, groupDelay);
                     
-                    //System.out.println("Filtered Outputs: " + filteredData[0]
-                    //        + " " + filteredData[1] + " " + filteredData[2]
-                    //        + " " + filteredData[3] + " " + filteredData[4]);
-                    messageProcessed = true;                    
+                    System.out.println("Filtered Outputs: " + filteredData[0]
+                            + " " + filteredData[1] + " " + filteredData[2]
+                            + " " + filteredData[3] + " " + filteredData[4]);                    
                 }
-            break;
+            return;
             }
 
             case ORIENTATION_ID:
@@ -177,8 +175,7 @@ public class MessageListener implements Observer
                         + " " +  roll + " " + magnetic);
                     //relay.sendMagneticStatus(status,
                     //        pitch, roll, magnetic);                   
-                    messageProcessed = true;
-                    break;      
+                    return;      
                 }
             
             case STATE_MESSAGE_ID:
@@ -188,20 +185,17 @@ public class MessageListener implements Observer
                 System.out.println("State and Active Drum: " + currentState
                         + "  " +  activeDrum);
                 relay.sendState(currentState, activeDrum);
-                messageProcessed = true;
-                break;
+                return;
             }
 
             case PARAM_REQUEST_MESSAGE_ID:
             {
                 //relay.sendLaunchParameterRequest();
                 System.out.println("Launch Parameter Request Message Received");
-                messageProcessed = true;
-                break;
+                return;
             }
         }
 
-        if (messageProcessed == false)
         {   //  IDs with 3 mapped lsbs
             int messageDrum = (canIn.id & 0x00e00000) >> ID_OFFSET;  
             switch (canIn.id & 0xff000000)    
@@ -223,8 +217,7 @@ public class MessageListener implements Observer
                         //  canIn.get_halffloat(0), canIn.get_halffloat(2), 
                         //  canIn.get_halffloat(4, ));            
                     }
-                    messageProcessed = true;
-                    break;
+                    return;
                 }
 
                 case (TENSION_MESSAGE_ID):
@@ -241,8 +234,7 @@ public class MessageListener implements Observer
                         //relay.sendTensionStatus(status, 
                         //        messageDrum, canIn.get_halffloat(0));            
                     }
-                    messageProcessed = true;
-                    break;
+                    return;
                 }
 
                 case (CABLE_ANGLE_MESSAGE_ID):
@@ -259,13 +251,11 @@ public class MessageListener implements Observer
                         //relay.CableAngleStatus(status,
                         //        messageDrum, canIn.get_halffloat(0));
                     }
-                    messageProcessed = true;
-                    break;
+                    return;
                 }
             }
         }
 
-        if (messageProcessed == false)
         {   //  IDs with 2 mapped lsbs 
             int messageMotor = (canIn.id & 0x00600000) >> ID_OFFSET;
             switch (canIn.id & 0xff800000)    
@@ -285,8 +275,7 @@ public class MessageListener implements Observer
                         //        messageMotor, speed, revolutions,
                         //        temperature);
                     }
-                    messageProcessed = true;
-                    break;
+                    return;
                 }
 
                 case TORQUE_COMMAND_MESSAGE_ID: //  command message, no status
@@ -299,8 +288,7 @@ public class MessageListener implements Observer
                     {
                         lastCommandedDrumTorque += motorTorque[i] * torqueGain[i];
                     }
-                    messageProcessed = true;
-                    break;   
+                    return;   
                 }
                  
                 case BATTERY_SYSTEM_ID:
@@ -313,13 +301,11 @@ public class MessageListener implements Observer
                         + " " +  current + " " + temperature);
                     //relay.sendBatteryStatus(status,
                     //        messageMotor, voltage, current, temperature);                    messageProcessed = true;
-                    messageProcessed = true;
-                    break;                    
+                    return;                    
                 }           
             }
         }
         
-        if (messageProcessed == false)
         {   //  lower priority and occurence messages   
             switch (canIn.id)
             {
@@ -332,8 +318,7 @@ public class MessageListener implements Observer
                     System.out.println("Density Altitude: " + pressure
                         + " " +  temperature + " " + humidity);
                     relay.sendDensityAltitudeStatus(status, pressure, temperature, humidity);                   
-                    messageProcessed = true;
-                    break;      
+                    return;      
                 }
                 
                 case WIND_ID:
@@ -345,8 +330,7 @@ public class MessageListener implements Observer
                     System.out.println("Wind: " + direction
                         + " " +  speed + " " + gust);
                     relay.sendWindStatus(status,speed, direction, gust);                   
-                    messageProcessed = true;
-                    break;      
+                    return;      
                 }                
             }
         }
