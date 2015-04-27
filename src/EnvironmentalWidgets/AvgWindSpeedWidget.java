@@ -5,6 +5,9 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitLabelUtilities;
+import DataObjects.CurrentDataObjectSet;
+
 /**
  *
  * @author jtroxel
@@ -21,10 +24,13 @@ public class AvgWindSpeedWidget extends EnvironmentalWidget {
 
     @Override
     public void update(String msg) {
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("windspeed"));
     }
 
     @Override
     public void setupUnits() {
+        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("avgwindspeed");
+        unit.setText(" " + UnitLabelUtilities.velocityUnitIndexToString(unitId));
     }
     
 }

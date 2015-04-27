@@ -1,0 +1,46 @@
+package DataObjects;
+
+/**
+ *
+ * @author Noah Fujioka
+ */
+
+import DatabaseUtilities.DatabaseDataObjectUtilities;
+
+public class FlightSummary {
+    private String startTimestamp;
+    private String pilotId;
+    private String pilotFirstName;
+    private String pilotLastName;
+    private String gliderNnumber;
+    
+    public FlightSummary(String startTimestamp, String pilotId, 
+            String pilotFirstName, String pilotLastName, String gliderNnumber){
+            this.startTimestamp = startTimestamp;
+            this.pilotId = pilotId;
+            this.pilotFirstName = pilotFirstName;
+            this.pilotLastName = pilotLastName;
+            this.gliderNnumber = gliderNnumber;
+    }
+    
+    public String toString(){
+        return startTimestamp + ", " + pilotFirstName + " " + pilotLastName +
+                ", " + gliderNnumber;
+    }
+    
+    public void setCurrentDataObjectSet(){
+        try{
+            DatabaseDataObjectUtilities.setCurrentDataObjectSetToFlight(this);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public String getStartTimestamp(){
+        return startTimestamp;
+    }
+    
+    public String getPilotId(){
+        return pilotId;
+    }
+}

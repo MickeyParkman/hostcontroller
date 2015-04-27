@@ -5,6 +5,9 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitLabelUtilities;
+import DataObjects.CurrentDataObjectSet;
+
 /**
  *
  * @author jtroxel
@@ -12,7 +15,7 @@ package EnvironmentalWidgets;
 public class HeadWindComponentWidget extends EnvironmentalWidget {
 
     public HeadWindComponentWidget() {
-        super("Headwind Component", true, true);
+        super("Headwind Component", true, false);
     }
 
     @Override
@@ -25,6 +28,8 @@ public class HeadWindComponentWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
+        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("headwind");
+        unit.setText(" " + UnitLabelUtilities.velocityUnitIndexToString(unitId));
     }
     
 }

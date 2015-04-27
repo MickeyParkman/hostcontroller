@@ -20,10 +20,10 @@ public class ProfileAirfieldPanel extends JPanel{
     private javax.swing.JScrollPane winchPositionsScrollPane;
     private javax.swing.JScrollPane runwaysScrollPane;
     private CurrentDataObjectSet currentData;       
-    protected JComboBox airfieldAltitudeComboBox = new JComboBox();
-    protected JComboBox gliderPosAltitudeComboBox = new JComboBox();
-    protected JComboBox runwayMagneticHeadingComboBox = new JComboBox();
-    protected JComboBox winchPosAltitudeComboBox = new JComboBox();
+    protected JComboBox airfieldAltitudeComboBox;
+    protected JComboBox gliderPosAltitudeComboBox;
+    protected JComboBox runwayMagneticHeadingComboBox;
+    protected JComboBox winchPosAltitudeComboBox;
     
     /**
      * Creates new form sailplanePanel
@@ -41,6 +41,10 @@ public class ProfileAirfieldPanel extends JPanel{
         gliderPositionsScrollPane = new javax.swing.JScrollPane();
         winchPositionsScrollPane = new javax.swing.JScrollPane();
         runwaysScrollPane = new javax.swing.JScrollPane();
+        airfieldAltitudeComboBox = new JComboBox();
+        gliderPosAltitudeComboBox = new JComboBox();
+        runwayMagneticHeadingComboBox = new JComboBox();
+        winchPosAltitudeComboBox = new JComboBox();
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
@@ -79,11 +83,11 @@ public class ProfileAirfieldPanel extends JPanel{
         airfieldAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
         airfieldAltitudeComboBox.setBounds(120, 101, 86, 20);
         airfieldAttributesPanel.add(airfieldAltitudeComboBox);
-        airfieldAltitudeComboBox.addItem("m");
         airfieldAltitudeComboBox.addItem("ft");
+        airfieldAltitudeComboBox.addItem("m");
         airfieldAltitudeComboBox.addItem("km");
         airfieldAltitudeComboBox.addItem("mi");
-        
+        airfieldAltitudeComboBox.setEnabled(false);
 
         JPanel gliderPostitionSubPanel = new JPanel();
         gliderPostitionSubPanel.setLayout(new BorderLayout(0, 0));
@@ -111,10 +115,11 @@ public class ProfileAirfieldPanel extends JPanel{
         gliderPosAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
         gliderPosAltitudeComboBox.setBounds(120, 75, 86, 20);
         gliderPositionAttributesPanel.add(gliderPosAltitudeComboBox);
-        gliderPosAltitudeComboBox.addItem("m");
         gliderPosAltitudeComboBox.addItem("ft");
+        gliderPosAltitudeComboBox.addItem("m");
         gliderPosAltitudeComboBox.addItem("km");
         gliderPosAltitudeComboBox.addItem("mi");
+        gliderPosAltitudeComboBox.setEnabled(false);
                
         JPanel runwaySubPanel = new JPanel();
         panel_1.add(runwaySubPanel);
@@ -133,7 +138,7 @@ public class ProfileAirfieldPanel extends JPanel{
         runwayAttributesPanelScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
         runwayAttributesPanelScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         
-        JLabel runwayAltitudeLabel = new JLabel("Magnetic Heading:");
+        JLabel runwayAltitudeLabel = new JLabel("Heading:");
         runwayAltitudeLabel.setBounds(10, 103, 100, 14);
         runwayAttributesPanel.add(runwayAltitudeLabel);
         
@@ -145,9 +150,10 @@ public class ProfileAirfieldPanel extends JPanel{
         runwayMagneticHeadingComboBox.setMaximumSize(new Dimension(32767, 20));
         runwayMagneticHeadingComboBox.setBounds(120, 100, 86, 20);
         runwayAttributesPanel.add(runwayMagneticHeadingComboBox);
-        runwayMagneticHeadingComboBox.addItem("true");
         runwayMagneticHeadingComboBox.addItem("magnetic");
-        
+        runwayMagneticHeadingComboBox.addItem("true");
+        runwayMagneticHeadingComboBox.setEnabled(false);
+                
         JPanel winchPostitionSubPanel = new JPanel();
         panel.add(winchPostitionSubPanel);
         winchPostitionSubPanel.setLayout(new BorderLayout(0, 0));
@@ -175,9 +181,10 @@ public class ProfileAirfieldPanel extends JPanel{
         winchPosAltitudeComboBox.setMaximumSize(new Dimension(32767, 20));
         winchPosAltitudeComboBox.setBounds(120, 75, 86, 20);
         winchPositionAttributesPanel.add(winchPosAltitudeComboBox);
-        winchPosAltitudeComboBox.addItem("m");
         winchPosAltitudeComboBox.addItem("ft");
+        winchPosAltitudeComboBox.addItem("m");
         winchPosAltitudeComboBox.addItem("km");
         winchPosAltitudeComboBox.addItem("mi");
+        winchPosAltitudeComboBox.setEnabled(false);
     }
 }

@@ -4,6 +4,7 @@ import AddEditPanels.AddEditPilotPanel;
 import Communications.Observer;
 import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.RecentLaunchSelections;
 import DataObjects.Pilot;
 import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import javax.swing.JPanel;
@@ -188,10 +189,21 @@ public class PilotPanel extends JPanel implements Observer{
     
     private void initPilotList() {
         try{
+            RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
+            
+            if (RecentLaunchSelections.IsInitialized()) {
+                List<Pilot> recentPilots = recent.getRecentPilot();
+                for (int i = 0; i < recentPilots.size(); i++){
+                    pilotNames.add(0, recentPilots.get(i));
+                }
+            }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
             // TODO change exception case
+        }
+        catch(Exception exp){
+            exp.printStackTrace();
         }
     }
 

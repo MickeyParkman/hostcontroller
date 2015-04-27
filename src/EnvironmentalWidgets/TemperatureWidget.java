@@ -5,6 +5,9 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitLabelUtilities;
+import DataObjects.CurrentDataObjectSet;
+
 /**
  *
  * @author jtroxel
@@ -17,6 +20,7 @@ public class TemperatureWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("temperature"));
     }
 
     @Override
@@ -25,6 +29,8 @@ public class TemperatureWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
+        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("temperature");
+        unit.setText(" " + UnitLabelUtilities.tempUnitIndexToString(unitId));
     }
     
 }

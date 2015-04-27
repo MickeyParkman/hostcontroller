@@ -1,5 +1,9 @@
 package EnvironmentalWidgets;
 
+import Configuration.UnitLabelUtilities;
+import DataObjects.CurrentDataObjectSet;
+import DataObjects.CurrentLaunchInformation;
+
 /**
  *
  * @author jtroxel
@@ -14,7 +18,8 @@ public class LaunchWeightWidget extends EnvironmentalWidget {
     @Override
     public void update()
     {
-        
+        float weight = CurrentLaunchInformation.getCurrentLaunchInformation().getGliderMaxGrossWeight();
+        field.setText(""+weight);
     }
 
     @Override
@@ -22,6 +27,8 @@ public class LaunchWeightWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
+        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("launchweight");
+        unit.setText(" " + UnitLabelUtilities.weightUnitIndexToString(unitId));
     }
     
 }
