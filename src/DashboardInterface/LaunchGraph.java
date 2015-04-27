@@ -6,6 +6,7 @@
 
 package DashboardInterface;
 
+import Communications.Observer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -47,7 +49,9 @@ import org.jfree.ui.Layer;
  * 
  * @author Alex
  */
-public class LaunchGraph extends JPanel {
+public class LaunchGraph extends JPanel implements Observer {
+    public HashMap datasetMap = new HashMap();
+    
     private final long serialVersionUID = 1L;
     TimeSeriesCollection heightDataset = new TimeSeriesCollection();
     TimeSeriesCollection speedDataset = new TimeSeriesCollection();
@@ -106,6 +110,7 @@ public class LaunchGraph extends JPanel {
         NumberAxis heightYAxis = new NumberAxis("Height");
         heightYAxis.setRange(0, 1050);
         plot.setRangeAxis(heightYAxis);
+        datasetMap.put("Height", dataset1);
     
         XYDataset dataset2 = createDataset2();
         plot.setDataset(1, dataset2);
@@ -113,6 +118,7 @@ public class LaunchGraph extends JPanel {
         NumberAxis speedYAxis = new NumberAxis("Speed");
         speedYAxis.setRange(0, 50);
         plot.setRangeAxis(1, speedYAxis);
+        datasetMap.put("Speed", dataset2);
     
         XYDataset dataset3 = createDataset3();
         plot.setDataset(2, dataset3);
@@ -120,6 +126,7 @@ public class LaunchGraph extends JPanel {
         NumberAxis tensionYAxis = new NumberAxis("Tension");
         tensionYAxis.setRange(0, 8000);
         plot.setRangeAxis(2, tensionYAxis);
+        datasetMap.put("Tension", dataset3);
 
         plot.mapDatasetToRangeAxis(0, 0);//1st dataset to 1st y-axis
         plot.mapDatasetToRangeAxis(1, 1); //2nd dataset to 2nd y-axis
@@ -143,6 +150,8 @@ public class LaunchGraph extends JPanel {
         XYLineAndShapeRenderer renderer3 = (XYLineAndShapeRenderer) plot.getRendererForDataset(tensionDataset);
         renderer3.setBaseShapesVisible(false);
         renderer3.setBaseShapesFilled(false);
+        
+        addDataset("test ", 3, 100);
         
         return chart;
     }
@@ -270,6 +279,31 @@ public class LaunchGraph extends JPanel {
         }
     }
     
+    public void addDataset(String title, int index, int range) {
+        XYSplineRenderer render = new XYSplineRenderer();
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
+        TimeSeries series = new TimeSeries(title);
+        dataset.addSeries(series);
+        XYDataset xyDataset = dataset;
+        
+        plot.setDataset(index, xyDataset);
+        plot.setRenderer(index, render);
+        
+        NumberAxis axis = new NumberAxis(title);
+        axis.setRange(0, range);
+        
+        plot.setRangeAxis(index, axis);
+        plot.mapDatasetToRangeAxis(index, index);
+        
+        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRendererForDataset(xyDataset);
+        renderer.setBaseShapesVisible(false);
+        renderer.setBaseShapesFilled(false);
+    }
+    
+    public void addDataPoint(long time, float value, TimeSeries series) {
+        series.addOrUpdate(new Millisecond(new Date(previousTime)), value);
+    }
+    
     /**
      * Creates a panel for the demo (used by SuperDemo.java).
      *
@@ -284,5 +318,15 @@ public class LaunchGraph extends JPanel {
         panel.setDomainZoomable(false);
         panel.setFocusable(false);
         return panel;
+    }
+
+    @Override
+    public void update() {
+        
+    }
+
+    @Override
+    public void update(String msg) {
+        
     }
 }

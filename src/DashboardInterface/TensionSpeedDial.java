@@ -116,8 +116,9 @@ public class TensionSpeedDial extends JPanel implements Observer {
                         standarddialscale1.setTickRadius(0.5D);
                         standarddialscale1.setTickLabelOffset(0.14999999999999999D);
                         standarddialscale1.setTickLabelFont(new Font("Dialog", 0, 10));
-                        standarddialscale1.setMajorTickPaint(Color.BLUE);
-                        standarddialscale1.setMinorTickPaint(Color.BLUE);
+                        standarddialscale1.setTickLabelPaint(Color.RED);
+                        standarddialscale1.setMajorTickPaint(Color.RED);
+                        standarddialscale1.setMinorTickPaint(Color.RED);
                         dialplot.addScale(1, standarddialscale1);
                         
                         dialplot.mapDatasetToScale(1, 1);
@@ -153,6 +154,7 @@ public class TensionSpeedDial extends JPanel implements Observer {
                         dialplot.addPointer(pin);
                         
                         org.jfree.chart.plot.dial.DialPointer.Pointer pointer = new org.jfree.chart.plot.dial.DialPointer.Pointer(0);
+                        pointer.setFillPaint(Color.BLUE);
                         dialplot.addPointer(pointer);
                         
                         DialCap dialcap = new DialCap();

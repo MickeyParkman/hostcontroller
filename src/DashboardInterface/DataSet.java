@@ -5,6 +5,7 @@
  */
 package DashboardInterface;
 
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.xy.XYDataset;
 
@@ -14,12 +15,16 @@ import org.jfree.data.xy.XYDataset;
  */
 public class DataSet {
     
+    public XYSplineRenderer render;
+    public XYDataset dataset;
+    public NumberAxis numberAxis;
+    
     public DataSet() {
         
     }
     
-    public DataSet(String title, XYDataset dataset, XYSplineRenderer render, int range) {
-        
+    public DataSet(String title, int range) {
+        render = new XYSplineRenderer();
     }
     
 }
