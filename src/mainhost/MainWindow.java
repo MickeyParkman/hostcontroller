@@ -4,36 +4,25 @@ import Configuration.ProfileManagementFrame;
 import Configuration.DatabaseExportFrame;
 import Configuration.DatabaseImportFrame;
 import ParameterSelection.ParameterSelectionPanel;
+import ParameterSelection.RecentLaunchesPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Profile;
-import DatabaseUtilities.DatabaseImporter;
 import javax.swing.*;
 import java.awt.Dimension;   
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.GridLayout;
 import java.awt.Color;
-import java.sql.SQLException;
 import javax.swing.BoxLayout;
-import DatabaseUtilities.DatabaseInitialization;
 import ParameterSelection.CurrentScenario;
 import ParameterSelection.EnvironmentalWindow;
-import ParameterSelection.WinchEditPanel;
 import ParameterSelection.DEBUGWinchEditPanel;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.border.LineBorder;
 import Communications.MessagePipeline;
-import java.awt.Component;
 
 public class MainWindow extends JFrame {
     private String version = "2.0.1";
@@ -82,29 +71,44 @@ public class MainWindow extends JFrame {
         upperLeftSidePanelScenario = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         upperLeftSidePanelDashboard = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         upperLeftSidePanelWinch = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
+        lowerLeftSidePanelScenario = new RecentLaunchesPanel();
+        lowerLeftSidePanelDashboard = new RecentLaunchesPanel();
+        lowerLeftSidePanelWinch = new RecentLaunchesPanel();
         createAndShowGUI();
             }
 
     private void initializeDefaultProfile()
     {
         Profile defaultProfile = new Profile("Default", "{}", "{}"); 
-        defaultProfile.setUnitSetting("flightWeight", 0);
+        defaultProfile.setUnitSetting("flightWeight", 1);
         
-        defaultProfile.setUnitSetting("emptyWeight", 0);
-        defaultProfile.setUnitSetting("maxGrossWeight", 0);
-        defaultProfile.setUnitSetting("stallSpeed", 0);
-        defaultProfile.setUnitSetting("ballastWeight", 0);
-        defaultProfile.setUnitSetting("baggageWeight", 0);
-        defaultProfile.setUnitSetting("passengerWeight", 0);
-        defaultProfile.setUnitSetting("maxTension", 0);
-        defaultProfile.setUnitSetting("weakLinkStrength", 0);
-        defaultProfile.setUnitSetting("winchingSpeed", 0);
+        defaultProfile.setUnitSetting("emptyWeight", 1);
+        defaultProfile.setUnitSetting("maxGrossWeight", 1);
+        defaultProfile.setUnitSetting("stallSpeed", 1);
+        defaultProfile.setUnitSetting("ballastWeight", 1);
+        defaultProfile.setUnitSetting("baggageWeight", 1);
+        defaultProfile.setUnitSetting("passengerWeight", 1);
+        defaultProfile.setUnitSetting("maxTension", 1);
+        defaultProfile.setUnitSetting("weakLinkStrength", 1);
+        defaultProfile.setUnitSetting("winchingSpeed", 1);
         
-        defaultProfile.setUnitSetting("airfieldAltitude", 0);
-        defaultProfile.setUnitSetting("gliderPosAltitude", 0);
-        defaultProfile.setUnitSetting("runwayAltitude", 0);
-        defaultProfile.setUnitSetting("winchPosAltitude", 0);
+        defaultProfile.setUnitSetting("airfieldAltitude", 1);
+        defaultProfile.setUnitSetting("gliderPosAltitude", 1);
+        defaultProfile.setUnitSetting("runwayMagneticHeading", 1);
+        defaultProfile.setUnitSetting("winchPosAltitude", 1);
         
+        defaultProfile.setUnitSetting("avgWindSpeed", 1);
+        defaultProfile.setUnitSetting("crosswind", 1);
+        defaultProfile.setUnitSetting("gustWindSpeed", 1);
+        defaultProfile.setUnitSetting("headwind", 1);
+        defaultProfile.setUnitSetting("launchWeight", 1);
+        defaultProfile.setUnitSetting("densityAltitude", 1);
+        defaultProfile.setUnitSetting("runLength", 1);
+        defaultProfile.setUnitSetting("pressure", 4);
+        defaultProfile.setUnitSetting("temperature", 1);
+        defaultProfile.setUnitSetting("runDirection", 1);
+        defaultProfile.setUnitSetting("windDirection", 1);
+                
         currentData.setCurrentProfile(defaultProfile);
     }
     
@@ -136,21 +140,12 @@ public class MainWindow extends JFrame {
         
         //TODO (jtroxel) move all side panels into their respective panels, since they are tied to them
         // RSP can stay with main window IF static.
-        lowerLeftSidePanelScenario = new JPanel();
-        lowerLeftSidePanelScenario.setPreferredSize(new Dimension(200,WIDTH));
-        lowerLeftSidePanelScenario.setBackground(Color.WHITE);
         leftSidePanelScenario.add(upperLeftSidePanelScenario);
         leftSidePanelScenario.add(lowerLeftSidePanelScenario);
         
-        lowerLeftSidePanelDashboard = new JPanel();
-        lowerLeftSidePanelDashboard.setPreferredSize(new Dimension(200,WIDTH));
-        lowerLeftSidePanelDashboard.setBackground(Color.WHITE);
         leftSidePanelDashboard.add(upperLeftSidePanelDashboard);
         leftSidePanelDashboard.add(lowerLeftSidePanelDashboard);
         
-        lowerLeftSidePanelWinch = new JPanel();
-        lowerLeftSidePanelWinch.setPreferredSize(new Dimension(200,WIDTH));
-        lowerLeftSidePanelWinch.setBackground(Color.WHITE);
         leftSidePanelWinch.add(upperLeftSidePanelWinch);
         leftSidePanelWinch.add(lowerLeftSidePanelWinch);
                 
@@ -167,7 +162,7 @@ public class MainWindow extends JFrame {
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);
 
         mainWindow.add(statusLabel, BorderLayout.PAGE_END);
-        statusLabel.setText("LOADED");
+        statusLabel.setText(" ");
 
         getContentPane().add(mainWindow);
         pack();
@@ -192,28 +187,31 @@ public class MainWindow extends JFrame {
 //FILE MENU
         JMenuItem setupDBItem = new JMenuItem("Setup Database");
         setupDBItem.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent event) {
-                try 
-                {
-                    //DatabaseUtilities.DatabaseInitialization.deleteDB();
-                    DatabaseUtilities.DatabaseInitialization.initDatabase(ParameterSelectionPanel_);
-                }
-                catch(ClassNotFoundException e1) 
-                {
-                    JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
-                }
-                catch(SQLException e2) 
-                {
-                    if(e2.getErrorCode() == 30000) 
+                int choice = JOptionPane.showConfirmDialog (null, "This will clear all databases. Are you sure you want to proceed?", "Warning",JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION){
+                    try 
                     {
-                        JOptionPane.showMessageDialog(null, "Database Already Exists");
+                        //DatabaseUtilities.DatabaseInitialization.deleteDB();
+                        DatabaseUtilities.DatabaseInitialization.initDatabase();
                     }
-                    else 
-                    { 
-                        JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
+                    catch(ClassNotFoundException e1) 
+                    {
+                        JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
+                    }
+                    catch(SQLException e2) 
+                    {
+                        if(e2.getErrorCode() == 30000) 
+                        {
+                            JOptionPane.showMessageDialog(null, "Database Already Exists");
+                        }
+                        else 
+                        { 
+                            JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
+                        }
                     }
                 }
+                else{}
             }
         });
 	fileMenu.add(setupDBItem);
@@ -228,7 +226,7 @@ public class MainWindow extends JFrame {
         });
 	fileMenu.add(exportDBItem);
         
-        JMenuItem importDBItem = new JMenuItem("Import From Database");
+        JMenuItem importDBItem = new JMenuItem("Import From File");
         importDBItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -262,7 +260,7 @@ public class MainWindow extends JFrame {
         });
 	fileMenu.add(importDBItem);
  
-        JMenuItem connectMenuItem = new JMenuItem("Connect to Server");
+        JMenuItem connectMenuItem = new JMenuItem("Connect to Winch");
         connectMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -291,7 +289,7 @@ public class MainWindow extends JFrame {
         });
 	fileMenu.add(connectMenuItem);
         
-        JMenuItem disconnectMenuItem = new JMenuItem("Disconnect from Server");
+        JMenuItem disconnectMenuItem = new JMenuItem("Disconnect from Winch");
         disconnectMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -315,7 +313,7 @@ public class MainWindow extends JFrame {
 //EDIT MENU
         //editMenu.add(editAddMenu);
 
-    	JMenuItem preferencesItem = new JMenuItem("Manage Profiles");
+    	JMenuItem preferencesItem = new JMenuItem("Operator Profiles");
     	preferencesItem.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {

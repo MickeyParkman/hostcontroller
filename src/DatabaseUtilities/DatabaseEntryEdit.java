@@ -176,12 +176,11 @@ public class DatabaseEntryEdit
         updateString = "UPDATE RUNWAY SET "
                 + "runway_name = '" + runway.getName() + "', "
                 + "parent = '" + runway.getParent() + "', "
-                + "magnetic_heading = '" + runway.getMagneticHeading() + "', "
+                + "magnetic_heading = " + runway.getMagneticHeading() + ", "
                 + "altitude = " + String.valueOf(runway.getAltitude()) + ", "
                 + "optional_info = '" + runway.getOptionalInfo() + "' "
                 + "WHERE runway_id = '" + runway.getId() + "' "
                 + "AND parent_id = '" + runway.getParentId() + "' ";
-        
         Update(updateString);
     }
     
@@ -195,17 +194,16 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE GLIDERPOSITION SET "
-                + "glider_position_id = '" + position.getId() + "', "
+                + "position_id = '" + position.getGliderPositionId() + "', "
                 + "runway_parent = '" + position.getRunwayParent() + "', "
                 + "airfield_parent = '" + position.getAirfieldParent() + "', "
-                + "altitude = " + String.valueOf(position.getAltitude()) + ", "
-                + "latitude = " + String.valueOf(position.getLatitude()) + ", "
-                + "longitude = " + String.valueOf(position.getLongitude()) + ", "
+                + "altitude = " + position.getAltitude() + ", "
+                + "latitude = " + position.getLatitude() + ", "
+                + "longitude = " + position.getLongitude() + ", "
                 + "optional_info = '" + position.getOptionalInfo() + "' "
-                + "WHERE position_id = '" + position.getGliderPositionId() + "' "
-                + "AND runway_parent_id = '" + position.getRunwayParent() + "' "
-                + "AND airfield_parent_id = '" + position.getAirfieldParent() + "' ";
-        
+                + "WHERE glider_position_id = '" + position.getId() + "' ";
+                //+ "AND runway_parent_id = '" + position.getRunwayParentId() + "' "
+                //+ "AND airfield_parent_id = '" + position.getAirfieldParentId() + "' ";
         Update(updateString);
     }
     
@@ -219,17 +217,17 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE WINCHPOSITION SET "
-                + "winch_position_id = '" + position.getId() + "', "
+                + "name = '" + position.getName() + "', "
                 + "runway_parent = '" + position.getRunwayParent() + "', "
                 + "airfield_parent = '" + position.getAirfieldParent() + "', "
                 + "altitude = " + String.valueOf(position.getAltitude()) + ", "
                 + "latitude = " + String.valueOf(position.getLatitude()) + ", "
                 + "longitude = " + String.valueOf(position.getLongitude()) + ", "
                 + "optional_info = '" + position.getOptionalInfo() + "' "
-                + "WHERE name = '" + position.getName() + "' "
-                + "AND runway_parent_id = '" + position.getRunwayParent() + "' "
-                + "AND airfield_parent_id = '" + position.getAirfieldParent() + "' ";
-        
+                + "WHERE winch_position_id = '" + position.getId() + "' ";
+                //+ "AND runway_parent_id = '" + position.getRunwayParent() + "' "
+                //+ "AND airfield_parent_id = '" + position.getAirfieldParent() + "' ";
+      
         Update(updateString);
     }
     

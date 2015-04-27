@@ -26,7 +26,7 @@ public class UnitLabelUtilities {
             case 5:
                 return "mi";
             default:
-                return "";
+                return "m";
         }
     }
     
@@ -41,7 +41,7 @@ public class UnitLabelUtilities {
             case 3:
                 return "daN";
             default:
-                return "";
+                return "N";
         } 
     }
     
@@ -52,7 +52,7 @@ public class UnitLabelUtilities {
             case 1:
                 return "lbs";
             default:
-                return "";
+                return "kg";
         } 
     }
     
@@ -66,32 +66,53 @@ public class UnitLabelUtilities {
                 return "m/s";
             case 3:
                 return "kn";
+            case 4:
+                return "kts";
             default:
-                return "";
+                return "kph";
+        } 
+    }
+    
+    public static String degreesUnitIndexToString(int index) {
+       switch (index) {
+            case 0:
+                return "true";
+            case 1:
+                return "magnetic";
+            case 2:
+                return "relative";
+            default:
+                return "true";
         } 
     }
     
     public static String tempUnitIndexToString(int index) {
        switch (index) {
-            case 1:
-                return "F";
             case 0:
                 return "C";
+            case 1:
+                return "F";
             default:
-                return "";
+                return "C";
         } 
     }
     
     public static String pressureUnitIndexToString(int index) {
        switch (index) {
-            case 0:
-                return "psi";
+            case 0: 
+                return "hPa";
             case 1:
-                return "Mp";
-            case 2: 
-                return "Kp";
+                return "kPa";
+            case 2:
+                return "psi";
+            case 3:
+                return "bar";  
+            case 4:
+                return "millibar";  
+            case 5:
+                return "atm"; 
             default:
-                return "";
+                return "hPa";
         } 
     }
 }

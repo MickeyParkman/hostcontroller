@@ -240,7 +240,7 @@ public class AddEditGliderPosFrame extends JFrame {
     
     protected void submitData(){
         if (isComplete()){
-            String gliderPosId = nameField.getText();
+            String gliderPosName = nameField.getText();
             float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID);
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
@@ -259,7 +259,7 @@ public class AddEditGliderPosFrame extends JFrame {
                 System.out.println("cur runway 404 " + e.getMessage());
             }
             
-            GliderPosition newGliderPos = new GliderPosition(gliderPosId, 
+            GliderPosition newGliderPos = new GliderPosition(gliderPosName, 
                     runwayParent, airfieldParent, altitude,
                     latitude, longitude, "");
             newGliderPos.setId(currentGliderPos.getId());
@@ -270,7 +270,6 @@ public class AddEditGliderPosFrame extends JFrame {
                 Object[] options = {"One-time Launch", "Save to Database"};
                 int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider Position for a one-time launch or save it to the database?",
                     "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                System.out.println(choice);
                 if (choice == 0){
                     parent.update("3");
                     this.dispose();
@@ -306,7 +305,6 @@ public class AddEditGliderPosFrame extends JFrame {
 
     public boolean isComplete()
     {
-    ErrWindow ew;
     try
     {
         boolean emptyFields = false;

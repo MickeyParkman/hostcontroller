@@ -118,8 +118,8 @@ public class AddEditGlider extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel nNumberLabel = new JLabel("N Number:");
-        nNumberLabel.setBounds(10, 11, 86, 14);
+        JLabel nNumberLabel = new JLabel("Registration Number:");
+        nNumberLabel.setBounds(10, 11, 125, 14);
         contentPane.add(nNumberLabel);
         
         JLabel emptyWeightLabel = new JLabel("Empty Weight:");
@@ -300,7 +300,7 @@ public class AddEditGlider extends JFrame {
         contentPane.add(tensionUnitsLabel);
         
         JLabel releaseAngelUnitsLabel = new JLabel("degrees");
-        releaseAngelUnitsLabel.setBounds(617, 86, 46, 14);
+        releaseAngelUnitsLabel.setBounds(617, 86, 60, 14);
         contentPane.add(releaseAngelUnitsLabel);
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -389,7 +389,6 @@ public class AddEditGlider extends JFrame {
     }
     
     public boolean isComplete(){
-        ErrWindow ew;
         try
         {
             boolean emptyFields = false;
@@ -469,7 +468,6 @@ public class AddEditGlider extends JFrame {
             return false;
         }catch(Exception e){
             JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
-            ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
             return false;
         }
         return true;
