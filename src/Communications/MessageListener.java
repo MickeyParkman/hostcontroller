@@ -9,11 +9,11 @@ public class MessageListener implements Observer
     static final int ID_OFFSET = 21;
     static final int ID_SCALE = 1 << ID_OFFSET;
     static final int TIME_MESSAGE_ID = 256 * ID_SCALE;              // 0x200
-    static final int MOTOR_MESSAGE_ID = 296 * ID_SCALE;             // 0x250
+    static final int MOTOR_MESSAGE_ID = 292 * ID_SCALE;             // 0x248
     static final int TORQUE_COMMAND_MESSAGE_ID = 300 * ID_SCALE;    // 0x258
     static final int STATE_MESSAGE_ID = 304 * ID_SCALE;             // 0x260
     static final int PARAM_REQUEST_MESSAGE_ID = 312 * ID_SCALE;     // 0x270 
-    static final int LAUNCH_PARAM_MESSAGE_ID = 327 * ID_SCALE;      // 0x28e
+    static final int LAUNCH_PARAM_MESSAGE_ID = 320 * ID_SCALE;      // 0x280
     static final int CP_CL_RMT_MESSAGE_ID = 328 * ID_SCALE;         // 0x290
     static final int CP_CL_LCL_MESSAGE_ID = 329 * ID_SCALE;         // 0x292
     static final int CP_INPUTS_RMT_MESSAGE_ID = 330 * ID_SCALE;     // 0x294
@@ -23,9 +23,12 @@ public class MessageListener implements Observer
     static final int DRUM_MESSAGE_ID = 432 * ID_SCALE;              // 0x360
     static final int TENSION_MESSAGE_ID = 448 * ID_SCALE;           // 0x380
     static final int CABLE_ANGLE_MESSAGE_ID = 464 * ID_SCALE;       // 0x3a0
+    static final int ZERO_ODOMETER_ID = 672 * ID_OFFSET;            // 0x540
+    static final int ZERO_TENSIOMETER_ID = 681 * ID_OFFSET;         // 0x552
     static final int DENSITY_ALTITUDE_ID = 689 * ID_SCALE;          // 0x562
     static final int WIND_ID = 690 * ID_SCALE;                      // 0x564
     static final int BATTERY_SYSTEM_ID = 704 * ID_SCALE;            // 0x580
+    
 
     private final int NUMBER_DRUMS = 1;
     private final int NUMBER_CICS = 5;
