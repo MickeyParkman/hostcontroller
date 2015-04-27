@@ -36,6 +36,11 @@ public class CurrentDataObjectSet {
         observers.add(ob);
     }
     
+    public void forceUpdate()
+    {
+        notifyObservers();
+    }
+    
     private void notifyObservers()
     {
         for(Observer ob : observers)

@@ -49,6 +49,7 @@ public class SystemsStatus extends javax.swing.JPanel {
 
         setLayout(new AbsoluteLayout());
 
+        setBackground(Color.WHITE);
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 0));
         jLabel1.setText("Motors");

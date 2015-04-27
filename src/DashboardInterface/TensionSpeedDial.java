@@ -42,10 +42,20 @@ public class TensionSpeedDial extends JPanel implements Observer {
          * @param tension a new tension to display
          * @param speed a new speed to display
          */
-        public void dialUpdate(double tension, double speed) {
+        public void dialUpdate(double tension) {
             //System.out.println("2");
-            dataset1.setValue(speed);
+            //dataset1.setValue(speed);
             dataset2.setValue(tension);      
+        }
+        
+        private void updateTension(double t)
+        {
+            dataset2.setValue(t);
+        }
+        
+        private void updateSpeed(double s)
+        {
+            dataset1.setValue(s);
         }
         
         public TensionSpeedDial(JPanel parentIn)
@@ -54,16 +64,13 @@ public class TensionSpeedDial extends JPanel implements Observer {
                 parent = parentIn;
                 dataset1 = new DefaultValueDataset(0D);
                 dataset2 = new DefaultValueDataset(0D);
-                
                 pipe = MessagePipeline.getInstance();
                 pipe.attach(this);
-                
                 DialPlot dialplot = new DialPlot();
-                        
                 dialplot.setView(0.0D, 0.0D, 1.0D, 1.0D);
                 dialplot.setDataset(0, dataset1);
                 dialplot.setDataset(1, dataset2);
-                        
+                setBackground(Color.WHITE);        
                 StandardDialFrame standarddialframe = new StandardDialFrame();
                 standarddialframe.setBackgroundPaint(Color.lightGray);
                 standarddialframe.setForegroundPaint(Color.darkGray);
@@ -159,6 +166,7 @@ public class TensionSpeedDial extends JPanel implements Observer {
                         width = 200;
                         
                         JFreeChart jfreechart = new JFreeChart(dialplot);
+                        jfreechart.setBackgroundPaint(Color.WHITE);
                         ChartPanel chartpanel = new ChartPanel(jfreechart);
                         chartpanel.setPreferredSize(new Dimension(width, width));
                         
@@ -200,13 +208,21 @@ public class TensionSpeedDial extends JPanel implements Observer {
 
     @Override
     public void update() {}
-
+    
     @Override
     public void update(String msg) {
         if(!msg.equals(""))
         {
-            String mParts[] = msg.split(" ");
-            dialUpdate(Double.parseDouble(mParts[1]), Double.parseDouble(mParts[0]));
+            String mParts[] = msg.split(";");
+            switch (mParts[0])
+            {
+                case "TENSION":
+                    updateTension(Double.parseDouble(mParts[1]));
+                    break;
+                case "SPEED":
+                    updateSpeed(Double.parseDouble(mParts[1]));
+                    break;
+            }
         }
     }
     

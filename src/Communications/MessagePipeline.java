@@ -49,6 +49,11 @@ public class MessagePipeline implements Runnable {
         return instance;
     }
    
+    public static DataRelay getDataRelay()
+    {
+        if(instance != null) return instance.relay;
+        else return null;
+    }
     
     public void init()
     {

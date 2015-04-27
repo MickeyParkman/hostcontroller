@@ -32,6 +32,7 @@ public class SaveAsNewFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public SaveAsNewFrame() {
+            setTitle("New Profile");
             currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setBounds(100, 100, 287, 110);

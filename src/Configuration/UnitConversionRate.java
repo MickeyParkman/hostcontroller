@@ -36,6 +36,14 @@ public class UnitConversionRate {
     public static final float MPH = (float) 0.621371;
     public static final float MPS = (float) 0.2777778;
     public static final float KN = (float) 0.539957;
+        
+    //Conversion rates for pressure from the standard of hPa
+    public static final float HPA = 1;
+    public static final float KPA = (float) 0.1;
+    public static final float PSI = (float) 0.0145038;
+    public static final float BAR = (float) 0.001;
+    public static final float MILLIBAR = (float) 1;
+    public static final float ATM = (float) 0.000986923;
     
     
     public static float convertTensionUnitIndexToFactor(int index) {
@@ -94,8 +102,29 @@ public class UnitConversionRate {
                 return MPS; 
             case 3:
                 return KN;
+            case 4:
+                return KN;
             default:
                 return KPH;
         }
-    }  
+    }
+    
+    public static float pressureUnitIndexToString(int index) {
+       switch (index) {
+            case 0: 
+                return HPA;
+            case 1:
+                return KPA;
+            case 2:
+                return PSI;
+            case 3:
+                return BAR;
+            case 4:
+                return MILLIBAR; 
+            case 5:
+                return ATM; 
+            default:
+                return HPA;
+        } 
+    }
 }

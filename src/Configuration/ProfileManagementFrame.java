@@ -14,12 +14,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.util.Random;
 import Communications.Observer;
-import DatabaseUtilities.DatabaseDataObjectUtilities;
 import DatabaseUtilities.DatabaseEntryEdit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 
@@ -29,7 +26,7 @@ public class ProfileManagementFrame extends JFrame {
     private ProfilePilotPanel ProfilePilotPanel;
     private ProfileGliderPanel ProfileGliderPanel;
     private ProfileAirfieldPanel ProfileAirfieldPanel;
-    private ProfileWinchPanel ProfileWinchPanel;
+    private ProfileDisplayPanel ProfileDisplayPanel;
     private ProfileOtherPanel ProfileOtherPanel;
     private SaveAsNewFrame SaveAsNewFrame;
     private List<Profile> names = new ArrayList<Profile>();
@@ -64,7 +61,10 @@ public class ProfileManagementFrame extends JFrame {
     private int ballastWeightUnitsID;
     private int baggageWeightUnitsID;
     private int passengerWeightUnitsID;
-
+    private JButton saveButton;
+    private JButton saveAsNewButton;
+    private JButton addNewButton;
+    
     public void setParent(Observer p)
     {
         parent = p;
@@ -75,7 +75,7 @@ public class ProfileManagementFrame extends JFrame {
         flightWeightUnits = (String)ProfilePilotPanel.flightWeightComboBox.getSelectedItem();
         airfieldAltitudeUnits = (String)ProfileAirfieldPanel.airfieldAltitudeComboBox.getSelectedItem();
         gliderPosAltitudeUnits = (String)ProfileAirfieldPanel.gliderPosAltitudeComboBox.getSelectedItem();
-        runwayAltitudeUnits = (String)ProfileAirfieldPanel.runwayAltitudeComboBox.getSelectedItem();
+        //runwayAltitudeUnits = (String)ProfileAirfieldPanel.runwayAltitudeComboBox.getSelectedItem();
         winchPosAltitudeUnits = (String)ProfileAirfieldPanel.winchPosAltitudeComboBox.getSelectedItem();
         emptyWeightUnits = (String)ProfileGliderPanel.emptyWeightComboBox.getSelectedItem();
         maxGrossWeightUnits = (String)ProfileGliderPanel.maxGrossWeightComboBox.getSelectedItem();
@@ -113,7 +113,8 @@ public class ProfileManagementFrame extends JFrame {
         currentProfile_.setUnitSetting("winchPosAltitude", UnitConversionToIndexUtilities.lenghtUnitStringToIndex(winchPosAltitudeUnits));
         currentProfile_.setUnitSetting("runwayAltitude", UnitConversionToIndexUtilities.lenghtUnitStringToIndex(runwayAltitudeUnits));
         currentProfile_.setUnitSetting("maxTension", UnitConversionToIndexUtilities.tensionUnitStringToIndex(maxTensionUnits));
-        currentProfile_.setUnitSetting("stallSpeed", UnitConversionToIndexUtilities.tensionUnitStringToIndex(stallSpeedUnits));
+        currentProfile_.setUnitSetting("weakLinkStrength", UnitConversionToIndexUtilities.tensionUnitStringToIndex(weakLinkStrengthUnits));
+        currentProfile_.setUnitSetting("stallSpeed", UnitConversionToIndexUtilities.velocityUnitStringToIndex(stallSpeedUnits));
         currentProfile_.setUnitSetting("winchingSpeed", UnitConversionToIndexUtilities.velocityUnitStringToIndex(maxWinchingSpeedUnits));
         currentData.setCurrentProfile(currentProfile_);
         parent.update();
@@ -126,6 +127,33 @@ public class ProfileManagementFrame extends JFrame {
         //System.out.println(currentData.getCurrentProfile().getUnitSettingsForStorage());
     }
 
+    public void addNewButtonClicked()
+    {
+        getUnitsForProfile();
+        Random randomId = new Random();
+        String temp = String.valueOf(randomId.nextInt(100000000));
+        Profile newProfile = new Profile(temp,"{}","{}");
+        newProfile.setUnitSetting("flightWeight", 0);
+        newProfile.setUnitSetting("emptyWeight", 0);
+        newProfile.setUnitSetting("maxGrossWeight", 0);
+        newProfile.setUnitSetting("ballastWeight", 0);
+        newProfile.setUnitSetting("baggageWeight", 0);
+        newProfile.setUnitSetting("passengerWeight", 0);
+        newProfile.setUnitSetting("airfieldAltitude", 0);
+        newProfile.setUnitSetting("gliderPosAltitude", 0);
+        newProfile.setUnitSetting("winchPosAltitude", 0);
+        newProfile.setUnitSetting("runwayAltitude", 0);
+        newProfile.setUnitSetting("maxTension", 0);
+        newProfile.setUnitSetting("weakLinkStrength", 0);
+        newProfile.setUnitSetting("stallSpeed", 0);
+        newProfile.setUnitSetting("winchingSpeed", 0);
+        currentData.setCurrentProfile(newProfile);
+        SaveAsNewFrame = new SaveAsNewFrame();
+        SaveAsNewFrame.setParent(getCurrentProfileManagementFrame());
+        SaveAsNewFrame.setVisible(true);
+        parent.update();
+    }
+    
     public void saveAsNewButtonClicked()
     {
         getUnitsForProfile();
@@ -143,6 +171,7 @@ public class ProfileManagementFrame extends JFrame {
         newProfile.setUnitSetting("winchPosAltitude", UnitConversionToIndexUtilities.lenghtUnitStringToIndex(winchPosAltitudeUnits));
         newProfile.setUnitSetting("runwayAltitude", UnitConversionToIndexUtilities.lenghtUnitStringToIndex(runwayAltitudeUnits));
         newProfile.setUnitSetting("maxTension", UnitConversionToIndexUtilities.tensionUnitStringToIndex(maxTensionUnits));
+        newProfile.setUnitSetting("weakLinkStrength", UnitConversionToIndexUtilities.tensionUnitStringToIndex(weakLinkStrengthUnits));
         newProfile.setUnitSetting("stallSpeed", UnitConversionToIndexUtilities.tensionUnitStringToIndex(stallSpeedUnits));
         newProfile.setUnitSetting("winchingSpeed", UnitConversionToIndexUtilities.velocityUnitStringToIndex(maxWinchingSpeedUnits));
         currentData.setCurrentProfile(newProfile);
@@ -181,7 +210,7 @@ public class ProfileManagementFrame extends JFrame {
         return this;
     }
 
-    private void profileJListMouseClicked(java.awt.event.MouseEvent evt) {
+    private void profileJListSelectionChanged(ListSelectionEvent listSelectionEvent) {
         if(profileJList.getSelectedIndex() >= 0){
             try{
                 Profile selectedProfile = (Profile)profileJList.getSelectedValue();
@@ -201,9 +230,9 @@ public class ProfileManagementFrame extends JFrame {
                 String gliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(gliderPosAltitudeUnitsID);
                 ProfileAirfieldPanel.gliderPosAltitudeComboBox.setSelectedItem(gliderPosAltitudeUnitsString);
 
-                runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
-                String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
-                ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem(runwayAltitudeUnitsString);
+                //runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
+                //String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
+                //ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem(runwayAltitudeUnitsString);
 
                 winchPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("winchPosAltitude");
                 String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(winchPosAltitudeUnitsID);
@@ -245,6 +274,8 @@ public class ProfileManagementFrame extends JFrame {
                 String winchingSpeedUnitsString = UnitLabelUtilities.velocityUnitIndexToString(winchingSpeedUnitsID);
                 ProfileGliderPanel.maxWinchingSpeedComboBox.setSelectedItem(winchingSpeedUnitsString);
 
+                saveButton.setEnabled(true);
+                saveAsNewButton.setEnabled(true);
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -273,9 +304,9 @@ public class ProfileManagementFrame extends JFrame {
         String gliderPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(gliderPosAltitudeUnitsID);
         ProfileAirfieldPanel.gliderPosAltitudeComboBox.setSelectedItem(gliderPosAltitudeUnitsString);
 
-        runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
-        String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
-        ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem(runwayAltitudeUnitsString);
+        //runwayAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("runwayAltitude");
+        //String runwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
+        //ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem(runwayAltitudeUnitsString);
 
         winchPosAltitudeUnitsID = currentData.getCurrentProfile().getUnitSetting("winchPosAltitude");
         String winchPosAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(winchPosAltitudeUnitsID);
@@ -323,7 +354,7 @@ public class ProfileManagementFrame extends JFrame {
         ProfilePilotPanel = new ProfilePilotPanel();
         ProfileGliderPanel = new ProfileGliderPanel();
         ProfileAirfieldPanel = new ProfileAirfieldPanel();
-        ProfileWinchPanel = new ProfileWinchPanel();
+        ProfileDisplayPanel = new ProfileDisplayPanel();
         ProfileOtherPanel = new ProfileOtherPanel();
         profileScrollPane = new javax.swing.JScrollPane();
         profileJList = new javax.swing.JList();
@@ -355,16 +386,26 @@ public class ProfileManagementFrame extends JFrame {
         selectButton.setBackground(new Color(200,200,200));
         panel.add(selectButton);
        
-        JButton saveButton = new JButton("Save");
+        addNewButton = new JButton("Add New");
+        addNewButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    addNewButtonClicked();
+                    }
+        });
+        addNewButton.setBackground(new Color(200,200,200));
+        panel.add(addNewButton);
+        
+        saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     saveButtonClicked();
                     }
         });
         saveButton.setBackground(new Color(200,200,200));
+        saveButton.setEnabled(false);
         panel.add(saveButton);
 
-        JButton saveAsNewButton = new JButton("Save as new");
+        saveAsNewButton = new JButton("Save as new");
         saveAsNewButton.setBackground(new Color(200,200,200));
         saveAsNewButton.addActionListener(new ActionListener() {
                 @Override
@@ -372,6 +413,7 @@ public class ProfileManagementFrame extends JFrame {
                     saveAsNewButtonClicked();
                 }
         });
+        saveAsNewButton.setEnabled(false);
         panel.add(saveAsNewButton);
 
         profileJList.setPreferredSize(new Dimension(200,100));
@@ -380,9 +422,9 @@ public class ProfileManagementFrame extends JFrame {
             profileModel.addElement(str);
         }
         profileJList.setModel(profileModel);
-        profileJList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                profileJListMouseClicked(evt);
+        profileJList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                profileJListSelectionChanged(listSelectionEvent);
             }
         });
         profileScrollPane.setViewportView(profileJList);
@@ -393,7 +435,7 @@ public class ProfileManagementFrame extends JFrame {
                     ProfilePilotPanel.flightWeightComboBox.setSelectedItem("kg");
                     ProfileAirfieldPanel.airfieldAltitudeComboBox.setSelectedItem("m");
                     ProfileAirfieldPanel.gliderPosAltitudeComboBox.setSelectedItem("m");
-                    ProfileAirfieldPanel.runwayAltitudeComboBox.setSelectedItem("m");
+                    ProfileAirfieldPanel.runwayMagneticHeadingComboBox.setSelectedItem("true");
                     ProfileAirfieldPanel.winchPosAltitudeComboBox.setSelectedItem("m");
                     ProfileGliderPanel.emptyWeightComboBox.setSelectedItem("kg");
                     ProfileGliderPanel.maxGrossWeightComboBox.setSelectedItem("kg");
@@ -422,7 +464,7 @@ public class ProfileManagementFrame extends JFrame {
         tabbedPane.addTab("Pilot", ProfilePilotPanel);
         tabbedPane.addTab("Glider", ProfileGliderPanel);
         tabbedPane.addTab("Airfield", ProfileAirfieldPanel);
-        tabbedPane.addTab("Display", ProfileWinchPanel);
+        tabbedPane.addTab("Other", ProfileOtherPanel);
+        tabbedPane.addTab("Display", ProfileDisplayPanel);  
     }
-
 }
