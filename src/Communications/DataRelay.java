@@ -13,6 +13,7 @@ public class DataRelay
     private ArrayList<Observer> CableOutListeners;    
     private ArrayList<Observer> StateListeners;
     private boolean newLaunch;
+    private MessageListener parent;
             
     public DataRelay()
     {
@@ -32,6 +33,11 @@ public class DataRelay
             //get the data again...
         }
         MessagePipeline.getInstance().WriteToSocket("");
+    }
+    
+    public void setParent(MessageListener ml)
+    {
+        parent = ml;
     }
     
     public void setNewLaunch(boolean nl)
@@ -83,23 +89,23 @@ public class DataRelay
         //0-torque, 1-tension, 2-cable_speed, 3-cable_angle, 4-cable_out
         for(Observer o : TensionListeners)
         {
-            o.update("TENSION;"+String.valueOf(data[1]));
+            o.update("TENSION;"+String.valueOf(data[1])+";"+String.valueOf(parent.currentUnixTime));
         }
         for(Observer o : TorqueListeners)
         {
-            o.update("TORQUE;"+String.valueOf(data[0]));
+            o.update("TORQUE;"+String.valueOf(data[0])+";"+String.valueOf(parent.currentUnixTime));
         }
         for(Observer o : CableSpeedListeners)
         {
-            o.update("SPEED;"+String.valueOf(data[2]));
+            o.update("SPEED;"+String.valueOf(data[2])+";"+String.valueOf(parent.currentUnixTime));
         }
         for(Observer o : CableAngleListeners)
         {
-            o.update("ANGLE;"+String.valueOf(data[3]));
+            o.update("ANGLE;"+String.valueOf(data[3])+";"+String.valueOf(parent.currentUnixTime));
         }
         for(Observer o : CableOutListeners)
         {
-            o.update("OUT;"+String.valueOf(data[4]));
+            o.update("OUT;"+String.valueOf(data[4])+";"+String.valueOf(parent.currentUnixTime));
         }
     }
     
