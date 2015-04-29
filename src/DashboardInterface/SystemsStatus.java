@@ -154,7 +154,6 @@ public class SystemsStatus extends javax.swing.JPanel {
         });
         add(jLabel12, new AbsoluteConstraints(170, 90, -1, -1));
         
-        ChangeTextColor(1,1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked

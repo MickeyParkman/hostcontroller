@@ -112,7 +112,7 @@ public class MessageListener implements Observer
         short status;
 
         //  check for empty string
-        if (msg.equals("") || (relay == null))
+        if (msg.equals("") || (relay != null))
         {
             // System.out.println("Null message received: " + ++nullMessageCnt);
             return;
@@ -156,7 +156,7 @@ public class MessageListener implements Observer
                                 / (gainCIC * cicScale[i]);                       
                     }
                     //  send filtered values                    
-                    relay.sendFilteredData(filteredData, groupDelay);
+                    // relay.sendFilteredData(filteredData, groupDelay);
                     
                     //System.out.println("Filtered Outputs: " + filteredData[0]
                     //        + " " + filteredData[1] + " " + filteredData[2]
