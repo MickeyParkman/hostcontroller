@@ -193,7 +193,7 @@ public class MainWindow extends JFrame {
                     try 
                     {
                         //DatabaseUtilities.DatabaseInitialization.deleteDB();
-                        DatabaseUtilities.DatabaseInitialization.initDatabase();
+                        DatabaseUtilities.DatabaseInitialization.initDatabase(ParameterSelectionPanel_);
                     }
                     catch(ClassNotFoundException e1) 
                     {
@@ -250,7 +250,7 @@ public class MainWindow extends JFrame {
                 }
                 
                 try {
-                        DatabaseImportFrame = new DatabaseImportFrame(zipLocation);
+                        DatabaseImportFrame = new DatabaseImportFrame(zipLocation, ParameterSelectionPanel_);
                         DatabaseImportFrame.setVisible(true);
                 } catch (IOException ex) {
                     ex.printStackTrace();

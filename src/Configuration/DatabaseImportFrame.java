@@ -7,6 +7,7 @@ package Configuration;
 
 import DatabaseUtilities.DatabaseExporter;
 import DatabaseUtilities.DatabaseImporter;
+import ParameterSelection.ParameterSelectionPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JCheckBox;
@@ -19,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -39,12 +41,14 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
     private List<String> names = new ArrayList<String>();
     private List<String> fileNames = new ArrayList<String>();
     private String zipName;
+    private ParameterSelectionPanel selectionPanel;
     
     /**
      * Creates new form DatabaseExportFrame
      */
-    public DatabaseImportFrame(String zipName) throws IOException {
+    public DatabaseImportFrame(String zipName, ParameterSelectionPanel psp) throws IOException {
         this.zipName = zipName;
+        this.selectionPanel = psp;
         initTableList();
         initComponents();
     }
@@ -107,17 +111,23 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
                     public void actionPerformed(ActionEvent arg0) {
                         
                         List<String> selectedTables = new ArrayList<String>();
+                        List<String> orderedTables = new ArrayList<String>();
                         
                         int[] selectedIndices;
                         selectedIndices = TableList.getSelectedIndices();
-
-                        
+                                               
                         for(int i : selectedIndices) {
                             selectedTables.add(fileNames.get(i));
                         }
-
+                        
+                        orderedTables = orderList(selectedTables);
+                        //System.out.println(orderedTables.toString());
+                        
                         try{
-                            DatabaseImporter.importDatabase(zipName, selectedTables);
+                            DatabaseImporter.importDatabase(zipName, orderedTables);
+                            //Done twice for possible foreign key contraints. Ugly solution
+                            DatabaseImporter.importDatabase(zipName, orderedTables);
+                            selectionPanel.update();
                             getFrame().dispose();
                         }catch(Exception e)
                         {
@@ -153,7 +163,32 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
                 }
             });
         panel.add(selectAll);
-    }               
+    }
 
+    public List<String> orderList(List<String> listStr) {
+        List<String> orderedList = new ArrayList<String>();
+        
+        for(String s : listStr) {
+            if(s.contains("AIRFIELD")) {
+                orderedList.add(s);
+            }
+        }
+        
+        for(String s : listStr) {
+            if(s.contains("RUNWAY")) {
+                orderedList.add(s);
+            }
+        }
+        
+        for(String s : listStr) { 
+            if( !(s.contains("AIRFIELD") || s.contains("RUNWAY")) ) {
+                orderedList.add(s);
+            }
+        }
+        
+        System.out.println(orderedList.toString());
+        
+        return orderedList;
+    }
 
 }
