@@ -47,7 +47,7 @@ public class CableOutSpeedDial extends JPanel implements Observer
 
     private void updateSpeed(double speed)
     {
-        System.out.println("Speed: " + speed);
+        //System.out.println("Speed: " + speed);
         speed = speed * 1.94384449;
         dataset1.setValue(speed);
     }
