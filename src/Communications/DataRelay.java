@@ -87,25 +87,28 @@ public class DataRelay
     {
         //CurrentDataObjectSet.getCurrentDataObjectSet().forceUpdate();
         //0-torque, 1-tension, 2-cable_speed, 3-cable_angle, 4-cable_out
+        //System.out.println("GSGS-" + String.valueOf(groupDelay));
+        //System.out.println("RTRT-" + String.valueOf(parent.intUnixTime));
+        
         for(Observer o : TensionListeners)
         {
-            o.update("TENSION;"+String.valueOf(data[1])+";"+String.valueOf(parent.currentUnixTime));
+            o.update("TENSION;"+String.valueOf(data[1])+";"+String.valueOf(parent.intUnixTime));
         }
         for(Observer o : TorqueListeners)
         {
-            o.update("TORQUE;"+String.valueOf(data[0])+";"+String.valueOf(parent.currentUnixTime));
+            o.update("TORQUE;"+String.valueOf(data[0])+";"+String.valueOf(parent.intUnixTime));
         }
         for(Observer o : CableSpeedListeners)
         {
-            o.update("SPEED;"+String.valueOf(data[2])+";"+String.valueOf(parent.currentUnixTime));
+            o.update("SPEED;"+String.valueOf(data[2])+";"+String.valueOf(parent.intUnixTime));
         }
         for(Observer o : CableAngleListeners)
         {
-            o.update("ANGLE;"+String.valueOf(data[3])+";"+String.valueOf(parent.currentUnixTime));
+            o.update("ANGLE;"+String.valueOf(data[3])+";"+String.valueOf(parent.intUnixTime));
         }
         for(Observer o : CableOutListeners)
         {
-            o.update("OUT;"+String.valueOf(data[4])+";"+String.valueOf(parent.currentUnixTime));
+            o.update("OUT;"+String.valueOf(data[4])+";"+String.valueOf(parent.intUnixTime));
         }
     }
     

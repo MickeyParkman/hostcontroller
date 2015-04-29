@@ -66,6 +66,8 @@ public class LaunchGraph extends JPanel implements Observer {
     private int maxTensionMarker = 950;
     private double currentAngle = 0f;
     
+    private boolean running = false;
+    
      public LaunchGraph(String title) {
         setBackground(Color.WHITE);
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
@@ -328,16 +330,26 @@ public class LaunchGraph extends JPanel implements Observer {
     public void update(String msg) {
         String[] dataPoint = msg.split(";");
         switch(dataPoint[0]) {
+            case "STATE":
+                if(dataPoint[1].equals("3"))
+                {
+                    running = true;
+                }
+                if(dataPoint[1].equals("1") && running)
+                {
+                    running = false;
+                }  
+                break;
             case "TENSION":
-                addTensionValue(Long.parseLong(dataPoint[2]), Float.parseFloat(dataPoint[1]));
+                if(running) addTensionValue(Long.parseLong(dataPoint[2]), Float.parseFloat(dataPoint[1]));
                 break;
             case "SPEED":
-                addSpeedValue(Long.parseLong(dataPoint[2]), Float.parseFloat(dataPoint[1]));
+                if(running) addSpeedValue(Long.parseLong(dataPoint[2]), Float.parseFloat(dataPoint[1]));
                 break;
             case "OUT":
                 float outLength = Float.parseFloat(dataPoint[1]);
-                float height = (float)(outLength * Math.sin(currentAngle));
-                addHeightValue(Long.parseLong(dataPoint[2]), height);
+                float height = (float)(outLength * Math.sin(Math.toRadians(currentAngle)));
+                if(running) addHeightValue(Long.parseLong(dataPoint[2]), height);
                 break;
             case "ANGLE":
                 currentAngle = Double.parseDouble(dataPoint[1]);
