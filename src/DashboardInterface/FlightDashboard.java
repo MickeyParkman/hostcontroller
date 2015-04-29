@@ -147,6 +147,7 @@ public class FlightDashboard extends javax.swing.JPanel
         MessagePipeline.getDataRelay().attach("TENSION", graph);
         MessagePipeline.getDataRelay().attach("OUT", graph);
         MessagePipeline.getDataRelay().attach("ANGLE", graph);
+        MessagePipeline.getDataRelay().attach("STATE", graph);
                 
         graphPane.add(graph);
         dialPane.add(dialSquare1);
