@@ -89,23 +89,23 @@ public class DataRelay
         //0-torque, 1-tension, 2-cable_speed, 3-cable_angle, 4-cable_out
         for(Observer o : TensionListeners)
         {
-            o.update("TENSION;"+String.valueOf(data[1])+";"+parent.intUnixTime);
+            o.update("TENSION;"+String.valueOf(data[1]));
         }
         for(Observer o : TorqueListeners)
         {
-            o.update("TORQUE;"+String.valueOf(data[0])+";"+parent.intUnixTime);
+            o.update("TORQUE;"+String.valueOf(data[0]));
         }
         for(Observer o : CableSpeedListeners)
         {
-            o.update("SPEED;"+String.valueOf(data[2])+";"+parent.intUnixTime);
+            o.update("SPEED;"+String.valueOf(data[2]));
         }
         for(Observer o : CableAngleListeners)
         {
-            o.update("ANGLE;"+String.valueOf(data[3])+";"+parent.intUnixTime);
+            o.update("ANGLE;"+String.valueOf(data[3]));
         }
         for(Observer o : CableOutListeners)
         {
-            o.update("OUT;"+String.valueOf(data[4])+";"+parent.intUnixTime);
+            o.update("OUT;"+String.valueOf(data[4]));
         }
     }
     
