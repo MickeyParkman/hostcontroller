@@ -39,7 +39,7 @@ public class MessageListener implements Observer
     private int currentState;
     //private int lastState;    
 
-    private int intUnixTime;
+    public int intUnixTime;
 
     private int activeDrum = 0;
 
