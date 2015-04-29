@@ -64,6 +64,7 @@ public class LaunchGraph extends JPanel implements Observer {
     
     private long previousTime = 0L;
     private int maxTensionMarker = 950;
+    private double currentAngle = 0f;
     
      public LaunchGraph(String title) {
         setBackground(Color.WHITE);
@@ -110,7 +111,7 @@ public class LaunchGraph extends JPanel implements Observer {
         NumberAxis heightYAxis = new NumberAxis("Height");
         heightYAxis.setRange(0, 1050);
         plot.setRangeAxis(heightYAxis);
-        datasetMap.put("Height", dataset1);
+        datasetMap.put("HEIGHT", dataset1);
     
         XYDataset dataset2 = createDataset2();
         plot.setDataset(1, dataset2);
@@ -118,7 +119,7 @@ public class LaunchGraph extends JPanel implements Observer {
         NumberAxis speedYAxis = new NumberAxis("Speed");
         speedYAxis.setRange(0, 50);
         plot.setRangeAxis(1, speedYAxis);
-        datasetMap.put("Speed", dataset2);
+        datasetMap.put("SPEED", dataset2);
     
         XYDataset dataset3 = createDataset3();
         plot.setDataset(2, dataset3);
@@ -126,7 +127,7 @@ public class LaunchGraph extends JPanel implements Observer {
         NumberAxis tensionYAxis = new NumberAxis("Tension");
         tensionYAxis.setRange(0, 8000);
         plot.setRangeAxis(2, tensionYAxis);
-        datasetMap.put("Tension", dataset3);
+        datasetMap.put("TENSION", dataset3);
 
         plot.mapDatasetToRangeAxis(0, 0);//1st dataset to 1st y-axis
         plot.mapDatasetToRangeAxis(1, 1); //2nd dataset to 2nd y-axis
@@ -150,8 +151,6 @@ public class LaunchGraph extends JPanel implements Observer {
         XYLineAndShapeRenderer renderer3 = (XYLineAndShapeRenderer) plot.getRendererForDataset(tensionDataset);
         renderer3.setBaseShapesVisible(false);
         renderer3.setBaseShapesFilled(false);
-        
-        addDataset("test ", 3, 100);
         
         return chart;
     }
@@ -327,6 +326,24 @@ public class LaunchGraph extends JPanel implements Observer {
 
     @Override
     public void update(String msg) {
+        String[] dataPoint = msg.split(";");
+        switch(dataPoint[0]) {
+            case "TENSION":
+                addTensionValue(Long.parseLong(dataPoint[2]), Float.parseFloat(dataPoint[1]));
+                break;
+            case "SPEED":
+                addSpeedValue(Long.parseLong(dataPoint[2]), Float.parseFloat(dataPoint[1]));
+                break;
+            case "OUT":
+                float outLength = Float.parseFloat(dataPoint[1]);
+                float height = (float)(outLength * Math.sin(currentAngle));
+                addHeightValue(Long.parseLong(dataPoint[2]), height);
+                break;
+            case "ANGLE":
+                currentAngle = Double.parseDouble(dataPoint[1]);
+                break;
+        }
+        
         
     }
 }
