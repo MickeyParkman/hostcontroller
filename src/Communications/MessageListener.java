@@ -29,7 +29,7 @@ public class MessageListener implements Observer
     static final int WIND_ID = 690 * ID_SCALE;                      // 0x564
     static final int BATTERY_SYSTEM_ID = 704 * ID_SCALE;            // 0x580
     
-
+   
     private final int NUMBER_DRUMS = 1;
     private final int NUMBER_CICS = 5;
     private final int NUMBER_MOTORS = 1;
@@ -91,6 +91,12 @@ public class MessageListener implements Observer
 
     private float[] filteredData = new float[NUMBER_CICS];
     private float[] cicScale = new float[NUMBER_CICS];
+    
+    //  status history valables
+    private byte previousTimeStatus;
+    private byte previousTensionStatus;
+    private byte previousDrumStatus;
+    private byte previousCableAngleStatus;    
 
     public MessageListener()
     {
@@ -112,7 +118,7 @@ public class MessageListener implements Observer
 
     public void update(String msg)
     {
-        short status;
+        byte status;
 
         //  check for empty string
         if (msg.equals("") || (relay == null))
@@ -136,11 +142,12 @@ public class MessageListener implements Observer
                 {
                     intUnixTime = canIn.get_int(0);
                     currentUnixTime = intUnixTime;
-                    status = canIn.get_ubyte(4);
-                    if (status != 0)
+                    status = canIn.get_byte(4);
+                    if (previousTimeStatus != status)
                     {
                         //relay.sendTimeStatus(status, 
                         //        intUnixTime);
+                        previousTimeStatus = status;
                     }                        
                 }
                 //   0 - torque, 1 -  tension, 2 - cable speed, 3 - cable angle, 
@@ -214,11 +221,12 @@ public class MessageListener implements Observer
                             lastCableSpeed = canIn.get_halffloat(2)
                                     * canIn.get_halffloat(4) * TWO_PI;
                         }
-                    } else if (status != 0)
+                    } else if (previousDrumStatus != status)
                     {
                         //relay.sendDrumStatus(status, messageDrum, 
                         //  canIn.get_halffloat(0), canIn.get_halffloat(2), 
-                        //  canIn.get_halffloat(4, ));            
+                        //  canIn.get_halffloat(4, ));   
+                        previousDrumStatus = status;
                     }
                     return;
                 }
@@ -232,10 +240,11 @@ public class MessageListener implements Observer
                         {
                             lastCableTension = canIn.get_halffloat(0);
                         }
-                    } else if(status != 0)
+                    } else if(previousTensionStatus != status)
                     {
                         //relay.sendTensionStatus(status, 
-                        //        messageDrum, canIn.get_halffloat(0));            
+                        //        messageDrum, canIn.get_halffloat(0)); 
+                        previousTensionStatus = status;
                     }
                     return;
                 }
@@ -249,10 +258,11 @@ public class MessageListener implements Observer
                         {
                             lastCableAngle = canIn.get_halffloat(0);
                         }
-                    } else if (status !=0)
+                    } else if (previousCableAngleStatus != status)
                     {
                         //relay.CableAngleStatus(status,
                         //        messageDrum, canIn.get_halffloat(0));
+                        previousCableAngleStatus = status;
                     }
                     return;
                 }
