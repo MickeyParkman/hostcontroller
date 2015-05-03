@@ -1353,6 +1353,72 @@ public class DatabaseDataObjectUtilities {
         }
         return true;            
     }
+    
+    
+    
+    public static void addMessageToBlackBox(long time, String message) throws SQLException, ClassNotFoundException {
+        
+        long unixTime = System.currentTimeMillis(); 
+        //Date date = new Date();
+        
+        //System.out.println(date.getTime());
+        
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(ClassNotFoundException e){
+            System.out.println("Error");
+            throw e;
+        }
+        
+        try(Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+           PreparedStatement insertStatement = connect.prepareStatement(
+                 "INSERT INTO BlackBox(timestamp, message)"
+                         + "values(?,?)");
+           insertStatement.setString(1, String.valueOf(time));
+           insertStatement.setString(2, message);
+           
+           insertStatement.executeUpdate();
+           insertStatement.close();
+        }catch(SQLException e) {
+            System.out.println("Error 2");
+            e.printStackTrace();
+            throw e;
+        }
+            
+    }
+    
+    public static void addMessageToFlightMessages(long time, String message) throws SQLException, ClassNotFoundException {
+        
+        long unixTime = System.currentTimeMillis(); 
+        //Date date = new Date();
+        
+        //System.out.println(date.getTime());
+        
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(ClassNotFoundException e){
+            System.out.println("Error");
+            throw e;
+        }
+        
+        try(Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+           PreparedStatement insertStatement = connect.prepareStatement(
+                 "INSERT INTO Messages(timestamp, message)"
+                         + "values(?,?)");
+           insertStatement.setString(1, String.valueOf(time));
+           insertStatement.setString(2, message);
+           
+           insertStatement.executeUpdate();
+           insertStatement.close();
+        }catch(SQLException e) {
+            System.out.println("Error 2");
+            e.printStackTrace();
+            throw e;
+        }
+            
+    }
 
 
 }
