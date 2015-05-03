@@ -47,6 +47,7 @@ public class MessagePipeline implements Runnable {
             instance.observers = new ArrayList<>();
             instance.init();
             instance.listener.attachRelay(instance.relay);
+            instance.relay.setParent(instance.listener);
         }
         return instance;
     }
