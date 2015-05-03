@@ -71,9 +71,9 @@ public class MainWindow extends JFrame {
         upperLeftSidePanelScenario = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         upperLeftSidePanelDashboard = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
         upperLeftSidePanelWinch = new CurrentScenario(selectionLayout, ParameterSelectionPanel_);
-        lowerLeftSidePanelScenario = new RecentLaunchesPanel();
-        lowerLeftSidePanelDashboard = new RecentLaunchesPanel();
-        lowerLeftSidePanelWinch = new RecentLaunchesPanel();
+        lowerLeftSidePanelScenario = new RecentLaunchesPanel(ParameterSelectionPanel_);
+        lowerLeftSidePanelDashboard = new RecentLaunchesPanel(ParameterSelectionPanel_);
+        lowerLeftSidePanelWinch = new RecentLaunchesPanel(ParameterSelectionPanel_);
         createAndShowGUI();
             }
 
@@ -138,8 +138,6 @@ public class MainWindow extends JFrame {
         rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         rightSidePanel.setBackground(Color.WHITE);
         
-        //TODO (jtroxel) move all side panels into their respective panels, since they are tied to them
-        // RSP can stay with main window IF static.
         leftSidePanelScenario.add(upperLeftSidePanelScenario);
         leftSidePanelScenario.add(lowerLeftSidePanelScenario);
         

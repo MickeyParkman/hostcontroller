@@ -7,6 +7,7 @@ package ParameterSelection;
 import DataObjects.*;
 import Communications.Observer;
 import Configuration.ProfileManagementFrame;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;

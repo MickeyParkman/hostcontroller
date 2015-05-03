@@ -17,10 +17,15 @@ public class CurrentLaunchInformation implements Observer{
     private CurrentDataObjectSet currentDataObjectSet;
     private CurrentWidgetDataSet environmentalData;
     private SailplanePanel gliderPanel;
-    private boolean complete;
+    private boolean completeObjects; //If the current data object set is complete
+    private boolean completeDerived; //If the dervied units are complete
+    private boolean complete; //Decides if the given information is enough to satisfy launch parameters
+    //All numbers are stored in SI units, degrees Celcius, and Magnetic Headings
+    //Pilot information
     private float pilotWeight;
     private int pilotCapacity;
     private int pilotPreference;
+    //Glider information
     private float gliderMaxGrossWeight;
     private float gliderEmptyWeight;
     private float gliderIndicatedStallSpeed;
@@ -30,26 +35,37 @@ public class CurrentLaunchInformation implements Observer{
     private float gliderBallast;
     private float gliderBaggage;
     private float passengerWeight;
+    //Airfield information
     private float airfieldAltitude;
     private float airfieldMagneticVariation;
     private float airfieldLatitude;
     private float airfieldLongitude;
-    private float runwayMagneticHeading;
+    //Runway information
+    private float runwayHeading;
     private float runwayAltitude;
+    //Glider position information
     private float gliderPositionAltitude;
     private float gliderPositionLatitude;
     private float gliderPositionLongitude;
+    //Winch position information
     private float winchPositionAltitude;
     private float winchPositionLatitude;
     private float winchPositionLongitude;
+    //Winch information
+    private float brakePressure;
+    //Drive information
+    private float reductionRatio;
+    //Drum Information
     private float drumCoreDiameter;
     private float drumKFactor;
     private float drumCableLength;
     private float drumEndOffset;
     private float drumQuadratureSensor;
+    //Parachute Information
     private float parachuteLift;
     private float parachuteDrag;
     private float parachuteWeight; 
+    //Environmental and Derived Information
     private float averageWindSpeed;
     private float gustWindSpeed;
     private float windDirection;
@@ -59,6 +75,7 @@ public class CurrentLaunchInformation implements Observer{
     private float temperature;
     private float humidity;
     private float pressure;
+    private float calculatedDensityAltitude;
     private float densityAltitude;
     private float runLength;
     private float runSlope;
@@ -66,7 +83,7 @@ public class CurrentLaunchInformation implements Observer{
     private float gliderLaunchMass;
     private ArrayList<Observer> observers;
     
-    /*public static void main(String args[]){
+    public static void main(String args[]){
         //For logical testing
         float gliderLat = 47.665808f;
         float gliderLon = -117.413895f;
@@ -74,27 +91,24 @@ public class CurrentLaunchInformation implements Observer{
         float winchLat = 47.681991f;
         float winchLon = -117.410633f;
         float winchAlt = 3;
-        float runDir = CurrentLaunchInformation.calculateHeading(gliderLat, gliderLon, winchLat, winchLon);
-        float windDir = CurrentLaunchInformation.calculateHeading(gliderLat, gliderLon, winchLat, winchLon) +25;
+        float magVariation = 0;
+        float runDir = CurrentLaunchInformation.calculateHeading(gliderLat, gliderLon, winchLat, winchLon, magVariation);
+        float windDir = 25;
         float relativeDir = CurrentLaunchInformation.calculateRelativeDirection(runDir, windDir);
         float averageWindSpeed = 5;
-        float headWind = 3;
-        float crossWind = 4;
-        float temp = 90;
+        float temp = 34;
         float pressure = 10;
         
-        System.out.println("WindDir:" + String.valueOf(CurrentLaunchInformation.calculateWindDirection(runDir, headWind, crossWind)));
-        System.out.println("WindSpeed:" + String.valueOf(CurrentLaunchInformation.calculateWindSpeed(headWind, crossWind)));
         System.out.println("RelativeDir:" + String.valueOf(relativeDir));
         System.out.println("HeadwindComp:" + String.valueOf(CurrentLaunchInformation.calculateHeadwind(relativeDir, averageWindSpeed)));
         System.out.println("CrosswindComp:" + String.valueOf(CurrentLaunchInformation.calculateCrosswind(relativeDir, averageWindSpeed)));
         System.out.println("DensityAltitude:" + String.valueOf(CurrentLaunchInformation.calculateDensityAltitude(temp, pressure)));
         System.out.println("Runlen:" + String.valueOf(CurrentLaunchInformation.calculateRunLength(gliderAlt, gliderLat, gliderLon, winchAlt, winchLat, winchLon)));
         System.out.println("RunSlope:" + String.valueOf(CurrentLaunchInformation.calculateRunSlope(gliderAlt, gliderLat, gliderLon, winchAlt, winchLat, winchLon)));
-        System.out.println("RunHeading:" + String.valueOf(CurrentLaunchInformation.calculateHeading(gliderLat, gliderLon, winchLat, winchLon)));
+        System.out.println("RunHeading:" + String.valueOf(runDir));
         System.out.println("TotalWeight:" + String.valueOf(CurrentLaunchInformation.calculateGliderLaunchMass(1, 2, 3, 4, 5)));
     
-    }*/
+    }
     
     private CurrentLaunchInformation(){
         currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
@@ -108,9 +122,11 @@ public class CurrentLaunchInformation implements Observer{
         if(instance == null)
         {
             instance = new CurrentLaunchInformation();
+            instance.completeObjects = false;
+            instance.completeDerived = false;
+            instance.complete = false;
             instance.update();
             instance.observers = new ArrayList<Observer>();
-            instance.complete = false;
         }
         return instance;
     }
@@ -123,7 +139,6 @@ public class CurrentLaunchInformation implements Observer{
     public void update()
     {
         try{
-            System.out.println("updated");
             currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             instance.pilotWeight = currentDataObjectSet.getCurrentPilot().getWeight();
             int capability = Capability.convertCapabilityStringToNum(currentDataObjectSet.getCurrentPilot().getCapability());
@@ -141,7 +156,7 @@ public class CurrentLaunchInformation implements Observer{
             instance.airfieldMagneticVariation = currentDataObjectSet.getCurrentAirfield().getMagneticVariation();
             instance.airfieldLatitude = currentDataObjectSet.getCurrentAirfield().getLatitude();
             instance.airfieldLongitude = currentDataObjectSet.getCurrentAirfield().getLongitude();
-            instance.runwayMagneticHeading = currentDataObjectSet.getCurrentRunway().getMagneticHeading();
+            instance.runwayHeading = currentDataObjectSet.getCurrentRunway().getMagneticHeading() + currentDataObjectSet.getCurrentAirfield().getMagneticVariation();
             instance.runwayAltitude = currentDataObjectSet.getCurrentRunway().getAltitude();
             instance.gliderPositionAltitude = currentDataObjectSet.getCurrentGliderPosition().getAltitude();
             instance.gliderPositionLatitude = currentDataObjectSet.getCurrentGliderPosition().getLatitude();
@@ -149,89 +164,136 @@ public class CurrentLaunchInformation implements Observer{
             instance.winchPositionAltitude = currentDataObjectSet.getCurrentWinchPosition().getAltitude();
             instance.winchPositionLatitude = currentDataObjectSet.getCurrentWinchPosition().getLatitude();
             instance.winchPositionLongitude = currentDataObjectSet.getCurrentWinchPosition().getLongitude();
-            
-            if (gliderPanel != null){
-                if(gliderPanel.getballastField().equals("")) instance.gliderBallast = 0;
-                else instance.gliderBallast = Float.parseFloat(gliderPanel.getballastField());
-                if (gliderPanel.getbaggageCheckBox()){
-                    instance.gliderBaggage = Float.parseFloat(gliderPanel.getbaggageField());
-                } else {
-                    instance.gliderBaggage = 0;
-                }
-                if(gliderPanel.getpassengerWeightField().equals("")) instance.passengerWeight = 0;
-                else instance.passengerWeight = Float.parseFloat(gliderPanel.getpassengerWeightField());
-
-            }
             System.out.println("First Checkpoint");
-            instance.temperature = Float.parseFloat(environmentalData.getValue("temperature"));
-            instance.pressure = Float.parseFloat(environmentalData.getValue("pressure"));
-            instance.averageWindSpeed = Float.parseFloat(environmentalData.getValue("windspeed"));
-            instance.windDirection = Float.parseFloat(environmentalData.getValue("winddirection"));
+
+            instance.brakePressure = currentDataObjectSet.getCurrentWinch().getBrakePressure();
+            if(!currentDataObjectSet.getCurrentWinch().getDriveList().isEmpty()){
+                instance.reductionRatio = currentDataObjectSet.getCurrentWinch().getDriveList().get(0).getReductionRatio();
+            }
+            else{
+                instance.reductionRatio = 0;
+            }
             System.out.println("Second Checkpoint");
-          
-            instance.densityAltitude = calculateDensityAltitude(instance.temperature, instance.pressure);
-            instance.runLength = calculateRunLength(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
-                                           instance.winchPositionAltitude, instance.winchPositionLatitude, instance.winchPositionLongitude);
-            instance.runSlope = calculateRunSlope(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
-                                           instance.winchPositionAltitude, instance.winchPositionLatitude, instance.winchPositionLongitude);
-            instance.runHeading = calculateHeading(instance.gliderPositionLatitude, instance.gliderPositionLongitude,
-                                           instance.winchPositionLatitude, instance.winchPositionLongitude);
-            instance.gliderLaunchMass = calculateGliderLaunchMass(instance.pilotWeight, instance.gliderEmptyWeight,
-                                            instance.gliderBallast, instance.gliderBaggage, instance.passengerWeight);
-            instance.windDegreeOffset = calculateRelativeDirection(instance.runHeading, instance.windDirection);
-            instance.headwindComponent = calculateHeadwind(instance.windDegreeOffset, instance.averageWindSpeed);
-            instance.crosswindComponent = calculateCrosswind(instance.windDegreeOffset, instance.averageWindSpeed);
-            instance.complete = true;
-        }catch (NumberFormatException e){
-            System.out.println("Error when updating current launch information");
-            e.printStackTrace();
-            instance.complete = false;
-        }catch (Exception e){
-            //e.printStackTrace();
-            instance.complete = false;
-        }
+
+            //Based on current Drum class
+            instance.drumCoreDiameter = currentDataObjectSet.getCurrentDrum().getCoreDiameter();
+            instance.drumKFactor = currentDataObjectSet.getCurrentDrum().getKFactor();
+            instance.drumCableLength = currentDataObjectSet.getCurrentDrum().getCableLength();
+            instance.drumEndOffset = 0;
+            instance.drumQuadratureSensor = 0;
+            instance.parachuteLift = currentDataObjectSet.getCurrentDrum().getParachute().getLift();
+            instance.parachuteDrag = currentDataObjectSet.getCurrentDrum().getParachute().getDrag();
+            instance.parachuteWeight = currentDataObjectSet.getCurrentDrum().getParachute().getWeight(); 
+            System.out.println("Third Checkpoint");
+
+            
+            instance.completeObjects = true;
+            update("Manual Entry");
+            if (instance.completeObjects && instance.completeDerived){
+                instance.complete = true;
+            }else{
+                instance.complete = false;
+            }
+            }catch (NumberFormatException e){
+                System.out.println("Incomplete current launch information");
+                instance.complete = false;
+            }catch (Exception e){
+                instance.complete = false;
+            }
     }
     
     @Override
     public void update(String msg) {
-        System.out.println("is updated");
         if (msg.equals("Manual Entry")){
-            System.out.println("is updated");
             try{
                 if (gliderPanel != null){
-                    instance.gliderBaggage = Float.parseFloat(gliderPanel.getbaggageField());
-                    instance.gliderBallast = Float.parseFloat(gliderPanel.getballastField());
-                    if (gliderPanel.getbaggageCheckBox()){
+                    if (currentDataObjectSet.getCurrentSailplane().getCarryBallast()){
+                        instance.gliderBallast = Float.parseFloat(gliderPanel.getballastField());
+                    }
+                    else{
+                        instance.gliderBallast = 0;
+                    }
+                    if (currentDataObjectSet.getCurrentSailplane().getMultipleSeats()){
                         instance.passengerWeight = Float.parseFloat(gliderPanel.getpassengerWeightField());
+                    }
+                    else{
+                        instance.passengerWeight = 0;
+                    }
+                    if (gliderPanel.getbaggageCheckBox()){
+                        instance.passengerWeight = Float.parseFloat(gliderPanel.getbaggageField());
                     }
                     else {
                         instance.passengerWeight = 0;
                     }
                 }
-                instance.temperature = Float.parseFloat(environmentalData.getValue("Temperature"));
-                instance.pressure = Float.parseFloat(environmentalData.getValue("Pressure"));
-                instance.averageWindSpeed = Float.parseFloat(environmentalData.getValue("Avg. Wind Speed"));
-                instance.windDirection = Float.parseFloat(environmentalData.getValue("Wind Direction"));
-
-                instance.densityAltitude = calculateDensityAltitude(instance.temperature, instance.pressure);
+                
+                String temperatureStr = environmentalData.getValue("temperature");
+                String pressureStr = environmentalData.getValue("Pressure");
+                String densityAltitudeStr = environmentalData.getValue("Density Altitude");
+                
+                if (!temperatureStr.equals("")){
+                    instance.temperature = Float.parseFloat(temperatureStr);
+                } else{
+                    instance.temperature = 0;
+                }
+                if (!pressureStr.equals("")){
+                    instance.pressure = Float.parseFloat(pressureStr);
+                } else{
+                    instance.pressure = 0;
+                }
+                if (!temperatureStr.equals("") && !pressureStr.equals("")){
+                    instance.calculatedDensityAltitude = calculateDensityAltitude(instance.temperature, instance.pressure);
+                } else{
+                    instance.calculatedDensityAltitude = 0;
+                }
+                if (!densityAltitudeStr.equals("")){
+                    instance.densityAltitude  = Float.parseFloat(densityAltitudeStr);
+                } else{
+                    instance.densityAltitude = calculatedDensityAltitude;
+                }
+                
+                if(environmentalData.getValue("windspeed").equals(""))
+                {
+                    instance.averageWindSpeed = 0;
+                }
+                else
+                {
+                    instance.averageWindSpeed = Float.parseFloat(environmentalData.getValue("windspeed"));
+                }
+                if(!environmentalData.getValue("winddirection").equals(""))
+                { 
+                    instance.windDirection = Float.parseFloat(environmentalData.getValue("winddirection"));
+                }
+                else
+                {
+                    instance.windDirection = 0;
+                }
                 instance.runLength = calculateRunLength(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
                                                instance.winchPositionAltitude, instance.winchPositionLatitude, instance.winchPositionLongitude);
                 instance.runSlope = calculateRunSlope(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
                                                instance.winchPositionAltitude, instance.winchPositionLatitude, instance.winchPositionLongitude);
                 instance.runHeading = calculateHeading(instance.gliderPositionLatitude, instance.gliderPositionLongitude,
-                                               instance.winchPositionLatitude, instance.winchPositionLongitude);
+                                               instance.winchPositionLatitude, instance.winchPositionLongitude, instance.airfieldMagneticVariation);
                 instance.gliderLaunchMass = calculateGliderLaunchMass(instance.pilotWeight, instance.gliderEmptyWeight,
                                                 instance.gliderBallast, instance.gliderBaggage, instance.passengerWeight);
                 instance.windDegreeOffset = calculateRelativeDirection(instance.runHeading, instance.windDirection);
                 instance.headwindComponent = calculateHeadwind(instance.windDegreeOffset, instance.averageWindSpeed);
                 instance.crosswindComponent = calculateCrosswind(instance.windDegreeOffset, instance.averageWindSpeed);
-
-                instance.complete = true;
+                
+                if (!densityAltitudeStr.equals("") || (!temperatureStr.equals("") && !pressureStr.equals(""))){
+                    instance.completeDerived = true;
+                }
+                if (instance.completeObjects && instance.completeDerived){
+                    instance.complete = true;
+                }else{
+                    instance.complete = false;
+                }
             }catch (NumberFormatException e){
-                System.out.println("Error when calculating derived values");
+                System.out.println("incomplete derived values");
                 e.printStackTrace();
                 instance.complete = false;
             }catch (Exception e){
+                e.printStackTrace();
                 instance.complete = false;
             }
         }
@@ -275,6 +337,16 @@ public class CurrentLaunchInformation implements Observer{
         this.gliderPanel = gliderPanel;
     }
     
+    public void setSailplanePanelBallast(String weight){
+        gliderPanel.setballastField(weight);
+    }
+    public void setSailplanePanelPassenger(String weight){
+        gliderPanel.setpassengerWeightField(weight);
+    }
+    public void setSailplanePanelBaggage(String weight){
+        gliderPanel.setbaggageField(weight);
+    }
+    
     //functions to determine derived values
     public static float calculateRunLength(float gliderAltitude, float gliderLatitude, float gliderLongitude,
                                            float winchAltitude, float winchLatitude, float winchLongitude){
@@ -295,10 +367,10 @@ public class CurrentLaunchInformation implements Observer{
     }
     
     public static float calculateHeading(float gliderLatitude, float gliderLongitude,
-                                        float winchLatitude, float winchLongitude){
+                                        float winchLatitude, float winchLongitude, float magneticVariation){
         double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
         double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitude - gliderLatitude));
-        float angle = (float)(Math.atan2(xRun, yRise));
+        float angle = (float)(Math.atan2(xRun, yRise)) * (magneticVariation);
         return angle;
     }
     
@@ -335,6 +407,7 @@ public class CurrentLaunchInformation implements Observer{
         return (pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
     }
     
+//Clear Functions
     public void clearPilotWeight()
     {
         if(instance != null) instance.pilotWeight = -1;
@@ -380,6 +453,21 @@ public class CurrentLaunchInformation implements Observer{
         if(instance != null) instance.gliderMaxTension = -1;
         instance.notifyObservers();
     }
+    public void clearGliderBallast()
+    {
+        if(instance != null) instance.gliderBallast = -1;
+        instance.notifyObservers();
+    }
+    public void clearGliderBaggage()
+    {
+        if(instance != null) instance.gliderBaggage = -1;
+        instance.notifyObservers();
+    }
+    public void clearPassengerWeight()
+    {
+        if(instance != null) instance.passengerWeight = -1;
+        instance.notifyObservers();
+    }
     public void clearAirfieldAltitude()
     {
         if(instance != null) instance.airfieldAltitude = -1;
@@ -400,9 +488,9 @@ public class CurrentLaunchInformation implements Observer{
         if(instance != null) instance.airfieldLongitude = -1;
         instance.notifyObservers();
     }
-    public void clearRunwayMagneticHeading()
+    public void clearRunwayHeading()
     {
-        if(instance != null) instance.runwayMagneticHeading = -1;
+        if(instance != null) instance.runwayHeading = -1;
         instance.notifyObservers();
     }
     public void clearRunwayAltitude()
@@ -438,6 +526,16 @@ public class CurrentLaunchInformation implements Observer{
     public void clearWinchPositionLongitude()
     {
         if(instance != null) instance.winchPositionLongitude = -1;
+        instance.notifyObservers();
+    }
+    public void clearBrakePressure()
+    {
+        if(instance != null) instance.brakePressure = -1;
+        instance.notifyObservers();
+    }
+    public void clearReductionRatio()
+    {
+        if(instance != null) instance.reductionRatio = -1;
         instance.notifyObservers();
     }
     public void clearDrumCoreDiameter()
@@ -485,9 +583,29 @@ public class CurrentLaunchInformation implements Observer{
         if(instance != null) instance.averageWindSpeed = -1;
         instance.notifyObservers();
     }
+    public void clearGustWindSpeed()
+    {
+        if(instance != null) instance.gustWindSpeed = -1;
+        instance.notifyObservers();
+    }
     public void clearWindDirection()
     {
         if(instance != null) instance.windDirection = -1;
+        instance.notifyObservers();
+    }
+    public void clearWindDegreeOffset()
+    {
+        if(instance != null) instance.windDegreeOffset = -1;
+        instance.notifyObservers();
+    }
+    public void clearHeadwindComponent()
+    {
+        if(instance != null) instance.headwindComponent = -1;
+        instance.notifyObservers();
+    }
+    public void clearCrosswindComponent()
+    {
+        if(instance != null) instance.crosswindComponent = -1;
         instance.notifyObservers();
     }
     public void clearTemperature()
@@ -495,9 +613,19 @@ public class CurrentLaunchInformation implements Observer{
         if(instance != null) instance.temperature = -1;
         instance.notifyObservers();
     }
+    public void clearHumidity()
+    {
+        if(instance != null) instance.humidity = -1;
+        instance.notifyObservers();
+    }
     public void clearPressure()
     {
         if(instance != null) instance.pressure = -1;
+        instance.notifyObservers();
+    }
+    public void clearCalculatedDensityAltitude()
+    {
+        if(instance != null) instance.calculatedDensityAltitude = -1;
         instance.notifyObservers();
     }
     public void clearDensityAltitude()
@@ -505,6 +633,27 @@ public class CurrentLaunchInformation implements Observer{
         if(instance != null) instance.densityAltitude = -1;
         instance.notifyObservers();
     }
+    public void clearRunLength()
+    {
+        if(instance != null) instance.runLength = -1;
+        instance.notifyObservers();
+    }
+    public void clearRunSlope()
+    {
+        if(instance != null) instance.runSlope = -1;
+        instance.notifyObservers();
+    }
+    public void clearRunHeading()
+    {
+        if(instance != null) instance.runHeading = -1;
+        instance.notifyObservers();
+    }
+    public void clearGliderLaunchMass()
+    {
+        if(instance != null) instance.gliderLaunchMass = -1;
+        instance.notifyObservers();
+    }
+    //Set Functions
     public void setPilotWeight(float newPilotWeight)
     {
         if(instance != null)
@@ -577,6 +726,30 @@ public class CurrentLaunchInformation implements Observer{
         }
     instance.notifyObservers();
     }
+    public void setGliderBallast(float newGliderBallast)
+    {
+        if(instance != null)
+        {
+            instance.gliderBallast = newGliderBallast;
+        }
+    instance.notifyObservers();
+    }
+    public void setGliderBaggage(float newGliderBaggage)
+    {
+        if(instance != null)
+        {
+            instance.gliderBaggage = newGliderBaggage;
+        }
+    instance.notifyObservers();
+    }
+    public void setPassengerWeight(float newPassengerWeight)
+    {
+        if(instance != null)
+        {
+            instance.passengerWeight = newPassengerWeight;
+        }
+    instance.notifyObservers();
+    }
     public void setAirfieldAltitude(float newAirfieldAltitude)
     {
         if(instance != null)
@@ -609,11 +782,11 @@ public class CurrentLaunchInformation implements Observer{
         }
     instance.notifyObservers();
     }
-    public void setRunwayMagneticHeading(float newRunwayMagneticHeading)
+    public void setRunwayHeading(float newRunwayHeading)
     {
         if(instance != null)
         {
-            instance.runwayMagneticHeading = newRunwayMagneticHeading;
+            instance.runwayHeading = newRunwayHeading;
         }
     instance.notifyObservers();
     }
@@ -670,6 +843,22 @@ public class CurrentLaunchInformation implements Observer{
         if(instance != null)
         {
             instance.winchPositionLongitude = newWinchPositionLongitude;
+        }
+    instance.notifyObservers();
+    }
+    public void setBrakePressure(float newBrakePressure)
+    {
+        if(instance != null)
+        {
+            instance.brakePressure = newBrakePressure;
+        }
+    instance.notifyObservers();
+    }
+    public void setReductionRatio(float newReductionRatio)
+    {
+        if(instance != null)
+        {
+            instance.reductionRatio = newReductionRatio;
         }
     instance.notifyObservers();
     }
@@ -737,19 +926,51 @@ public class CurrentLaunchInformation implements Observer{
         }
     instance.notifyObservers();
     }
-    public void setWindSpeed(float newWindSpeed)
+    public void setAverageWindSpeed(float newAverageWindSpeed)
     {
         if(instance != null)
         {
-            instance.averageWindSpeed = newWindSpeed;
+            instance.averageWindSpeed = newAverageWindSpeed;
         }
     instance.notifyObservers();
     }
-    public void setAverageWindDirection(float newWindDirection)
+    public void setGustWindSpeed(float newGustWindSpeed)
+    {
+        if(instance != null)
+        {
+            instance.gustWindSpeed = newGustWindSpeed;
+        }
+    instance.notifyObservers();
+    }
+    public void setWindDirection(float newWindDirection)
     {
         if(instance != null)
         {
             instance.windDirection = newWindDirection;
+        }
+    instance.notifyObservers();
+    }
+    public void setWindDegreeOffset(float newWindDegreeOffset)
+    {
+        if(instance != null)
+        {
+            instance.windDegreeOffset = newWindDegreeOffset;
+        }
+    instance.notifyObservers();
+    }
+    public void setHeadwindComponent(float newHeadwindComponent)
+    {
+        if(instance != null)
+        {
+            instance.headwindComponent = newHeadwindComponent;
+        }
+    instance.notifyObservers();
+    }
+    public void setCrosswindComponent(float newCrosswindComponent)
+    {
+        if(instance != null)
+        {
+            instance.crosswindComponent = newCrosswindComponent;
         }
     instance.notifyObservers();
     }
@@ -761,11 +982,27 @@ public class CurrentLaunchInformation implements Observer{
         }
     instance.notifyObservers();
     }
+    public void setHumidity(float newHumidity)
+    {
+        if(instance != null)
+        {
+            instance.humidity = newHumidity;
+        }
+    instance.notifyObservers();
+    }
     public void setPressure(float newPressure)
     {
         if(instance != null)
         {
             instance.pressure = newPressure;
+        }
+    instance.notifyObservers();
+    }
+    public void setCalculatedDensityAltitude(float newCalculatedDensityAltitude)
+    {
+        if(instance != null)
+        {
+            instance.calculatedDensityAltitude = newCalculatedDensityAltitude;
         }
     instance.notifyObservers();
     }
@@ -777,6 +1014,39 @@ public class CurrentLaunchInformation implements Observer{
         }
     instance.notifyObservers();
     }
+    public void setRunLength(float newRunLength)
+    {
+        if(instance != null)
+        {
+            instance.runLength = newRunLength;
+        }
+    instance.notifyObservers();
+    }
+    public void setRunSlope(float newRunSlope)
+    {
+        if(instance != null)
+        {
+            instance.runSlope = newRunSlope;
+        }
+    instance.notifyObservers();
+    }
+    public void setRunHeading(float newRunHeading)
+    {
+        if(instance != null)
+        {
+            instance.runHeading = newRunHeading;
+        }
+    instance.notifyObservers();
+    }
+    public void setGliderLaunchMass(float newGliderLaunchMass)
+    {
+        if(instance != null)
+        {
+            instance.gliderLaunchMass = newGliderLaunchMass;
+        }
+    instance.notifyObservers();
+    }
+    //Get Functions
     public float getPilotWeight()
     {
         if(instance == null)
@@ -876,6 +1146,39 @@ public class CurrentLaunchInformation implements Observer{
             return instance.gliderMaxTension;
         }
     }
+    public float getGliderBallast()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.gliderBallast;
+        }
+    }
+    public float getGliderBaggage()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.gliderBaggage;
+        }
+    }
+    public float getPassengerWeight()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.passengerWeight;
+        }
+    }
     public float getAirfieldAltitude()
     {
         if(instance == null)
@@ -920,7 +1223,7 @@ public class CurrentLaunchInformation implements Observer{
             return instance.airfieldLongitude;
         }
     }
-    public float getRunwayMagneticHeading()
+    public float getRunwayHeading()
     {
         if(instance == null)
         {
@@ -928,7 +1231,7 @@ public class CurrentLaunchInformation implements Observer{
         }
         else
         {
-            return instance.runwayMagneticHeading;
+            return instance.runwayHeading;
         }
     }
     public float getRunwayAltitude()
@@ -1006,6 +1309,28 @@ public class CurrentLaunchInformation implements Observer{
         else
         {
             return instance.winchPositionLongitude;
+        }
+    }
+    public float getBrakePressure()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.brakePressure;
+        }
+    }
+    public float getReductionRatio()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.reductionRatio;
         }
     }
     public float getDrumCoreDiameter()
@@ -1107,6 +1432,17 @@ public class CurrentLaunchInformation implements Observer{
             return instance.averageWindSpeed;
         }
     }
+    public float getGustWindSpeed()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.gustWindSpeed;
+        }
+    }
     public float getWindDirection()
     {
         if(instance == null)
@@ -1116,6 +1452,39 @@ public class CurrentLaunchInformation implements Observer{
         else
         {
             return instance.windDirection;
+        }
+    }
+    public float getWindDegreeOffset()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.windDegreeOffset;
+        }
+    }
+    public float getHeadwindComponent()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.headwindComponent;
+        }
+    }
+    public float getCrosswindComponent()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.crosswindComponent;
         }
     }
     public float getTemperature()
@@ -1129,6 +1498,17 @@ public class CurrentLaunchInformation implements Observer{
             return instance.temperature;
         }
     }
+    public float getHumidity()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.humidity;
+        }
+    }
     public float getPressure()
     {
         if(instance == null)
@@ -1140,6 +1520,17 @@ public class CurrentLaunchInformation implements Observer{
             return instance.pressure;
         }
     }
+    public float getCalculatedDensityAltitude()
+    {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.calculatedDensityAltitude;
+        }
+    }
     public float getDensityAltitude()
     {
         if(instance == null)
@@ -1148,17 +1539,10 @@ public class CurrentLaunchInformation implements Observer{
         }
         else
         {
-            try{
-                float returnVal = Float.parseFloat(environmentalData.getValue("Density Altitude"));
-                return returnVal;
-            }
-            catch(NumberFormatException e){
-                System.out.println("Density Altitude input error");
-                return -1;
-            }
+            return instance.densityAltitude;
         }
     }
-    public float getRunDirection()
+    public float getRunLength()
     {
         if(instance == null)
         {
@@ -1200,28 +1584,6 @@ public class CurrentLaunchInformation implements Observer{
         else
         {
             return instance.gliderLaunchMass;
-        }
-    }
-    public float getHeadwindComponent()
-    {
-        if(instance == null)
-        {
-            return -1;
-        }
-        else
-        {
-            return instance.headwindComponent;
-        }
-    }
-        public float getCrosswindComponent()
-    {
-        if(instance == null)
-        {
-            return -1;
-        }
-        else
-        {
-            return instance.crosswindComponent;
         }
     }
 }

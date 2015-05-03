@@ -23,11 +23,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Random;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
 
 
-public class AddEditWinchPosFrame extends JFrame {
+public class AddEditWinchPosFrame extends JDialog {
     private JPanel contentPane;
     private JTextField latitudeField;
     private JTextField longitudeField;
@@ -56,6 +57,7 @@ public class AddEditWinchPosFrame extends JFrame {
      * Create the frame.
      */
     public AddEditWinchPosFrame(WinchPosition editWinchPos, boolean isEditEntry) {
+        this.setModal(true);
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
         setupUnits();
 

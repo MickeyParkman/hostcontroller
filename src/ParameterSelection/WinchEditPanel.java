@@ -208,7 +208,7 @@ public class WinchEditPanel extends JPanel {
     private ArrayList<Winch> getWinchList() {
         ArrayList<Winch> result = new ArrayList<>();
         Winch testWinch = new Winch("Winch 1", "Primary Winch", (float)2.0);
-        Drive drive = new Drive("1");
+        Drive drive = new Drive("1", (float)1.0);
         drive.addDrum(new Drum("Drum 1", (float)1.0, (float)1.0, (float)1000.0));
         drive.addDrum(new Drum("Drum 2", (float)2.0, (float)2.0, (float)2000.0));
         testWinch.addDrive(drive);

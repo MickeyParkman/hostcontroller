@@ -22,7 +22,14 @@ public class CurrentWidgetDataSet {
     
     public String getValue(String key)
     {
-        return values.get(key.toUpperCase());
+        if(values.containsKey(key.toUpperCase()))
+        {
+            return values.get(key.toUpperCase());
+        }
+        else
+        {
+            return "";
+        }
     }
     
     public void setValue(String key, String value)

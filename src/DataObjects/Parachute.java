@@ -11,9 +11,9 @@ package DataObjects;
  * @author Alec Jacuzzi, dbennett3
  */
 public class Parachute {
-    private int parachuteNumber;    //Parachute ID number
-    private float lift;             //Parachute lift
-    private float drag;             //Parachute drag
+    private int parachuteNumber;
+    private float lift;
+    private float drag;
     private float weight;
     private String name;
     private Winch winch;

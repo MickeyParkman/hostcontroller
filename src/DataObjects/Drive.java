@@ -15,7 +15,7 @@ public class Drive {
         drumList = new ArrayList<>();
     }
     
-    public Drive(String nameIn) {
+    public Drive(String nameIn, float reductionRatio) {
         drumList = new ArrayList<>();        
         name = nameIn;
     }
@@ -32,5 +32,13 @@ public class Drive {
     public List<Drum> getDrumList()
     {
         return drumList;
+    }
+    
+    public float getReductionRatio(){
+        return reductionRatio;
+    }
+    
+    public void setReductionRatio(float reductionRatio){
+        this.reductionRatio = reductionRatio;
     }
 }

@@ -32,7 +32,8 @@ public class FlightSummary {
         try{
             DatabaseDataObjectUtilities.setCurrentDataObjectSetToFlight(this);
         }catch(Exception e){
-            e.printStackTrace();
+            System.out.println("Error 404: Flight not found");
+            //e.printStackTrace();
         }
     }
     

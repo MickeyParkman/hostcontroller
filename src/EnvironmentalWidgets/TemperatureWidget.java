@@ -5,6 +5,7 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 
@@ -20,7 +21,16 @@ public class TemperatureWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
-        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("temperature"));
+        if(unitId == 0)
+        {
+            this.field.setText(String.valueOf(CurrentWidgetDataSet.getInstance().getValue("temperature")));
+        }
+        else if(unitId == 1)
+        {
+            String value = CurrentWidgetDataSet.getInstance().getValue("temperature");
+            System.out.println(value);
+            this.field.setText(String.valueOf((Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("temperature"))) * 1.8 + 32));
+        }
     }
 
     @Override

@@ -29,10 +29,11 @@ import javax.swing.JToggleButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 
-public class AddEditGlider extends JFrame {
+public class AddEditGlider extends JDialog {
 
     private JPanel contentPane;
     private JTextField nNumberField;
@@ -99,6 +100,7 @@ public class AddEditGlider extends JFrame {
      * Create the frame.
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
+        this.setModal(true);
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         setupUnits();
         

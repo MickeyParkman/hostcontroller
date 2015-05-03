@@ -147,6 +147,7 @@ public class DatabaseInitialization {
         //Build the RecentLaunches table
         try{
             createRecentLaunches(connection);
+            System.out.println("Build recent launches");
         }catch(SQLException e) {
             //For debugging purposes:
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -155,6 +156,7 @@ public class DatabaseInitialization {
         //Build the PreviousLaunchesInfo table
         try{
             createPreviousLaunchesInfo(connection);
+            System.out.println("Build previous launches info");
         }catch(SQLException e) {
             //For debugging purposes:
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -586,7 +588,12 @@ public class DatabaseInitialization {
                 + "winch_position_latitude FLOAT, "
                 + "winch_position_longitude FLOAT, "
                 + "winch_position_optional_info VARCHAR(150), "
+                + "drum_name VARCHAR(30), "
+                + "drum_core_diameter FLOAT, "
+                + "drum_k_factor FLOAT, "
+                + "drum_cable_length FLOAT, "
                 + "parachute_id INT, "
+                + "parachute_name VARCHAR(30), "
                 + "parachute_lift FLOAT, "
                 + "parachute_drag FLOAT, "
                 + "parachute_weight FLOAT, "             

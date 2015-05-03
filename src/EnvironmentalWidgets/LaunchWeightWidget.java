@@ -1,5 +1,6 @@
 package EnvironmentalWidgets;
 
+import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
@@ -18,7 +19,7 @@ public class LaunchWeightWidget extends EnvironmentalWidget {
     @Override
     public void update()
     {
-        float weight = CurrentLaunchInformation.getCurrentLaunchInformation().getGliderLaunchMass();
+        float weight = (CurrentLaunchInformation.getCurrentLaunchInformation().getGliderLaunchMass()) * UnitConversionRate.convertWeightUnitIndexToFactor(unitId);
         field.setText(""+weight);
     }
 

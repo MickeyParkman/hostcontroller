@@ -5,6 +5,7 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 
@@ -24,7 +25,7 @@ public class AvgWindSpeedWidget extends EnvironmentalWidget {
 
     @Override
     public void update(String msg) {
-        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("windspeed"));
+        this.field.setText(String.valueOf(Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("windspeed")) * UnitConversionRate.convertSpeedUnitIndexToFactor(unitId)));
     }
 
     @Override
