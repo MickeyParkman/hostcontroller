@@ -264,7 +264,7 @@ public class MainWindow extends JFrame {
         connectMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                JTextField address = new JTextField("127.0.0.1", 10);
+                JTextField address = new JTextField("147.222.165.75", 10);
                 JTextField port = new JTextField("32123", 10);
                 JPanel connectPanel = new JPanel();
                 connectPanel.setLayout(new BoxLayout(connectPanel, BoxLayout.PAGE_AXIS));

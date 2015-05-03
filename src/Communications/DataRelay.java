@@ -75,9 +75,10 @@ public class DataRelay
     public void sendState(int currentState, int activeDrum)
     {
         //System.out.println("STATE:" + currentState);
+        long milliTime = (long)(parent.currentUnixTime);
         for(Observer o : StateListeners)
         {
-            o.update("STATE;"+String.valueOf(currentState));
+            o.update("STATE;"+String.valueOf(currentState)+";"+String.valueOf(milliTime));
         }    
     }
 
@@ -90,25 +91,31 @@ public class DataRelay
         //System.out.println("GSGS-" + String.valueOf(groupDelay));
         //System.out.println("RTRT-" + String.valueOf(parent.intUnixTime));
         
+        long milliTime = (long)(parent.currentUnixTime);
+        //System.out.println("MTIME: " + milliTime);
+        //System.out.println("UTIME: " + parent.currentUnixTime);
+        //System.out.println("GDELAY: " + groupDelay);
+        
+        
         for(Observer o : TensionListeners)
         {
-            o.update("TENSION;"+String.valueOf(data[1])+";"+String.valueOf(parent.intUnixTime));
+            o.update("TENSION;"+String.valueOf(data[1])+";"+String.valueOf(groupDelay));
         }
         for(Observer o : TorqueListeners)
         {
-            o.update("TORQUE;"+String.valueOf(data[0])+";"+String.valueOf(parent.intUnixTime));
+            o.update("TORQUE;"+String.valueOf(data[0])+";"+String.valueOf(groupDelay));
         }
         for(Observer o : CableSpeedListeners)
         {
-            o.update("SPEED;"+String.valueOf(data[2])+";"+String.valueOf(parent.intUnixTime));
+            o.update("SPEED;"+String.valueOf(data[2])+";"+String.valueOf(groupDelay));
         }
         for(Observer o : CableAngleListeners)
         {
-            o.update("ANGLE;"+String.valueOf(data[3])+";"+String.valueOf(parent.intUnixTime));
+            o.update("ANGLE;"+String.valueOf(data[3])+";"+String.valueOf(groupDelay));
         }
         for(Observer o : CableOutListeners)
         {
-            o.update("OUT;"+String.valueOf(data[4])+";"+String.valueOf(parent.intUnixTime));
+            o.update("OUT;"+String.valueOf(data[4])+";"+String.valueOf(groupDelay));
         }
     }
     
