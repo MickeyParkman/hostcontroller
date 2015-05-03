@@ -18,7 +18,7 @@ public class LaunchWeightWidget extends EnvironmentalWidget {
     @Override
     public void update()
     {
-        float weight = CurrentLaunchInformation.getCurrentLaunchInformation().getGliderMaxGrossWeight();
+        float weight = CurrentLaunchInformation.getCurrentLaunchInformation().getGliderLaunchMass();
         field.setText(""+weight);
     }
 

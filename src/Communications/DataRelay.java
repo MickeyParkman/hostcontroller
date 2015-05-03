@@ -40,11 +40,6 @@ public class DataRelay
         MessagePipeline.getInstance().WriteToSocket("");
     }
     
-    public void setParent(MessageListener ml)
-    {
-        parent = ml;
-    }
-    
     public void setNewLaunch(boolean nl)
     {
         newLaunch = nl;

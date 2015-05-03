@@ -151,21 +151,24 @@ public class CurrentLaunchInformation implements Observer{
             instance.winchPositionLongitude = currentDataObjectSet.getCurrentWinchPosition().getLongitude();
             
             if (gliderPanel != null){
-                instance.gliderBaggage = Float.parseFloat(gliderPanel.getbaggageField());
-                instance.gliderBallast = Float.parseFloat(gliderPanel.getballastField());
+                if(gliderPanel.getballastField().equals("")) instance.gliderBallast = 0;
+                else instance.gliderBallast = Float.parseFloat(gliderPanel.getballastField());
                 if (gliderPanel.getbaggageCheckBox()){
-                    instance.passengerWeight = Float.parseFloat(gliderPanel.getpassengerWeightField());
+                    instance.gliderBaggage = Float.parseFloat(gliderPanel.getbaggageField());
+                } else {
+                    instance.gliderBaggage = 0;
                 }
-                else {
-                    instance.passengerWeight = 0;
-                }
+                if(gliderPanel.getpassengerWeightField().equals("")) instance.passengerWeight = 0;
+                else instance.passengerWeight = Float.parseFloat(gliderPanel.getpassengerWeightField());
+
             }
-            
-            instance.temperature = Float.parseFloat(environmentalData.getValue("Temperature"));
-            instance.pressure = Float.parseFloat(environmentalData.getValue("Pressure"));
-            instance.averageWindSpeed = Float.parseFloat(environmentalData.getValue("Avg. Wind Speed"));
-            instance.windDirection = Float.parseFloat(environmentalData.getValue("Wind Direction"));
-            
+            System.out.println("First Checkpoint");
+            instance.temperature = Float.parseFloat(environmentalData.getValue("temperature"));
+            instance.pressure = Float.parseFloat(environmentalData.getValue("pressure"));
+            instance.averageWindSpeed = Float.parseFloat(environmentalData.getValue("windspeed"));
+            instance.windDirection = Float.parseFloat(environmentalData.getValue("winddirection"));
+            System.out.println("Second Checkpoint");
+          
             instance.densityAltitude = calculateDensityAltitude(instance.temperature, instance.pressure);
             instance.runLength = calculateRunLength(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
                                            instance.winchPositionAltitude, instance.winchPositionLatitude, instance.winchPositionLongitude);
@@ -178,15 +181,15 @@ public class CurrentLaunchInformation implements Observer{
             instance.windDegreeOffset = calculateRelativeDirection(instance.runHeading, instance.windDirection);
             instance.headwindComponent = calculateHeadwind(instance.windDegreeOffset, instance.averageWindSpeed);
             instance.crosswindComponent = calculateCrosswind(instance.windDegreeOffset, instance.averageWindSpeed);
-            
             instance.complete = true;
-            }catch (NumberFormatException e){
-                System.out.println("Error when updating current launch information");
-                e.printStackTrace();
-                instance.complete = false;
-            }catch (Exception e){
-                instance.complete = false;
-            }
+        }catch (NumberFormatException e){
+            System.out.println("Error when updating current launch information");
+            e.printStackTrace();
+            instance.complete = false;
+        }catch (Exception e){
+            //e.printStackTrace();
+            instance.complete = false;
+        }
     }
     
     @Override
@@ -327,6 +330,8 @@ public class CurrentLaunchInformation implements Observer{
     
     public static float calculateGliderLaunchMass(float pilotWeight, float gliderEmptyWeight,
                                             float gliderBallast, float gliderBaggage, float passengerWeight){
+        System.out.println("Adding: " + pilotWeight + ", " + gliderEmptyWeight + ", " + gliderBallast + ", " + gliderBaggage + ", " + passengerWeight);
+        System.out.println("= " + pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
         return (pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
     }
     
