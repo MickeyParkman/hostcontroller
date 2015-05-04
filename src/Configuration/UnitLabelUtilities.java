@@ -25,6 +25,8 @@ public class UnitLabelUtilities {
                 return "km";
             case 5:
                 return "mi";
+            case 6:
+                return "in";
             default:
                 return "m";
         }

@@ -97,6 +97,9 @@ public class MainWindow extends JFrame {
         defaultProfile.setUnitSetting("runwayMagneticHeading", 1);
         defaultProfile.setUnitSetting("winchPosAltitude", 1);
         
+        defaultProfile.setUnitSetting("cableLength", 1);
+        defaultProfile.setUnitSetting("coreDiameter", 6);
+        
         defaultProfile.setUnitSetting("avgWindSpeed", 1);
         defaultProfile.setUnitSetting("crosswind", 1);
         defaultProfile.setUnitSetting("gustWindSpeed", 1);

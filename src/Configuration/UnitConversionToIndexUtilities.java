@@ -25,6 +25,8 @@ public class UnitConversionToIndexUtilities {
                 return 4;
             case "mi":
                 return 5;
+            case "in":
+                return 6;
             default:
                 return 0;
         }
