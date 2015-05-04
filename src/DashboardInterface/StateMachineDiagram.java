@@ -20,6 +20,7 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
 
     JTextField last = new JTextField();
     private FlightDashboard parent;
+    private final int width = 400;
     
     public StateMachineDiagram() {
         statePics = new HashMap<>();
@@ -62,16 +63,16 @@ public class StateMachineDiagram extends javax.swing.JPanel implements Observer 
     
     private void loadPictures()
     {
-        statePics.put(0, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/safe.png")),500));
-        statePics.put(1, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/prep.png")),500));
-        statePics.put(2, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/armed.png")),500));
-        statePics.put(3, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/profile.png")),500));
-        statePics.put(4, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/ramp.png")),500));
-        statePics.put(5, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/constant.png")),500));
-        statePics.put(6, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/recovery.png")),500));
-        statePics.put(7, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/retrieve.png")),500));
-        statePics.put(14, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/stop.png")),500));
-        statePics.put(15, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/abort.png")),500));
+        statePics.put(0, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/safe.png")),width));
+        statePics.put(1, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/prep.png")),width));
+        statePics.put(2, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/armed.png")),width));
+        statePics.put(3, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/profile.png")),width));
+        statePics.put(4, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/ramp.png")),width));
+        statePics.put(5, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/constant.png")),width));
+        statePics.put(6, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/recovery.png")),width));
+        statePics.put(7, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/retrieve.png")),width));
+        statePics.put(14, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/stop.png")),width));
+        statePics.put(15, getScaledImage(new ImageIcon(getClass().getResource("/DashboardInterface/images/abort.png")),width));
     }
     
     @SuppressWarnings("unchecked")
