@@ -28,8 +28,13 @@ public class TemperatureWidget extends EnvironmentalWidget {
         else if(unitId == 1)
         {
             String value = CurrentWidgetDataSet.getInstance().getValue("temperature");
-            System.out.println(value);
-            this.field.setText(String.valueOf((Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("temperature"))) * 1.8 + 32));
+            if (value.equals("")){
+                this.field.setText("");
+            }
+            else
+            {
+                this.field.setText(String.format("%.2f", (Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("temperature"))) * 1.8 + 32));
+            }
         }
     }
 

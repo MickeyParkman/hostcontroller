@@ -5,8 +5,10 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.CurrentLaunchInformation;
 
 /**
  *
@@ -22,7 +24,8 @@ public class RunLengthWidget extends EnvironmentalWidget {
     @Override
     public void update()
     {
-        
+        float length = (CurrentLaunchInformation.getCurrentLaunchInformation().getRunLength()) * UnitConversionRate.convertDistanceUnitIndexToFactor(unitId);
+        field.setText(String.format("%.2f", length));
     }
 
     @Override

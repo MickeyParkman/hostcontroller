@@ -26,7 +26,6 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -35,7 +34,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 
-public class AddEditPilotPanel extends JDialog {
+public class AddEditPilotPanel extends JFrame {
     private JTextField firstNameField;
     private JTextField lastNameField;
     private JTextField middleNameField;
@@ -70,7 +69,6 @@ public class AddEditPilotPanel extends JDialog {
      * Create the frame.
      */
     public AddEditPilotPanel(Pilot editPilot, boolean isEditEntry) {
-        this.setModal(true);
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         setupUnits();
         

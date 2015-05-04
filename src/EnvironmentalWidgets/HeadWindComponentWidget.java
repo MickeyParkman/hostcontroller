@@ -5,8 +5,10 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.CurrentLaunchInformation;
 
 /**
  *
@@ -20,6 +22,8 @@ public class HeadWindComponentWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        float speed = (CurrentLaunchInformation.getCurrentLaunchInformation().getHeadwindComponent()) * UnitConversionRate.convertSpeedUnitIndexToFactor(unitId);
+        field.setText(String.format("%.2f", speed));
     }
 
     @Override

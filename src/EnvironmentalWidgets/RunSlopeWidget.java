@@ -5,8 +5,9 @@
  */
 package EnvironmentalWidgets;
 
-import Configuration.UnitLabelUtilities;
+
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.CurrentLaunchInformation;
 
 /**
  *
@@ -20,7 +21,10 @@ public class RunSlopeWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        float slope = CurrentLaunchInformation.getCurrentLaunchInformation().getRunSlope();
+        field.setText(String.format("%.2f", slope));
     }
+
 
     @Override
     public void update(String msg) {
