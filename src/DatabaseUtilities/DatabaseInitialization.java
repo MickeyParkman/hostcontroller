@@ -254,6 +254,10 @@ public class DatabaseInitialization {
             //JOptionPane.showMessageDialog(null, e.getMessage());
             //throw e;
         }
+        try {
+            createBlackboxTable(connection);
+        }catch(SQLException e) {
+        }
         psp.update();
         connection.close();
     }
@@ -912,13 +916,30 @@ public class DatabaseInitialization {
     }
     
     /**
-     * Creates the table to store raw CanBus messages
+     * Creates the table to store flight messages
      * 
      * @param connect the connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
     private static void createMessagesTable(Connection connect) throws SQLException {
         String createMessagesString = "CREATE TABLE Messages"
+                + "( timestamp BIGINT, "
+                + " message VARCHAR(40))";
+        try (Statement createMessagesTableStatement = connect.createStatement()) {
+            createMessagesTableStatement.execute(createMessagesString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Creates the table to store raw CanBus messages
+     * 
+     * @param connect the connection to be used for creating the table in the database
+     * @throws SQLException if the table can't be created
+     */
+    private static void createBlackboxTable(Connection connect) throws SQLException {
+        String createMessagesString = "CREATE TABLE Blackbox"
                 + "( timestamp BIGINT, "
                 + " message VARCHAR(40))";
         try (Statement createMessagesTableStatement = connect.createStatement()) {
