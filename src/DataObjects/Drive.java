@@ -28,6 +28,11 @@ public class Drive {
     {
         return name;
     }
+    
+    public void setName(String s)
+    {
+        name = s;
+    }
 
     public List<Drum> getDrumList()
     {
@@ -40,5 +45,10 @@ public class Drive {
     
     public void setReductionRatio(float reductionRatio){
         this.reductionRatio = reductionRatio;
+    }
+    
+    public String toString()
+    {
+        return name;
     }
 }

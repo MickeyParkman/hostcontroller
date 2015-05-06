@@ -73,6 +73,11 @@ public class Parachute {
         lift = newLift;
     }
     
+    public void setWeight(float w)
+    {
+        weight = w;
+    }
+    
     /**
     * This method can change the drag of a Parachute object.
     * This method always works, only if Parachute already
@@ -82,6 +87,11 @@ public class Parachute {
     */
     public void setDrag(float newDrag) {
         drag = newDrag;
+    }
+    
+    public void setName(String s)
+    {
+        name = s;
     }
     
     /**

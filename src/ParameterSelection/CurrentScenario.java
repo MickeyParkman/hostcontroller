@@ -122,8 +122,9 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
             drumLabel.setText("NO DRUM"); 
             drumLabel.setForeground(Color.RED);
         } else {
+            if(drum.getParachute() == null) drumLabel.setForeground(new Color(255,102,0));  
+            else drumLabel.setForeground(new Color(0,128,0));  
             drumLabel.setText(drum.toString());    
-            drumLabel.setForeground(new Color(0,128,0));  
         }
         
         if(profile == null) {

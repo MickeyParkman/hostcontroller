@@ -50,6 +50,7 @@ public class MainWindow extends JFrame {
     private CurrentScenario CurrentScenario_;
     private CurrentDataObjectSet currentData;
     private CardLayout selectionLayout;
+    private DEBUGWinchEditPanel winchPanel;
 
     public MainWindow() {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
@@ -63,6 +64,7 @@ public class MainWindow extends JFrame {
         statusLabel = new JLabel();
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         currentProfile = "NO PROFILE";
+        winchPanel = new DEBUGWinchEditPanel(ParameterSelectionPanel_);
         ParameterSelectionPanel_ = new ParameterSelectionPanel();
         FlightDashboard_ = new FlightDashboard();
         EnvironmentalWindow_ = new EnvironmentalWindow();
@@ -153,11 +155,12 @@ public class MainWindow extends JFrame {
         
         //upperLeftSidePanelDashboard.add(new JLabel("REPLAY LIST HERE"));
         //lowerLeftSidePanelDashboard.add(new JLabel("Current Scenario"));
+       
         
         tabbedPane.setPreferredSize(new Dimension(800, 620));
         tabbedPane.addTab("Edit Scenario", makePanel(ParameterSelectionPanel_, 1));
         tabbedPane.addTab("Flight Dashboard", makePanel(FlightDashboard_, 2));
-        tabbedPane.addTab("Edit Winch", makePanel(new DEBUGWinchEditPanel(), 3));
+        tabbedPane.addTab("Edit Winch", makePanel(winchPanel, 3));
         mainWindow.add(tabbedPane, BorderLayout.CENTER);
 
         mainWindow.add(rightSidePanel, BorderLayout.LINE_END);

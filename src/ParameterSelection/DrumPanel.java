@@ -22,6 +22,13 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.MatteBorder;
 import Configuration.UnitLabelUtilities;
+import DataObjects.Drive;
+import DataObjects.Parachute;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.JComboBox;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -40,7 +47,8 @@ public class DrumPanel extends JPanel implements Observer{
     private int cableLengthUnitsID;
     private int coreDiameterUnitsID;
     private JTextField numLaunchesField;
-    private JTextField attachedParachuteField;
+    //private JTextField attachedParachuteField;
+    private JComboBox attachedParachuteField;
     
     public void setupUnits()
     {
@@ -65,6 +73,7 @@ public class DrumPanel extends JPanel implements Observer{
         }
         drumJList.setModel(drumModel);
         Drum currentDrum = currentData.getCurrentDrum();
+        loadParachutesFromWinch();
         try{
             drumJList.setSelectedValue(currentDrum.toString(), true);
         
@@ -84,11 +93,21 @@ public class DrumPanel extends JPanel implements Observer{
             
             numLaunchesField.setText(String.valueOf(currentDrum.getNumLaunches()));
             numLaunchesField.setBackground(Color.GREEN);
-            
-            attachedParachuteField.setText(String.valueOf(currentDrum.getParachute()));
-            attachedParachuteField.setBackground(Color.GREEN);
+            //attachedParachuteField.setText(String.valueOf(currentDrum.getParachute()));
+            //attachedParachuteField.setBackground(Color.GREEN);
         }
-        catch(Exception e){}
+        catch(Exception e){
+        }
+    }
+    
+    private void loadParachutesFromWinch()
+    {
+        attachedParachuteField.removeAllItems();
+        attachedParachuteField.addItem("No Parachute");
+        for(Parachute p : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getParachuteList())
+        {
+            attachedParachuteField.addItem(p);
+        }
     }
     
     private Observer getObserver() {
@@ -98,8 +117,11 @@ public class DrumPanel extends JPanel implements Observer{
     private void initDrumList() {
         try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
-            //drumNames = DatabaseUtilities.DatabaseDataObjectUtilities.getDrums();
-            
+            drumNames = new ArrayList<Drum>();
+            for(Drive d : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getDriveList())
+            {
+                drumNames.addAll(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getDrumsForDrive(d.getName()));
+            }
             /*if (RecentLaunchSelections.IsInitialized()) {
                 List<Drum> recentDrums = recent.getRecentDrum();
                 for (int i = 0; i < recentDrums.size(); i++){
@@ -125,11 +147,12 @@ public class DrumPanel extends JPanel implements Observer{
         cableLengthField.setBackground(Color.WHITE);
         numLaunchesField.setText("No Drum Selected");
         numLaunchesField.setBackground(Color.WHITE);
-        attachedParachuteField.setText("No Drum Selected");
+        //attachedParachuteField.setText("No Drum Selected");
         attachedParachuteField.setBackground(Color.WHITE);
     }
     
     private void drumJListSelectionChanged(ListSelectionEvent listSelectionEvent) {
+        loadParachutesFromWinch();
         if(drumJList.getSelectedIndex() >= 0){
             try{
                 Drum currentDrum = (Drum)drumJList.getSelectedValue();
@@ -150,8 +173,8 @@ public class DrumPanel extends JPanel implements Observer{
                 numLaunchesField.setText(String.valueOf(currentDrum.getNumLaunches()));
                 numLaunchesField.setBackground(Color.GREEN);
 
-                attachedParachuteField.setText(String.valueOf(currentDrum.getParachute()));
-                attachedParachuteField.setBackground(Color.GREEN);  
+                //attachedParachuteField.setText(String.valueOf(currentDrum.getParachute()));
+                //attachedParachuteField.setBackground(Color.GREEN);  
             } catch(Exception e) {
                 //TODO respond to error
             }
@@ -278,10 +301,32 @@ public class DrumPanel extends JPanel implements Observer{
         attachedParachuteLabel.setBounds(10, 184, 140, 14);
         attributesPanel.add(attachedParachuteLabel);
         
-        attachedParachuteField = new JTextField();
-        attachedParachuteField.setText("No Drum Selected");
+        //attachedParachuteField = new JTextField();
+        attachedParachuteField = new JComboBox();
+        attachedParachuteField.addItem("No Drum Selected");
+        attachedParachuteField.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    JComboBox cb = (JComboBox)e.getSource();
+                    try 
+                    {
+                        Parachute para = (Parachute)cb.getSelectedItem();
+                        CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().setParachute(para);
+                        //update();
+                    }
+                    catch (ClassCastException cce)
+                    {   
+                        Drum cDrum = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum();
+                        if(cDrum != null) CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().clearParachute();
+                    }
+                }
+            }
+        });  
+        //loadParachutesFromWinch();
+        //attachedParachuteField.setText("No Drum Selected");
         attachedParachuteField.setEditable(false);
-        attachedParachuteField.setColumns(10);
+        //attachedParachuteField.setColumns(10);
         attachedParachuteField.setBorder(new MatteBorder(1, 1, 1, 1, Color.WHITE));
         attachedParachuteField.setBackground(Color.WHITE);
         attachedParachuteField.setBounds(160, 181, 110, 20);
@@ -293,6 +338,6 @@ public class DrumPanel extends JPanel implements Observer{
             
     @Override
     public void update(String msg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
