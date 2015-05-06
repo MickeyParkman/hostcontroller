@@ -41,6 +41,15 @@ public class CurrentDataObjectSet {
         notifyObservers();
     }
     
+    public void notifyWithString()
+    {
+       for(Observer ob : observers)
+        {
+            String msg = "";
+            ob.update(msg);
+        } 
+    }
+    
     private void notifyObservers()
     {
         for(Observer ob : observers)

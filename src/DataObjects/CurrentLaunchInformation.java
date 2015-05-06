@@ -294,7 +294,7 @@ public class CurrentLaunchInformation implements Observer{
             }
         }
         else{
-            throw new UnsupportedOperationException("Not supported yet.");
+            //throw new UnsupportedOperationException("Not supported yet.");
         }
     }
     

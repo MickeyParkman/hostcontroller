@@ -16,6 +16,11 @@ public class Drum {
 
     }
     
+    public Drive getDrive()
+    {
+        return drive;
+    }
+    
     public void setDrive(Drive d)
     {
         drive = d;

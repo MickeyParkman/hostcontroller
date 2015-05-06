@@ -1,5 +1,6 @@
 package ParameterSelection;
 
+import Communications.Observer;
 import DataObjects.Drive;
 import DataObjects.Drum;
 import DataObjects.Parachute;
@@ -16,7 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import DataObjects.CurrentDataObjectSet;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,28 +29,31 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 
 /**
  *
  * @author jtroxel
  */
-public class DEBUGWinchEditPanel extends JPanel {
+public class DEBUGWinchEditPanel extends JPanel implements Observer {
     
     private Winch DEBUGWinch;
     private JPanel DEBUGWinchPanel;
-    private JPanel DEBUGWinchPanel2;
     private JPanel DEBUGMainPanel;
     private int selected;
-    private ParameterSelectionPanel paramPanel;
     private CurrentDataObjectSet data;
+    private JPanel buttonPanel;
     
     public DEBUGWinchEditPanel(ParameterSelectionPanel p) {
-        paramPanel = p;
+        //CurrentDataObjectSet.getCurrentDataObjectSet().attach(this);
+        setBackground(Color.WHITE);
         selected = 0;
-        initDEBUGWinch();
+        //initDEBUGWinch();
         initComponents();
         JScrollPane scrollPane = new JScrollPane(DEBUGMainPanel);
+        scrollPane.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());
         this.add(scrollPane, BorderLayout.CENTER);
                 
@@ -56,11 +63,12 @@ public class DEBUGWinchEditPanel extends JPanel {
     
     public void setParamPanel(ParameterSelectionPanel p)
     {
-        paramPanel = p;   
     }
     
     private void buildWinchPanel(Winch winch, boolean isSelected) {
+        if(winch == null) return;
         DEBUGWinchPanel = new JPanel();
+        DEBUGWinchPanel.setBackground(Color.WHITE);
 
         JPanel WinchPanel = new JPanel();
         WinchPanel.setLayout(new BoxLayout(WinchPanel, BoxLayout.Y_AXIS));
@@ -90,6 +98,34 @@ public class DEBUGWinchEditPanel extends JPanel {
     private void initComponents() {
         DEBUGMainPanel = new JPanel();
         DEBUGMainPanel.setLayout(new BoxLayout(DEBUGMainPanel, BoxLayout.Y_AXIS));
+        DEBUGMainPanel.setBackground(Color.WHITE);
+        buttonPanel = new JPanel();
+        JButton loadNewWinchButton = new JButton("Load Winch Config File");
+        loadNewWinchButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle("Winch Config");
+                chooser.setApproveButtonText("Select");
+                String filePath;
+                String fileName;
+                int option = chooser.showOpenDialog(DEBUGWinchEditPanel.this);
+                if(option == JFileChooser.APPROVE_OPTION) {
+                    File file = chooser.getSelectedFile();
+                    File chosen = chooser.getCurrentDirectory();
+                    filePath = chosen.getPath();
+                    fileName = file.getName();
+                    loadWinch(filePath + "\\" + fileName);
+                }
+            }
+        });
+        buttonPanel.setBackground(Color.WHITE);
+        loadNewWinchButton.setBackground(new Color(200,200,200));
+        buttonPanel.add(loadNewWinchButton);
+        buttonPanel.setMaximumSize(new Dimension(200, 40));
+        DEBUGMainPanel.add(buttonPanel);
+        
         buildWinchPanel(DEBUGWinch, true);
         /*for(int i = 0; i < 7; ++i) {
             if(i == selected) buildWinchPanel(DEBUGWinch, true);
@@ -97,21 +133,14 @@ public class DEBUGWinchEditPanel extends JPanel {
         }*/
     }
     
-    private void initDEBUGWinch() {
-        /*DEBUGWinch = new Winch("Winch #1", "Primary Winch for Spokane Gliding Team", (float)2.0);
-        Drive drive = new Drive("Drive #1", (float)1.0);
-        Drum drum1 = new Drum("Drum #1", (float)1.0, (float)1.0, (float)1000.0);
-        Parachute p1 = new Parachute("Green Parachute", 0, (float)0.5, (float)0.5, (float)25);
-        drum1.setParachute(p1);
-        drive.addDrum(drum1);
-        drive.addDrum(new Drum("Drum #2", (float)2.0, (float)2.0, (float)2000.0));
-        DEBUGWinch.addDrive(drive);
-        
-        DEBUGWinch.addParachute(p1);
-        DEBUGWinch.addParachute(new Parachute("Red Parachute", 1, (float)0.77, (float)0.67, (float)55));
-        DEBUGWinch.addParachute(new Parachute("Blue Parachute", 2, (float)0.23, (float)0.34, (float)35));*/
-        DEBUGWinch = loadWinchFile("D:\\Users\\Jacob\\Documents\\example_winch.txt");
-        //paramPanel.update();
+    private void loadWinch(String filepath)
+    {
+        DEBUGWinch = loadWinchFile(filepath);
+        CurrentDataObjectSet.getCurrentDataObjectSet().setCurrentWinch(DEBUGWinch);
+        CurrentDataObjectSet.getCurrentDataObjectSet().notifyWithString();
+        DEBUGMainPanel.removeAll();
+        DEBUGMainPanel.add(buttonPanel);
+        buildWinchPanel(DEBUGWinch, true);
     }
     
     private Winch loadWinchFile(String file)
@@ -135,6 +164,7 @@ public class DEBUGWinchEditPanel extends JPanel {
             } catch (IOException ex) {
             }
         } catch (FileNotFoundException ex) {
+            return null;
         }
         
         for(String str : lines)
@@ -210,7 +240,14 @@ public class DEBUGWinchEditPanel extends JPanel {
                     break;
             }
         }
-        
         return loadedWinch;
+    }
+
+    @Override
+    public void update() {
+    }
+
+    @Override
+    public void update(String msg) {
     }
 }

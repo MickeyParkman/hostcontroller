@@ -73,7 +73,7 @@ public class DrumPanel extends JPanel implements Observer{
         }
         drumJList.setModel(drumModel);
         Drum currentDrum = currentData.getCurrentDrum();
-        loadParachutesFromWinch();
+        //loadParachutesFromWinch();
         try{
             drumJList.setSelectedValue(currentDrum.toString(), true);
         
@@ -104,9 +104,12 @@ public class DrumPanel extends JPanel implements Observer{
     {
         attachedParachuteField.removeAllItems();
         attachedParachuteField.addItem("No Parachute");
-        for(Parachute p : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getParachuteList())
+        if(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch() != null)
         {
-            attachedParachuteField.addItem(p);
+            for(Parachute p : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getParachuteList())
+            {
+                attachedParachuteField.addItem(p);
+            }   
         }
     }
     
@@ -130,7 +133,7 @@ public class DrumPanel extends JPanel implements Observer{
             }*/
         }
         catch(Exception exp){
-            exp.printStackTrace();
+            //exp.printStackTrace();
         }
     }
 
@@ -152,7 +155,7 @@ public class DrumPanel extends JPanel implements Observer{
     }
     
     private void drumJListSelectionChanged(ListSelectionEvent listSelectionEvent) {
-        loadParachutesFromWinch();
+        //loadParachutesFromWinch();
         if(drumJList.getSelectedIndex() >= 0){
             try{
                 Drum currentDrum = (Drum)drumJList.getSelectedValue();
@@ -189,6 +192,7 @@ public class DrumPanel extends JPanel implements Observer{
         initDrumList();
         initComponents();
         setupUnits();
+        currentData.attach(this);
     }
     
     /**
@@ -312,13 +316,29 @@ public class DrumPanel extends JPanel implements Observer{
                     try 
                     {
                         Parachute para = (Parachute)cb.getSelectedItem();
-                        CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().setParachute(para);
+                        String driveName = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().getDrive().getName();
+                        for(Drum d : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getDrumsForDrive(driveName))
+                        {
+                            if(d.getName().equals(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().getName()))
+                            {
+                                d.setParachute(para);
+                            }
+                        }
                         //update();
                     }
                     catch (ClassCastException cce)
                     {   
-                        Drum cDrum = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum();
-                        if(cDrum != null) CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().clearParachute();
+                        if(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum() != null)
+                        {
+                            String driveName = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().getDrive().getName();
+                            for(Drum d : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getDrumsForDrive(driveName))
+                            {
+                                if(d.getName().equals(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().getName()))
+                                {
+                                    d.clearParachute();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -338,6 +358,7 @@ public class DrumPanel extends JPanel implements Observer{
             
     @Override
     public void update(String msg) {
+        loadParachutesFromWinch();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
