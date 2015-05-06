@@ -5,8 +5,10 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitConversionToIndexUtilities;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.CurrentLaunchInformation;
 
 /**
  *
@@ -20,6 +22,11 @@ public class RunDirectionWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        float direction = (CurrentLaunchInformation.getCurrentLaunchInformation().getRunHeading());
+        if (unitId == UnitConversionToIndexUtilities.degreesUnitStringToIndex("true")){
+            direction -= CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
+        }
+        field.setText(String.format("%.2f", direction));
     }
 
     @Override

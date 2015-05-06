@@ -29,11 +29,10 @@ import javax.swing.JToggleButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 
-public class AddEditGlider extends JDialog {
+public class AddEditGlider extends JFrame {
 
     private JPanel contentPane;
     private JTextField nNumberField;
@@ -100,7 +99,6 @@ public class AddEditGlider extends JDialog {
      * Create the frame.
      */
     public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
-        this.setModal(true);
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         setupUnits();
         
@@ -356,7 +354,6 @@ public class AddEditGlider extends JDialog {
                 Object[] options = {"One-time Launch", "Save to Database"};
                 int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider for a one-time launch or save it to the database?",
                     "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                System.out.println(choice);
                 if (choice == 0){
                     parent.update();
                     this.dispose();

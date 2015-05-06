@@ -21,15 +21,34 @@ public class TemperatureWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
-        if(unitId == 0)
+        if (manualEntry())
         {
-            this.field.setText(String.valueOf(CurrentWidgetDataSet.getInstance().getValue("temperature")));
+            //Its a manual entry we don't set it but should set hash map here
         }
-        else if(unitId == 1)
+        else
         {
-            String value = CurrentWidgetDataSet.getInstance().getValue("temperature");
-            System.out.println(value);
-            this.field.setText(String.valueOf((Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("temperature"))) * 1.8 + 32));
+            if(unitId == 0)
+            {
+                String value = CurrentWidgetDataSet.getInstance().getValue("temperature");
+                if (value.equals("")){
+                    this.field.setText("0.00");
+                }
+                else
+                {
+                    this.field.setText(String.format("%.2f", value));
+                }
+            }
+            else if(unitId == 1)
+            {
+                String value = CurrentWidgetDataSet.getInstance().getValue("temperature");
+                if (value.equals("")){
+                    this.field.setText("0.00");
+                }
+                else
+                {
+                    this.field.setText(String.format("%.2f", (Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("temperature"))) * 1.8 + 32));
+                }
+            }
         }
     }
 

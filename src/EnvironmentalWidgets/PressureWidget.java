@@ -5,6 +5,7 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 /**
@@ -19,7 +20,22 @@ public class PressureWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
-        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("pressure"));
+        if (manualEntry())
+        {
+            //Its a manual entry we don't set it but should set hash map here
+        }
+        else
+        {
+            if (CurrentWidgetDataSet.getInstance().getValue("pressure").equals(""))
+            {
+                field.setText("0.00");
+            }
+            else
+            {
+                float speed = (Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("pressure")) * UnitConversionRate.convertWeightUnitIndexToFactor(unitId));
+                field.setText(String.format("%.2f", speed));
+            }
+        }
     }
 
     @Override

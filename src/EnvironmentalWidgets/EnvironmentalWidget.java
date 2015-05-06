@@ -84,6 +84,10 @@ public abstract class EnvironmentalWidget extends JPanel implements Observer {
     {
         return field.getText();
     }
+    
+    public boolean manualEntry(){
+        return isEditable.isSelected();
+    }
 
     @Override
     public abstract void update();

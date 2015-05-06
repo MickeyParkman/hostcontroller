@@ -23,12 +23,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Random;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
 
 
-public class AddEditGliderPosFrame extends JDialog {
+public class AddEditGliderPosFrame extends JFrame {
 
     private JPanel contentPane;
     private JTextField latitudeField;
@@ -58,7 +57,6 @@ public class AddEditGliderPosFrame extends JDialog {
      * Create the frame.
      */
     public AddEditGliderPosFrame(GliderPosition editGliderPos, boolean isEditEntry) {
-        this.setModal(true);
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
         setupUnits();
 

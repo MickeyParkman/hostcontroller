@@ -5,8 +5,11 @@
  */
 package EnvironmentalWidgets;
 
+import Configuration.UnitConversionRate;
+import Configuration.UnitConversionToIndexUtilities;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.CurrentLaunchInformation;
 
 /**
  *
@@ -20,7 +23,30 @@ public class WindDirectionWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
-        this.field.setText(CurrentWidgetDataSet.getInstance().getValue("winddirection"));
+        if (manualEntry())
+        {
+            //Its a manual entry we don't set it but should set hash map here
+        }
+        else
+        {
+            if(unitId == 0)
+            {
+                String value = CurrentWidgetDataSet.getInstance().getValue("winddirection");
+                if (value.equals("")){
+                    this.field.setText("0.00");
+                }
+                else
+                {
+                    float direction = Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("winddirection"));
+                    direction -= CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
+                    this.field.setText(String.format("%.2f", direction));
+                }
+            }
+            else if(unitId == 1)
+            {
+                this.field.setText(String.valueOf(CurrentWidgetDataSet.getInstance().getValue("winddirection")));
+            }
+        }
     }
 
     @Override

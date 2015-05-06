@@ -27,12 +27,11 @@ import java.sql.SQLException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
 
 
-public class AddEditRunwayFrame extends JDialog {
+public class AddEditRunwayFrame extends JFrame {
 
     private JPanel contentPane;
     private JTextField magneticHeadingField;
@@ -61,7 +60,6 @@ public class AddEditRunwayFrame extends JDialog {
      * Create the frame.
      */
     public AddEditRunwayFrame(Runway editRunway, boolean isEditEntry) {
-        this.setModal(true);
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
         //setupUnits();
 

@@ -164,7 +164,6 @@ public class CurrentLaunchInformation implements Observer{
             instance.winchPositionAltitude = currentDataObjectSet.getCurrentWinchPosition().getAltitude();
             instance.winchPositionLatitude = currentDataObjectSet.getCurrentWinchPosition().getLatitude();
             instance.winchPositionLongitude = currentDataObjectSet.getCurrentWinchPosition().getLongitude();
-            System.out.println("First Checkpoint");
 
             instance.brakePressure = currentDataObjectSet.getCurrentWinch().getBrakePressure();
             if(!currentDataObjectSet.getCurrentWinch().getDriveList().isEmpty()){
@@ -173,7 +172,6 @@ public class CurrentLaunchInformation implements Observer{
             else{
                 instance.reductionRatio = 0;
             }
-            System.out.println("Second Checkpoint");
 
             //Based on current Drum class
             instance.drumCoreDiameter = currentDataObjectSet.getCurrentDrum().getCoreDiameter();
@@ -184,8 +182,6 @@ public class CurrentLaunchInformation implements Observer{
             instance.parachuteLift = currentDataObjectSet.getCurrentDrum().getParachute().getLift();
             instance.parachuteDrag = currentDataObjectSet.getCurrentDrum().getParachute().getDrag();
             instance.parachuteWeight = currentDataObjectSet.getCurrentDrum().getParachute().getWeight(); 
-            System.out.println("Third Checkpoint");
-
             
             instance.completeObjects = true;
             update("Manual Entry");
@@ -370,7 +366,7 @@ public class CurrentLaunchInformation implements Observer{
                                         float winchLatitude, float winchLongitude, float magneticVariation){
         double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
         double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitude - gliderLatitude));
-        float angle = (float)(Math.atan2(xRun, yRise)) * (magneticVariation);
+        float angle = (float)(Math.toDegrees(Math.atan2(xRun, yRise))) + (magneticVariation);
         return angle;
     }
     
@@ -402,8 +398,8 @@ public class CurrentLaunchInformation implements Observer{
     
     public static float calculateGliderLaunchMass(float pilotWeight, float gliderEmptyWeight,
                                             float gliderBallast, float gliderBaggage, float passengerWeight){
-        System.out.println("Adding: " + pilotWeight + ", " + gliderEmptyWeight + ", " + gliderBallast + ", " + gliderBaggage + ", " + passengerWeight);
-        System.out.println("= " + pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
+        //System.out.println("Adding: " + pilotWeight + ", " + gliderEmptyWeight + ", " + gliderBallast + ", " + gliderBaggage + ", " + passengerWeight);
+        //System.out.println("= " + pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
         return (pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
     }
     

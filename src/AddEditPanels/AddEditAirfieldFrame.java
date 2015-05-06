@@ -23,10 +23,9 @@ import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.FocusListener;
 import java.awt.event.FocusEvent;
-import javax.swing.JDialog;
 
 
-public class AddEditAirfieldFrame extends JDialog{
+public class AddEditAirfieldFrame extends JFrame{
     private JPanel airfieldAttributesPanel;
     private JTextField airfieldAltitudeField;
     private JTextField designatorField;
@@ -57,8 +56,6 @@ public class AddEditAirfieldFrame extends JDialog{
      * Create the frame.
      */
     public AddEditAirfieldFrame(Airfield editAirfield, boolean isEditEntry) {
-        this.setModal(true);
-        
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
         setupUnits();
         
