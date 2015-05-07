@@ -39,7 +39,7 @@ public abstract class EnvironmentalWidget extends JPanel implements Observer {
         JPanel fieldPanel = new JPanel();
         JPanel titlePanel = new JPanel();
         fieldPanel.setBackground(Color.WHITE);
-        fieldPanel.setLayout(new BorderLayout());        
+        fieldPanel.setLayout(new BorderLayout());     
         titlePanel.setBackground(Color.WHITE);
         titlePanel.setLayout(new BorderLayout());
         title = new JLabel(titleIn);
@@ -55,6 +55,7 @@ public abstract class EnvironmentalWidget extends JPanel implements Observer {
                     CurrentLaunchInformation.getCurrentLaunchInformation().update("Manual Entry");
         	}
         });
+        field.setHorizontalAlignment(JTextField.RIGHT);
         isEditable = new JCheckBox();
         isEditable.setBackground(Color.WHITE);
         isEditable.addItemListener(new ItemListener(){

@@ -258,47 +258,59 @@ public class SailplanePanel extends JPanel implements Observer{
                 
                 nNumberField.setText(theSailplane.getNumber());
                 nNumberField.setBackground(Color.GREEN);
+                nNumberField.setHorizontalAlignment(JTextField.RIGHT);
 
                 weakLinkField.setText(String.valueOf(theSailplane.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
                 weakLinkField.setBackground(Color.GREEN);
+                weakLinkField.setHorizontalAlignment(JTextField.RIGHT);
 
                 tensionField.setText(String.valueOf(theSailplane.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
                 tensionField.setBackground(Color.GREEN);
+                tensionField.setHorizontalAlignment(JTextField.RIGHT);
 
                 releaseAngleField.setText(String.valueOf(theSailplane.getCableReleaseAngle()));
                 releaseAngleField.setBackground(Color.GREEN);
+                releaseAngleField.setHorizontalAlignment(JTextField.RIGHT);
 
                 stallSpeedField.setText(String.valueOf(theSailplane.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
                 stallSpeedField.setBackground(Color.GREEN);
+                stallSpeedField.setHorizontalAlignment(JTextField.RIGHT);
 
                 grossWeightField.setText(String.valueOf(theSailplane.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
                 grossWeightField.setBackground(Color.GREEN);
+                grossWeightField.setHorizontalAlignment(JTextField.RIGHT);
 
                 emptyWeightField.setText(String.valueOf(theSailplane.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
                 emptyWeightField.setBackground(Color.GREEN);
+                emptyWeightField.setHorizontalAlignment(JTextField.RIGHT);
 
                 winchingSpeedField.setText(String.valueOf(theSailplane.getMaxWinchingSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
                 winchingSpeedField.setBackground(Color.GREEN);
+                winchingSpeedField.setHorizontalAlignment(JTextField.RIGHT);
                 
                 if(theSailplane.getCarryBallast())
                 {
                     ballastField.setEnabled(true);
                     ballastField.setBackground(Color.WHITE);
+                    ballastField.setHorizontalAlignment(JTextField.RIGHT);
                 }
                 if(!theSailplane.getCarryBallast())
                 {
                     ballastField.setEnabled(false);
                     ballastField.setBackground(Color.LIGHT_GRAY);
+                    ballastField.setHorizontalAlignment(JTextField.RIGHT);
                 }
                 if(theSailplane.getMultipleSeats())
                 {
                     passengerWeightField.setEnabled(true);
                     passengerWeightField.setBackground(Color.WHITE);
+                    passengerWeightField.setHorizontalAlignment(JTextField.RIGHT);
                 }
                 if(!theSailplane.getMultipleSeats())
                 {
                     passengerWeightField.setEnabled(false);
                     passengerWeightField.setBackground(Color.LIGHT_GRAY);
+                    passengerWeightField.setHorizontalAlignment(JTextField.RIGHT);
                 }
             } catch(Exception e) {
                 //TODO respond to error

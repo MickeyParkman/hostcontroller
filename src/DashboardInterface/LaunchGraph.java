@@ -7,6 +7,7 @@
 package DashboardInterface;
 
 import Communications.Observer;
+import DataObjects.CurrentDataObjectSet;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -29,6 +30,7 @@ import org.jfree.chart.annotations.XYLineAnnotation;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
@@ -39,6 +41,8 @@ import org.jfree.data.general.SeriesException;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.Layer;
@@ -53,22 +57,33 @@ public class LaunchGraph extends JPanel implements Observer {
     public HashMap datasetMap = new HashMap();
     
     private final long serialVersionUID = 1L;
-    TimeSeriesCollection heightDataset = new TimeSeriesCollection();
-    TimeSeriesCollection speedDataset = new TimeSeriesCollection();
-    TimeSeriesCollection tensionDataset = new TimeSeriesCollection();
-    TimeSeries tensionTimeSeries = new TimeSeries("Tension ");
-    TimeSeries speedTimeSeries = new TimeSeries("Speed ");
-    TimeSeries heightTimeSeries = new TimeSeries("Height ");
+    XYSeriesCollection heightDataset = new XYSeriesCollection();
+    XYSeriesCollection speedDataset = new XYSeriesCollection();
+    XYSeriesCollection tensionDataset = new XYSeriesCollection();
+    XYSeries tensionTimeSeries = new XYSeries("Tension");
+    XYSeries speedTimeSeries = new XYSeries("Speed");
+    XYSeries heightTimeSeries = new XYSeries("Height");
     
     private XYPlot plot;
     
     private long previousTime = 0L;
-    private int maxTensionMarker = 950;
+    private float maxTensionMarker;
     private double currentAngle = 0f;
+    private double startTime;
+    private double curTime;
     
     private boolean running = false;
     
      public LaunchGraph(String title) {
+        if(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentSailplane() == null)
+        {
+            maxTensionMarker = 1000;
+        }
+        else
+        {
+            // this is not being converted -- must happen before added back in...
+            maxTensionMarker = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentSailplane().getMaxTension();
+        }
         setBackground(Color.WHITE);
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
         chartPanel.setPreferredSize(new java.awt.Dimension(1000, 270));
@@ -90,7 +105,7 @@ public class LaunchGraph extends JPanel implements Observer {
             "Speed, Height and Tension v Time:",  // title
             "Time",             // x-axis label
             "Speed",   // y-axis label
-            dataset,            // data
+            null,            // data
             PlotOrientation.VERTICAL,
             true,               // create legend?
             true,               // generate tooltips?
@@ -108,8 +123,10 @@ public class LaunchGraph extends JPanel implements Observer {
         XYDataset dataset1 = createDataset(0L, 130000);
         plot.setDataset(0,dataset1);
         plot.setRenderer(0,splinerenderer1);
-        DateAxis domainAxis = new DateAxis("Date");
+        plot.getRenderer().setSeriesPaint(0, Color.MAGENTA);
+        NumberAxis domainAxis = new NumberAxis("Time (Seconds from Start of Launch)");
         plot.setDomainAxis(domainAxis);
+        //domainAxis.setRange(0, 30);
         NumberAxis heightYAxis = new NumberAxis("Height");
         heightYAxis.setRange(0, 1050);
         plot.setRangeAxis(heightYAxis);
@@ -118,6 +135,7 @@ public class LaunchGraph extends JPanel implements Observer {
         XYDataset dataset2 = createDataset2();
         plot.setDataset(1, dataset2);
         plot.setRenderer(1, splinerenderer2);
+        plot.getRenderer().setSeriesPaint(1, Color.BLUE);
         NumberAxis speedYAxis = new NumberAxis("Speed");
         speedYAxis.setRange(0, 50);
         plot.setRangeAxis(1, speedYAxis);
@@ -127,6 +145,7 @@ public class LaunchGraph extends JPanel implements Observer {
         plot.setDataset(2, dataset3);
         plot.setRenderer(2, splinerenderer3);
         NumberAxis tensionYAxis = new NumberAxis("Tension");
+        plot.getRenderer().setSeriesPaint(2, Color.RED);
         tensionYAxis.setRange(0, 8000);
         plot.setRangeAxis(2, tensionYAxis);
         datasetMap.put("TENSION", dataset3);
@@ -135,11 +154,11 @@ public class LaunchGraph extends JPanel implements Observer {
         plot.mapDatasetToRangeAxis(1, 1); //2nd dataset to 2nd y-axis
         plot.mapDatasetToRangeAxis(2, 2);
     
-        float[] dashArray = {1,1,1,0};
-        plot.addRangeMarker(new ValueMarker(maxTensionMarker, Color.YELLOW, new BasicStroke(1, 0, 0, 1, dashArray, 0)));
-        XYTextAnnotation text = new XYTextAnnotation("Max Tension", 10, maxTensionMarker);
-        text.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        plot.addAnnotation(text);
+        //float[] dashArray = {1,1,1,0};
+        //plot.addRangeMarker(new ValueMarker(maxTensionMarker, Color.YELLOW, new BasicStroke(1, 0, 0, 1, dashArray, 0)));
+        //XYTextAnnotation text = new XYTextAnnotation("Max Tension", 10, maxTensionMarker);
+        //text.setFont(new Font("SansSerif", Font.PLAIN, 9));
+        //plot.addAnnotation(text);
         
                 
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
@@ -162,36 +181,36 @@ public class LaunchGraph extends JPanel implements Observer {
      * 
      * @param state the new state the launch has transitioned into
      */
-    public void addStateMarker(int state) {
-        plot.addDomainMarker(new ValueMarker(previousTime, Color.BLUE, new BasicStroke((float) 2.5)));
+    public void addStateMarker(int state, double time) {
+        plot.addDomainMarker(new ValueMarker(time, Color.BLUE, new BasicStroke((float) 2.5)));
         switch(state) {
             case 2:
-                XYTextAnnotation text = new XYTextAnnotation("Armed", previousTime + 2000, 500);
+                XYTextAnnotation text = new XYTextAnnotation("Armed", time, 500);
                 text.setFont(new Font("SansSerif", Font.PLAIN, 9));
                 plot.addAnnotation(text);
                 break;
             case 3:
-                XYTextAnnotation text2 = new XYTextAnnotation("Profile", previousTime + 2000, 510);
+                XYTextAnnotation text2 = new XYTextAnnotation("Profile", time, 510);
                 text2.setFont(new Font("SansSerif", Font.PLAIN, 9));
                 plot.addAnnotation(text2);
                 break;
             case 4:
-                XYTextAnnotation text3 = new XYTextAnnotation("Ramp", previousTime + 2000, 520);
+                XYTextAnnotation text3 = new XYTextAnnotation("Ramp", time, 520);
                 text3.setFont(new Font("SansSerif", Font.PLAIN, 9));
                 plot.addAnnotation(text3);
                 break;
             case 5:
-                XYTextAnnotation text4 = new XYTextAnnotation("Constant", previousTime + 2000, 530);
+                XYTextAnnotation text4 = new XYTextAnnotation("Constant", time, 530);
                 text4.setFont(new Font("SansSerif", Font.PLAIN, 9));
                 plot.addAnnotation(text4);
                 break;
             case 6:
-                XYTextAnnotation text5 = new XYTextAnnotation("Recovery", previousTime + 2000, 540);
+                XYTextAnnotation text5 = new XYTextAnnotation("Recovery", time, 540);
                 text5.setFont(new Font("SansSerif", Font.PLAIN, 9));
                 plot.addAnnotation(text5);
                 break;
             case 7:
-                XYTextAnnotation text6 = new XYTextAnnotation("Retrieve", previousTime + 2000, 550);
+                XYTextAnnotation text6 = new XYTextAnnotation("Retrieve", time, 550);
                 text6.setFont(new Font("SansSerif", Font.PLAIN, 9));
                 plot.addAnnotation(text6);
                 break;
@@ -204,11 +223,8 @@ public class LaunchGraph extends JPanel implements Observer {
      * @return The dataset.
      */
     private XYDataset createDataset(long startTimeMili, int maxOffset) {
-        heightTimeSeries.add(new Millisecond(new Date(startTimeMili + maxOffset)), null);
         heightDataset.addSeries(heightTimeSeries);
-
         return heightDataset;
-
     }
     
     /**
@@ -251,8 +267,8 @@ public class LaunchGraph extends JPanel implements Observer {
      * @param time the time associated with the value on the graph
      * @param value the height value to be graphed
      */
-    public void addHeightValue(long time, float value) {
-        heightTimeSeries.addOrUpdate(new Millisecond(new Date(previousTime)), value);
+    public void addHeightValue(double time, float value) {
+        heightTimeSeries.addOrUpdate(time , value);
     }
     
     /**
@@ -261,8 +277,8 @@ public class LaunchGraph extends JPanel implements Observer {
      * @param time the time associated with the value on the graph
      * @param value the tension value to be graphed
      */
-    public void addTensionValue(long time, float value) {
-        tensionTimeSeries.addOrUpdate(new Millisecond(new Date(previousTime)), value);
+    public void addTensionValue(double time, float value) {
+        tensionTimeSeries.addOrUpdate(time , value);
     }
     
     /**
@@ -271,10 +287,10 @@ public class LaunchGraph extends JPanel implements Observer {
      * @param time the time associated with the value on the graph
      * @param value the speed value to be graphed
      */
-    public void addSpeedValue(long time, float value) {
+    public void addSpeedValue(double time, float value) {
         try{
             previousTime += time;
-            speedTimeSeries.add(new Millisecond(new Date(previousTime)), value);
+            speedTimeSeries.addOrUpdate(time , value);
         } catch(SeriesException e) {
             
         }
@@ -311,7 +327,7 @@ public class LaunchGraph extends JPanel implements Observer {
      * @return A panel.
      */
     public JPanel createDemoPanel() {
-        JFreeChart chart = createChart(createDataset(0L, 18000));
+        JFreeChart chart = createChart(null);
         ChartPanel panel = new ChartPanel(chart);
         panel.setFillZoomRectangle(false);
         panel.setMouseWheelEnabled(false);
@@ -331,8 +347,11 @@ public class LaunchGraph extends JPanel implements Observer {
         String[] dataPoint = msg.split(";");
         switch(dataPoint[0]) {
             case "STATE":
+                //addStateMarker(Integer.parseInt(dataPoint[1]), curTime);
                 if(dataPoint[1].equals("3"))
                 {
+                    startTime = Double.parseDouble(dataPoint[2]);
+                    curTime = startTime;
                     running = true;
                 }
                 if(dataPoint[1].equals("1") && running)
@@ -341,15 +360,16 @@ public class LaunchGraph extends JPanel implements Observer {
                 }  
                 break;
             case "TENSION":
-                if(running) addTensionValue(Long.parseLong(dataPoint[2]), Float.parseFloat(dataPoint[1]));
+                curTime += Double.parseDouble(dataPoint[2]);
+                if(running) addTensionValue(curTime - startTime, Float.parseFloat(dataPoint[1]));
                 break;
             case "SPEED":
-                if(running) addSpeedValue(Long.parseLong(dataPoint[2]), Float.parseFloat(dataPoint[1]));
+                if(running) addSpeedValue(curTime - startTime, Float.parseFloat(dataPoint[1]));
                 break;
             case "OUT":
                 float outLength = Float.parseFloat(dataPoint[1]);
                 float height = (float)(outLength * Math.sin(Math.toRadians(currentAngle)));
-                if(running) addHeightValue(Long.parseLong(dataPoint[2]), height);
+                if(running) addHeightValue(curTime - startTime, height);
                 break;
             case "ANGLE":
                 currentAngle = Double.parseDouble(dataPoint[1]);

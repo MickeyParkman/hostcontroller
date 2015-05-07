@@ -233,15 +233,17 @@ public class PilotPanel extends JPanel implements Observer{
         if(pilotJList.getSelectedIndex() >= 0){
             try{
                 Pilot thePilot = (Pilot)pilotJList.getSelectedValue();
-                currentData.setCurrentPilot(thePilot);
                 firstNameField.setText((thePilot.getFirstName()));
                 firstNameField.setBackground(Color.GREEN);
+                firstNameField.setHorizontalAlignment(JTextField.RIGHT);
 
                 lastNameField.setText((thePilot.getLastName()));
                 lastNameField.setBackground(Color.GREEN);
+                lastNameField.setHorizontalAlignment(JTextField.RIGHT);
 
                 middleNameField.setText((thePilot.getMiddleName()));
                 middleNameField.setBackground(Color.GREEN);
+                middleNameField.setHorizontalAlignment(JTextField.RIGHT);
 
                 String emergencyContact = thePilot.getEmergencyContact();
                 String emergencyContactName;
@@ -259,8 +261,10 @@ public class PilotPanel extends JPanel implements Observer{
                 }
                 emergencyContactNameField.setText(emergencyContactName);
                 emergencyContactNameField.setBackground(Color.GREEN);
+                emergencyContactNameField.setHorizontalAlignment(JTextField.RIGHT);
                 emergencyContactPhoneField.setText(emergencyContactPhone);
                 emergencyContactPhoneField.setBackground(Color.GREEN);
+                emergencyContactPhoneField.setHorizontalAlignment(JTextField.RIGHT);
 
                 /*String medInfo = thePilot.getEmergencyContact();
                 String medInfoName;
@@ -283,6 +287,7 @@ public class PilotPanel extends JPanel implements Observer{
 
                 flightWeightField.setText(String.valueOf((thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID))));
                 flightWeightField.setBackground(Color.GREEN);
+                flightWeightField.setHorizontalAlignment(JTextField.RIGHT);
 
                 if(thePilot.getCapability().equals("Student"))
                 {
