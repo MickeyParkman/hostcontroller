@@ -29,9 +29,9 @@ public class WindDirectionWidget extends EnvironmentalWidget {
         {
             try{
                 float direction = Float.parseFloat(field.getText());
-                if(unitId == 1)
+                if(unitId == 0)
                 {
-                    direction += CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
+                    direction -= CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
                 }
                 else if(unitId == 2){
                     direction += CurrentLaunchInformation.getCurrentLaunchInformation().getRunHeading();
