@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed May 06 17:25:17 PDT 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-014d-2bc3-1dc7-0000031f6de0 
+Wed May 06 17:33:08 PDT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-014d-2bca-4f64-0000031e4808 
 on database directory C:\Users\jtroxel\git\hc\HostController1\WinchCommonsTest12DataBase  with class loader sun.misc.Launcher$AppClassLoader@5451c3a8 
 Loaded from file:/C:/Users/jtroxel/git/hc/lib/derby.jar
 java.vendor=Oracle Corporation
