@@ -36,6 +36,7 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import DataObjects.CurrentLaunchInformation;
+import DataObjects.RecentLaunchSelections;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -96,6 +97,27 @@ public class SailplanePanel extends JPanel implements Observer{
     public Boolean getbaggageCheckBox()
     {
         return(baggageCheckBox.isSelected());
+    }
+    
+    public void setbaggageField(float setValue)
+    {
+        baggageField.setText(String.format("%.2f", (setValue * 
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentData.getCurrentProfile().getUnitSetting("baggageWeight")))));
+    }
+    
+    public void setballastField(float setValue)
+    {
+        ballastField.setText(String.format("%.2f", (setValue * 
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentData.getCurrentProfile().getUnitSetting("ballastWeight")))));
+    }
+    
+    public void setpassengerWeightField(float setValue)
+    {
+        passengerWeightField.setText(String.format("%.2f", (setValue * 
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentData.getCurrentProfile().getUnitSetting("passengerWeight")))));
     }
     
     public void setupUnits()
@@ -236,59 +258,47 @@ public class SailplanePanel extends JPanel implements Observer{
                 
                 nNumberField.setText(theSailplane.getNumber());
                 nNumberField.setBackground(Color.GREEN);
-                nNumberField.setHorizontalAlignment(JTextField.RIGHT);
 
                 weakLinkField.setText(String.valueOf(theSailplane.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
                 weakLinkField.setBackground(Color.GREEN);
-                weakLinkField.setHorizontalAlignment(JTextField.RIGHT);
 
                 tensionField.setText(String.valueOf(theSailplane.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
                 tensionField.setBackground(Color.GREEN);
-                tensionField.setHorizontalAlignment(JTextField.RIGHT);
 
                 releaseAngleField.setText(String.valueOf(theSailplane.getCableReleaseAngle()));
                 releaseAngleField.setBackground(Color.GREEN);
-                releaseAngleField.setHorizontalAlignment(JTextField.RIGHT);
 
                 stallSpeedField.setText(String.valueOf(theSailplane.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
                 stallSpeedField.setBackground(Color.GREEN);
-                stallSpeedField.setHorizontalAlignment(JTextField.RIGHT);
 
                 grossWeightField.setText(String.valueOf(theSailplane.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
                 grossWeightField.setBackground(Color.GREEN);
-                grossWeightField.setHorizontalAlignment(JTextField.RIGHT);
 
                 emptyWeightField.setText(String.valueOf(theSailplane.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
                 emptyWeightField.setBackground(Color.GREEN);
-                emptyWeightField.setHorizontalAlignment(JTextField.RIGHT);
 
                 winchingSpeedField.setText(String.valueOf(theSailplane.getMaxWinchingSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
                 winchingSpeedField.setBackground(Color.GREEN);
-                winchingSpeedField.setHorizontalAlignment(JTextField.RIGHT);
                 
                 if(theSailplane.getCarryBallast())
                 {
                     ballastField.setEnabled(true);
                     ballastField.setBackground(Color.WHITE);
-                    ballastField.setHorizontalAlignment(JTextField.RIGHT);
                 }
                 if(!theSailplane.getCarryBallast())
                 {
                     ballastField.setEnabled(false);
                     ballastField.setBackground(Color.LIGHT_GRAY);
-                    ballastField.setHorizontalAlignment(JTextField.RIGHT);
                 }
                 if(theSailplane.getMultipleSeats())
                 {
                     passengerWeightField.setEnabled(true);
                     passengerWeightField.setBackground(Color.WHITE);
-                    passengerWeightField.setHorizontalAlignment(JTextField.RIGHT);
                 }
                 if(!theSailplane.getMultipleSeats())
                 {
                     passengerWeightField.setEnabled(false);
                     passengerWeightField.setBackground(Color.LIGHT_GRAY);
-                    passengerWeightField.setHorizontalAlignment(JTextField.RIGHT);
                 }
             } catch(Exception e) {
                 //TODO respond to error
@@ -299,8 +309,12 @@ public class SailplanePanel extends JPanel implements Observer{
     
     private void initSailPlaneList() {
         try{
+            RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
-
+            List<Sailplane> recentSailplanes = recent.getRecentSailplane();
+            for (int i = 0; i < recentSailplanes.size(); i++){
+                sailplanes.add(0, recentSailplanes.get(i));
+            }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
 
@@ -518,7 +532,6 @@ public class SailplanePanel extends JPanel implements Observer{
         baggageField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         baggageField.setEnabled(false);
         baggageField.setBounds(160, 247, 110, 20);
-        baggageField.setHorizontalAlignment(JTextField.RIGHT);
         attributesPanel.add(baggageField);
         baggageField.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {

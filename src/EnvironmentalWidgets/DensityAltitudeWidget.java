@@ -9,6 +9,7 @@ import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import java.awt.Color;
 
 /**
  *
@@ -22,9 +23,15 @@ public class DensityAltitudeWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        field.setBackground(Color.WHITE);
         if (manualEntry())
         {
-            //Its a manual entry we don't set it but should set hash map here
+            try{
+                float alt = Float.parseFloat(field.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(unitId);
+                CurrentWidgetDataSet.getInstance().setValue("densityaltitude", String.valueOf(alt));
+            }catch (NumberFormatException e){
+                field.setBackground(Color.PINK);
+            }
         }
         else
         {

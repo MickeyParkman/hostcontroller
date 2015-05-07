@@ -8,6 +8,7 @@ package EnvironmentalWidgets;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import java.awt.Color;
 
 /**
  *
@@ -21,9 +22,21 @@ public class TemperatureWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        field.setBackground(Color.WHITE);
         if (manualEntry())
         {
-            //Its a manual entry we don't set it but should set hash map here
+            try{
+                float temp = Float.parseFloat(field.getText());
+                if (unitId == 1)
+                {
+                    temp = ((temp - 32f) * (5f/9f));
+                }
+                CurrentWidgetDataSet.getInstance().setValue("temperature", String.valueOf(temp));
+            }catch (NumberFormatException e){
+                field.setBackground(Color.PINK);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
         else
         {
@@ -31,7 +44,7 @@ public class TemperatureWidget extends EnvironmentalWidget {
             {
                 String value = CurrentWidgetDataSet.getInstance().getValue("temperature");
                 if (value.equals("")){
-                    this.field.setText("0.00");
+                    this.field.setText("");
                 }
                 else
                 {
@@ -46,7 +59,7 @@ public class TemperatureWidget extends EnvironmentalWidget {
                 }
                 else
                 {
-                    this.field.setText(String.format("%.2f", (Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("temperature"))) * 1.8 + 32));
+                    this.field.setText(String.format("%.2f", (Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("temperature")) * (9f/5f) + 32f)));
                 }
             }
         }

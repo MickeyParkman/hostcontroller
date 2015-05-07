@@ -10,6 +10,7 @@ import Configuration.UnitConversionToIndexUtilities;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import java.awt.Color;
 
 /**
  *
@@ -23,15 +24,21 @@ public class GustWindSpeedWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        field.setBackground(Color.WHITE);
         if (manualEntry())
         {
-            //Its a manual entry we don't set it but should set hash map here
+            try{
+                float speed = Float.parseFloat(field.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(unitId);
+                CurrentWidgetDataSet.getInstance().setValue("gustwindspeed", String.valueOf(speed));
+            }catch (NumberFormatException e){
+                field.setBackground(Color.PINK);
+            }
         }
         else
         {
             if (CurrentWidgetDataSet.getInstance().getValue("gustwindspeed").equals(""))
             {
-                field.setText("0.00");
+                field.setText("");
             }
             else
             {

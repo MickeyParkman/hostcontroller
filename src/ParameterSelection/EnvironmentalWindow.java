@@ -12,6 +12,7 @@ import Communications.MessagePipeline;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import Communications.Observer;
+import DataObjects.CurrentLaunchInformation;
 import EnvironmentalWidgets.AvgWindSpeedWidget;
 import EnvironmentalWidgets.CrossWindComponentWidget;
 import EnvironmentalWidgets.CurrentWidgetDataSet;
@@ -25,9 +26,11 @@ import EnvironmentalWidgets.RunLengthWidget;
 import EnvironmentalWidgets.RunSlopeWidget;
 import EnvironmentalWidgets.TemperatureWidget;
 import EnvironmentalWidgets.WindDirectionWidget;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 
 /**
  *
@@ -38,10 +41,13 @@ public class EnvironmentalWindow extends javax.swing.JPanel implements Observer 
     private MessagePipeline pipe;
     private ArrayList<EnvironmentalWidget> widgets;
     private CurrentDataObjectSet data;
+    private CurrentLaunchInformation info;
     
     public EnvironmentalWindow() {
         data = CurrentDataObjectSet.getCurrentDataObjectSet();
         data.attach(this);
+        info = CurrentLaunchInformation.getCurrentLaunchInformation();
+        info.attach(this);
         pipe = MessagePipeline.getInstance();
         widgets = new ArrayList<>();
         addWidget(new LaunchWeightWidget());
@@ -57,6 +63,7 @@ public class EnvironmentalWindow extends javax.swing.JPanel implements Observer 
         addWidget(new TemperatureWidget());
         addWidget(new HumidityWidget());
         addWidget(new PressureWidget());
+        add(new JLabel ("Press enter to update fields."));
         //setLayout(new FlowLayout());
         init();
     }

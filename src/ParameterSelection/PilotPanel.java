@@ -191,12 +191,9 @@ public class PilotPanel extends JPanel implements Observer{
         try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
-            
-            if (RecentLaunchSelections.IsInitialized()) {
-                List<Pilot> recentPilots = recent.getRecentPilot();
-                for (int i = 0; i < recentPilots.size(); i++){
-                    pilotNames.add(0, recentPilots.get(i));
-                }
+            List<Pilot> recentPilots = recent.getRecentPilot();
+            for (int i = 0; i < recentPilots.size(); i++){
+                pilotNames.add(0, recentPilots.get(i));
             }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
@@ -239,15 +236,12 @@ public class PilotPanel extends JPanel implements Observer{
                 currentData.setCurrentPilot(thePilot);
                 firstNameField.setText((thePilot.getFirstName()));
                 firstNameField.setBackground(Color.GREEN);
-                firstNameField.setHorizontalAlignment(JTextField.RIGHT);
 
                 lastNameField.setText((thePilot.getLastName()));
                 lastNameField.setBackground(Color.GREEN);
-                lastNameField.setHorizontalAlignment(JTextField.RIGHT);
 
                 middleNameField.setText((thePilot.getMiddleName()));
                 middleNameField.setBackground(Color.GREEN);
-                middleNameField.setHorizontalAlignment(JTextField.RIGHT);
 
                 String emergencyContact = thePilot.getEmergencyContact();
                 String emergencyContactName;
@@ -265,10 +259,8 @@ public class PilotPanel extends JPanel implements Observer{
                 }
                 emergencyContactNameField.setText(emergencyContactName);
                 emergencyContactNameField.setBackground(Color.GREEN);
-                emergencyContactNameField.setHorizontalAlignment(JTextField.RIGHT);
                 emergencyContactPhoneField.setText(emergencyContactPhone);
                 emergencyContactPhoneField.setBackground(Color.GREEN);
-                emergencyContactPhoneField.setHorizontalAlignment(JTextField.RIGHT);
 
                 /*String medInfo = thePilot.getEmergencyContact();
                 String medInfoName;
@@ -291,7 +283,6 @@ public class PilotPanel extends JPanel implements Observer{
 
                 flightWeightField.setText(String.valueOf((thePilot.getWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(flightWeightUnitsID))));
                 flightWeightField.setBackground(Color.GREEN);
-                flightWeightField.setHorizontalAlignment(JTextField.RIGHT);
 
                 if(thePilot.getCapability().equals("Student"))
                 {
