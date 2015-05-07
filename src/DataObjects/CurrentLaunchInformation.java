@@ -347,7 +347,7 @@ public class CurrentLaunchInformation implements Observer{
     
     public static boolean IsReady()
     {
-        return(instance.complete);
+        return((instance != null)  && instance.complete);
     }
     
     //Register glider panel with the singleton
