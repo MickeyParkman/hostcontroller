@@ -1,5 +1,7 @@
 package Communications;
 
+import DataObjects.CurrentLaunchInformation;
+
 public class MessageListener implements Observer
 {
     static final float TWO_PI = 2.0f * (float) Math.PI;
@@ -46,7 +48,7 @@ public class MessageListener implements Observer
 
     private int activeDrum = 0;
 
-    public double currentUnixTime;
+    private double currentUnixTime;
 
     private DataRelay relay = null;
     
@@ -136,8 +138,7 @@ public class MessageListener implements Observer
             {
                 if (canIn.dlc == 1)
                 {
-                    currentUnixTime = intUnixTime
-                            + canIn.get_byte(0) * secPerTic;
+                    currentUnixTime = (double)intUnixTime + (double)(canIn.get_byte(0) * secPerTic);
                 } else
                 {
                     intUnixTime = canIn.get_int(0);
@@ -200,7 +201,7 @@ public class MessageListener implements Observer
 
             case PARAM_REQUEST_MESSAGE_ID:
             {
-                //relay.sendLaunchParameterRequest();
+                relay.sendLaunchParameterRequest();
                 System.out.println("Launch Parameter Request Message Received");
                 return;
             }
@@ -371,4 +372,42 @@ public class MessageListener implements Observer
     public void update()
     {
     } //this guy is not used, but needed because we are implementing Observer
+    
+    public double getCurrentUnixTime()
+    {
+        return currentUnixTime;
+    }
+    
+    public boolean calculateLaunchParameters()
+    {
+        CurrentLaunchInformation cli = CurrentLaunchInformation.getCurrentLaunchInformation();
+        boolean isReady = cli.IsReady();
+        if(!isReady) return false;
+        //we can use cli to get all the info needed...
+        //and set our array of doubles with the necessary values.
+        
+        return true;
+    }
+    
+    public void sendLaunchParameters(boolean launchReady)
+    {
+        if(!launchReady)
+        {
+            //here we can alert the operator
+            //or send any necessary msgs back to the MC
+        }
+        else
+        {
+            MessagePipeline pipe = MessagePipeline.getInstance();
+            CanCnvt testMsg = new CanCnvt();
+            testMsg.id = LAUNCH_PARAM_MESSAGE_ID;
+            testMsg.set_int(-1, 0);
+            testMsg.set_int(255, 4);
+            testMsg.dlc = 5;
+
+            pipe.WriteToSocket(testMsg.msg_prep());
+            //....
+            //....send all messages needed
+        }
+    }
 }

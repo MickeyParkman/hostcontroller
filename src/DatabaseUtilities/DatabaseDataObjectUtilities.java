@@ -1392,7 +1392,7 @@ public class DatabaseDataObjectUtilities {
     
     
     
-    public static void addMessageToBlackBox(long time, String message) throws SQLException, ClassNotFoundException {
+    public static void addMessageToBlackBox(double time, String message) throws SQLException, ClassNotFoundException {
         //long unixTime = System.currentTimeMillis(); 
         //Date date = new Date();
         
@@ -1452,7 +1452,34 @@ public class DatabaseDataObjectUtilities {
             e.printStackTrace();
             throw e;
         }
+    }
+         
+    public static void clearBlackbox() throws SQLException, ClassNotFoundException {
+        
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(ClassNotFoundException e){
+            System.out.println("Error");
+            throw e;
+        }
+        
+        try(Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            Statement stmt = connect.createStatement();
+            try 
+            {
+                stmt.execute("SELECT * FROM Blackbox");
+                stmt.execute("DROP TABLE Blackbox");
+                
+            } catch(SQLException e) { }
             
+            DatabaseInitialization.createBlackboxTable(connect);
+            
+        }catch(SQLException e) {
+            System.out.println("Error 2");
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 

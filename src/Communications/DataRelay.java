@@ -1,6 +1,7 @@
 package Communications;
 
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.CurrentLaunchInformation;
 import java.util.ArrayList;
 import EnvironmentalWidgets.CurrentWidgetDataSet;
 
@@ -13,6 +14,7 @@ public class DataRelay
     private ArrayList<Observer> CableOutListeners;    
     private ArrayList<Observer> StateListeners;
     private boolean newLaunch;
+    private boolean readyForLaunch;
     private MessageListener parent;
             
     public DataRelay()
@@ -35,9 +37,12 @@ public class DataRelay
     {
         if(newLaunch)
         {
-            //get the data again...
+            newLaunch = false;
+            readyForLaunch = parent.calculateLaunchParameters();
+            if(!readyForLaunch) newLaunch = true;
         }
-        MessagePipeline.getInstance().WriteToSocket("");
+        //write that data out
+        parent.sendLaunchParameters(readyForLaunch);
     }
     
     public void setNewLaunch(boolean nl)
@@ -75,11 +80,16 @@ public class DataRelay
     public void sendState(int currentState, int activeDrum)
     {
         //System.out.println("STATE:" + currentState);
-        long milliTime = (long)(parent.currentUnixTime);
+        long milliTime = (long)(parent.getCurrentUnixTime());
         for(Observer o : StateListeners)
         {
             o.update("STATE;"+String.valueOf(currentState)+";"+String.valueOf(milliTime));
-        }    
+        }  
+        if(currentState == 3)
+        {
+            newLaunch = true;
+            DatabaseUtilities.DatabaseDataObjectUtilities.addLaunchToDB(parent.getCurrentUnixTime(), parent.getCurrentUnixTime());
+        }
     }
 
     public void sendUnknownMessage(){}
@@ -91,7 +101,7 @@ public class DataRelay
         //System.out.println("GSGS-" + String.valueOf(groupDelay));
         //System.out.println("RTRT-" + String.valueOf(parent.intUnixTime));
         
-        long milliTime = (long)(parent.currentUnixTime);
+        //long milliTime = (long)(parent.currentUnixTime);
         //System.out.println("MTIME: " + milliTime);
         //System.out.println("UTIME: " + parent.currentUnixTime);
         //System.out.println("GDELAY: " + groupDelay);

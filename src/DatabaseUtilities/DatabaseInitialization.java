@@ -938,9 +938,9 @@ public class DatabaseInitialization {
      * @param connect the connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createBlackboxTable(Connection connect) throws SQLException {
+    public static void createBlackboxTable(Connection connect) throws SQLException {
         String createMessagesString = "CREATE TABLE Blackbox"
-                + "( timestamp BIGINT, "
+                + "( timestamp DOUBLE, "
                 + " message VARCHAR(40))";
         try (Statement createMessagesTableStatement = connect.createStatement()) {
             createMessagesTableStatement.execute(createMessagesString);

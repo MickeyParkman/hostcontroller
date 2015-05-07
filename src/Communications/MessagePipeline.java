@@ -147,8 +147,16 @@ public class MessagePipeline implements Runnable {
     public void WriteToSocket(String s)
     {
         try {
-            writer.write(s + "\n");
+            writer.write(s);
             writer.flush();
+            try {
+                if(!currentMessage.equals(oldMessage) && !currentMessage.equals(""))
+                {
+                    DatabaseDataObjectUtilities.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
+                    oldMessage = currentMessage;
+                }
+            } catch (SQLException | ClassNotFoundException ex) {
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }       
@@ -176,7 +184,7 @@ public class MessagePipeline implements Runnable {
             try {
                 if(!currentMessage.equals(oldMessage) && !currentMessage.equals(""))
                 {
-                    DatabaseDataObjectUtilities.addMessageToBlackBox(System.currentTimeMillis(), currentMessage);
+                    DatabaseDataObjectUtilities.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
                     oldMessage = currentMessage;
                 }
             } catch (SQLException | ClassNotFoundException ex) {

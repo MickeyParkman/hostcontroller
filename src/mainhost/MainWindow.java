@@ -23,6 +23,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import Communications.MessagePipeline;
+import DatabaseUtilities.DatabaseDataObjectUtilities;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainWindow extends JFrame {
     private String version = "2.0.1";
@@ -219,7 +222,26 @@ public class MainWindow extends JFrame {
             }
         });
 	fileMenu.add(setupDBItem);
-
+        
+        JMenuItem clearBlackboxItem = new JMenuItem("Clear Blackbox");
+        clearBlackboxItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                int choice = JOptionPane.showConfirmDialog (null, "This will clear the Blackbox Database. Are you sure you want to proceed?", "Warning",JOptionPane.YES_NO_OPTION);
+                if(choice == JOptionPane.YES_OPTION)
+                {
+                    try {
+                        DatabaseDataObjectUtilities.clearBlackbox();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        fileMenu.add(clearBlackboxItem);
+       
         JMenuItem exportDBItem = new JMenuItem("Export From Database");
         exportDBItem.addActionListener(new ActionListener() {
             @Override
