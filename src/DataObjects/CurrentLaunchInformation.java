@@ -388,7 +388,7 @@ public class CurrentLaunchInformation implements Observer{
                                         float winchLatitude, float winchLongitude, float magneticVariation){
         double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
         double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitude - gliderLatitude));
-        float angle = (float)(Math.toDegrees(Math.atan2(xRun, yRise))) + (magneticVariation);
+        float angle = ((float)(Math.toDegrees(Math.atan2(xRun, yRise))) + (magneticVariation)) % 360f;
         return angle;
     }
     
