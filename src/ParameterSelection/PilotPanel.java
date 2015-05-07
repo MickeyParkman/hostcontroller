@@ -233,6 +233,7 @@ public class PilotPanel extends JPanel implements Observer{
         if(pilotJList.getSelectedIndex() >= 0){
             try{
                 Pilot thePilot = (Pilot)pilotJList.getSelectedValue();
+                currentData.setCurrentPilot(thePilot);
                 firstNameField.setText((thePilot.getFirstName()));
                 firstNameField.setBackground(Color.GREEN);
                 firstNameField.setHorizontalAlignment(JTextField.RIGHT);
