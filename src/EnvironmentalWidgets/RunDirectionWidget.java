@@ -25,6 +25,7 @@ public class RunDirectionWidget extends EnvironmentalWidget {
         float direction = (CurrentLaunchInformation.getCurrentLaunchInformation().getRunHeading());
         if (unitId == UnitConversionToIndexUtilities.degreesUnitStringToIndex("true")){
             direction -= CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
+            direction = direction % 360f;
         }
         field.setText(String.format("%.2f", direction));
     }

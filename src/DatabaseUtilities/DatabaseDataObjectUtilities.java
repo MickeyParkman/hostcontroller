@@ -348,7 +348,7 @@ public class DatabaseDataObjectUtilities {
      * @throws SQLException if table cannot be accessed
      * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
      */
-    public static void addLaunchToDB(int startTime, int endTime) throws SQLException, ClassNotFoundException {
+    public static void addLaunchToDB(double startTime, double endTime) throws SQLException, ClassNotFoundException {
         //Check for DB drivers
         try{
             Class.forName(driverName);
@@ -1039,7 +1039,7 @@ public class DatabaseDataObjectUtilities {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
             ResultSet theFlight = stmt.executeQuery("SELECT * "
-                    + "FROM PreviousLaunchesInfo WHERE start_timestamp = " + Integer.parseInt(flightInformation.getStartTimestamp()) + " "
+                    + "FROM PreviousLaunchesInfo WHERE start_timestamp = " + Double.parseDouble(flightInformation.getStartTimestamp()) + " "
                     + "AND pilot_id = '" + flightInformation.getPilotId() + "' ");
             CurrentDataObjectSet currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             while(theFlight.next()) {

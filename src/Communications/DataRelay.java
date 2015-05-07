@@ -4,6 +4,9 @@ import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
 import java.util.ArrayList;
 import EnvironmentalWidgets.CurrentWidgetDataSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DataRelay
 {
@@ -88,7 +91,10 @@ public class DataRelay
         if(currentState == 3)
         {
             newLaunch = true;
-            DatabaseUtilities.DatabaseDataObjectUtilities.addLaunchToDB(parent.getCurrentUnixTime(), parent.getCurrentUnixTime());
+            try {
+                DatabaseUtilities.DatabaseDataObjectUtilities.addLaunchToDB(parent.getCurrentUnixTime(), parent.getCurrentUnixTime());
+            } catch (SQLException | ClassNotFoundException ex) {
+            }
         }
     }
 

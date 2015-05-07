@@ -56,6 +56,7 @@ public abstract class EnvironmentalWidget extends JPanel implements Observer {
                     CurrentLaunchInformation.getCurrentLaunchInformation().update("Manual Entry");
         	}
         });
+        field.setHorizontalAlignment(JTextField.RIGHT);
         isEditable = new JCheckBox();
         isEditable.setBackground(Color.WHITE);
         isEditable.addItemListener(new ItemListener(){

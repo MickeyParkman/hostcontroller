@@ -29,13 +29,14 @@ public class WindDirectionWidget extends EnvironmentalWidget {
         {
             try{
                 float direction = Float.parseFloat(field.getText());
-                if(unitId == 1)
+                if(unitId == 0)
                 {
-                    direction += CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
+                    direction -= CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
                 }
                 else if(unitId == 2){
                     direction += CurrentLaunchInformation.getCurrentLaunchInformation().getRunHeading();
                 }
+                direction = direction % 360f;
                 CurrentWidgetDataSet.getInstance().setValue("winddirection", String.valueOf(direction));
             }catch (NumberFormatException e){
                 field.setBackground(Color.PINK);
@@ -53,6 +54,7 @@ public class WindDirectionWidget extends EnvironmentalWidget {
                 {
                     float direction = Float.parseFloat(value);
                     direction -= CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
+                    direction = direction % 360f;
                     this.field.setText(String.format("%.2f", direction));
                 }
             }
@@ -63,7 +65,9 @@ public class WindDirectionWidget extends EnvironmentalWidget {
                 }
                 else
                 {
-                    this.field.setText(String.format("%.2f", Float.parseFloat(value)));
+                    float direction = Float.parseFloat(value);
+                    direction = direction % 360f;
+                    this.field.setText(String.format("%.2f", direction));
                 }
             }
             else if(unitId == 2)
