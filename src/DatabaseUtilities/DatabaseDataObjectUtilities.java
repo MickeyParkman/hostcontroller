@@ -1393,8 +1393,7 @@ public class DatabaseDataObjectUtilities {
     
     
     public static void addMessageToBlackBox(long time, String message) throws SQLException, ClassNotFoundException {
-        
-        long unixTime = System.currentTimeMillis(); 
+        //long unixTime = System.currentTimeMillis(); 
         //Date date = new Date();
         
         //System.out.println(date.getTime());

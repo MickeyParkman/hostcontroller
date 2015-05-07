@@ -73,6 +73,7 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
         TableList.setPreferredSize(new Dimension(500,300));
         DefaultListModel tableModel = new DefaultListModel();
         for(Object str : names) {
+            //System.out.println(str);
             tableModel.addElement(str);
         }
         TableList.setModel(tableModel);

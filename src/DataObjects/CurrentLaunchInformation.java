@@ -334,13 +334,13 @@ public class CurrentLaunchInformation implements Observer{
     }
     
     public void setSailplanePanelBallast(String weight){
-        gliderPanel.setballastField(weight);
+        //gliderPanel.setballastField(weight);
     }
     public void setSailplanePanelPassenger(String weight){
-        gliderPanel.setpassengerWeightField(weight);
+        //gliderPanel.setpassengerWeightField(weight);
     }
     public void setSailplanePanelBaggage(String weight){
-        gliderPanel.setbaggageField(weight);
+        //gliderPanel.setbaggageField(weight);
     }
     
     //functions to determine derived values
