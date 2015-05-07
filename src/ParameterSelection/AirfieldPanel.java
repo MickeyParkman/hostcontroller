@@ -10,6 +10,7 @@ import Configuration.UnitLabelUtilities;
 import DataObjects.Airfield;
 import DataObjects.GliderPosition;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.RecentLaunchSelections;
 import DataObjects.Runway;
 import DataObjects.WinchPosition;
 import javax.swing.DefaultListModel;
@@ -245,7 +246,12 @@ public class AirfieldPanel extends JPanel implements Observer{
     
     private void initAirfieldList() {
         try{
+            RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             airfields = DatabaseUtilities.DatabaseDataObjectUtilities.getAirfields();
+            List<Airfield> recentAirfields = recent.getRecentAirfield();
+            for (int i = 0; i < recentAirfields.size(); i++){
+                airfields.add(0, recentAirfields.get(i));
+            }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,7 +260,12 @@ public class AirfieldPanel extends JPanel implements Observer{
 
     private void initGliderPositionsList() {
         try{
+            RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             gliderPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getGliderPositions();
+            List<GliderPosition> recentGliderPositions = recent.getRecentGliderPosition();
+            for (int i = 0; i < recentGliderPositions.size(); i++){
+                gliderPositions.add(0, recentGliderPositions.get(i));
+            }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -263,7 +274,12 @@ public class AirfieldPanel extends JPanel implements Observer{
     
     private void initWinchPositionsList() {
         try{
+            RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             winchPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getWinchPositions();
+            List<WinchPosition> recentWinchPositions = recent.getRecentWinchPosition();
+            for (int i = 0; i < recentWinchPositions.size(); i++){
+                winchPositions.add(0, recentWinchPositions.get(i));
+            }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -272,7 +288,12 @@ public class AirfieldPanel extends JPanel implements Observer{
     
     private void initRunwaysList() {
         try{
+            RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             runways = DatabaseUtilities.DatabaseDataObjectUtilities.getRunways();
+            List<Runway> recentRunways = recent.getRecentRunway();
+            for (int i = 0; i < recentRunways.size(); i++){
+                runways.add(0, recentRunways.get(i));
+            }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);

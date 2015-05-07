@@ -36,6 +36,7 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import DataObjects.CurrentLaunchInformation;
+import DataObjects.RecentLaunchSelections;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -308,8 +309,12 @@ public class SailplanePanel extends JPanel implements Observer{
     
     private void initSailPlaneList() {
         try{
+            RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
-
+            List<Sailplane> recentSailplanes = recent.getRecentSailplane();
+            for (int i = 0; i < recentSailplanes.size(); i++){
+                sailplanes.add(0, recentSailplanes.get(i));
+            }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
 

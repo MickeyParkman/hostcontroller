@@ -191,12 +191,9 @@ public class PilotPanel extends JPanel implements Observer{
         try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
-            
-            if (RecentLaunchSelections.IsInitialized()) {
-                List<Pilot> recentPilots = recent.getRecentPilot();
-                for (int i = 0; i < recentPilots.size(); i++){
-                    pilotNames.add(0, recentPilots.get(i));
-                }
+            List<Pilot> recentPilots = recent.getRecentPilot();
+            for (int i = 0; i < recentPilots.size(); i++){
+                pilotNames.add(0, recentPilots.get(i));
             }
         }catch(SQLException e) {
         } catch (ClassNotFoundException ex) {
