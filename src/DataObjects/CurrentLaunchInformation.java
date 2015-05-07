@@ -1,6 +1,7 @@
 package DataObjects;
 
 import Communications.Observer;
+import Configuration.UnitConversionRate;
 import EnvironmentalWidgets.CurrentWidgetDataSet;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
@@ -202,30 +203,44 @@ public class CurrentLaunchInformation implements Observer{
     public void update(String msg) {
         if (msg.equals("Manual Entry")){
             try{
-                if (gliderPanel != null){
-                    if (currentDataObjectSet.getCurrentSailplane().getCarryBallast()){
-                        instance.gliderBallast = Float.parseFloat(gliderPanel.getballastField());
+                try{
+                    if (gliderPanel != null){
+                        if (currentDataObjectSet.getCurrentSailplane().getCarryBallast()){
+                            instance.gliderBallast = Float.parseFloat(gliderPanel.getballastField()) / 
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentDataObjectSet.getCurrentProfile().getUnitSetting("ballastWeight"));
+                        }
+                        else{
+                            instance.gliderBallast = 0;
+                        }
+                        if (currentDataObjectSet.getCurrentSailplane().getMultipleSeats()){
+                            instance.passengerWeight = Float.parseFloat(gliderPanel.getpassengerWeightField()) /
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentDataObjectSet.getCurrentProfile().getUnitSetting("passengerWeight"));
+                        }
+                        else{
+                            instance.passengerWeight = 0;
+                        }
+                        if (gliderPanel.getbaggageCheckBox()){
+                            instance.gliderBaggage = Float.parseFloat(gliderPanel.getbaggageField()) /
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentDataObjectSet.getCurrentProfile().getUnitSetting("baggageWeight"));
+                        }
+                        else {
+                            instance.gliderBaggage = 0;
+                        }
                     }
-                    else{
-                        instance.gliderBallast = 0;
-                    }
-                    if (currentDataObjectSet.getCurrentSailplane().getMultipleSeats()){
-                        instance.passengerWeight = Float.parseFloat(gliderPanel.getpassengerWeightField());
-                    }
-                    else{
-                        instance.passengerWeight = 0;
-                    }
-                    if (gliderPanel.getbaggageCheckBox()){
-                        instance.passengerWeight = Float.parseFloat(gliderPanel.getbaggageField());
-                    }
-                    else {
-                        instance.passengerWeight = 0;
-                    }
+                }catch(NullPointerException e){
+                    instance.gliderBallast = 0;
+                    instance.passengerWeight = 0;
+                    instance.gliderBaggage = 0;
+                }catch(Exception e){
+                    throw e;
                 }
                 
                 String temperatureStr = environmentalData.getValue("temperature");
-                String pressureStr = environmentalData.getValue("Pressure");
-                String densityAltitudeStr = environmentalData.getValue("Density Altitude");
+                String pressureStr = environmentalData.getValue("pressure");
+                String densityAltitudeStr = environmentalData.getValue("densityaltitude");
                 
                 if (!temperatureStr.equals("")){
                     instance.temperature = Float.parseFloat(temperatureStr);
@@ -248,13 +263,21 @@ public class CurrentLaunchInformation implements Observer{
                     instance.densityAltitude = calculatedDensityAltitude;
                 }
                 
-                if(environmentalData.getValue("windspeed").equals(""))
+                if(environmentalData.getValue("avgwindspeed").equals(""))
                 {
                     instance.averageWindSpeed = 0;
                 }
                 else
                 {
-                    instance.averageWindSpeed = Float.parseFloat(environmentalData.getValue("windspeed"));
+                    instance.averageWindSpeed = Float.parseFloat(environmentalData.getValue("avgwindspeed"));
+                }
+                if(environmentalData.getValue("gustwindspeed").equals(""))
+                {
+                    instance.gustWindSpeed = 0;
+                }
+                else
+                {
+                    instance.gustWindSpeed = Float.parseFloat(environmentalData.getValue("gustwindspeed"));
                 }
                 if(!environmentalData.getValue("winddirection").equals(""))
                 { 
@@ -284,12 +307,11 @@ public class CurrentLaunchInformation implements Observer{
                 }else{
                     instance.complete = false;
                 }
+                notifyObservers();
             }catch (NumberFormatException e){
-                System.out.println("incomplete derived values");
-                e.printStackTrace();
+                System.out.println("Incomplete derived values");
                 instance.complete = false;
             }catch (Exception e){
-                e.printStackTrace();
                 instance.complete = false;
             }
         }
@@ -333,13 +355,13 @@ public class CurrentLaunchInformation implements Observer{
         this.gliderPanel = gliderPanel;
     }
     
-    public void setSailplanePanelBallast(String weight){
+    public void setSailplanePanelBallast(float weight){
         gliderPanel.setballastField(weight);
     }
-    public void setSailplanePanelPassenger(String weight){
+    public void setSailplanePanelPassenger(float weight){
         gliderPanel.setpassengerWeightField(weight);
     }
-    public void setSailplanePanelBaggage(String weight){
+    public void setSailplanePanelBaggage(float weight){
         gliderPanel.setbaggageField(weight);
     }
     
@@ -393,7 +415,7 @@ public class CurrentLaunchInformation implements Observer{
     
     public static float calculateDensityAltitude(float temperature, float pressure){
         //Using the dry air approximation equation from the National Weather Service
-        return (float) (145442.16 * (1 - Math.pow(((17.326 * pressure)/(459.67 + ((temperature - 32) * (5/9)))), 0.235)) / 3.2808);
+        return (float) (145442.16 * (1 - Math.pow(((17.326 * pressure)/(459.67 + ((temperature - 32.0) * (5.0/9.0)))), 0.235)) / 3.2808);
     }
     
     public static float calculateGliderLaunchMass(float pilotWeight, float gliderEmptyWeight,

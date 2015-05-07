@@ -8,6 +8,7 @@ package EnvironmentalWidgets;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import java.awt.Color;
 /**
  *
  * @author jtroxel
@@ -20,20 +21,26 @@ public class PressureWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        field.setBackground(Color.WHITE);
         if (manualEntry())
         {
-            //Its a manual entry we don't set it but should set hash map here
+            try{
+                float press = Float.parseFloat(field.getText()) / UnitConversionRate.convertPressureUnitIndexToFactor(unitId);
+                CurrentWidgetDataSet.getInstance().setValue("pressure", String.valueOf(press));
+            }catch (NumberFormatException e){
+                field.setBackground(Color.PINK);
+            }
         }
         else
         {
             if (CurrentWidgetDataSet.getInstance().getValue("pressure").equals(""))
             {
-                field.setText("0.00");
+                field.setText("");
             }
             else
             {
-                float speed = (Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("pressure")) * UnitConversionRate.convertWeightUnitIndexToFactor(unitId));
-                field.setText(String.format("%.2f", speed));
+                float press = (Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("pressure")) * UnitConversionRate.convertPressureUnitIndexToFactor(unitId));
+                field.setText(String.format("%.2f", press));
             }
         }
     }

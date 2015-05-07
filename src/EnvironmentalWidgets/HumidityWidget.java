@@ -8,6 +8,7 @@ package EnvironmentalWidgets;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import java.awt.Color;
 
 /**
  *
@@ -21,15 +22,21 @@ public class HumidityWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        field.setBackground(Color.WHITE);
         if (manualEntry())
         {
-            //Its a manual entry we don't set it but should set hash map here
+            try{
+                float humid = Float.parseFloat(field.getText());
+                CurrentWidgetDataSet.getInstance().setValue("humidity", String.valueOf(humid));
+            }catch (NumberFormatException e){
+                field.setBackground(Color.PINK);
+            }
         }
         else
         {
             if (CurrentWidgetDataSet.getInstance().getValue("humidity").equals(""))
             {
-                field.setText("0.00");
+                field.setText("");
             }
             else
             {

@@ -98,19 +98,25 @@ public class SailplanePanel extends JPanel implements Observer{
         return(baggageCheckBox.isSelected());
     }
     
-    public void setbaggageField(String setString)
+    public void setbaggageField(float setValue)
     {
-        baggageField.setText(setString);
+        baggageField.setText(String.format("%.2f", (setValue * 
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentData.getCurrentProfile().getUnitSetting("baggageWeight")))));
     }
     
-    public void setballastField(String setString)
+    public void setballastField(float setValue)
     {
-        ballastField.setText(setString);
+        ballastField.setText(String.format("%.2f", (setValue * 
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentData.getCurrentProfile().getUnitSetting("ballastWeight")))));
     }
     
-    public void setpassengerWeightField(String setString)
+    public void setpassengerWeightField(float setValue)
     {
-        passengerWeightField.setText(setString);
+        passengerWeightField.setText(String.format("%.2f", (setValue * 
+                                    UnitConversionRate.convertWeightUnitIndexToFactor(
+                                            currentData.getCurrentProfile().getUnitSetting("passengerWeight")))));
     }
     
     public void setupUnits()

@@ -10,6 +10,7 @@ import Configuration.UnitConversionToIndexUtilities;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import java.awt.Color;
 
 /**
  *
@@ -23,28 +24,61 @@ public class WindDirectionWidget extends EnvironmentalWidget {
 
     @Override
     public void update() {
+        field.setBackground(Color.WHITE);
         if (manualEntry())
         {
-            //Its a manual entry we don't set it but should set hash map here
+            try{
+                float direction = Float.parseFloat(field.getText());
+                if(unitId == 1)
+                {
+                    direction += CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
+                }
+                else if(unitId == 2){
+                    direction += CurrentLaunchInformation.getCurrentLaunchInformation().getRunHeading();
+                }
+                CurrentWidgetDataSet.getInstance().setValue("winddirection", String.valueOf(direction));
+            }catch (NumberFormatException e){
+                field.setBackground(Color.PINK);
+            }
         }
         else
         {
+            String value = CurrentWidgetDataSet.getInstance().getValue("winddirection");
             if(unitId == 0)
             {
-                String value = CurrentWidgetDataSet.getInstance().getValue("winddirection");
                 if (value.equals("")){
-                    this.field.setText("0.00");
+                    this.field.setText("");
                 }
                 else
                 {
-                    float direction = Float.parseFloat(CurrentWidgetDataSet.getInstance().getValue("winddirection"));
+                    float direction = Float.parseFloat(value);
                     direction -= CurrentLaunchInformation.getCurrentLaunchInformation().getAirfieldMagneticVariation();
                     this.field.setText(String.format("%.2f", direction));
                 }
             }
             else if(unitId == 1)
             {
-                this.field.setText(String.valueOf(CurrentWidgetDataSet.getInstance().getValue("winddirection")));
+                if (value.equals("")){
+                    this.field.setText("");
+                }
+                else
+                {
+                    this.field.setText(String.format("%.2f", Float.parseFloat(value)));
+                }
+            }
+            else if(unitId == 2)
+            {
+                if (value.equals("")){
+                    this.field.setText("");
+                }
+                else
+                {
+                    this.field.setText(String.format("%.2f", CurrentLaunchInformation.getCurrentLaunchInformation().getWindDegreeOffset()));
+                }
+            }
+            else
+            {
+                this.field.setText("");
             }
         }
     }

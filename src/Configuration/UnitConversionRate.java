@@ -109,7 +109,7 @@ public class UnitConversionRate {
         }
     }
     
-    public static float pressureUnitIndexToString(int index) {
+    public static float convertPressureUnitIndexToFactor(int index) {
        switch (index) {
             case 0: 
                 return HPA;

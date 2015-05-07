@@ -11,8 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import Communications.Observer;
+import DataObjects.CurrentLaunchInformation;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.border.MatteBorder;
@@ -46,6 +49,12 @@ public abstract class EnvironmentalWidget extends JPanel implements Observer {
         field.setEditable(false);
         field.setBackground(Color.WHITE);
         field.setPreferredSize(new Dimension(80, 20));
+        field.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    update();
+                    CurrentLaunchInformation.getCurrentLaunchInformation().update("Manual Entry");
+        	}
+        });
         isEditable = new JCheckBox();
         isEditable.setBackground(Color.WHITE);
         isEditable.addItemListener(new ItemListener(){
