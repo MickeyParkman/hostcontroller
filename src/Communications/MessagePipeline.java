@@ -83,7 +83,7 @@ public class MessagePipeline implements Runnable {
             System.out.println("Connected");
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return false;
         } 
     }
@@ -147,9 +147,10 @@ public class MessagePipeline implements Runnable {
     public void WriteToSocket(String s)
     {
         try {
-            writer.write(s);
+            writer.write(s + "\n");
+            writer.flush();
         } catch (IOException ex) {
-            //ex.printStackTrace();
+            ex.printStackTrace();
         }       
     }
     
