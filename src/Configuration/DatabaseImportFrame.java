@@ -40,14 +40,14 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
     private javax.swing.JList TableList;
     private List<String> names = new ArrayList<String>();
     private List<String> fileNames = new ArrayList<String>();
-    private String zipName;
+    private File file;
     private ParameterSelectionPanel selectionPanel;
     
     /**
      * Creates new form DatabaseExportFrame
      */
-    public DatabaseImportFrame(String zipName, ParameterSelectionPanel psp) throws IOException {
-        this.zipName = zipName;
+    public DatabaseImportFrame(File zipName, ParameterSelectionPanel psp) throws IOException {
+        this.file = zipName;
         this.selectionPanel = psp;
         initTableList();
         initComponents();
@@ -55,8 +55,7 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
     
     private void initTableList() throws IOException
     {
-        ZipFile zip = new ZipFile(new File(zipName));
-        ZipInputStream zin = new ZipInputStream(new FileInputStream(zipName));
+        ZipInputStream zin = new ZipInputStream(new FileInputStream(file));
         for(ZipEntry e; (e = zin.getNextEntry()) != null;) {
             String fileName = e.toString();
             fileNames.add(fileName);
@@ -105,8 +104,7 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
         JPanel panel = new JPanel();
         contentPane.add(panel, BorderLayout.SOUTH);
         JButton submitButton = new JButton("Import");
-        submitButton.addActionListener(
-                new ActionListener() {
+        submitButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {
                         
@@ -124,9 +122,9 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
                         //System.out.println(orderedTables.toString());
                         
                         try{
-                            DatabaseImporter.importDatabase(zipName, orderedTables);
+                            DatabaseImporter.importDatabase(file, orderedTables);
                             //Done twice for possible foreign key contraints. Ugly solution
-                            DatabaseImporter.importDatabase(zipName, orderedTables);
+                            //DatabaseImporter.importDatabase(file, orderedTables);
                             selectionPanel.update();
                             getFrame().dispose();
                         }catch(Exception e)

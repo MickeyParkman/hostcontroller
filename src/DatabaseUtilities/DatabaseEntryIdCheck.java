@@ -19,7 +19,7 @@ public class DatabaseEntryIdCheck {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
         String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         Connection connection = null;
         boolean result = false;
         
@@ -42,8 +42,8 @@ public class DatabaseEntryIdCheck {
         
         //Update the value given
         try {
-            stmt = connection.createStatement();
-            ResultSet theIds = stmt.executeQuery(idCheckString);
+            stmt = connection.prepareStatement(idCheckString);;
+            ResultSet theIds = stmt.executeQuery();
             result = theIds.next();
             stmt.close();
         }catch(Exception e)
@@ -115,6 +115,20 @@ public class DatabaseEntryIdCheck {
         idCheckString = "SELECT * FROM PARACHUTE WHERE parachute_id = '" + parachute.getParachuteNumber() + "'";
         
         return IdCheck(idCheckString);
+    }
+    
+    public static boolean uniqueCheck(Sailplane plane) throws Exception{
+        String idCheckString;
+        idCheckString = "SELECT * FROM GLIDER WHERE reg_number = '" + plane.getRegistration() + "'";
+        
+        return IdCheck(idCheckString);    
+    }
+    
+    public static boolean uniqueCheck(Airfield field) throws Exception {
+        String idCheckString;
+        idCheckString = "SELECT * FROM AIRFIELD WHERE designator = '" + field.getDesignator() + "'";
+        
+        return IdCheck(idCheckString);    
     }
     
 }

@@ -112,6 +112,14 @@ public class DatabaseEntryDelete {
         Delete(deleteString);
     }
     
+    public static void DeleteEntry(Drum drum) throws Exception
+    {
+        String deleteString;
+        deleteString = "DELETE FROM DRUM WHERE drum_id = '" + drum.getID() + "'";
+        
+        Delete(deleteString);
+    }
+    
     public static void DeleteEntry(Parachute parachute) throws Exception
     {
         String deleteString;

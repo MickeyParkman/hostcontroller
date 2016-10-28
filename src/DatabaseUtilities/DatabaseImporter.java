@@ -5,7 +5,6 @@
  */
 package DatabaseUtilities;
 
-import Communications.Observer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,8 +15,6 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Enumeration;
-import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -36,7 +33,7 @@ public class DatabaseImporter{
     private static BufferedReader br;
     private static Connection connection;
     
-    public static void importDatabase(String zipName, List<String> importList) throws ClassNotFoundException, SQLException 
+    public static void importDatabase(File zipFile, List<String> importList) throws ClassNotFoundException, SQLException 
     {
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
@@ -61,7 +58,7 @@ public class DatabaseImporter{
         }
         
         try {
-            importTable(connection, zipName, importList);
+            importTable(connection, zipFile, importList);
             
         }catch(Exception e) {
             JOptionPane.showMessageDialog(null, "Couldn't import", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -72,12 +69,12 @@ public class DatabaseImporter{
     }
     
     
-    private static void importTable(Connection connect, String zipName, List<String> importList) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
+    private static void importTable(Connection connect, File file, List<String> importList) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
         
         //System.out.println(importList.toString());
         
-        ZipFile zip = new ZipFile(new File(zipName));
-        ZipInputStream zin = new ZipInputStream(new FileInputStream(zipName));
+        ZipFile zip = new ZipFile(file);
+        ZipInputStream zin = new ZipInputStream(new FileInputStream(file));
         for(ZipEntry e; (e = zin.getNextEntry()) != null;) {
 
             //System.out.println(importList);
@@ -91,37 +88,37 @@ public class DatabaseImporter{
             
             if(importList.contains(fileName)) {
                 if(fileName.contains("CAPABILITY")) {
-                    //System.out.println("Importing CAPABILITY");
+                    System.out.println("Importing CAPABILITY");
                     importCapability();
                 }else if(fileName.contains("PREFERENCE")) {
-                    //System.out.println("Importing PREFERENCE");
+                    System.out.println("Importing PREFERENCE");
                     importPreference();
                 }else if(fileName.contains("GLIDERPOSITION")) {
-                    //System.out.println("Importing GLIDERPOSITION");
+                    System.out.println("Importing GLIDERPOSITION");
                     importGliderPosition();
                 }else if(fileName.contains("GLIDER")) {
-                    //System.out.println("Importing SAILPLANE");
+                    System.out.println("Importing SAILPLANE");
                     importGlider();
                 }else if(fileName.contains("AIRFIELD")) {
-                    //System.out.println("Importing AIRFIELD");
+                    System.out.println("Importing AIRFIELD");
                     importAirfield();
                 }else if(fileName.contains("RUNWAY")) {
-                    //System.out.println("Importing RUNWAY");
+                    System.out.println("Importing RUNWAY");
                     importRunway();
                 }else if(fileName.contains("WINCHPOSITION")) {
-                    //System.out.println("Importing WINCHPOSITION");
+                    System.out.println("Importing WINCHPOSITION");
                     importWinchPosition();
                 }else if(fileName.contains("PARACHUTE")) {
-                    //System.out.println("Importing PARACHUTE");
+                    System.out.println("Importing PARACHUTE");
                     importParachute();
                 }else if(fileName.contains("PILOT")) {
-                    //System.out.println("Importing PILOT");
+                    System.out.println("Importing PILOT");
                     importPilot();
                 }else if(fileName.contains("PROFILE")) {
-                    //System.out.println("Importing PROFILE");
+                    System.out.println("Importing PROFILE");
                     importProfile();
                 }else if(fileName.contains("Messages")) {
-                    //System.out.println("Importing Messages");
+                    System.out.println("Importing Messages");
                     importMessages();
                 }
             }
@@ -171,10 +168,12 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] gliderData = s.split(",", -1);
-            Sailplane importer = new Sailplane(gliderData[1], "", Float.parseFloat(gliderData[3]),
-                    Float.parseFloat(gliderData[4]), Float.parseFloat(gliderData[5]), Float.parseFloat(gliderData[6]), 
-                    Float.parseFloat(gliderData[7]), Float.parseFloat(gliderData[8]), Float.parseFloat(gliderData[9]),
-                    Boolean.parseBoolean(gliderData[10]), Boolean.parseBoolean(gliderData[11]), gliderData[12]);
+            Sailplane importer = new Sailplane(gliderData[1],gliderData[2], gliderData[3],
+                    gliderData[4], Float.parseFloat(gliderData[5]),Float.parseFloat(gliderData[6]), 
+                    Float.parseFloat(gliderData[7]), Float.parseFloat(gliderData[8]), 
+                    Float.parseFloat(gliderData[9]), Float.parseFloat(gliderData[10]), 
+                    Float.parseFloat(gliderData[11]), Boolean.parseBoolean(gliderData[12]), 
+                    Boolean.parseBoolean(gliderData[13]), gliderData[14]);
             importer.setId(gliderData[0]);
             try {
                 DatabaseDataObjectUtilities.addSailplaneToDB(importer);

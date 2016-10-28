@@ -1,5 +1,6 @@
 package AddEditPanels;
 
+import static Communications.ErrorLogger.logError;
 import Communications.Observer;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
@@ -105,7 +106,7 @@ public class AddEditGlider extends JFrame {
         this.isEditEntry = isEditEntry;
 
         if (!isEditEntry || sailplaneEdited == null){
-            sailplaneEdited = new Sailplane("", "", 0, 0, 0, 0, 0, 0, 0, false, false, "");
+            sailplaneEdited = new Sailplane("", "", "", "", 0, 0, 0, 0, 0, 0, 0, false, false, "");
         }
         currentGlider = sailplaneEdited;
         
@@ -158,7 +159,7 @@ public class AddEditGlider extends JFrame {
         contentPane.add(emptyWeightField);
         emptyWeightField.setColumns(10);
         
-        nNumberField = new JTextField(currentGlider.getNumber());
+        nNumberField = new JTextField(currentGlider.getId());
         nNumberField.setBounds(160, 8, 110, 20);
         contentPane.add(nNumberField);
         nNumberField.setColumns(10);
@@ -312,7 +313,7 @@ public class AddEditGlider extends JFrame {
     
     public void deleteCommand(){
         try{
-            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGlider.getNumber() + "?",
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGlider.getId() + "?",
                 "Delete Glider", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (choice == 0){
                 DatabaseEntryDelete.DeleteEntry(currentGlider);
@@ -332,6 +333,8 @@ public class AddEditGlider extends JFrame {
     public void submitData(){
         if (isComplete()){
             String nNumber = nNumberField.getText();
+            String name = "Planet Express";
+            String owner = "Hubert Farnsworth";
             float emptyWeight = (Float.parseFloat(emptyWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID));
             float grossWeight = Float.parseFloat(grossWeightField.getText()) / UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID);
             float stallSpeed = Float.parseFloat(stallSpeedField.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID);
@@ -341,12 +344,10 @@ public class AddEditGlider extends JFrame {
             float winchingSpeed = Float.parseFloat(winchingSpeedField.getText()) / UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID);
             boolean carryBallast = ballastCheckBox.isSelected();
             boolean multipleSeats = multipleSeatsCheckBox.isSelected();
-            
-            Sailplane newGlider = new Sailplane(nNumber ,"", grossWeight,
+            Sailplane newGlider = new Sailplane(nNumber ,name, owner,"", grossWeight,
                     emptyWeight, stallSpeed, winchingSpeed, weakLink, tension,
-                    releaseAngle, carryBallast, multipleSeats, "");
+                    releaseAngle, carryBallast, multipleSeats, "");   
             newGlider.setId(currentGlider.getId());
-            
 
             try{
                 CurrentDataObjectSet ObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
@@ -377,6 +378,7 @@ public class AddEditGlider extends JFrame {
                 } 
             }catch(SQLException e1) {
                 e1.printStackTrace();
+                logError(e1);
                 if(e1.getErrorCode() == 30000)
                     JOptionPane.showMessageDialog(rootPane, "Sorry, but the glider " + newGlider.toString() + " already exists in the database", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (ClassNotFoundException e2) {

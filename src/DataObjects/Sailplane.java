@@ -14,8 +14,14 @@ package DataObjects;
 
 public class Sailplane {
     String id;
-    //n_number of the plane
-    String nNumber;
+    //reg_number of the plane
+    String regNumber;
+    
+    //glider name
+    String name;
+    
+    //name of the owner
+    String owner;
     
     //type of the plane
     String type;
@@ -58,11 +64,13 @@ public class Sailplane {
     public Sailplane(){
     }
     
-    public Sailplane(String nNumber, String Type,
+    public Sailplane(String regNumber, String name, String owner, String Type,
                      float maximumGrossWeight, float emptyWeight, float indicatedStallSpeed,
                      float maximumWinchingSpeed, float maximumAllowableWeakLinkStrength, float maxTension,
                      float cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
-        this.nNumber = nNumber;
+        this.regNumber = regNumber;
+        this.name = name;
+        this.owner = owner;
         this.type = Type;
         this.maximumGrossWeight = maximumGrossWeight;
         this.emptyWeight= emptyWeight;
@@ -78,22 +86,25 @@ public class Sailplane {
         ballast = 0;
     }
     
-    public String getId(){
-        if (id != null){
-            return id;
-        }
-        else{
-            return id;
-        }
+    public void setId(String id) {
+        this.id = id;
     }
     
-    public void setId(String newId){
-        id = newId;
+    public String getId() {
+        return id;
     }
     
-    public String getNumber() {
-        return nNumber;
-    }     
+    public String getRegistration() {
+        return regNumber;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getOwner() {
+        return owner;
+    }
     
     public String getType() {
         return type;
@@ -180,6 +191,6 @@ public class Sailplane {
     }
 
     public String toString() {
-        return nNumber;
+        return name + " " + regNumber + " " + owner;
     }
 }

@@ -263,22 +263,23 @@ public class MainWindow extends JFrame {
                 String filePath = "";
                 String fileName = "";
                 String zipLocation = "";
+                File file = null;
                 int option = chooser.showOpenDialog(topMenu);
                 if(option == JFileChooser.APPROVE_OPTION) {
-                    File file = chooser.getSelectedFile();
+                    file = chooser.getSelectedFile();
                     File chosen = chooser.getCurrentDirectory();
                     filePath = chosen.getPath();
                     fileName = file.getName();
-                    zipLocation = filePath + "\\" + fileName;
+                    zipLocation = filePath + "/" + fileName;
                     if(!fileName.contains(".zip")) {
                         zipLocation += ".zip";
                     }                    
                 }
                 
                 try {
-                        DatabaseImportFrame = new DatabaseImportFrame(zipLocation, ParameterSelectionPanel_);
+                        DatabaseImportFrame = new DatabaseImportFrame(file, ParameterSelectionPanel_);
                         DatabaseImportFrame.setVisible(true);
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                        

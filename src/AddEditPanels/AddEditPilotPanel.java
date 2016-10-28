@@ -388,9 +388,6 @@ public class AddEditPilotPanel extends JFrame {
                 }
             }catch(SQLException e1) {
                 e1.printStackTrace();
-                //if(e1.getErrorCode() == 30000)
-                    
-                    //JOptionPane.showMessageDialog(rootPane, "Sorry, but the pilot " + newPilot.toString() + " already exists in the database");
             }catch (ClassNotFoundException e2) {
                 JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }catch (Exception e3) {

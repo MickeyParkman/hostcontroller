@@ -175,7 +175,7 @@ public class SailplanePanel extends JPanel implements Observer{
             sailplaneJList.setSelectedValue(currentSailplane.toString(), true);
             sailplaneScrollPane.setViewportView(sailplaneJList);
 
-            nNumberField.setText(currentSailplane.getNumber());
+            nNumberField.setText(currentSailplane.getId());
             nNumberField.setBackground(Color.GREEN);
 
             weakLinkField.setText(String.valueOf(currentSailplane.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
@@ -256,7 +256,7 @@ public class SailplanePanel extends JPanel implements Observer{
                 Sailplane theSailplane = (Sailplane)sailplaneJList.getSelectedValue();
                 currentData.setCurrentGlider(theSailplane);
                 
-                nNumberField.setText(theSailplane.getNumber());
+                nNumberField.setText(theSailplane.getId());
                 nNumberField.setBackground(Color.GREEN);
                 nNumberField.setHorizontalAlignment(JTextField.RIGHT);
 

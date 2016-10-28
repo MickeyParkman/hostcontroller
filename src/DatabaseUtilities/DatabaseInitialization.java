@@ -1,5 +1,6 @@
 package DatabaseUtilities;
 
+import static Communications.ErrorLogger.logError;
 import ParameterSelection.ParameterSelectionPanel;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -57,8 +58,8 @@ public class DatabaseInitialization {
             System.out.println("Build capability");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         } 
         
         //Build and fill Preference table
@@ -67,8 +68,8 @@ public class DatabaseInitialization {
             System.out.println("Build preference");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         //Build the Pilot table
         try{
@@ -76,8 +77,8 @@ public class DatabaseInitialization {
             System.out.println("Build pilot");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }  
         //Build the Glider table
         try{
@@ -85,8 +86,8 @@ public class DatabaseInitialization {
              System.out.println("Build glider");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }  
         //Build the Airfield table  
         try{
@@ -94,8 +95,8 @@ public class DatabaseInitialization {
             System.out.println("Build airfield");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         //Build the Runway table
         try{
@@ -103,8 +104,8 @@ public class DatabaseInitialization {
             System.out.println("Build runway");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         //Build the GliderPosition table
         try{
@@ -112,9 +113,8 @@ public class DatabaseInitialization {
             System.out.println("Build glider position");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         //Build the WinchPosition table
         try{
@@ -122,8 +122,8 @@ public class DatabaseInitialization {
             System.out.println("Build winch position");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         //Build the Operator Profile table
         try{
@@ -131,17 +131,28 @@ public class DatabaseInitialization {
             System.out.println("Build profile");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
+        
+        //Build the Drum table
+        try{
+            createDrum(connection);
+            System.out.println("Build drum");
+        }catch(SQLException e) {
+            //For debugging purposes:
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
+        }
+        
         //Build the Parachute table
         try{
             createParachute(connection);
             System.out.println("Build parachute");
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         
         //Build the RecentLaunches table
@@ -151,7 +162,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            logError(e);
         }
         //Build the PreviousLaunchesInfo table
         try{
@@ -160,103 +171,105 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //For debugging purposes:
             JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            logError(e);
         }
         
         try{
              createDistanceUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createTensionUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createVelocityUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createWeightUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createTemperatureUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createPressureUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createPilotUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createGliderUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createAirfieldUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createPositionUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createDashboardUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createEnvironmentalUnits(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try{
              createMessagesTable(connection);
         }catch(SQLException e) {
             //For debugging purposes:
-            //JOptionPane.showMessageDialog(null, e.getMessage());
-            //throw e;
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         try {
             createBlackboxTable(connection);
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            logError(e);
         }
         psp.update();
         connection.close();
@@ -301,7 +314,9 @@ public class DatabaseInitialization {
     private static void createGlider(Connection connect) throws SQLException {
         String createGliderString = "CREATE TABLE Glider"
                 + "(glider_id VARCHAR(8), "
-                + "n_number VARCHAR(30),"
+                + "reg_number VARCHAR(30),"
+                + "name VARCHAR(30),"
+                + "owner VARCHAR(30),"
                 + "type VARCHAR(30),"
                 + "max_gross_weight FLOAT,"
                 + "empty_weight FLOAT,"
@@ -313,6 +328,7 @@ public class DatabaseInitialization {
                 + "carry_ballast INT, "
                 + "multiple_seats INT, "
                 + "optional_info VARCHAR(150),"
+                + "UNIQUE (reg_number),"
                 + "PRIMARY KEY (glider_id))";
         try (Statement createPilotTableStatement = connect.createStatement()) {
             createPilotTableStatement.execute(createGliderString);
@@ -389,6 +405,7 @@ public class DatabaseInitialization {
                 + "latitude FLOAT, "
                 + "longitude FLOAT, "
                 + "optional_info VARCHAR(150), "
+                + "UNIQUE (designator),"
                 + "PRIMARY KEY (airfield_id))";
         try (Statement createAirfieldTableStatement = connect.createStatement()) {
             createAirfieldTableStatement.execute(createAirfieldString);
@@ -477,6 +494,23 @@ public class DatabaseInitialization {
         }
     }
     
+    
+    private static void createDrum(Connection connect) throws SQLException {
+        String createDrumString = "CREATE TABLE Drum "
+                + "(drum_id INT, "
+                + "drum_name VARCHAR(30), "
+                + "core_diameter FLOAT, "
+                + "kfactor FLOAT, "
+                + "cable_length FLOAT, "
+                + "launch_number INT, "
+                + "PRIMARY KEY (drum_id))";
+        try (Statement createDrumTableStatement = connect.createStatement()) {
+            createDrumTableStatement.execute(createDrumString);
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
         /**
      * Creates the table in the database for storing data associated with a Parachute object
      * 
@@ -507,8 +541,8 @@ public class DatabaseInitialization {
         String createRecentLaunchesString = "CREATE TABLE RecentLaunches"
                 + "(timestamp BIGINT, "
                 + "pilot_id VARCHAR(8), "
-                + "glider_n_number VARCHAR(30), "
-                + "PRIMARY KEY (timestamp, pilot_id, glider_n_number), "
+                + "glider_reg_number VARCHAR(30), "
+                + "PRIMARY KEY (timestamp, pilot_id, glider_reg_number), "
                 + "FOREIGN KEY (pilot_id) REFERENCES Pilot (pilot_id))"; 
         try (Statement createRecentLaunchesTableStatement = connect.createStatement()) {
             createRecentLaunchesTableStatement.execute(createRecentLaunchesString);
@@ -542,7 +576,9 @@ public class DatabaseInitialization {
                 + "pilot_emergency_medical_info VARCHAR(150), "
                 + "pilot_optional_info VARCHAR(150), "
                 + "glider_id VARCHAR(8), "
-                + "glider_n_number VARCHAR(30), "
+                + "glider_reg_number VARCHAR(30), "
+                + "glider_name VARCHAR(30),"
+                + "glider_owner VARCHAR(30),"
                 + "glider_type VARCHAR(30), "
                 + "glider_max_gross_weight FLOAT, "
                 + "glider_empty_weight FLOAT, "
@@ -603,7 +639,7 @@ public class DatabaseInitialization {
                 + "parachute_weight FLOAT, "             
                 + "FOREIGN KEY (pilot_capability) REFERENCES Capability (capability_id), "
                 + "FOREIGN KEY (pilot_preference) REFERENCES Preference (preference_id), "
-                + "PRIMARY KEY (start_timestamp, pilot_id, glider_n_number))";
+                + "PRIMARY KEY (start_timestamp, pilot_id, glider_reg_number))";
         try (Statement createPastLaunchesInfoTableStatement = connect.createStatement()) {
             createPastLaunchesInfoTableStatement.execute(createPastLaunchesInfo);
         }catch(SQLException e) {
@@ -1004,73 +1040,76 @@ public class DatabaseInitialization {
             
             try 
             {
-                stmt.execute("SELECT * FROM PREVIOUSLAUNCHESINFO");
                 stmt.execute("DROP TABLE PREVIOUSLAUNCHESINFO");
-            } catch(SQLException e) { }
+                System.out.println("Dropped previous launch info");
+            } catch(SQLException e) { logError(e); }
             try 
             {
-                stmt.execute("SELECT * FROM RECENTLAUNCHES");
                 stmt.execute("DROP TABLE RECENTLAUNCHES");
-            } catch(SQLException e) { }
+                System.out.println("Dropped recent launches");
+            } catch(SQLException e) { logError(e); }
             try 
             {
-                stmt.execute("SELECT * FROM PARACHUTE");
+                stmt.execute("DROP TABLE DRUM");
+                System.out.println("Dropped drum");
+            } catch(SQLException e) { logError(e); }
+            try 
+            {
                 stmt.execute("DROP TABLE PARACHUTE");
-            } catch(SQLException e) { }
+                System.out.println("Dropped parachute");
+            } catch(SQLException e) { logError(e); }
             
             try 
             {
-                stmt.execute("SELECT * FROM PROFILE");
                 stmt.execute("DROP TABLE PROFILE");
-            } catch(SQLException e) { }
+                System.out.println("Dropped profile");
+            } catch(SQLException e) { logError(e); }
             
             try 
             {
-                stmt.execute("SELECT * FROM WINCHPOSITION");
                 stmt.execute("DROP TABLE WINCHPOSITION");
-            } catch(SQLException e) { }
+                System.out.println("Dropped winch position");
+            } catch(SQLException e) { logError(e); }
             
             try 
             {
-                stmt.execute("SELECT * FROM GLIDERPOSITION");
                 stmt.execute("DROP TABLE GLIDERPOSITION");
-            } catch(SQLException e) { }
+                System.out.println("Dropped glider position");
+            } catch(SQLException e) { logError(e); }
             
             try 
             {
-                stmt.execute("SELECT * FROM RUNWAY");
                 stmt.execute("DROP TABLE RUNWAY");
-            } catch(SQLException e) { }
+                System.out.println("Dropped runway");
+            } catch(SQLException e) { logError(e); }
             try 
             {
-                stmt.execute("SELECT * FROM AIRFIELD");
                 stmt.execute("DROP TABLE AIRFIELD");
-            } catch(SQLException e) { }
+                System.out.println("Dropped airfield");
+            } catch(SQLException e) { logError(e); }
             try 
             {
-                stmt.execute("SELECT * FROM GLIDER");
                 stmt.execute("DROP TABLE GLIDER");
                 System.out.println("Dropped glider");
-            } catch(SQLException e) { }
+            } catch(SQLException e) { logError(e); }
             try 
             {
-                stmt.execute("SELECT * FROM PILOT");
                 stmt.execute("DROP TABLE PILOT");
-            } catch(SQLException e) { e.printStackTrace(); }
+                System.out.println("Dropped pilot");
+            } catch(SQLException e) { logError(e); }
             try 
             {
-                stmt.execute("SELECT * FROM PREFERENCE");
                 stmt.execute("DROP TABLE PREFERENCE");
-            } catch(SQLException e) { e.printStackTrace(); }
+                System.out.println("Dropped preference");
+            } catch(SQLException e) { logError(e); }
             try 
             {
-                stmt.execute("SELECT * FROM CAPABILITY");
                 stmt.execute("DROP TABLE CAPABILITY");
                 System.out.println("Dropped capability");
-            } catch(SQLException e) { e.printStackTrace(); }
+            } catch(SQLException e) { logError(e); }
            
         }catch(SQLException e) {
-            //System.out.println(e);
+            System.out.println(e);
             throw e;
         }
     }

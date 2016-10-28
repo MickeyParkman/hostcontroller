@@ -2,6 +2,7 @@ package DataObjects;
 
 public class Drum {
     
+    private int drum_id;
     private float coreDiameter;
     private float kFactor;
     private float cableLength;
@@ -26,11 +27,23 @@ public class Drum {
         drive = d;
     }
     
+    public Drum(int id, String n, float cD, float kF, float cL) {
+        drum_id = id;
+        name = n;
+        coreDiameter = cD;
+        kFactor = kF;
+        cableLength = cL;
+    }
+    
     public Drum(String n, float cD, float kF, float cL) {
         name = n;
         coreDiameter = cD;
         kFactor = kF;
         cableLength = cL;
+    }
+    
+    public void setId(int i) {
+        drum_id = i;
     }
     
     public void setName(String s)
@@ -56,6 +69,10 @@ public class Drum {
     public String toString() {
         if(para == null) return drive.getName() + " - " + name + " (NO PARACHUTE)";
         else return drive.getName() + " - " + name + " (" + para.getName() + ")";
+    }
+    
+    public int getID() {
+        return drum_id;
     }
     
     public String getName() {

@@ -6,17 +6,11 @@
 
 package DatabaseUtilities;
 
-import DataObjects.Pilot;
-import ParameterSelection.Capability;
-import ParameterSelection.Preference;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,7 +25,7 @@ public class DatabaseUnitSelectionUtilities {
     private static final String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
     
     /**
-     * Accessor for retrieving the units for Pilot weight
+     * accessorss for retrieving the units for Pilot weight
      * 
      * @return units for Pilot weight
      * @throws ClassNotFoundException if Database driver classes not found
@@ -70,7 +64,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Sailplane weight
+     * accessorss for retrieving the units for Sailplane weight
      * 
      * @return units for Sailplane weight
      * @throws ClassNotFoundException if Database driver classes not found
@@ -109,7 +103,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Sailplane velocity
+     * accessorss for retrieving the units for Sailplane velocity
      * 
      * @return units for Sailplane velocity
      * @throws ClassNotFoundException if Database driver classes not found
@@ -148,7 +142,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Sailplane tension
+     * accessors for retrieving the units for Sailplane tension
      * 
      * @return units for Sailplane tension
      * @throws ClassNotFoundException if Database driver classes not found
@@ -187,7 +181,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Airfield distance
+     * accessors for retrieving the units for Airfield distance
      * 
      * @return units for Airfield distance
      * @throws ClassNotFoundException if Database driver classes not found
@@ -226,7 +220,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Position distance
+     * accessors for retrieving the units for Position distance
      * 
      * @return units for Position distance
      * @throws ClassNotFoundException if Database driver classes not found
@@ -265,7 +259,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Dashboard distance
+     * accessors for retrieving the units for Dashboard distance
      * 
      * @return units for Dashboard distance
      * @throws ClassNotFoundException if Database driver classes not found
@@ -304,7 +298,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Dashboard tension
+     * accessors for retrieving the units for Dashboard tension
      * 
      * @return units for Dashboard tension
      * @throws ClassNotFoundException if Database driver classes not found
@@ -343,7 +337,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Dashboard velocity
+     * accessors for retrieving the units for Dashboard velocity
      * 
      * @return units for Dashboard velocity
      * @throws ClassNotFoundException if Database driver classes not found
@@ -382,7 +376,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Environmental temperature
+     * accessors for retrieving the units for Environmental temperature
      * 
      * @return units for Environmental temperature
      * @throws ClassNotFoundException if Database driver classes not found
@@ -421,7 +415,7 @@ public class DatabaseUnitSelectionUtilities {
     }
     
     /**
-     * Accessor for retrieving the units for Environmental pressure
+     * accessors for retrieving the units for Environmental pressure
      * 
      * @return units for Environmental pressure
      * @throws ClassNotFoundException if Database driver classes not found

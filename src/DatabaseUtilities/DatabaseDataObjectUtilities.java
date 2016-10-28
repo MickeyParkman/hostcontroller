@@ -12,7 +12,6 @@ import DataObjects.Airfield;
 import DataObjects.Runway;
 import DataObjects.GliderPosition;
 import DataObjects.Winch;
-import DataObjects.DrumParameters;
 import DataObjects.Drum;
 import DataObjects.Parachute;
 import DataObjects.WinchPosition;
@@ -29,7 +28,7 @@ import javax.swing.JOptionPane;
 
 /**
  * This class provides the methods that allow a user to add and retrieve Pilots,
- * Sailplanes and Airfields from the database as well as update and delete Pilots
+ * Sail planes and Airfields from the database as well as update and delete Pilots
  * 
  * @author Alex Williams, Noah Fujioka, dbennett3
  */
@@ -94,37 +93,35 @@ public class DatabaseDataObjectUtilities {
         }
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)){
-            PreparedStatement sailplaneInsertStatement = connect.prepareStatement(
-                    "INSERT INTO Glider(glider_id, n_number, type, "
+            PreparedStatement sailplaneInsertStatement;
+            sailplaneInsertStatement = connect.prepareStatement(
+                    "INSERT INTO Glider(glider_id, reg_number, name, owner, type, "
                             + "max_gross_weight, empty_weight, indicated_stall_speed, "
                             + "max_winching_speed, max_weak_link_strength, max_tension, "
                             + "cable_release_angle, carry_ballast, multiple_seats, "
                             + "optional_info)"
-                            + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                            + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             sailplaneInsertStatement.setString(1, theSailplane.getId());
-            sailplaneInsertStatement.setString(2, theSailplane.getNumber());
-            sailplaneInsertStatement.setString(3, theSailplane.getType());
-            sailplaneInsertStatement.setString(4, String.valueOf(theSailplane.getMaxGrossWeight()));
-            sailplaneInsertStatement.setString(5, String.valueOf(theSailplane.getEmptyWeight()));
-            sailplaneInsertStatement.setString(6, String.valueOf(theSailplane.getIndicatedStallSpeed()));
-            sailplaneInsertStatement.setString(7, String.valueOf(theSailplane.getMaxWinchingSpeed()));
-            sailplaneInsertStatement.setString(8, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
-            sailplaneInsertStatement.setString(9, String.valueOf(theSailplane.getMaxTension()));
-            sailplaneInsertStatement.setString(10, String.valueOf(theSailplane.getCableReleaseAngle()));
-            sailplaneInsertStatement.setString(11, String.valueOf(theSailplane.storeCarryBallast()));
-            sailplaneInsertStatement.setString(12, String.valueOf(theSailplane.storeMultipleSeats()));
-            sailplaneInsertStatement.setString(13, theSailplane.getOptionalInfo());
+            sailplaneInsertStatement.setString(2, theSailplane.getRegistration());
+            sailplaneInsertStatement.setString(3, theSailplane.getName());
+            sailplaneInsertStatement.setString(4, theSailplane.getOwner());
+            sailplaneInsertStatement.setString(5, theSailplane.getType());
+            sailplaneInsertStatement.setString(6, String.valueOf(theSailplane.getMaxGrossWeight()));
+            sailplaneInsertStatement.setString(7, String.valueOf(theSailplane.getEmptyWeight()));
+            sailplaneInsertStatement.setString(8, String.valueOf(theSailplane.getIndicatedStallSpeed()));
+            sailplaneInsertStatement.setString(9, String.valueOf(theSailplane.getMaxWinchingSpeed()));
+            sailplaneInsertStatement.setString(10, String.valueOf(theSailplane.getMaxWeakLinkStrength()));
+            sailplaneInsertStatement.setString(11, String.valueOf(theSailplane.getMaxTension()));
+            sailplaneInsertStatement.setString(12, String.valueOf(theSailplane.getCableReleaseAngle()));
+            sailplaneInsertStatement.setString(13, String.valueOf(theSailplane.storeCarryBallast()));
+            sailplaneInsertStatement.setString(14, String.valueOf(theSailplane.storeMultipleSeats()));
+            sailplaneInsertStatement.setString(15, theSailplane.getOptionalInfo());
             sailplaneInsertStatement.executeUpdate();
             sailplaneInsertStatement.close();
         }catch(SQLException e) {
-            //System.out.println("Error adding sailplane to database");
+            System.out.println("Error adding sailplane to database\n" + e);
             throw e;
         }
-    }
-    
-    public static void addWinchToDB(Winch theWinch) throws SQLException, ClassNotFoundException 
-    {
-
     }
     
     /**
@@ -136,13 +133,9 @@ public class DatabaseDataObjectUtilities {
      */
     public static void addAirfieldToDB(Airfield theAirfield) throws SQLException, ClassNotFoundException {
         //Check for DB drivers
-        try{
-            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            throw e;
-        }
+        //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+        Class.forName(driverName);
+        Class.forName(clientDriverName);
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement AirfieldInsertStatement = connect.prepareStatement(
@@ -173,13 +166,9 @@ public class DatabaseDataObjectUtilities {
      */
     public static void addRunwayToDB(Runway theRunway) throws SQLException, ClassNotFoundException {
         //Check for DB drivers
-        try{
-            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            throw e;
-        }
+        //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+        Class.forName(driverName);
+        Class.forName(clientDriverName);
         
         try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
             PreparedStatement RunwayInsertStatement = connect.prepareStatement(
@@ -195,7 +184,6 @@ public class DatabaseDataObjectUtilities {
             RunwayInsertStatement.executeUpdate();
             RunwayInsertStatement.close();
         }catch(SQLException e) {
-            e.printStackTrace();
             throw e;
         }
     }
@@ -271,6 +259,41 @@ public class DatabaseDataObjectUtilities {
             WinchPositionInsertStatement.setString(10, theWinchPosition.getOptionalInfo());
             WinchPositionInsertStatement.executeUpdate();
             WinchPositionInsertStatement.close();
+        }catch(SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Adds the relevant data for a parachute to the database
+     * 
+     * @param theDrum the drum to add to the database
+     * @throws SQLException if table cannot be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
+     */
+    public static void addParachuteToDB(Drum theDrum) throws SQLException, ClassNotFoundException {
+        //Check for DB drivers
+        try{
+            //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+            PreparedStatement DrumInsertStatement = connect.prepareStatement(
+                "INSERT INTO Parachute(drum_id, drum_name, core_diameter, kfactor, cable_length,"
+                        + "launch_number) "
+                        + "values (?,?,?,?,?,?)");
+            DrumInsertStatement.setString(1, String.valueOf(theDrum.getID()));
+            DrumInsertStatement.setString(2, String.valueOf(theDrum.getName()));
+            DrumInsertStatement.setString(3, String.valueOf(theDrum.getCoreDiameter()));
+            DrumInsertStatement.setString(4, String.valueOf(theDrum.getKFactor()));
+            DrumInsertStatement.setString(5, String.valueOf(theDrum.getCableLength()));
+            DrumInsertStatement.setString(5, String.valueOf(theDrum.getNumLaunches()));
+            DrumInsertStatement.executeUpdate();
+            DrumInsertStatement.close();
         }catch(SQLException e) {
             throw e;
         }
@@ -376,7 +399,9 @@ public class DatabaseDataObjectUtilities {
                         + "pilot_emergency_medical_info, "
                         + "pilot_optional_info, "
                         + "glider_id, "
-                        + "glider_n_number,"
+                        + "glider_reg_number,"
+                        + "glider_name,"
+                        + "glider_owner,"
                         + "glider_type,"
                         + "glider_max_gross_weight,"
                         + "glider_empty_weight,"
@@ -435,8 +460,8 @@ public class DatabaseDataObjectUtilities {
                         + "parachute_lift, "
                         + "parachute_drag, "
                         + "parachute_weight) "
-                        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-                        + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+                        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+                        + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                         + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             CurrentDataObjectSet currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             PreviousLaunchesInfoInsertStatement.setString(1, String.valueOf(startTime));
@@ -455,66 +480,68 @@ public class DatabaseDataObjectUtilities {
             PreviousLaunchesInfoInsertStatement.setString(14, currentDataObjectSet.getCurrentPilot().getMedInfo());
             PreviousLaunchesInfoInsertStatement.setString(15, currentDataObjectSet.getCurrentPilot().getOptionalInfo());
             PreviousLaunchesInfoInsertStatement.setString(16, currentDataObjectSet.getCurrentSailplane().getId());
-            PreviousLaunchesInfoInsertStatement.setString(17, currentDataObjectSet.getCurrentSailplane().getNumber());
-            PreviousLaunchesInfoInsertStatement.setString(18, currentDataObjectSet.getCurrentSailplane().getType());
-            PreviousLaunchesInfoInsertStatement.setString(19, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxGrossWeight()));
-            PreviousLaunchesInfoInsertStatement.setString(20, String.valueOf(currentDataObjectSet.getCurrentSailplane().getEmptyWeight()));
-            PreviousLaunchesInfoInsertStatement.setString(21, String.valueOf(currentDataObjectSet.getCurrentSailplane().getIndicatedStallSpeed()));
-            PreviousLaunchesInfoInsertStatement.setString(22, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxWinchingSpeed()));
-            PreviousLaunchesInfoInsertStatement.setString(23, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxWeakLinkStrength()));
-            PreviousLaunchesInfoInsertStatement.setString(24, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxTension()));
-            PreviousLaunchesInfoInsertStatement.setString(25, String.valueOf(currentDataObjectSet.getCurrentSailplane().getCableReleaseAngle()));
-            PreviousLaunchesInfoInsertStatement.setString(26, String.valueOf(currentDataObjectSet.getCurrentSailplane().storeCarryBallast()));
-            PreviousLaunchesInfoInsertStatement.setString(27, String.valueOf(currentDataObjectSet.getCurrentSailplane().storeMultipleSeats()));
-            PreviousLaunchesInfoInsertStatement.setString(28, currentDataObjectSet.getCurrentSailplane().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(17, currentDataObjectSet.getCurrentSailplane().getRegistration());
+            PreviousLaunchesInfoInsertStatement.setString(18, currentDataObjectSet.getCurrentSailplane().getName());
+            PreviousLaunchesInfoInsertStatement.setString(19, currentDataObjectSet.getCurrentSailplane().getOwner());
+            PreviousLaunchesInfoInsertStatement.setString(20, currentDataObjectSet.getCurrentSailplane().getType());
+            PreviousLaunchesInfoInsertStatement.setString(21, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxGrossWeight()));
+            PreviousLaunchesInfoInsertStatement.setString(22, String.valueOf(currentDataObjectSet.getCurrentSailplane().getEmptyWeight()));
+            PreviousLaunchesInfoInsertStatement.setString(23, String.valueOf(currentDataObjectSet.getCurrentSailplane().getIndicatedStallSpeed()));
+            PreviousLaunchesInfoInsertStatement.setString(24, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxWinchingSpeed()));
+            PreviousLaunchesInfoInsertStatement.setString(25, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxWeakLinkStrength()));
+            PreviousLaunchesInfoInsertStatement.setString(26, String.valueOf(currentDataObjectSet.getCurrentSailplane().getMaxTension()));
+            PreviousLaunchesInfoInsertStatement.setString(27, String.valueOf(currentDataObjectSet.getCurrentSailplane().getCableReleaseAngle()));
+            PreviousLaunchesInfoInsertStatement.setString(28, String.valueOf(currentDataObjectSet.getCurrentSailplane().storeCarryBallast()));
+            PreviousLaunchesInfoInsertStatement.setString(29, String.valueOf(currentDataObjectSet.getCurrentSailplane().storeMultipleSeats()));
+            PreviousLaunchesInfoInsertStatement.setString(30, currentDataObjectSet.getCurrentSailplane().getOptionalInfo());
             CurrentLaunchInformation currentLaunchInformation = CurrentLaunchInformation.getCurrentLaunchInformation();
-            PreviousLaunchesInfoInsertStatement.setString(29, String.valueOf(currentLaunchInformation.getGliderBallast()));
-            PreviousLaunchesInfoInsertStatement.setString(30, String.valueOf(currentLaunchInformation.getGliderBaggage()));
-            PreviousLaunchesInfoInsertStatement.setString(31, String.valueOf(currentLaunchInformation.getPassengerWeight()));
-            PreviousLaunchesInfoInsertStatement.setString(32, currentDataObjectSet.getCurrentAirfield().getId());
-            PreviousLaunchesInfoInsertStatement.setString(33, currentDataObjectSet.getCurrentAirfield().getName());
-            PreviousLaunchesInfoInsertStatement.setString(34, currentDataObjectSet.getCurrentAirfield().getDesignator());
-            PreviousLaunchesInfoInsertStatement.setString(35, String.valueOf(currentDataObjectSet.getCurrentAirfield().getAltitude()));
-            PreviousLaunchesInfoInsertStatement.setString(36, String.valueOf(currentDataObjectSet.getCurrentAirfield().getMagneticVariation()));
-            PreviousLaunchesInfoInsertStatement.setString(37, String.valueOf(currentDataObjectSet.getCurrentAirfield().getLatitude()));
-            PreviousLaunchesInfoInsertStatement.setString(38, String.valueOf(currentDataObjectSet.getCurrentAirfield().getLongitude()));
-            PreviousLaunchesInfoInsertStatement.setString(39, currentDataObjectSet.getCurrentAirfield().getOptionalInfo());
-            PreviousLaunchesInfoInsertStatement.setString(40, currentDataObjectSet.getCurrentRunway().getId());
-            PreviousLaunchesInfoInsertStatement.setString(41, currentDataObjectSet.getCurrentRunway().getName());
-            PreviousLaunchesInfoInsertStatement.setString(42, String.valueOf(currentDataObjectSet.getCurrentRunway().getMagneticHeading()));
-            PreviousLaunchesInfoInsertStatement.setString(43, currentDataObjectSet.getCurrentRunway().getParent());
-            PreviousLaunchesInfoInsertStatement.setString(44, currentDataObjectSet.getCurrentRunway().getParentId());
-            PreviousLaunchesInfoInsertStatement.setString(45, String.valueOf(currentDataObjectSet.getCurrentRunway().getAltitude()));
-            PreviousLaunchesInfoInsertStatement.setString(46, currentDataObjectSet.getCurrentRunway().getOptionalInfo());
-            PreviousLaunchesInfoInsertStatement.setString(47, currentDataObjectSet.getCurrentGliderPosition().getId());
-            PreviousLaunchesInfoInsertStatement.setString(48, currentDataObjectSet.getCurrentGliderPosition().getGliderPositionId());
-            PreviousLaunchesInfoInsertStatement.setString(49, currentDataObjectSet.getCurrentGliderPosition().getRunwayParent());
-            PreviousLaunchesInfoInsertStatement.setString(50, currentDataObjectSet.getCurrentGliderPosition().getRunwayParentId());
-            PreviousLaunchesInfoInsertStatement.setString(51, currentDataObjectSet.getCurrentGliderPosition().getAirfieldParent());
-            PreviousLaunchesInfoInsertStatement.setString(52, currentDataObjectSet.getCurrentGliderPosition().getAirfieldParentId());
-            PreviousLaunchesInfoInsertStatement.setString(53, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getAltitude()));
-            PreviousLaunchesInfoInsertStatement.setString(54, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getLatitude()));
-            PreviousLaunchesInfoInsertStatement.setString(55, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getLongitude()));
-            PreviousLaunchesInfoInsertStatement.setString(56, currentDataObjectSet.getCurrentGliderPosition().getOptionalInfo());
-            PreviousLaunchesInfoInsertStatement.setString(57, currentDataObjectSet.getCurrentWinchPosition().getId());
-            PreviousLaunchesInfoInsertStatement.setString(58, currentDataObjectSet.getCurrentWinchPosition().getName());
-            PreviousLaunchesInfoInsertStatement.setString(59, currentDataObjectSet.getCurrentWinchPosition().getRunwayParent());
-            PreviousLaunchesInfoInsertStatement.setString(60, currentDataObjectSet.getCurrentWinchPosition().getRunwayParentId());
-            PreviousLaunchesInfoInsertStatement.setString(61, currentDataObjectSet.getCurrentWinchPosition().getAirfieldParent());
-            PreviousLaunchesInfoInsertStatement.setString(62, currentDataObjectSet.getCurrentWinchPosition().getAirfieldParentId());
-            PreviousLaunchesInfoInsertStatement.setString(63, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getAltitude()));
-            PreviousLaunchesInfoInsertStatement.setString(64, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getLatitude()));
-            PreviousLaunchesInfoInsertStatement.setString(65, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getLongitude()));
-            PreviousLaunchesInfoInsertStatement.setString(66, currentDataObjectSet.getCurrentWinchPosition().getOptionalInfo());
-            PreviousLaunchesInfoInsertStatement.setString(67, currentDataObjectSet.getCurrentDrum().getName());
-            PreviousLaunchesInfoInsertStatement.setString(68, String.valueOf(currentDataObjectSet.getCurrentDrum().getCoreDiameter()));
-            PreviousLaunchesInfoInsertStatement.setString(69, String.valueOf(currentDataObjectSet.getCurrentDrum().getKFactor()));
-            PreviousLaunchesInfoInsertStatement.setString(70, String.valueOf(currentDataObjectSet.getCurrentDrum().getCableLength()));
-            PreviousLaunchesInfoInsertStatement.setString(71, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getParachuteNumber()));
-            PreviousLaunchesInfoInsertStatement.setString(72, currentDataObjectSet.getCurrentDrum().getParachute().getName());
-            PreviousLaunchesInfoInsertStatement.setString(73, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getLift()));
-            PreviousLaunchesInfoInsertStatement.setString(74, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getDrag()));
-            PreviousLaunchesInfoInsertStatement.setString(75, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getWeight()));
+            PreviousLaunchesInfoInsertStatement.setString(31, String.valueOf(currentLaunchInformation.getGliderBallast()));
+            PreviousLaunchesInfoInsertStatement.setString(32, String.valueOf(currentLaunchInformation.getGliderBaggage()));
+            PreviousLaunchesInfoInsertStatement.setString(33, String.valueOf(currentLaunchInformation.getPassengerWeight()));
+            PreviousLaunchesInfoInsertStatement.setString(34, currentDataObjectSet.getCurrentAirfield().getId());
+            PreviousLaunchesInfoInsertStatement.setString(35, currentDataObjectSet.getCurrentAirfield().getName());
+            PreviousLaunchesInfoInsertStatement.setString(36, currentDataObjectSet.getCurrentAirfield().getDesignator());
+            PreviousLaunchesInfoInsertStatement.setString(37, String.valueOf(currentDataObjectSet.getCurrentAirfield().getAltitude()));
+            PreviousLaunchesInfoInsertStatement.setString(38, String.valueOf(currentDataObjectSet.getCurrentAirfield().getMagneticVariation()));
+            PreviousLaunchesInfoInsertStatement.setString(39, String.valueOf(currentDataObjectSet.getCurrentAirfield().getLatitude()));
+            PreviousLaunchesInfoInsertStatement.setString(40, String.valueOf(currentDataObjectSet.getCurrentAirfield().getLongitude()));
+            PreviousLaunchesInfoInsertStatement.setString(41, currentDataObjectSet.getCurrentAirfield().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(42, currentDataObjectSet.getCurrentRunway().getId());
+            PreviousLaunchesInfoInsertStatement.setString(43, currentDataObjectSet.getCurrentRunway().getName());
+            PreviousLaunchesInfoInsertStatement.setString(44, String.valueOf(currentDataObjectSet.getCurrentRunway().getMagneticHeading()));
+            PreviousLaunchesInfoInsertStatement.setString(45, currentDataObjectSet.getCurrentRunway().getParent());
+            PreviousLaunchesInfoInsertStatement.setString(46, currentDataObjectSet.getCurrentRunway().getParentId());
+            PreviousLaunchesInfoInsertStatement.setString(47, String.valueOf(currentDataObjectSet.getCurrentRunway().getAltitude()));
+            PreviousLaunchesInfoInsertStatement.setString(48, currentDataObjectSet.getCurrentRunway().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(49, currentDataObjectSet.getCurrentGliderPosition().getId());
+            PreviousLaunchesInfoInsertStatement.setString(50, currentDataObjectSet.getCurrentGliderPosition().getGliderPositionId());
+            PreviousLaunchesInfoInsertStatement.setString(51, currentDataObjectSet.getCurrentGliderPosition().getRunwayParent());
+            PreviousLaunchesInfoInsertStatement.setString(52, currentDataObjectSet.getCurrentGliderPosition().getRunwayParentId());
+            PreviousLaunchesInfoInsertStatement.setString(53, currentDataObjectSet.getCurrentGliderPosition().getAirfieldParent());
+            PreviousLaunchesInfoInsertStatement.setString(54, currentDataObjectSet.getCurrentGliderPosition().getAirfieldParentId());
+            PreviousLaunchesInfoInsertStatement.setString(55, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getAltitude()));
+            PreviousLaunchesInfoInsertStatement.setString(56, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getLatitude()));
+            PreviousLaunchesInfoInsertStatement.setString(57, String.valueOf(currentDataObjectSet.getCurrentGliderPosition().getLongitude()));
+            PreviousLaunchesInfoInsertStatement.setString(58, currentDataObjectSet.getCurrentGliderPosition().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(59, currentDataObjectSet.getCurrentWinchPosition().getId());
+            PreviousLaunchesInfoInsertStatement.setString(60, currentDataObjectSet.getCurrentWinchPosition().getName());
+            PreviousLaunchesInfoInsertStatement.setString(61, currentDataObjectSet.getCurrentWinchPosition().getRunwayParent());
+            PreviousLaunchesInfoInsertStatement.setString(62, currentDataObjectSet.getCurrentWinchPosition().getRunwayParentId());
+            PreviousLaunchesInfoInsertStatement.setString(63, currentDataObjectSet.getCurrentWinchPosition().getAirfieldParent());
+            PreviousLaunchesInfoInsertStatement.setString(64, currentDataObjectSet.getCurrentWinchPosition().getAirfieldParentId());
+            PreviousLaunchesInfoInsertStatement.setString(65, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getAltitude()));
+            PreviousLaunchesInfoInsertStatement.setString(66, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getLatitude()));
+            PreviousLaunchesInfoInsertStatement.setString(67, String.valueOf(currentDataObjectSet.getCurrentWinchPosition().getLongitude()));
+            PreviousLaunchesInfoInsertStatement.setString(68, currentDataObjectSet.getCurrentWinchPosition().getOptionalInfo());
+            PreviousLaunchesInfoInsertStatement.setString(69, currentDataObjectSet.getCurrentDrum().getName());
+            PreviousLaunchesInfoInsertStatement.setString(70, String.valueOf(currentDataObjectSet.getCurrentDrum().getCoreDiameter()));
+            PreviousLaunchesInfoInsertStatement.setString(71, String.valueOf(currentDataObjectSet.getCurrentDrum().getKFactor()));
+            PreviousLaunchesInfoInsertStatement.setString(72, String.valueOf(currentDataObjectSet.getCurrentDrum().getCableLength()));
+            PreviousLaunchesInfoInsertStatement.setString(73, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getParachuteNumber()));
+            PreviousLaunchesInfoInsertStatement.setString(74, currentDataObjectSet.getCurrentDrum().getParachute().getName());
+            PreviousLaunchesInfoInsertStatement.setString(75, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getLift()));
+            PreviousLaunchesInfoInsertStatement.setString(76, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getDrag()));
+            PreviousLaunchesInfoInsertStatement.setString(77, String.valueOf(currentDataObjectSet.getCurrentDrum().getParachute().getWeight()));
             
             PreviousLaunchesInfoInsertStatement.executeUpdate();
             PreviousLaunchesInfoInsertStatement.close();
@@ -544,7 +571,7 @@ public class DatabaseDataObjectUtilities {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT pilot_id, first_name, last_name, middle_name, flight_weight, capability, "
                     + "preference, emergency_contact_info, emergency_medical_info, optional_info "
-                    + "FROM Pilot ORDER BY pilot_id");
+                    + "FROM Pilot ORDER BY first_name");
             List pilots = new ArrayList<Pilot>();
             
             while(thePilots.next()) {
@@ -596,17 +623,20 @@ public class DatabaseDataObjectUtilities {
         try {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
-            ResultSet theSailplanes = stmt.executeQuery("SELECT glider_id, n_number, type, "
-                    + "max_gross_weight, empty_weight, indicated_stall_speed,"
+            ResultSet theSailplanes = stmt.executeQuery("SELECT glider_id, reg_number, name, owner,"
+                    + "type, max_gross_weight, empty_weight, indicated_stall_speed,"
                     + "max_winching_speed, max_weak_link_strength, max_tension, "
                     + "cable_release_angle, carry_ballast, multiple_seats, "
                     + "optional_info "
-                    + "FROM Glider ORDER BY n_number");
+                    + "FROM Glider ORDER BY name");
             List sailplanes = new ArrayList<Sailplane>();
             
             while(theSailplanes.next()) {
-                String nNumber = theSailplanes.getString(2);
-                String type = theSailplanes.getString(3);
+                String id = theSailplanes.getString(1);
+                String regNumber = theSailplanes.getString(2);
+                String name = theSailplanes.getString(3);
+                String owner = theSailplanes.getString(4);
+                String type = theSailplanes.getString(5);
                 float maxGrossWeight = 0; 
                 float emptyWeight = 0;
                 float stallSpeed = 0;
@@ -615,13 +645,13 @@ public class DatabaseDataObjectUtilities {
                 float maxTension = 0;
                 float cableAngle = 0;
                 try {
-                    maxGrossWeight = Float.parseFloat(theSailplanes.getString(4));
-                    emptyWeight = Float.parseFloat(theSailplanes.getString(5));
-                    stallSpeed = Float.parseFloat(theSailplanes.getString(6));
-                    maxWinchingSpeed = Float.parseFloat(theSailplanes.getString(7));
-                    maxWeakLinkStrength = Float.parseFloat(theSailplanes.getString(8));
-                    maxTension = Float.parseFloat(theSailplanes.getString(9));
-                    cableAngle = Float.parseFloat(theSailplanes.getString(10));
+                    maxGrossWeight = Float.parseFloat(theSailplanes.getString(6));
+                    emptyWeight = Float.parseFloat(theSailplanes.getString(7));
+                    stallSpeed = Float.parseFloat(theSailplanes.getString(8));
+                    maxWinchingSpeed = Float.parseFloat(theSailplanes.getString(9));
+                    maxWeakLinkStrength = Float.parseFloat(theSailplanes.getString(10));
+                    maxTension = Float.parseFloat(theSailplanes.getString(11));
+                    cableAngle = Float.parseFloat(theSailplanes.getString(12));
                 }catch(NumberFormatException e) {
                     //TODO What happens when the Database sends back invalid data
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -629,17 +659,17 @@ public class DatabaseDataObjectUtilities {
                 boolean ballast = false;
                 boolean multipleSeats = false;
                 try{
-                    ballast = Sailplane.returnCarryBallast(Integer.parseInt(theSailplanes.getString(11)));
-                    multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theSailplanes.getString(12)));
+                    ballast = Sailplane.returnCarryBallast(Integer.parseInt(theSailplanes.getString(13)));
+                    multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theSailplanes.getString(14)));
                 }catch(NumberFormatException e) {
                     //e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error reading ballast in reading from DB");
                 }
                 
-                Sailplane newSailplane = new Sailplane(nNumber, type,
+                Sailplane newSailplane = new Sailplane(regNumber, name, owner, type,
                         maxGrossWeight, emptyWeight, stallSpeed, maxWinchingSpeed, 
-                        maxWeakLinkStrength, maxTension, cableAngle, ballast, multipleSeats, theSailplanes.getString(13));
-                newSailplane.setId(theSailplanes.getString(1));
+                        maxWeakLinkStrength, maxTension, cableAngle, ballast, multipleSeats, theSailplanes.getString(15));
+                newSailplane.setId(id);
                 sailplanes.add(newSailplane);
                 
             }
@@ -730,7 +760,7 @@ public class DatabaseDataObjectUtilities {
             Statement stmt = connect.createStatement();
             ResultSet theRunways = stmt.executeQuery("SELECT runway_id, runway_name, magnetic_heading, parent, parent_id, altitude, optional_info "
                 + "FROM Runway ORDER BY runway_id");
-            List runways = new ArrayList<Runway>();
+            List<Runway> runways = new ArrayList<Runway>();
             
             while(theRunways.next()) {
                 String name = theRunways.getString(2);
@@ -884,6 +914,63 @@ public class DatabaseDataObjectUtilities {
      * @throws SQLException if the table in the database can't be accessed
      * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
      */
+    public static List<Drum> getDrum() throws SQLException, ClassNotFoundException {        
+        try{
+            Class.forName(driverName);
+            Class.forName(clientDriverName);
+        }catch(java.lang.ClassNotFoundException e) {
+            throw e;
+        }
+        
+        try {
+            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Statement stmt = connect.createStatement();
+            ResultSet theDrums = stmt.executeQuery("SELECT drum_id, drun_name, core_diameter,"
+                    + "kfactor, cable_length, launch_number"
+                + "FROM Parachute ORDER BY parachute_id");
+            List<Drum> drums = new ArrayList<Drum>();
+            
+            while(theDrums.next()) {
+                
+                int id = 0;
+                String drum_name = "";
+                float core_diameter = 0;
+                float kfactor = 0;
+                float cable_length = 0;
+                int launch_number = 0;
+                try {
+                    id = Integer.parseInt(theDrums.getString(1));
+                    drum_name = theDrums.getString(3);
+                    core_diameter = Float.parseFloat(theDrums.getString(3));
+                    kfactor = Float.parseFloat(theDrums.getString(4));
+                    cable_length = Float.parseFloat(theDrums.getString(5));
+                    launch_number = Integer.parseInt(theDrums.getString(6));
+                }catch(NumberFormatException e) {
+                    //TODO What happens when the Database sends back invalid data
+                    JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
+                }
+               
+                Drum newDrum = new Drum(id, drum_name, core_diameter, kfactor, cable_length);
+                        
+                drums.add(newDrum);
+                
+            }
+            theDrums.close();
+            stmt.close();
+            connect.close();
+            return drums;
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Pulls the list of Parachutes (and relevant data) from the database
+     * 
+     * @return the list of parachutes in the database
+     * @throws SQLException if the table in the database can't be accessed
+     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded 
+     */
     public static List<Parachute> getParachutes() throws SQLException, ClassNotFoundException {        
         try{
             Class.forName(driverName);
@@ -993,7 +1080,7 @@ public class DatabaseDataObjectUtilities {
             Connection connect = DriverManager.getConnection(databaseConnectionName);
             Statement stmt = connect.createStatement();
             ResultSet theFlights = stmt.executeQuery("SELECT start_timestamp, pilot_id, "
-                    + "pilot_first_name, pilot_last_name, glider_n_number "
+                    + "pilot_first_name, pilot_last_name, glider_reg_number "
                     + "FROM PreviousLaunchesInfo ORDER BY start_timestamp");
             List flights = new ArrayList<FlightSummary>();
             
@@ -1074,8 +1161,11 @@ public class DatabaseDataObjectUtilities {
                 currentDataObjectSet.setCurrentPilot(newPilot);
                 
                 //Create Glider
+                String gliderid = theFlight.getString(16);
                 String gliderNNumber = theFlight.getString(17);
-                String gliderType = theFlight.getString(18);
+                String gliderName = theFlight.getString(18);
+                String gliderOwner = theFlight.getString(19);
+                String gliderType = theFlight.getString(20);
                 float gliderMaxGrossWeight = 0; 
                 float gliderEmptyWeight = 0;
                 float gliderStallSpeed = 0;
@@ -1084,13 +1174,13 @@ public class DatabaseDataObjectUtilities {
                 float gliderMaxTension = 0;
                 float gliderCableAngle = 0;
                 try {
-                    gliderMaxGrossWeight = Float.parseFloat(theFlight.getString(19));
-                    gliderEmptyWeight = Float.parseFloat(theFlight.getString(20));
-                    gliderStallSpeed = Float.parseFloat(theFlight.getString(21));
-                    gliderMaxWinchingSpeed = Float.parseFloat(theFlight.getString(22));
-                    gliderMaxWeakLinkStrength = Float.parseFloat(theFlight.getString(23));
-                    gliderMaxTension = Float.parseFloat(theFlight.getString(24));
-                    gliderCableAngle = Float.parseFloat(theFlight.getString(25));
+                    gliderMaxGrossWeight = Float.parseFloat(theFlight.getString(21));
+                    gliderEmptyWeight = Float.parseFloat(theFlight.getString(22));
+                    gliderStallSpeed = Float.parseFloat(theFlight.getString(23));
+                    gliderMaxWinchingSpeed = Float.parseFloat(theFlight.getString(24));
+                    gliderMaxWeakLinkStrength = Float.parseFloat(theFlight.getString(25));
+                    gliderMaxTension = Float.parseFloat(theFlight.getString(26));
+                    gliderCableAngle = Float.parseFloat(theFlight.getString(27));
                 }catch(NumberFormatException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -1098,135 +1188,135 @@ public class DatabaseDataObjectUtilities {
                 boolean ballast = false;
                 boolean multipleSeats = false;
                 try{
-                    ballast = Sailplane.returnCarryBallast(Integer.parseInt(theFlight.getString(26)));
-                    multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theFlight.getString(27)));
+                    ballast = Sailplane.returnCarryBallast(Integer.parseInt(theFlight.getString(28)));
+                    multipleSeats = Sailplane.returnMultipleSeats(Integer.parseInt(theFlight.getString(29)));
                 }catch(NumberFormatException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error reading ballast in reading from DB");
                 }
                 
-                Sailplane newSailplane = new Sailplane(gliderNNumber, gliderType,
+                Sailplane newSailplane = new Sailplane(gliderNNumber, gliderName, gliderOwner, gliderType,
                         gliderMaxGrossWeight, gliderEmptyWeight, gliderStallSpeed, gliderMaxWinchingSpeed, 
-                        gliderMaxWeakLinkStrength, gliderMaxTension, gliderCableAngle, ballast, multipleSeats, theFlight.getString(28));
-                newSailplane.setId(theFlight.getString(16));
+                        gliderMaxWeakLinkStrength, gliderMaxTension, gliderCableAngle, ballast, multipleSeats, theFlight.getString(30));
+                newSailplane.setId(gliderid);
                 currentDataObjectSet.setCurrentGlider(newSailplane);
                 
                 CurrentLaunchInformation currentLaunchInformation = CurrentLaunchInformation.getCurrentLaunchInformation();
-                currentLaunchInformation.setGliderBallast(Float.parseFloat(theFlight.getString(29)));
-                currentLaunchInformation.setPassengerWeight(Float.parseFloat(theFlight.getString(31)));
-                currentLaunchInformation.setGliderBaggage(Float.parseFloat(theFlight.getString(30)));
+                currentLaunchInformation.setGliderBallast(Float.parseFloat(theFlight.getString(31)));
+                currentLaunchInformation.setPassengerWeight(Float.parseFloat(theFlight.getString(33)));
+                currentLaunchInformation.setGliderBaggage(Float.parseFloat(theFlight.getString(32)));
                 
                 //Create Airfield
-                String airfieldName = theFlight.getString(33);
-                String airfieldDesignator = theFlight.getString(34);
+                String airfieldName = theFlight.getString(35);
+                String airfieldDesignator = theFlight.getString(36);
                 
                 float airfieldAltitude = 0;
                 float airfieldMagneticVariation = 0;
                 float airfieldLatitude = 0;
                 float airfieldLongitude = 0;
                 try {
-                    airfieldAltitude = Float.parseFloat(theFlight.getString(35));
-                    airfieldMagneticVariation = Float.parseFloat(theFlight.getString(36));
-                    airfieldLatitude = Float.parseFloat(theFlight.getString(37));
-                    airfieldLongitude = Float.parseFloat(theFlight.getString(38));
+                    airfieldAltitude = Float.parseFloat(theFlight.getString(37));
+                    airfieldMagneticVariation = Float.parseFloat(theFlight.getString(38));
+                    airfieldLatitude = Float.parseFloat(theFlight.getString(39));
+                    airfieldLongitude = Float.parseFloat(theFlight.getString(40));
                 }catch(NumberFormatException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String airfieldOptional = theFlight.getString(39);
+                String airfieldOptional = theFlight.getString(41);
                 
                 Airfield newAirfield = new Airfield(airfieldName, airfieldDesignator, airfieldAltitude, airfieldMagneticVariation,
                         airfieldLatitude, airfieldLongitude, airfieldOptional);
-                newAirfield.setId(theFlight.getString(32));
+                newAirfield.setId(theFlight.getString(34));
                 currentDataObjectSet.setCurrentAirfield(newAirfield);
                 
                 //Create Runway
-                String runwayName = theFlight.getString(41);
-                String runwayParent = theFlight.getString(43);
+                String runwayName = theFlight.getString(43);
+                String runwayParent = theFlight.getString(45);
                 
                 float runwayAltitude = 0;
                 float runwayMagneticHeading = 0;
                 try {
-                    runwayMagneticHeading = Float.parseFloat(theFlight.getString(42));
-                    runwayAltitude = Float.parseFloat(theFlight.getString(45));
+                    runwayMagneticHeading = Float.parseFloat(theFlight.getString(44));
+                    runwayAltitude = Float.parseFloat(theFlight.getString(47));
                 }catch(NumberFormatException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String runwayOptional = theFlight.getString(46);
+                String runwayOptional = theFlight.getString(48);
                           
                 Runway newRunway = new Runway(runwayName, runwayMagneticHeading, runwayParent, runwayAltitude, runwayOptional);
-                newRunway.setId(theFlight.getString(40));
-                newRunway.setParentId(theFlight.getString(44));
+                newRunway.setId(theFlight.getString(42));
+                newRunway.setParentId(theFlight.getString(46));
                 currentDataObjectSet.setCurrentRunway(newRunway);
                 
                 //Create Glider Position
-                String gliderPositionId = theFlight.getString(48);
-                String gliderPositionRunwayParent = theFlight.getString(49);
-                String gliderPositionAirfieldParent = theFlight.getString(51);
+                String gliderPositionId = theFlight.getString(50);
+                String gliderPositionRunwayParent = theFlight.getString(51);
+                String gliderPositionAirfieldParent = theFlight.getString(53);
                 
                 float gliderPositionAltitude = 0;
                 float gliderPositionLatitude = 0;
                 float gliderPositionLongitude = 0;
                 try {
-                    gliderPositionAltitude = Float.parseFloat(theFlight.getString(53));
-                    gliderPositionLatitude = Float.parseFloat(theFlight.getString(54));
-                    gliderPositionLongitude = Float.parseFloat(theFlight.getString(55));
+                    gliderPositionAltitude = Float.parseFloat(theFlight.getString(55));
+                    gliderPositionLatitude = Float.parseFloat(theFlight.getString(56));
+                    gliderPositionLongitude = Float.parseFloat(theFlight.getString(57));
                 }catch(NumberFormatException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String gliderPositionOptional = theFlight.getString(56);
+                String gliderPositionOptional = theFlight.getString(58);
                           
                 GliderPosition newGliderPosition = new GliderPosition(gliderPositionId, 
                         gliderPositionRunwayParent, gliderPositionAirfieldParent, 
                         gliderPositionAltitude, gliderPositionLatitude, gliderPositionLongitude, gliderPositionOptional);
-                newGliderPosition.setId(theFlight.getString(47));
-                newGliderPosition.setRunwayParentId(theFlight.getString(50));
-                newGliderPosition.setAirfieldParentId(theFlight.getString(52));
+                newGliderPosition.setId(theFlight.getString(49));
+                newGliderPosition.setRunwayParentId(theFlight.getString(52));
+                newGliderPosition.setAirfieldParentId(theFlight.getString(54));
                 currentDataObjectSet.setCurrentGliderPosition(newGliderPosition);
                 
                 //Create Winch Position
-                String winchPositionName = theFlight.getString(58);
-                String winchPositionRunwayParent = theFlight.getString(59);
-                String winchPositionAirfieldParent = theFlight.getString(61);
+                String winchPositionName = theFlight.getString(60);
+                String winchPositionRunwayParent = theFlight.getString(61);
+                String winchPositionAirfieldParent = theFlight.getString(63);
                 
                 float winchPositionAltitude = 0;
                 float winchPositionLatitude = 0;
                 float winchPositionLongitude = 0;
                 try {
-                    winchPositionAltitude = Float.parseFloat(theFlight.getString(63));
-                    winchPositionLatitude = Float.parseFloat(theFlight.getString(64));
-                    winchPositionLongitude = Float.parseFloat(theFlight.getString(65));
+                    winchPositionAltitude = Float.parseFloat(theFlight.getString(65));
+                    winchPositionLatitude = Float.parseFloat(theFlight.getString(66));
+                    winchPositionLongitude = Float.parseFloat(theFlight.getString(67));
                 }catch(NumberFormatException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
                 }
                 
-                String winchPositionOptional = theFlight.getString(66);
+                String winchPositionOptional = theFlight.getString(68);
                           
                 WinchPosition newWinchPosition = new WinchPosition(winchPositionName,
                         winchPositionRunwayParent, winchPositionAirfieldParent,
                         winchPositionAltitude, winchPositionLatitude,
                         winchPositionLongitude, winchPositionOptional);
-                newWinchPosition.setId(theFlight.getString(57));
-                newWinchPosition.setRunwayParentId(theFlight.getString(60));
-                newWinchPosition.setAirfieldParentId(theFlight.getString(62));
+                newWinchPosition.setId(theFlight.getString(59));
+                newWinchPosition.setRunwayParentId(theFlight.getString(62));
+                newWinchPosition.setAirfieldParentId(theFlight.getString(64));
                 currentDataObjectSet.setCurrentWinchPosition(newWinchPosition);
                 
                 //Create Drum
-                String drumName = theFlight.getString(67);
+                String drumName = theFlight.getString(69);
                 
                 float drumCoreDiameter = 0;
                 float drumKFactor = 0;
                 float drumCableLength = 0;
                 try {
                     drumCoreDiameter = Float.parseFloat(theFlight.getString(68));
-                    drumKFactor = Float.parseFloat(theFlight.getString(69));
-                    drumCableLength = Float.parseFloat(theFlight.getString(70));
+                    drumKFactor = Float.parseFloat(theFlight.getString(71));
+                    drumCableLength = Float.parseFloat(theFlight.getString(72));
                 }catch(NumberFormatException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");
@@ -1235,17 +1325,17 @@ public class DatabaseDataObjectUtilities {
                 Drum newDrum = new Drum(drumName, drumCoreDiameter, drumKFactor, drumCableLength);
                 
                 //Create Parachute
-                String parachuteName = theFlight.getString(72);
+                String parachuteName = theFlight.getString(74);
                 int parachuteId = 0;
                 
                 float parachuteLift = 0;
                 float parachuteDrag = 0;
                 float parachuteWeight = 0;
                 try {
-                    parachuteId = Integer.parseInt(theFlight.getString(71));
-                    parachuteLift = Float.parseFloat(theFlight.getString(73));
-                    parachuteDrag = Float.parseFloat(theFlight.getString(74));
-                    parachuteWeight = Float.parseFloat(theFlight.getString(75));
+                    parachuteId = Integer.parseInt(theFlight.getString(73));
+                    parachuteLift = Float.parseFloat(theFlight.getString(75));
+                    parachuteDrag = Float.parseFloat(theFlight.getString(76));
+                    parachuteWeight = Float.parseFloat(theFlight.getString(77));
                 }catch(NumberFormatException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Number Format Exception in reading from DB");

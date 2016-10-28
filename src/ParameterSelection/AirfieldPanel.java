@@ -586,6 +586,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         }
         airfieldJList.setModel(airfieldModel);
         airfieldJList.addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 airfieldJListSelectionChanged(listSelectionEvent);
             }
@@ -690,6 +691,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         airfieldAddNewButton = new JButton("Add New");
         airfieldAddNewButton.setBackground(new Color(200,200,200));
         airfieldAddNewButton.addActionListener(new ActionListener() {
+                @Override
         	public void actionPerformed(ActionEvent arg0) {
                     AddEditAirfieldFrame AddEditAirfieldFrame_ = new AddEditAirfieldFrame(currentData.getCurrentAirfield(), false);
                     AddEditAirfieldFrame_.setVisible(true);
@@ -702,6 +704,7 @@ public class AirfieldPanel extends JPanel implements Observer{
         airfieldEditButton = new JButton("Edit");
         airfieldEditButton.setBackground(new Color(200,200,200));
         airfieldEditButton.addActionListener(new ActionListener() {
+                @Override
         	public void actionPerformed(ActionEvent e) {
                     AddEditAirfieldFrame AddEditAirfieldFrame_ = new AddEditAirfieldFrame(currentData.getCurrentAirfield(), true);
                     AddEditAirfieldFrame_.setVisible(true);

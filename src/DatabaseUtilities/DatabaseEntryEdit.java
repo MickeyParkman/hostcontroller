@@ -126,7 +126,9 @@ public class DatabaseEntryEdit
     {
         String updateString;
         updateString = "UPDATE GLIDER SET "
-                + "n_number = '" + sailplane.getNumber() + "', "
+                + "reg_number = '" + sailplane.getRegistration() + "', "
+                + "name = '" + sailplane.getName() + "', "
+                + "owner = '" + sailplane.getOwner() + "', "
                 + "type = '" + sailplane.getType() + "', "
                 + "max_gross_weight = " + String.valueOf(sailplane.getMaxGrossWeight()) + ", "
                 + "empty_weight = " + String.valueOf(sailplane.getEmptyWeight()) + ", "
@@ -230,6 +232,27 @@ public class DatabaseEntryEdit
       
         Update(updateString);
     }
+    
+    /**
+     * updates the parachute in the database with the new parachute data in the object passed in
+     * 
+     * @param drum drum object that is to be updated
+     * @throws Exception 
+     */
+    public static void UpdateEntry(Drum drum) throws Exception
+    {
+        String updateString;
+        updateString = "UPDATE DRUM SET "
+                + "drum_name = " + String.valueOf(drum.getName()) + " "
+                + "core_diameter = " + String.valueOf(drum.getCoreDiameter()) + " "
+                + "kfactor = " + String.valueOf(drum.getKFactor()) + " "
+                + "cable_length = " + String.valueOf(drum.getCableLength()) + " "
+                + "launch_number = " + String.valueOf(drum.getNumLaunches())
+                + "WHERE drum_id = '" + drum.getID() + "'";
+        
+        Update(updateString);
+    }
+    
     
     /**
      * updates the parachute in the database with the new parachute data in the object passed in
