@@ -141,6 +141,7 @@ public class FlightDashboard extends javax.swing.JPanel
         dialSquare2.add(tensionSpeedDial, BorderLayout.CENTER);
         
         health = new SystemsStatus();
+        health.setPreferredSize(new Dimension(400, 300));
         graph = new LaunchGraph("title");
         
         MessagePipeline.getDataRelay().attach("SPEED", graph);

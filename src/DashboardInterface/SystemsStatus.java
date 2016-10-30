@@ -7,8 +7,6 @@
 package DashboardInterface;
 
 import java.awt.Color;
-import org.netbeans.lib.awtextra.AbsoluteConstraints;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
@@ -47,102 +45,130 @@ public class SystemsStatus extends javax.swing.JPanel {
 
         jLabel8.setText("jLabel8");
 
-        setLayout(new AbsoluteLayout());
+        setLayout(null);
 
         setBackground(Color.WHITE);
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 0));
         jLabel1.setText("Motors");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel1.setBounds(20, 70, 80, 20);
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel1MouseClicked(evt);
             }
         });
-        add(jLabel1, new AbsoluteConstraints(20, 70, -1, -1));
+        add(jLabel1);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("System Status");
-        add(jLabel2, new AbsoluteConstraints(130, 10, -1, -1));
+        jLabel2.setBounds(130, 10, 120, 20);
+        add(jLabel2);
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 153, 0));
         jLabel6.setText("Batteries");
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel6.setBounds(20, 90, 80, 20);
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel6MouseClicked(evt);
             }
         });
-        add(jLabel6, new AbsoluteConstraints(20, 90, -1, -1));
+        add(jLabel6);
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 153, 0));
         jLabel7.setText("Tensiometer");
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel7.setBounds(20, 110, 80, 20);
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel7MouseClicked(evt);
             }
         });
-        add(jLabel7, new AbsoluteConstraints(20, 110, -1, -1));
+        add(jLabel7);
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 153, 0));
         jLabel9.setText("Guillotine");
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel9.setBounds(20, 140, 80, 20);
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel9MouseClicked(evt);
             }
         });
-        add(jLabel9, new AbsoluteConstraints(20, 140, 80, 20));
+        add(jLabel9);
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 153, 0));
         jLabel10.setText("Mechanical Brake");
-        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel10MouseClicked(evt);
             }
         });
-        add(jLabel10, new AbsoluteConstraints(20, 170, -1, -1));
+        jLabel10.setBounds(20, 170, 120, 20);
+        add(jLabel10);
 
         jLabel13.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 153, 0));
         jLabel13.setText("Chargers");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel13MouseClicked(evt);
             }
         });
-        add(jLabel13, new AbsoluteConstraints(170, 110, -1, -1));
+        jLabel13.setBounds(170, 110, 80, 20);
+        add(jLabel13);
 
         jLabel15.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 153, 0));
         jLabel15.setText("Gateway");
-        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel15MouseClicked(evt);
             }
         });
-        add(jLabel15, new AbsoluteConstraints(170, 170, -1, -1));
+        jLabel15.setBounds(170, 170, 80, 20);
+        add(jLabel15);
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 153, 0));
         jLabel11.setText("Environmental");
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel11MouseClicked(evt);
             }
         });
-        add(jLabel11, new AbsoluteConstraints(170, 70, -1, -1));
+        jLabel11.setBounds(170, 70, 100, 20);
+        add(jLabel11);
 
         jLabel14.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 153, 0));
         jLabel14.setText("Generator");
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jLabel14MouseClicked(evt);
             }
         });
-        add(jLabel14, new AbsoluteConstraints(170, 150, -1, -1));
+        jLabel14.setBounds(170, 150, 80, 20);
+        add(jLabel14);
 
         jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 153, 0));
@@ -152,8 +178,9 @@ public class SystemsStatus extends javax.swing.JPanel {
                 jLabel12MouseClicked(evt);
             }
         });
-        add(jLabel12, new AbsoluteConstraints(170, 90, -1, -1));
-        
+        jLabel12.setBounds(170, 90, 100, 20);
+        add(jLabel12);
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -201,14 +228,14 @@ public class SystemsStatus extends javax.swing.JPanel {
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
         // TODO add your handling code here:
         Chargers eight = new Chargers();
-        eight.setVisible(true);          
+        eight.setVisible(true);
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         // TODO add your handling code here:
         Generator nine = new Generator();
         nine.setVisible(true);
-        
+
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
@@ -216,10 +243,10 @@ public class SystemsStatus extends javax.swing.JPanel {
         Gateway ten = new Gateway();
         ten.setVisible(true);
     }//GEN-LAST:event_jLabel15MouseClicked
-    
-    
+
+
     /**
-     * 
+     *
      * @param id        id of the label to be changed   1 - 15
      * @param choice    color to be changed to
      *                  0 green, 1 yellow, 2 red
