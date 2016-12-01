@@ -16,10 +16,10 @@ import javax.swing.JOptionPane;
  */
 public class DatabaseEntryIdCheck {
     
-    public static Connection connectEx() throws ClassNotFoundException, SQLException {
+    public static Connection connectEx() throws ClassNotFoundException, SQLException {//other connect in Initialization
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
+        String databaseConnectionName = "jdbc:derby:hcDatabase;create=true";
         Connection connection = null;
         //Check for DB drivers
         try {

@@ -15,10 +15,10 @@ public class DatabaseInitialization {
     public static final String DATABASE_VERSION = "3.0.0";
     public static final String WINCH_PRAM_VERSION = "1.0.0";
     
-    public static Connection connect() {
+    public static Connection connect() { //other connect in Id Check
         String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
         String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
+        String databaseConnectionName = "jdbc:derby:hcDatabase;create=true";
         Connection connection = null;
         
         //Check for DB drivers
