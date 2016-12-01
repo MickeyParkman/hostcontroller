@@ -6,7 +6,6 @@ import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.RecentLaunchSelections;
 import DataObjects.Pilot;
-import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,7 +20,6 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
-import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
@@ -29,6 +27,7 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.MatteBorder;
 import Configuration.UnitLabelUtilities;
+import DatabaseUtilities.DatabaseEntrySelect;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -99,7 +98,7 @@ public class PilotPanel extends JPanel implements Observer{
             middleNameField.setText((currentPilot.getMiddleName()));
             middleNameField.setBackground(Color.GREEN);
 
-            String emergencyContact = currentPilot.getEmergencyContact();
+            String emergencyContact = currentPilot.getEmergencyName();
             String emergencyContactName;
             String emergencyContactPhone;
             int p = emergencyContact.indexOf('%');
@@ -158,7 +157,7 @@ public class PilotPanel extends JPanel implements Observer{
                 proficientLabel.setEnabled(false);
                 advancedLabel.setEnabled(true);
             }
-            
+            /*
             if(currentPilot.getPreference().equals("Mild"))
             {
                 mildLabel.setEnabled(true);
@@ -177,6 +176,7 @@ public class PilotPanel extends JPanel implements Observer{
                 nominalLabel.setEnabled(false);
                 performanceLabel.setEnabled(true);
             }
+            */
 
             optionalInfoField.setText((currentPilot.getOptionalInfo()));
         }
@@ -188,20 +188,12 @@ public class PilotPanel extends JPanel implements Observer{
     }
     
     private void initPilotList() {
-        try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
-            pilotNames = DatabaseUtilities.DatabaseDataObjectUtilities.getPilots();
+            pilotNames = DatabaseEntrySelect.getPilots();
             List<Pilot> recentPilots = recent.getRecentPilot();
             for (int i = 0; i < recentPilots.size(); i++){
                 pilotNames.add(0, recentPilots.get(i));
             }
-        }catch(SQLException e) {
-        } catch (ClassNotFoundException ex) {
-            // TODO change exception case
-        }
-        catch(Exception exp){
-            exp.printStackTrace();
-        }
     }
 
     public void clear()
@@ -246,7 +238,7 @@ public class PilotPanel extends JPanel implements Observer{
                 middleNameField.setBackground(Color.GREEN);
                 middleNameField.setHorizontalAlignment(JTextField.RIGHT);
 
-                String emergencyContact = thePilot.getEmergencyContact();
+                String emergencyContact = thePilot.getEmergencyName();
                 String emergencyContactName;
                 String emergencyContactPhone;
                 int p = emergencyContact.indexOf('%');
@@ -308,7 +300,7 @@ public class PilotPanel extends JPanel implements Observer{
                     proficientLabel.setEnabled(false);
                     advancedLabel.setEnabled(true);
                 }
-
+                /*
                 if(thePilot.getPreference().equals("Mild"))
                 {
                     mildLabel.setEnabled(true);
@@ -327,6 +319,7 @@ public class PilotPanel extends JPanel implements Observer{
                     nominalLabel.setEnabled(false);
                     performanceLabel.setEnabled(true);
                 }
+                */
 
                 optionalInfoField.setText((thePilot.getOptionalInfo()));
             } catch(Exception e) {

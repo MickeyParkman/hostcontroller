@@ -5,6 +5,7 @@
  */
 package Configuration;
 
+import DatabaseUtilities.DatabaseEntrySelect;
 import DatabaseUtilities.DatabaseExporter;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -43,7 +44,7 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
     private void initTableList()
     {
         try {
-            names = DatabaseUtilities.DatabaseDataObjectUtilities.getTables();
+            names = DatabaseEntrySelect.getTables();
         }catch(Exception e) {
         }
     }

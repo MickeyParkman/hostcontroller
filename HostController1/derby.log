@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Fri Oct 28 13:55:25 PDT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0158-0d13-66e2-000006cacf20 
-on database directory /Users/gene/code/java/senior project/hc-master/HostController1/WinchCommonsTest12DataBase  with class loader sun.misc.Launcher$AppClassLoader@2c7b84de 
-Loaded from file:/Users/gene/code/java/senior%20project/hc-master/lib/derby.jar
+Wed Nov 30 20:40:33 PST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0158-b8af-1b1c-000006ca33a0 
+on database directory /Users/gene/code/java/senior project/hc/HostController1/WinchCommonsTest12DataBase  with class loader sun.misc.Launcher$AppClassLoader@2c7b84de 
+Loaded from file:/Users/gene/code/java/senior%20project/hc/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_20-b26
-user.dir=/Users/gene/code/java/senior project/hc-master/HostController1
+user.dir=/Users/gene/code/java/senior project/hc/HostController1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

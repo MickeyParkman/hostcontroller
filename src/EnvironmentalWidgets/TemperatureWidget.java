@@ -8,6 +8,7 @@ package EnvironmentalWidgets;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.Operator;
 import java.awt.Color;
 
 /**
@@ -71,7 +72,8 @@ public class TemperatureWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("temperature");
+        Operator temp = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile();
+        unitId = temp.getUnitSetting("temperature");
         unit.setText(" " + UnitLabelUtilities.tempUnitIndexToString(unitId));
     }
     

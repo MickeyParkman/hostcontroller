@@ -5,11 +5,12 @@
  */
 package DatabaseUtilities;
 
+import static Communications.ErrorLogger.logError;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
 import DataObjects.*;
-import java.util.List;
+import static DatabaseUtilities.DatabaseInitialization.connect;
 
 /**
  *
@@ -17,141 +18,131 @@ import java.util.List;
  */
 public class DatabaseEntryDelete {
     
-    private static void Delete(String deleteString) throws ClassNotFoundException, SQLException
-    {
-        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
-        PreparedStatement ps = null;
-        Connection connection = null;
-        
-        //Check for DB drivers
-        try {
-            Class.forName(clientDriverName);
-            Class.forName(driverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDB ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-        
-        //Try to connect
-        try {
-            connection = DriverManager.getConnection(databaseConnectionName);
-        } catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-        
+    private static boolean Delete(PreparedStatement ps) throws SQLException {
         //Update the value given
-        try {
-            ps = connection.prepareStatement(deleteString);
-            ps.execute();
-            ps.close();
-        }catch(Exception e)
-        {
+        ps.execute();
+        ps.close();
+        return true;
+    }
+    
+    public static boolean DeleteEntry(Pilot pilot) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM PILOT WHERE pilot_id = ?");
+            stmt.setInt(1, pilot.getPilotId());
+            return Delete(stmt);
+        }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }finally
-        { 
+            logError(e);
         }
+        return false;
     }
     
-    public static void DeleteEntry(Pilot pilot) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM PILOT WHERE pilot_id = '" + pilot.getPilotId() + "'";
-        
-        Delete(deleteString);
-    }
-    
-    public static void DeleteEntry(Sailplane sailplane) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM GLIDER WHERE glider_id = '" + sailplane.getId() + "'";
-        
-        Delete(deleteString);
-    }
-    
-    public static void DeleteEntry(Airfield airfield) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM AIRFIELD WHERE airfield_id = '" + airfield.getId() + "'";
-        
-        Delete(deleteString);
-    }
-    
-    public static void DeleteEntry(Runway runway) throws Exception
-    {
-        DeleteGliderPositions(runway.getId(), runway.getParentId());
-        DeleteWinchPositions(runway.getId(), runway.getParentId());
-        String deleteString;
-        deleteString = "DELETE FROM RUNWAY WHERE runway_id = '" + runway.getId() + "' "
-                + "AND parent_id = '" + runway.getParentId() + "'";
-        
-        Delete(deleteString);
-    }
-    
-    public static void DeleteEntry(GliderPosition position) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM GLIDERPOSITION WHERE glider_position_id = '" + position.getId() + "' "
-                + "AND runway_parent_id = '" + position.getRunwayParentId() + "' "
-                + "AND airfield_parent_id = '" + position.getAirfieldParentId() + "'";
-        
-        Delete(deleteString);
-    }
-    
-    public static void DeleteEntry(WinchPosition position) throws Exception
-    {
-        String deleteString;
+    public static boolean DeleteEntry(Sailplane sailplane) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM GLIDER WHERE glider_id = ?");
+            stmt.setInt(1, sailplane.getId());
+            return Delete(stmt);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
 
-        deleteString = "DELETE FROM WINCHPOSITION WHERE winch_position_id = '" + position.getId() + "' "
-                + "AND runway_parent_id = '" + position.getRunwayParentId() + "' "
-                + "AND airfield_parent_id = '" + position.getAirfieldParentId() + "'";
-        
-        Delete(deleteString);
     }
     
-    public static void DeleteEntry(Drum drum) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM DRUM WHERE drum_id = '" + drum.getID() + "'";
-        
-        Delete(deleteString);
-    }
-    
-    public static void DeleteEntry(Parachute parachute) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM PARACHUTE WHERE parachute_id = '" + parachute.getParachuteNumber() + "'";
-        
-        Delete(deleteString);
-    }
-    
-    private static void DeleteRunways(String airfieldParentId) throws Exception
-    {
-        List<Runway> runways = DatabaseDataObjectUtilities.getRunways();
-        for(Runway str: runways){
-            if(str.getParent().equals(airfieldParentId))
-                DeleteEntry(str);
+    public static boolean DeleteEntry(Airfield airfield) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM AIRFIELD WHERE airfield_id = ?");
+            stmt.setInt(1, airfield.getId());
+            return Delete(stmt);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
         }
+        return false;
     }
     
-    private static void DeleteGliderPositions(String runwayParentId, String airfieldParentId) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM GLIDERPOSITION WHERE runway_parent_id = '" + runwayParentId + "' "
-                + "AND airfield_parent_id = '" + airfieldParentId + "'";
-        
-        Delete(deleteString);
+    public static boolean DeleteEntry(Runway runway) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM RUNWAY WHERE runway_id = ?");
+            stmt.setInt(1, runway.getId());
+            return Delete(stmt);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
     
-    private static void DeleteWinchPositions(String runwayParentId, String airfieldParentId) throws Exception
-    {
-        String deleteString;
-        deleteString = "DELETE FROM WINCHPOSITION WHERE runway_parent_id = '" + runwayParentId + "' "
-                + "AND airfield_parent_id = '" + airfieldParentId + "'";
-        
-        Delete(deleteString);
+    public static boolean DeleteEntry(GliderPosition position) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM GLIDERPOSITION WHERE glider_position_id = ?");
+            stmt.setInt(1, position.getId());
+            return Delete(stmt);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
+    }
+    
+    public static boolean DeleteEntry(WinchPosition position) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM WINCHPOSITION WHERE winch_position_id = ?");
+            stmt.setInt(1, position.getId());
+            return Delete(stmt);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
+    }
+    
+    public static boolean DeleteEntry(Drum drum) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM DRUM WHERE drum_id = ?");
+            stmt.setInt(1, drum.getId());
+            return Delete(stmt);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
+}
+    
+    public static boolean DeleteEntry(Parachute parachute) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM PARACHUTE WHERE parachute_id = ?");
+            stmt.setInt(1, parachute.getParachuteId());
+            return Delete(stmt);
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
 }

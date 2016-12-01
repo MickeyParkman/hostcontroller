@@ -12,7 +12,7 @@ public class CurrentDataObjectSet {
     private static CurrentDataObjectSet instance = null;
     private Pilot currentPilot;
     private Sailplane currentSailplane;
-    private Profile currentProfile;
+    private Operator currentProfile;
     private Runway currentRunway;
     private WinchPosition currentWinchPos;
     private GliderPosition currentGliderPos;
@@ -26,7 +26,7 @@ public class CurrentDataObjectSet {
         if(instance == null)
         {
             instance = new CurrentDataObjectSet();
-            instance.observers = new ArrayList<Observer>();
+            instance.observers = new ArrayList();
         }
         return instance;
     }
@@ -149,7 +149,7 @@ public class CurrentDataObjectSet {
         }        
         instance.notifyObservers();
     }
-    public void setCurrentProfile(Profile profile)
+    public void setCurrentProfile(Operator profile)
     {
         if(instance != null)
         {
@@ -268,7 +268,7 @@ public class CurrentDataObjectSet {
             return instance.currentWinch;
         }        
     }
-    public Profile getCurrentProfile()
+    public Operator getCurrentProfile()
     {
         if(instance == null)
         {

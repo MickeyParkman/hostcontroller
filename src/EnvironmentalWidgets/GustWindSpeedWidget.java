@@ -10,6 +10,7 @@ import Configuration.UnitConversionToIndexUtilities;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import DataObjects.Operator;
 import java.awt.Color;
 
 /**
@@ -54,7 +55,8 @@ public class GustWindSpeedWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("gustwindspeed");
+        Operator temp = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile();
+        unitId = temp.getUnitSetting("gustwindspeed");
         unit.setText(" " + UnitLabelUtilities.velocityUnitIndexToString(unitId));
     }
     

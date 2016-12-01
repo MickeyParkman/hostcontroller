@@ -10,7 +10,6 @@ import DatabaseUtilities.DatabaseEntryEdit;
 import DatabaseUtilities.DatabaseEntryIdCheck;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,7 +17,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -61,7 +59,7 @@ public class AddEditGliderPosFrame extends JFrame {
         setupUnits();
 
         if (!isEditEntry || editGliderPos == null){
-            editGliderPos = new GliderPosition("", "", "", 0, 0, 0, "");
+            editGliderPos = new GliderPosition("", 0, 0, 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentGliderPos = editGliderPos;
@@ -112,13 +110,13 @@ public class AddEditGliderPosFrame extends JFrame {
 
         altitudeField = new JTextField();
         if (isEditEntry){
-            altitudeField.setText(String.valueOf(currentGliderPos.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
+            altitudeField.setText(String.valueOf(currentGliderPos.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
         }
         altitudeField.setColumns(10);
         altitudeField.setBounds(135, 36, 200, 20);
         panel.add(altitudeField);
 
-        nameField = new JTextField(currentGliderPos.getGliderPositionId());
+        nameField = new JTextField(currentGliderPos.getName());
         nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         nameField.setColumns(10);
         nameField.setBounds(135, 11, 200, 20);
@@ -210,8 +208,7 @@ public class AddEditGliderPosFrame extends JFrame {
     }
 	
     public void deleteCommand(){
-        try{
-            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGliderPos.getGliderPositionId() + "?",
+            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGliderPos.getName() + "?",
                 "Delete Glider Position", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (choice == 0){
                 DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentGliderPos);
@@ -220,11 +217,6 @@ public class AddEditGliderPosFrame extends JFrame {
                 parent.update("3");
                 this.dispose();
             }
-        }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }catch (Exception e3) {
-
-        }
     }
 
     public void clearData(){
@@ -241,34 +233,28 @@ public class AddEditGliderPosFrame extends JFrame {
     protected void submitData(){
         if (isComplete()){
             String gliderPosName = nameField.getText();
-            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID);
+            float altitude = Float.parseFloat(altitudeField.getText()) 
+                    / UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID);
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             
-            String runwayParent = "";
-            String runwayParentId = "";
-            String airfieldParent = "";
-            String airfieldParentId = "";
+            int runwayParentId = 0;
             
             try{
-                runwayParent = objectSet.getCurrentRunway().getName();
                 runwayParentId = objectSet.getCurrentRunway().getId();
-                airfieldParent = objectSet.getCurrentAirfield().getDesignator();
-                airfieldParentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
                 System.out.println("cur runway 404 " + e.getMessage());
             }
             
-            GliderPosition newGliderPos = new GliderPosition(gliderPosName, 
-                    runwayParent, airfieldParent, altitude,
+            GliderPosition newGliderPos = new GliderPosition(gliderPosName, altitude,
                     latitude, longitude, "");
             newGliderPos.setId(currentGliderPos.getId());
             newGliderPos.setRunwayParentId(runwayParentId);
-            newGliderPos.setAirfieldParentId(airfieldParentId);
             try{
                 objectSet.setCurrentGliderPosition(newGliderPos);
                 Object[] options = {"One-time Launch", "Save to Database"};
-                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Glider Position for a one-time launch or save it to the database?",
+                int choice = JOptionPane.showOptionDialog(rootPane, 
+                        "Do you want to use this Glider Position for a one-time launch or save it to the database?",
                     "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                 if (choice == 0){
                     parent.update("3");
@@ -281,11 +267,11 @@ public class AddEditGliderPosFrame extends JFrame {
                     }
                     else{
                         Random randomId = new Random();
-                        newGliderPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                        newGliderPos.setId(randomId.nextInt(100000000));
                         while (DatabaseEntryIdCheck.IdCheck(newGliderPos)){
-                            newGliderPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                            newGliderPos.setId(randomId.nextInt(100000000));
                         }
-                        DatabaseUtilities.DatabaseDataObjectUtilities.addGliderPositionToDB(newGliderPos);
+                        DatabaseUtilities.DatabaseEntryInsert.addGliderPositionToDB(newGliderPos);
                     }
                     parent.update("3");
                     dispose();

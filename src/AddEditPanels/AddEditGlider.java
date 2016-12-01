@@ -10,25 +10,18 @@ import DatabaseUtilities.DatabaseEntryDelete;
 import DatabaseUtilities.DatabaseEntryEdit;
 import DatabaseUtilities.DatabaseEntryIdCheck;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.Random;
 import javax.swing.JCheckBox;
-import javax.swing.JToggleButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -159,7 +152,7 @@ public class AddEditGlider extends JFrame {
         contentPane.add(emptyWeightField);
         emptyWeightField.setColumns(10);
         
-        nNumberField = new JTextField(currentGlider.getId());
+        nNumberField = new JTextField(currentGlider.getRegistration());
         nNumberField.setBounds(160, 8, 110, 20);
         contentPane.add(nNumberField);
         nNumberField.setColumns(10);
@@ -312,7 +305,6 @@ public class AddEditGlider extends JFrame {
     }
     
     public void deleteCommand(){
-        try{
             int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGlider.getId() + "?",
                 "Delete Glider", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (choice == 0){
@@ -323,11 +315,6 @@ public class AddEditGlider extends JFrame {
                 parent.update();
                 this.dispose();
             }
-        }catch (ClassNotFoundException e1) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }catch (Exception e2){
-            System.out.println(e2.getMessage());
-        }
     }
     
     public void submitData(){
@@ -366,11 +353,11 @@ public class AddEditGlider extends JFrame {
                     }
                     else{
                         Random randomId = new Random();
-                        newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
+                        newGlider.setId(randomId.nextInt(100000000));
                         while (DatabaseEntryIdCheck.IdCheck(newGlider)){
-                            newGlider.setId(String.valueOf(randomId.nextInt(100000000)));
+                            newGlider.setId(randomId.nextInt(100000000));
                         }
-                        DatabaseUtilities.DatabaseDataObjectUtilities.addSailplaneToDB(newGlider);
+                        DatabaseUtilities.DatabaseEntryInsert.addSailplaneToDB(newGlider);
                     }
 
                     parent.update();

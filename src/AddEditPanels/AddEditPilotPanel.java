@@ -7,13 +7,11 @@ import DataObjects.CurrentDataObjectSet;
 import DataObjects.Pilot;
 import DatabaseUtilities.DatabaseEntryDelete;
 import DatabaseUtilities.DatabaseEntryEdit;
-import DatabaseUtilities.DatabaseDataObjectUtilities;
 import DatabaseUtilities.DatabaseEntryIdCheck;
-import ParameterSelection.PilotPanel;
+import ParameterSelection.Preference;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -23,15 +21,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
 
 
 public class AddEditPilotPanel extends JFrame {
@@ -73,7 +67,7 @@ public class AddEditPilotPanel extends JFrame {
         setupUnits();
         
         if (!isEditEntry || editPilot == null){
-            editPilot = new Pilot("", "", "", "", 0, "", "", "", "", "");
+            editPilot = new Pilot(0, "", "", "", 0, "", 0, "", "", "");
         }
         this.isEditEntry = isEditEntry;
         currentPilot = editPilot;
@@ -186,16 +180,14 @@ public class AddEditPilotPanel extends JFrame {
         pilotLaunchPref.add(mildRadioButton);
         pilotLaunchPref.add(nominalRadioButton);
         pilotLaunchPref.add(performanceRadioButton);
-        switch(editPilot.getPreference()){
-            case "Mild":
+        if(editPilot.getPreference() == 0){
                 mildRadioButton.doClick();
-                break;
-            case "Nominal":
+        }
+        if(editPilot.getPreference() == 1){
                 nominalRadioButton.doClick();
-                break;
-            case "Performance":
+        }
+        if(editPilot.getPreference() == 2){
                 performanceRadioButton.doClick();
-                break;
         }
         
         JLabel emergencyContactLabel = new JLabel("Emergency Contact:");
@@ -210,7 +202,7 @@ public class AddEditPilotPanel extends JFrame {
         emergencyContactPhoneLabel.setBounds(33, 258, 46, 14);
         panel.add(emergencyContactPhoneLabel);
         
-        String emergencyContact = editPilot.getEmergencyContact();
+        String emergencyContact = editPilot.getEmergencyName();
         String emergencyContactName;
         String emergencyContactPhone;
         int p = emergencyContact.indexOf('%');
@@ -352,9 +344,10 @@ public class AddEditPilotPanel extends JFrame {
                 weight = -1;
             }
             String capability = pilotCapability.getSelection().getActionCommand();
-            String preference = pilotLaunchPref.getSelection().getActionCommand();
+            float preference = Preference
+                    .convertPreferenceStringToNum(pilotLaunchPref.getSelection().getActionCommand());
             try{
-            String newPilotId = currentPilot.getPilotId();
+            int newPilotId = currentPilot.getPilotId();
             Pilot newPilot = new Pilot(newPilotId, firstName, lastName, middleName, 
                         weight, capability, preference, emergencyContact,
                         "", optionalInformation);
@@ -372,15 +365,15 @@ public class AddEditPilotPanel extends JFrame {
                 else
                 {
                     if (isEditEntry){
-                        DatabaseEntryEdit.UpdateEntry(newPilot);
+                        DatabaseEntryEdit.updateEntry(newPilot);
                     }
                     else{
                         Random randomId = new Random();
-                        newPilot.setPilotId(String.valueOf(randomId.nextInt(100000000)));
+                        newPilot.setPilotId(randomId.nextInt(100000000));
                         while (DatabaseEntryIdCheck.IdCheck(newPilot)){
-                            newPilotId = String.valueOf(randomId.nextInt(100000000));
+                            newPilotId = randomId.nextInt(100000000);
                         }
-                        DatabaseUtilities.DatabaseDataObjectUtilities.addPilotToDB(newPilot);
+                        DatabaseUtilities.DatabaseEntryInsert.addPilotToDB(newPilot);
                     }
 
                     parent.update();
@@ -397,20 +390,12 @@ public class AddEditPilotPanel extends JFrame {
     }
     
     public void deleteCommand(){
-        try{
             DatabaseEntryDelete.DeleteEntry(currentPilot);
             CurrentDataObjectSet objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             objectSet.clearPilot();
             JOptionPane.showMessageDialog(rootPane, currentPilot.toString() + " successfully deleted.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
             parent.update();
-            this.dispose();
-        }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }catch (Exception e3) {
-
-            e3.printStackTrace();
-            //System.out.println(e3.getMessage());
-        }   
+            this.dispose(); 
     }
     
     public void cancelCommand(){

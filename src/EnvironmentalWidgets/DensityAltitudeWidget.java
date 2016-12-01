@@ -9,6 +9,7 @@ import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import DataObjects.Operator;
 import java.awt.Color;
 
 /**
@@ -46,7 +47,8 @@ public class DensityAltitudeWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("densityaltitude");
+        Operator temp = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile();
+        unitId = temp.getUnitSetting("densityaltitude");
         unit.setText(" " + UnitLabelUtilities.lenghtUnitIndexToString(unitId));
     }
     

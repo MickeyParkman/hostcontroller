@@ -2,16 +2,12 @@
 package AddEditPanels;
 
 import Communications.Observer;
-import Configuration.UnitConversionRate;
-import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Runway;
-import DatabaseUtilities.DatabaseDataObjectUtilities;
 import DatabaseUtilities.DatabaseEntryEdit;
 import DatabaseUtilities.DatabaseEntryIdCheck;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,13 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
 
@@ -36,21 +29,11 @@ public class AddEditRunwayFrame extends JFrame {
     private JPanel contentPane;
     private JTextField magneticHeadingField;
     private JTextField nameField;
-    //private JTextField altitudeField;
     private CurrentDataObjectSet objectSet;
     private Runway currentRunway;
     private boolean isEditEntry;
     private Observer parent;
-    //private JLabel runwayAltitudeUnitsLabel = new JLabel(); 
-    //private int runwayAltitudeUnitsID;
-    
-    /*public void setupUnits()
-    {
-        runwayAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("runwayAltitude");
-        String RunwayAltitudeUnitsString = UnitLabelUtilities.lenghtUnitIndexToString(runwayAltitudeUnitsID);
-        runwayAltitudeUnitsLabel.setText(RunwayAltitudeUnitsString);
-    }*/
-    
+
     public void attach(Observer o)
     {
         parent = o;
@@ -64,7 +47,7 @@ public class AddEditRunwayFrame extends JFrame {
         //setupUnits();
 
         if (!isEditEntry || editRunway == null){
-            editRunway = new Runway("", 0, "", 0, "");
+            editRunway = new Runway("", 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentRunway = editRunway;
@@ -186,7 +169,6 @@ public class AddEditRunwayFrame extends JFrame {
 
     public void deleteCommand()
     {
-        try{
             int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentRunway.getId() + "?"
                     + "\n This will also delete all glider and winch positions associated with this runway.",
                     "Delete Runway", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -197,11 +179,7 @@ public class AddEditRunwayFrame extends JFrame {
                 parent.update("2");
                 this.dispose();
             }
-        }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }catch (Exception e3) {
 
-        }
     }
 
     public void clearData(){
@@ -220,17 +198,15 @@ public class AddEditRunwayFrame extends JFrame {
             float magneticHeading = Float.parseFloat(magneticHeadingField.getText());
             //float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(runwayAltitudeUnitsID);
 
-            String parentAirfield = "";
-            String parentId = "";
+            int parentId = 0;
             try{
-                parentAirfield = objectSet.getCurrentAirfield().getDesignator();
                 parentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
                 
             }
             
 
-            Runway newRunway = new Runway(name, magneticHeading, parentAirfield, 0, "");
+            Runway newRunway = new Runway(name, magneticHeading, "");
             newRunway.setId(currentRunway.getId());
             newRunway.setParentId(parentId);
             try{
@@ -250,11 +226,11 @@ public class AddEditRunwayFrame extends JFrame {
                     }
                     else{
                         Random randomId = new Random();
-                        newRunway.setId(String.valueOf(randomId.nextInt(100000000)));
+                        newRunway.setId(randomId.nextInt(100000000));
                         while (DatabaseEntryIdCheck.IdCheck(newRunway)){
-                            newRunway.setId(String.valueOf(randomId.nextInt(100000000)));
+                            newRunway.setId(randomId.nextInt(100000000));
                         }
-                        DatabaseUtilities.DatabaseDataObjectUtilities.addRunwayToDB(newRunway);
+                        DatabaseUtilities.DatabaseEntryInsert.addRunwayToDB(newRunway);
                     }
                     parent.update("2");
                     this.dispose();

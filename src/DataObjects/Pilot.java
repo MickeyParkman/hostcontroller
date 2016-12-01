@@ -13,7 +13,7 @@ package DataObjects;
  */
 public class Pilot {
     //Pilot's unique id
-    String pilotId;
+    int pilotId;
     //Pilot's last name
     String lastName;
     //Pilot's first name
@@ -25,7 +25,7 @@ public class Pilot {
     //Pilot's capability
     String capability;
     //Pilot's paunch preference
-    String preference;
+    float preference;
     //Pilot's Emergency Contact Info
     String emergencyContact;
     //Pilot's Emergency Medical Info
@@ -33,7 +33,9 @@ public class Pilot {
     //Pilot's optional_info
     String optional_info;
     
-    public Pilot(String pilotId, String firstName, String lastName, String middleName, float weight, String capability, String preference, String emergencyContact, String medInfo, String optional) {
+    public Pilot(int pilotId, String firstName, String lastName, String middleName,
+            float weight, String capability, float preference, String emergencyContact,
+            String medInfo, String optional) {
         this.pilotId = pilotId;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -46,16 +48,10 @@ public class Pilot {
         this.optional_info = optional;
     }
     
-    public String getPilotId() {
-        if (pilotId != null){
-            return pilotId;
-        }
-        else{
-            pilotId = "";
-            return pilotId;
-        }
+    public int getPilotId() {
+        return pilotId;
     }
-    public void setPilotId(String newId) {
+    public void setPilotId(int newId) {
         pilotId = newId;
     }
     
@@ -79,15 +75,15 @@ public class Pilot {
         return capability;
     }
     
-    public String getPreference() {
+    public float getPreference() {
         return preference;
     }
     
-    public String getEmergencyContact() {
+    public String getEmergencyName() {
         return emergencyContact;
     }
     
-    public String getMedInfo() {
+    public String getEmergencyPhone() {
         return medInfo;
     }
     
@@ -104,8 +100,9 @@ public class Pilot {
      * 
      * @param other Pilot being compared to this pilot
      * @return true if the pilot id's are the same 
-     */
+     *
     public boolean pilotEquals(Pilot other) {
-        return pilotId.equals(other.pilotId);
+        return pilotId == other.pilotId;
     }
+    */
 }

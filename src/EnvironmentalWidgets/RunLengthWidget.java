@@ -9,6 +9,7 @@ import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import DataObjects.Operator;
 
 /**
  *
@@ -34,7 +35,8 @@ public class RunLengthWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("runlength");
+        Operator temp = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile();
+        unitId = temp.getUnitSetting("runlength");
         unit.setText(" " + UnitLabelUtilities.lenghtUnitIndexToString(unitId));
     }
     

@@ -21,8 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.FocusListener;
-import java.awt.event.FocusEvent;
 
 
 public class AddEditAirfieldFrame extends JFrame{
@@ -95,7 +93,7 @@ public class AddEditAirfieldFrame extends JFrame{
         
         airfieldAltitudeField = new JTextField();
         if (isEditEntry){
-            airfieldAltitudeField.setText(String.valueOf(currentAirfield.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
+            airfieldAltitudeField.setText(String.valueOf(currentAirfield.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
         }
         airfieldAltitudeField.setBounds(140, 58, 120, 20);
         airfieldAttributesPanel.add(airfieldAltitudeField);
@@ -202,7 +200,6 @@ public class AddEditAirfieldFrame extends JFrame{
     }
     
     public void deleteCommand(){
-        try{
 
             int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentAirfield.getName() + "?"
                     + "\n This will also delete all runways on this airfield and glider and winch positions associated with those runways.",
@@ -215,11 +212,6 @@ public class AddEditAirfieldFrame extends JFrame{
                 parent.update("1");
                 this.dispose();
             }
-        }catch (ClassNotFoundException e1) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }catch (Exception e2){
-            System.out.println(e2.getMessage());
-        }
     }
     
     public void submitData(){
@@ -253,11 +245,11 @@ public class AddEditAirfieldFrame extends JFrame{
                     }
                     else{
                         Random randomId = new Random();
-                        newAirfield.setId(String.valueOf(randomId.nextInt(100000000)));
+                        newAirfield.setId(randomId.nextInt(100000000));
                         while (DatabaseEntryIdCheck.IdCheck(newAirfield)){
-                            newAirfield.setId(String.valueOf(randomId.nextInt(100000000)));
+                            newAirfield.setId(randomId.nextInt(100000000));
                         }
-                        DatabaseUtilities.DatabaseDataObjectUtilities.addAirfieldToDB(newAirfield);
+                        DatabaseUtilities.DatabaseEntryInsert.addAirfieldToDB(newAirfield);
                     }
 
                     parent.update("1");

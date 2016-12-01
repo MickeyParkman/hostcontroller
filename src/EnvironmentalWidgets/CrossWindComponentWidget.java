@@ -9,6 +9,7 @@ import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import DataObjects.Operator;
 
 /**
  *
@@ -32,7 +33,8 @@ public class CrossWindComponentWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("crosswind");
+        Operator temp = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile();
+        unitId = temp.getUnitSetting("crosswind");
         unit.setText(" " + UnitLabelUtilities.velocityUnitIndexToString(unitId));
     }
     

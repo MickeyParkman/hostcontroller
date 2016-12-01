@@ -12,11 +12,11 @@ public class Drive {
 
     public Drive()
     {
-        drumList = new ArrayList<>();
+        drumList = new ArrayList();
     }
     
     public Drive(String nameIn, float reductionRatio) {
-        drumList = new ArrayList<>();        
+        drumList = new ArrayList();        
         name = nameIn;
     }
     
@@ -47,6 +47,7 @@ public class Drive {
         this.reductionRatio = reductionRatio;
     }
     
+    @Override
     public String toString()
     {
         return name;

@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -17,15 +16,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
-import javax.swing.ButtonGroup;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import javax.swing.border.MatteBorder;
 import Configuration.UnitLabelUtilities;
 import DataObjects.Drive;
 import DataObjects.Parachute;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
@@ -105,11 +101,13 @@ public class DrumPanel extends JPanel implements Observer{
         attachedParachuteField.removeAllItems();
         attachedParachuteField.addItem("No Parachute");
         if(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch() != null)
-        {
+        {   
+            /*
             for(Parachute p : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getParachuteList())
             {
                 attachedParachuteField.addItem(p);
-            }   
+            } 
+            */
         }
     }
     
@@ -121,10 +119,12 @@ public class DrumPanel extends JPanel implements Observer{
         try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
             drumNames = new ArrayList<Drum>();
+            /*
             for(Drive d : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getDriveList())
             {
                 drumNames.addAll(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getDrumsForDrive(d.getName()));
             }
+            */
             /*if (RecentLaunchSelections.IsInitialized()) {
                 List<Drum> recentDrums = recent.getRecentDrum();
                 for (int i = 0; i < recentDrums.size(); i++){
@@ -317,6 +317,7 @@ public class DrumPanel extends JPanel implements Observer{
                     {
                         Parachute para = (Parachute)cb.getSelectedItem();
                         String driveName = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().getDrive().getName();
+                        /*
                         for(Drum d : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getDrumsForDrive(driveName))
                         {
                             if(d.getName().equals(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().getName()))
@@ -324,6 +325,7 @@ public class DrumPanel extends JPanel implements Observer{
                                 d.setParachute(para);
                             }
                         }
+                        */
                         //update();
                     }
                     catch (ClassCastException cce)
@@ -331,6 +333,7 @@ public class DrumPanel extends JPanel implements Observer{
                         if(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum() != null)
                         {
                             String driveName = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().getDrive().getName();
+                            /*
                             for(Drum d : CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentWinch().getDrumsForDrive(driveName))
                             {
                                 if(d.getName().equals(CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentDrum().getName()))
@@ -338,6 +341,7 @@ public class DrumPanel extends JPanel implements Observer{
                                     d.clearParachute();
                                 }
                             }
+                            */
                         }
                     }
                 }

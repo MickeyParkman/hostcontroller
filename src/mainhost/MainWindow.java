@@ -7,7 +7,7 @@ import ParameterSelection.ParameterSelectionPanel;
 import ParameterSelection.RecentLaunchesPanel;
 import DashboardInterface.FlightDashboard;
 import DataObjects.CurrentDataObjectSet;
-import DataObjects.Profile;
+import DataObjects.Operator;
 import javax.swing.*;
 import java.awt.Dimension;   
 import java.awt.event.ActionEvent;
@@ -20,15 +20,14 @@ import ParameterSelection.CurrentScenario;
 import ParameterSelection.EnvironmentalWindow;
 import ParameterSelection.DEBUGWinchEditPanel;
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import Communications.MessagePipeline;
-import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DatabaseUtilities.DatabaseEntryInsert;
+import static DatabaseUtilities.DatabaseInitialization.HOSTCONTROLLER_VERSION;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainWindow extends JFrame {
-    private String version = "2.0.1";
     private JMenuBar topMenu;
     private JPanel mainWindow;
     private String currentProfile;
@@ -84,7 +83,7 @@ public class MainWindow extends JFrame {
 
     private void initializeDefaultProfile()
     {
-        Profile defaultProfile = new Profile("Default", "{}", "{}"); 
+        Operator defaultProfile = new Operator(0, "Default", "{}"); 
         defaultProfile.setUnitSetting("flightWeight", 1);
         
         defaultProfile.setUnitSetting("emptyWeight", 1);
@@ -126,7 +125,7 @@ public class MainWindow extends JFrame {
         //setupLeftSideBar()
         //setupTabbedPane();
         //setupRightSideBar();
-    	setTitle("Winch Host Manager v" + version);
+    	setTitle("Winch Host Manager v" + HOSTCONTROLLER_VERSION);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         setUpMenus();
@@ -197,32 +196,13 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 int choice = JOptionPane.showConfirmDialog (null, "This will clear all databases. Are you sure you want to proceed?", "Warning",JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION){
-                    try 
-                    {
-                        //DatabaseUtilities.DatabaseInitialization.deleteDB();
-                        DatabaseUtilities.DatabaseInitialization.initDatabase(ParameterSelectionPanel_);
-                    }
-                    catch(ClassNotFoundException e1) 
-                    {
-                        JOptionPane.showMessageDialog(null, "ClassNotFoundException" + e1.getMessage());
-                    }
-                    catch(SQLException e2) 
-                    {
-                        if(e2.getErrorCode() == 30000) 
-                        {
-                            JOptionPane.showMessageDialog(null, "Database Already Exists");
-                        }
-                        else 
-                        { 
-                            JOptionPane.showMessageDialog(null, "SQLException: " + e2.getErrorCode());
-                        }
-                    }
+                    DatabaseUtilities.DatabaseInitialization.rebuildDatabase(ParameterSelectionPanel_);
                 }
                 else{}
             }
         });
 	fileMenu.add(setupDBItem);
-        
+        /*
         JMenuItem clearBlackboxItem = new JMenuItem("Clear Blackbox");
         clearBlackboxItem.addActionListener(new ActionListener() {
             @Override
@@ -231,7 +211,7 @@ public class MainWindow extends JFrame {
                 if(choice == JOptionPane.YES_OPTION)
                 {
                     try {
-                        DatabaseDataObjectUtilities.clearBlackbox();
+                        DatabaseEntryInsert.clearBlackbox();
                     } catch (SQLException ex) {
                         Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (ClassNotFoundException ex) {
@@ -241,6 +221,7 @@ public class MainWindow extends JFrame {
             }
         });
         fileMenu.add(clearBlackboxItem);
+        */
        
         JMenuItem exportDBItem = new JMenuItem("Export From Database");
         exportDBItem.addActionListener(new ActionListener() {

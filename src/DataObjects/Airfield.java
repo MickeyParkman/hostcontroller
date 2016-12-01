@@ -12,17 +12,19 @@ package DataObjects;
  * @author garreola-gutierrez, dbennett3, Noah Fujioka
  */
 public class Airfield {
-    String id;
+    int id;
     String name;
     String designator;
     float altitude;
     float magneticVariation;
     float latitude;
     float longitude;
+    int utcOffset;
     String optionalInfo;
     
     
-    public Airfield(String name, String designator, float altitude, float magneticVariation, float latitude, float longitude, String optional){
+    public Airfield(String name, String designator, float altitude, float magneticVariation, 
+            float latitude, float longitude, String optional) {
        this.name = name;
        this.designator = designator;
        this.altitude = altitude;
@@ -31,18 +33,24 @@ public class Airfield {
        this.longitude = longitude;
        this.optionalInfo = optional;
     }
-    
-    public String getId(){
-        if (id != null){
-            return id;
-        }
-        else{
-            id = "";
-            return id;
-        }
+    public Airfield(int id, String name, String designator, float altitude, float magneticVariation, 
+            float latitude, float longitude, int utc, String optional) {
+        this.id = id;
+        this.name = name;
+        this.designator = designator;
+        this.altitude = altitude;
+        this.magneticVariation = magneticVariation;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.utcOffset = utc;
+        this.optionalInfo = optional;
     }
     
-    public void setId(String newId){
+    public int getId(){
+        return id;
+    }
+    
+    public void setId(int newId){
         id = newId;
     }
     
@@ -54,7 +62,7 @@ public class Airfield {
        return designator; 
     }
     
-    public float getAltitude(){
+    public float getElevation(){
        return altitude; 
     }
     
@@ -68,6 +76,9 @@ public class Airfield {
     
     public float getLongitude() {
         return longitude;
+    }
+    public int getUTC() {
+        return utcOffset;
     }
     
     public String getOptionalInfo() {

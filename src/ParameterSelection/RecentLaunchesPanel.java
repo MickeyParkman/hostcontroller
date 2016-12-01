@@ -8,6 +8,7 @@ package ParameterSelection;
 import DataObjects.FlightSummary;
 import DataObjects.CurrentDataObjectSet;
 import Communications.Observer;
+import DatabaseUtilities.DatabaseEntrySelect;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 import java.awt.BorderLayout;
@@ -52,7 +53,7 @@ public class RecentLaunchesPanel extends javax.swing.JPanel implements Observer 
         
         
         try{
-            recentFlights = DatabaseUtilities.DatabaseDataObjectUtilities.getFlights();
+            recentFlights = DatabaseEntrySelect.getFlights();
         }catch(SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException ex) {

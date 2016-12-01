@@ -7,7 +7,8 @@ package DataObjects;
 
 import Communications.Observer;
 import java.util.ArrayList;
-import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DatabaseUtilities.DatabaseEntryInsert;
+import DatabaseUtilities.DatabaseEntrySelect;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,14 +21,14 @@ import java.util.logging.Logger;
 public class RecentLaunchSelections {
     private static RecentLaunchSelections instance = null;
     private CurrentDataObjectSet currentDataObjectSet;
-    private List<String> recentPilot;
-    private List<String> recentSailplane;
-    private List<String> recentProfile;
-    private List<String> recentRunway;
-    private List<String> recentWinchPosition;
-    private List<String> recentGliderPosition;
-    private List<String> recentWinch;
-    private List<String> recentAirfield;
+    private List<Integer> recentPilot;
+    private List<Integer> recentSailplane;
+    private List<Integer> recentProfile;
+    private List<Integer> recentRunway;
+    private List<Integer> recentWinchPosition;
+    private List<Integer> recentGliderPosition;
+    private List<Integer> recentWinch;
+    private List<Integer> recentAirfield;
     private List<String> recentDrum;
     private List<Observer> observers;
     
@@ -36,16 +37,16 @@ public class RecentLaunchSelections {
         if(instance == null)
         {
             instance = new RecentLaunchSelections();
-            instance.recentPilot = new ArrayList<String>();
-            instance.recentSailplane = new ArrayList<String>();
-            instance.recentProfile = new ArrayList<String>();
-            instance.recentRunway = new ArrayList<String>();
-            instance.recentWinchPosition = new ArrayList<String>();
-            instance.recentGliderPosition = new ArrayList<String>();
-            instance.recentWinch = new ArrayList<String>();
-            instance.recentAirfield = new ArrayList<String>();
-            instance.recentDrum = new ArrayList<String>();
-            instance.observers = new ArrayList<Observer>();
+            instance.recentPilot = new ArrayList();
+            instance.recentSailplane = new ArrayList();
+            instance.recentProfile = new ArrayList();
+            instance.recentRunway = new ArrayList();
+            instance.recentWinchPosition = new ArrayList();
+            instance.recentGliderPosition = new ArrayList();
+            instance.recentWinch = new ArrayList();
+            instance.recentAirfield = new ArrayList();
+            instance.recentDrum = new ArrayList();
+            instance.observers = new ArrayList();
         }
         return instance;
     }
@@ -152,7 +153,7 @@ public class RecentLaunchSelections {
         }
     instance.notifyObservers();
     }
-    public void addRecentProfile(Profile newProfile)
+    public void addRecentProfile(Operator newProfile)
     {
         if(instance != null)
         {
@@ -211,9 +212,8 @@ public class RecentLaunchSelections {
     //Get the list of object
     public List<Pilot> getRecentPilot()
     {
-        try{
-            List<Pilot> pilots = DatabaseDataObjectUtilities.getPilots();
-            List<Pilot> recentPilotList = new ArrayList<Pilot>();
+            List<Pilot> pilots = DatabaseEntrySelect.getPilots();
+            List<Pilot> recentPilotList = new ArrayList<>();
             if(instance == null)
             {
                 return null;
@@ -222,7 +222,7 @@ public class RecentLaunchSelections {
             {
                 for (int index = 0; (index < instance.recentPilot.size()) && (recentPilotList.size() < 5); index++){
                     for (int index2 = 0; (index2 < pilots.size()); index2++){
-                        if (pilots.get(index2).getPilotId().equals(instance.recentPilot.get(index))){
+                        if (pilots.get(index2).getPilotId() == instance.recentPilot.get(index)){
                             recentPilotList.add(pilots.get(index2));
                         }
                     }
@@ -230,17 +230,10 @@ public class RecentLaunchSelections {
                 
                 return recentPilotList;
             }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RecentLaunchSelections.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
     public List<Sailplane> getRecentSailplane()
     {
-        try{
-            List<Sailplane> sailplanes = DatabaseDataObjectUtilities.getSailplanes();
+            List<Sailplane> sailplanes = DatabaseEntrySelect.getSailplanes();
             List<Sailplane> recentSailplaneList = new ArrayList<Sailplane>();
             if(instance == null)
             {
@@ -248,21 +241,16 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentSailplane.size()) && (recentSailplaneList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentSailplane.size()) && (recentSailplaneList.size() < 5); 
+                        index++){
                     for (int index2 = 0; (index2 < sailplanes.size()); index2++){
-                        if (sailplanes.get(index2).getId().equals(instance.recentSailplane.get(index))){
+                        if (sailplanes.get(index2).getId() == instance.recentSailplane.get(index)){
                             recentSailplaneList.add(sailplanes.get(index2));
                         }
                     }
                 }
                 return recentSailplaneList;
             }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RecentLaunchSelections.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
     /*public List<Profile> getRecentProfile()
     {
@@ -293,8 +281,7 @@ public class RecentLaunchSelections {
     }*/
     public List<Runway> getRecentRunway()
     {
-        try{
-            List<Runway> runways = DatabaseDataObjectUtilities.getRunways();
+            List<Runway> runways = DatabaseEntrySelect.getRunways();
             List<Runway> recentRunwayList = new ArrayList<Runway>();
             if(instance == null)
             {
@@ -304,24 +291,18 @@ public class RecentLaunchSelections {
             {
                 for (int index = 0; (index < instance.recentRunway.size()) && (recentRunwayList.size() < 5); index++){
                     for (int index2 = 0; (index2 < runways.size()); index2++){
-                        if (runways.get(index2).getId().equals(instance.recentRunway.get(index))){
+                        if (runways.get(index2).getId() == instance.recentRunway.get(index)){
                             recentRunwayList.add(runways.get(index2));
                         }
                     }
                 }
                 return recentRunwayList;
             }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RecentLaunchSelections.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
+    
     public List<WinchPosition> getRecentWinchPosition()
     {
-        try{
-            List<WinchPosition> winchPositions = DatabaseDataObjectUtilities.getWinchPositions();
+            List<WinchPosition> winchPositions = DatabaseEntrySelect.getWinchPositions();
             List<WinchPosition> recentWinchPositionList = new ArrayList<WinchPosition>();
             if(instance == null)
             {
@@ -329,26 +310,20 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentWinchPosition.size()) && (recentWinchPositionList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentWinchPosition.size()) && (recentWinchPositionList.size() < 5);
+                        index++){
                     for (int index2 = 0; (index2 < winchPositions.size()); index2++){
-                        if (winchPositions.get(index2).getId().equals(instance.recentWinchPosition.get(index))){
+                        if (winchPositions.get(index2).getId() == instance.recentWinchPosition.get(index)){
                             recentWinchPositionList.add(winchPositions.get(index2));
                         }
                     }
                 }
                 return recentWinchPositionList;
             }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RecentLaunchSelections.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
     public List<GliderPosition> getRecentGliderPosition()
     {
-        try{
-            List<GliderPosition> gliderPositions = DatabaseDataObjectUtilities.getGliderPositions();
+            List<GliderPosition> gliderPositions = DatabaseEntrySelect.getGliderPositions();
             List<GliderPosition> recentGliderPositionList = new ArrayList<GliderPosition>();
             if(instance == null)
             {
@@ -356,22 +331,18 @@ public class RecentLaunchSelections {
             }
             else
             {
-                for (int index = 0; (index < instance.recentGliderPosition.size()) && (recentGliderPositionList.size() < 5); index++){
+                for (int index = 0; (index < instance.recentGliderPosition.size()) && (recentGliderPositionList.size() < 5); 
+                        index++){
                     for (int index2 = 0; (index2 < gliderPositions.size()); index2++){
-                        if (gliderPositions.get(index2).getId().equals(instance.recentGliderPosition.get(index))){
+                        if (gliderPositions.get(index2).getId() == instance.recentGliderPosition.get(index)){
                             recentGliderPositionList.add(gliderPositions.get(index2));
                         }
                     }
                 }
                 return recentGliderPositionList;
             }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RecentLaunchSelections.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
+        
     /*public List<Winch> getRecentWinch()
     {
         try{
@@ -401,8 +372,7 @@ public class RecentLaunchSelections {
     }*/
     public List<Airfield> getRecentAirfield()
     {
-        try{
-            List<Airfield> airfields = DatabaseDataObjectUtilities.getAirfields();
+            List<Airfield> airfields = DatabaseEntrySelect.getAirfields();
             List<Airfield> recentAirfieldList = new ArrayList<Airfield>();
             if(instance == null)
             {
@@ -412,19 +382,14 @@ public class RecentLaunchSelections {
             {
                 for (int index = 0; (index < instance.recentAirfield.size()) && (recentAirfieldList.size() < 5); index++){
                     for (int index2 = 0; (index2 < airfields.size()); index2++){
-                        if (airfields.get(index2).getId().equals(instance.recentAirfield.get(index))){
+                        if (airfields.get(index2).getId() == instance.recentAirfield.get(index)){
                             recentAirfieldList.add(airfields.get(index2));
                         }
                     }
                 }
                 return recentAirfieldList;
             }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RecentLaunchSelections.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+
     }
     /*public List<Drum> getRecentDrum()
     {

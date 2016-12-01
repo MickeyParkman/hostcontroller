@@ -13,6 +13,7 @@ import DataObjects.CurrentDataObjectSet;
 import DataObjects.RecentLaunchSelections;
 import DataObjects.Runway;
 import DataObjects.WinchPosition;
+import DatabaseUtilities.DatabaseEntrySelect;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -138,7 +139,7 @@ public class AirfieldPanel extends JPanel implements Observer{
                 designatorField.setText(String.valueOf(currentAirfield.getDesignator()));
                 designatorField.setBackground(Color.GREEN);
 
-                airfieldAltitudeField.setText(String.valueOf(currentAirfield.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
+                airfieldAltitudeField.setText(String.valueOf(currentAirfield.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
                 airfieldAltitudeField.setBackground(Color.GREEN);
 
                 magneticVariationField.setText(String.valueOf(currentAirfield.getMagneticVariation()));
@@ -196,10 +197,10 @@ public class AirfieldPanel extends JPanel implements Observer{
                 gliderPositionsJList.setSelectedValue(currentGliderPosition.toString(), true);
                 gliderPositionsScrollPane.setViewportView(gliderPositionsJList); 
 
-                gliderPosNameField.setText(currentGliderPosition.getGliderPositionId());
+                gliderPosNameField.setText(currentGliderPosition.getName());
                 gliderPosNameField.setBackground(Color.GREEN);
 
-                gliderPosAltitudeField.setText(String.valueOf(currentGliderPosition.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
+                gliderPosAltitudeField.setText(String.valueOf(currentGliderPosition.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
                 gliderPosAltitudeField.setBackground(Color.GREEN);
 
                 gliderPosLongitudeField.setText(String.valueOf(currentGliderPosition.getLongitude()));
@@ -227,7 +228,7 @@ public class AirfieldPanel extends JPanel implements Observer{
                 winchPosNameField.setText(currentWinchPos.getName());
                 winchPosNameField.setBackground(Color.GREEN);
 
-                winchPosAltitudeField.setText(String.valueOf(currentWinchPos.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID)));
+                winchPosAltitudeField.setText(String.valueOf(currentWinchPos.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID)));
                 winchPosAltitudeField.setBackground(Color.GREEN);
 
                 winchPosLongitudeField.setText(String.valueOf(currentWinchPos.getLongitude()));
@@ -245,59 +246,39 @@ public class AirfieldPanel extends JPanel implements Observer{
     }
     
     private void initAirfieldList() {
-        try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
-            airfields = DatabaseUtilities.DatabaseDataObjectUtilities.getAirfields();
+            airfields = DatabaseEntrySelect.getAirfields();
             List<Airfield> recentAirfields = recent.getRecentAirfield();
             for (int i = 0; i < recentAirfields.size(); i++){
                 airfields.add(0, recentAirfields.get(i));
             }
-        }catch(SQLException e) {
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void initGliderPositionsList() {
-        try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
-            gliderPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getGliderPositions();
+            gliderPositions = DatabaseEntrySelect.getGliderPositions();
             List<GliderPosition> recentGliderPositions = recent.getRecentGliderPosition();
             for (int i = 0; i < recentGliderPositions.size(); i++){
                 gliderPositions.add(0, recentGliderPositions.get(i));
             }
-        }catch(SQLException e) {
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     private void initWinchPositionsList() {
-        try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
-            winchPositions = DatabaseUtilities.DatabaseDataObjectUtilities.getWinchPositions();
+            winchPositions = DatabaseEntrySelect.getWinchPositions();
             List<WinchPosition> recentWinchPositions = recent.getRecentWinchPosition();
             for (int i = 0; i < recentWinchPositions.size(); i++){
                 winchPositions.add(0, recentWinchPositions.get(i));
             }
-        }catch(SQLException e) {
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     private void initRunwaysList() {
-        try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
-            runways = DatabaseUtilities.DatabaseDataObjectUtilities.getRunways();
+            runways = DatabaseEntrySelect.getRunways();
             List<Runway> recentRunways = recent.getRecentRunway();
             for (int i = 0; i < recentRunways.size(); i++){
                 runways.add(0, recentRunways.get(i));
             }
-        }catch(SQLException e) {
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AirfieldPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void clear()
@@ -368,7 +349,7 @@ public class AirfieldPanel extends JPanel implements Observer{
                 designatorField.setBackground(Color.GREEN);
                 designatorField.setHorizontalAlignment(JTextField.RIGHT);
                 
-                airfieldAltitudeField.setText(String.valueOf(theAirfield.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
+                airfieldAltitudeField.setText(String.valueOf(theAirfield.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(airfieldAltitudeUnitsID)));
                 airfieldAltitudeField.setBackground(Color.GREEN);
                 airfieldAltitudeField.setHorizontalAlignment(JTextField.RIGHT);
                 
@@ -411,7 +392,7 @@ public class AirfieldPanel extends JPanel implements Observer{
                 winchPositionModel.removeAllElements();
                 gliderPositionModel.removeAllElements();
                 for(Runway str: runways){
-                    if(str.getParent().equals(theAirfield.getDesignator()))
+                    if(str.getParentId() == theAirfield.getId())
                         runwaysModel.addElement(str);
                 }
                 runwaysJList.setModel(runwaysModel);
@@ -469,13 +450,13 @@ public class AirfieldPanel extends JPanel implements Observer{
                 
                 gliderPositionModel.removeAllElements();
                 for(GliderPosition str: gliderPositions){
-                    if(str.getRunwayParentId().equals(theRunway.getId()))
+                    if(str.getRunwayParentId() == theRunway.getId())
                         gliderPositionModel.addElement(str);
                 }
                 
                 winchPositionModel.removeAllElements();
                 for(WinchPosition str: winchPositions){
-                    if(str.getRunwayParentId().equals(theRunway.getId()))
+                    if(str.getRunwayParentId() == theRunway.getId())
                         winchPositionModel.addElement(str);
                 }
             } catch(Exception e) {
@@ -494,11 +475,11 @@ public class AirfieldPanel extends JPanel implements Observer{
                 GliderPosition theGliderPosition = (GliderPosition)gliderPositionsJList.getSelectedValue();
                 currentData.setCurrentGliderPosition(theGliderPosition);
                 
-                gliderPosNameField.setText(theGliderPosition.getGliderPositionId());
+                gliderPosNameField.setText(theGliderPosition.getName());
                 gliderPosNameField.setBackground(Color.GREEN);
                 gliderPosNameField.setHorizontalAlignment(JTextField.RIGHT);
                 
-                gliderPosAltitudeField.setText(String.valueOf(theGliderPosition.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
+                gliderPosAltitudeField.setText(String.valueOf(theGliderPosition.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
                 gliderPosAltitudeField.setBackground(Color.GREEN);
                 gliderPosAltitudeField.setHorizontalAlignment(JTextField.RIGHT);
  
@@ -527,7 +508,7 @@ public class AirfieldPanel extends JPanel implements Observer{
                 winchPosNameField.setBackground(Color.GREEN);
                 winchPosNameField.setHorizontalAlignment(JTextField.RIGHT);
                 
-                winchPosAltitudeField.setText(String.valueOf(theWinchPosition.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID)));
+                winchPosAltitudeField.setText(String.valueOf(theWinchPosition.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID)));
                 winchPosAltitudeField.setBackground(Color.GREEN);
                 winchPosAltitudeField.setHorizontalAlignment(JTextField.RIGHT);
  

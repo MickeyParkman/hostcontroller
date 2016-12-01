@@ -11,43 +11,36 @@ package DataObjects;
  * @author Alec Jacuzzi, dbennett3
  */
 public class Parachute {
-    private int parachuteNumber;
+    private int parachuteId;
+    private String name;
     private float lift;
     private float drag;
     private float weight;
-    private String name;
-    private Winch winch;
+    private String info;
+    
     
     public Parachute() {
         //Parachute ID number
-        parachuteNumber = 0;
+        parachuteId = 0;
         lift = 0;
         drag = 0;
         weight = 0;
-        winch = null;
     }
     
-    public Parachute(String n, int initialParachuteNumber, float initialLift, float initialDrag, float initialWeight) {
-        parachuteNumber = initialParachuteNumber;
+    public Parachute(int id, String n, float initialLift, float initialDrag, float initialWeight, String info) {
+        this.parachuteId = id;
         lift = initialLift;
         drag = initialDrag;
         weight = initialWeight;
         name = n;
+        this.info = info;
     }
     
-    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, float initialWeight) {
-        parachuteNumber = initialParachuteNumber;
+    public Parachute(float initialLift, float initialDrag, float initialWeight, String info) {
         lift = initialLift;
         drag = initialDrag;
         weight = initialWeight;
-    }
-    
-    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, float initialWeight, Winch winch) {
-        parachuteNumber = initialParachuteNumber;
-        lift = initialLift;
-        drag = initialDrag;
-        weight = initialWeight;
-        winch = this.winch;
+        this.info = info;
     }
     
     /**
@@ -58,8 +51,8 @@ public class Parachute {
     * @param  newParachuteNumber  the int that is used to identify 
     *                of the Parachute object
     */
-    public void setParachuteNumber(int newParachuteNumber) {
-        parachuteNumber = newParachuteNumber;
+    public void setParachuteId(int newParachuteNumber) {
+        parachuteId = newParachuteNumber;
     }
     
     /**
@@ -95,15 +88,6 @@ public class Parachute {
     }
     
     /**
-    * Returns a Parachute object parachute ID number. 
-    * This method always returns immediately,only if Parachute exists. 
-    * @return      the parachute ID number of the Parachute object
-    */
-    public int getParachuteNumber() {
-        return parachuteNumber;
-    }
-    
-    /**
     * Returns a Parachute object lift. 
     * This method always returns immediately,only if Parachute exists. 
     * @return      the lift of the Parachute object
@@ -125,20 +109,16 @@ public class Parachute {
         return weight;
     }
     
-    public int getId() {
-        return parachuteNumber;
-    }
-    
-    public void setWinch(Winch newWinch) {
-        winch = newWinch;
-    }
-    
-    public Winch getWinch() {
-        return winch;
+    public int getParachuteId() {
+        return parachuteId;
     }
     
     public String getName() {
         return name;
+    }
+    
+    public String getInfo() {
+        return info;
     }
     
     public String toString() {

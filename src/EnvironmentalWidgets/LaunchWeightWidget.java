@@ -4,6 +4,7 @@ import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import DataObjects.Operator;
 
 /**
  *
@@ -28,7 +29,8 @@ public class LaunchWeightWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("launchweight");
+        Operator temp = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile();
+        unitId = temp.getUnitSetting("launchweight");
         unit.setText(" " + UnitLabelUtilities.weightUnitIndexToString(unitId));
     }
     

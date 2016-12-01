@@ -13,7 +13,7 @@ package DataObjects;
  */
 
 public class Sailplane {
-    String id;
+    int id;
     //reg_number of the plane
     String regNumber;
     
@@ -85,12 +85,34 @@ public class Sailplane {
         
         ballast = 0;
     }
+    public Sailplane(int id, String regNumber, String name, String owner, String Type,
+                     float maximumGrossWeight, float emptyWeight, float indicatedStallSpeed,
+                     float maximumWinchingSpeed, float maximumAllowableWeakLinkStrength, float maxTension,
+                     float cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
+        this.id = id;
+        this.regNumber = regNumber;
+        this.name = name;
+        this.owner = owner;
+        this.type = Type;
+        this.maximumGrossWeight = maximumGrossWeight;
+        this.emptyWeight= emptyWeight;
+        this.indicatedStallSpeed = indicatedStallSpeed;
+        this.maximumWinchingSpeed = maximumWinchingSpeed;
+        this.maximumAllowableWeakLinkStrength = maximumAllowableWeakLinkStrength;
+        this.maximumTension = maxTension;
+        this.cableReleaseAngle = cableReleaseAngle;
+        this.carryBallast = carryBallast;
+        this.multipleSeats = multipleSeats;
+        this.optionalInfo = optional;
+        
+        ballast = 0;
+    }
     
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     
-    public String getId() {
+    public int getId() {
         return id;
     }
     
@@ -141,37 +163,9 @@ public class Sailplane {
     public float getMaximumGrossWeight(){
         return maximumGrossWeight;
     }
-        
-    public int storeCarryBallast() {
-        if (carryBallast)
-            return 1;
-        return 0;
-    }
-    
-    public static boolean returnCarryBallast(int cBallast) {
-        if(cBallast == 0)
-            return false;
-        else if(cBallast == 1)
-            return true;
-        return false;
-    }
     
     public boolean getCarryBallast() {
         return carryBallast;
-    }
-    
-    public int storeMultipleSeats() {
-        if (multipleSeats)
-            return 1;
-        return 0;
-    }
-    
-    public static boolean returnMultipleSeats(int cMultipleSeats) {
-        if(cMultipleSeats == 0)
-            return false;
-        else if(cMultipleSeats == 1)
-            return true;
-        return false;
     }
     
     public boolean getMultipleSeats() {
@@ -190,6 +184,7 @@ public class Sailplane {
         this.ballast += ballast;
     }
 
+    @Override
     public String toString() {
         return name + " " + regNumber + " " + owner;
     }

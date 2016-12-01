@@ -7,7 +7,7 @@ package ParameterSelection;
 import DataObjects.*;
 import Communications.Observer;
 import Configuration.ProfileManagementFrame;
-import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DatabaseUtilities.DatabaseEntryInsert;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -68,7 +68,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         Runway runway = data.getCurrentRunway();
         WinchPosition winch = data.getCurrentWinchPosition(); 
         Drum drum = data.getCurrentDrum();
-        Profile profile = data.getCurrentProfile();
+        Operator profile = data.getCurrentProfile();
         
         if(pilot == null) {
             pilotNameLabel.setText("NO PILOT");

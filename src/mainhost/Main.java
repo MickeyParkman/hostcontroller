@@ -6,16 +6,8 @@
 
 package mainhost;
 
-import Communications.MessagePipeline;
-import DataObjects.Pilot;
-import DataObjects.Sailplane;
-import ParameterSelection.Capability;
-import ParameterSelection.Preference;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 import Communications.MessagePipeline;
-import javax.swing.SwingUtilities;
 
 /**
  * The Main class is the launching point for this program where the UI and 
@@ -23,6 +15,7 @@ import javax.swing.SwingUtilities;
  *  JTROXEL
  */
 public class Main {
+    
 
     public static void main(String[] args) {
         MainWindow a = new MainWindow();

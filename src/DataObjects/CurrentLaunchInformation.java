@@ -25,7 +25,7 @@ public class CurrentLaunchInformation implements Observer{
     //Pilot information
     private float pilotWeight;
     private int pilotCapacity;
-    private int pilotPreference;
+    private float pilotPreference;
     //Glider information
     private float gliderMaxGrossWeight;
     private float gliderEmptyWeight;
@@ -101,15 +101,30 @@ public class CurrentLaunchInformation implements Observer{
         float pressure = 10;
         
         System.out.println("RelativeDir:" + String.valueOf(relativeDir));
-        System.out.println("HeadwindComp:" + String.valueOf(CurrentLaunchInformation.calculateHeadwind(relativeDir, averageWindSpeed)));
-        System.out.println("CrosswindComp:" + String.valueOf(CurrentLaunchInformation.calculateCrosswind(relativeDir, averageWindSpeed)));
-        System.out.println("DensityAltitude:" + String.valueOf(CurrentLaunchInformation.calculateDensityAltitude(temp, pressure)));
-        System.out.println("Runlen:" + String.valueOf(CurrentLaunchInformation.calculateRunLength(gliderAlt, gliderLat, gliderLon, winchAlt, winchLat, winchLon)));
-        System.out.println("RunSlope:" + String.valueOf(CurrentLaunchInformation.calculateRunSlope(gliderAlt, gliderLat, gliderLon, winchAlt, winchLat, winchLon)));
+        System.out.println("HeadwindComp:" + String.valueOf(
+                CurrentLaunchInformation.calculateHeadwind(relativeDir, averageWindSpeed)));
+        System.out.println("CrosswindComp:" + String.valueOf(
+                CurrentLaunchInformation.calculateCrosswind(relativeDir, averageWindSpeed)));
+        System.out.println("DensityAltitude:" + String.valueOf(
+                CurrentLaunchInformation.calculateDensityAltitude(temp, pressure)));
+        System.out.println("Runlen:" + String.valueOf(
+                CurrentLaunchInformation.calculateRunLength(
+                gliderAlt, gliderLat, gliderLon, winchAlt, winchLat, winchLon)));
+        System.out.println("RunSlope:" + String.valueOf(
+                CurrentLaunchInformation.calculateRunSlope(
+                gliderAlt, gliderLat, gliderLon, winchAlt, winchLat, winchLon)));
         System.out.println("RunHeading:" + String.valueOf(runDir));
-        System.out.println("TotalWeight:" + String.valueOf(CurrentLaunchInformation.calculateGliderLaunchMass(1, 2, 3, 4, 5)));
+        System.out.println("TotalWeight:" + String.valueOf(
+                CurrentLaunchInformation.calculateGliderLaunchMass(1, 2, 3, 4, 5)));
     
     }
+    private float winchWindDirection;
+    private float WinchWindSpeed;
+    private float winchWindGust;
+    private float gliderWindDirection;
+    private float gliderWindGust;
+    private float gliderWindSpeed;
+    private float altimeter;
     
     private CurrentLaunchInformation(){
         currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
@@ -142,10 +157,10 @@ public class CurrentLaunchInformation implements Observer{
         try{
             currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             instance.pilotWeight = currentDataObjectSet.getCurrentPilot().getWeight();
-            int capability = Capability.convertCapabilityStringToNum(currentDataObjectSet.getCurrentPilot().getCapability());
-            int preference = Preference.convertPreferenceStringToNum(currentDataObjectSet.getCurrentPilot().getPreference());
+            int capability = Capability.convertCapabilityStringToNum(
+                    currentDataObjectSet.getCurrentPilot().getCapability());
             instance.pilotCapacity = capability;
-            instance.pilotPreference = preference;
+            instance.pilotPreference = currentDataObjectSet.getCurrentPilot().getPreference();;
 
             instance.gliderMaxGrossWeight = currentDataObjectSet.getCurrentSailplane().getMaxGrossWeight();
             instance.gliderEmptyWeight = currentDataObjectSet.getCurrentSailplane().getEmptyWeight();
@@ -153,26 +168,18 @@ public class CurrentLaunchInformation implements Observer{
             instance.gliderMaxWinchingSpeed = currentDataObjectSet.getCurrentSailplane().getMaxWinchingSpeed();
             instance.gliderMaxWeakLinkStrength = currentDataObjectSet.getCurrentSailplane().getMaxWeakLinkStrength();
             instance.gliderMaxTension = currentDataObjectSet.getCurrentSailplane().getMaxTension();
-            instance.airfieldAltitude = currentDataObjectSet.getCurrentAirfield().getAltitude();
+            instance.airfieldAltitude = currentDataObjectSet.getCurrentAirfield().getElevation();
             instance.airfieldMagneticVariation = currentDataObjectSet.getCurrentAirfield().getMagneticVariation();
             instance.airfieldLatitude = currentDataObjectSet.getCurrentAirfield().getLatitude();
             instance.airfieldLongitude = currentDataObjectSet.getCurrentAirfield().getLongitude();
-            instance.runwayHeading = currentDataObjectSet.getCurrentRunway().getMagneticHeading() + currentDataObjectSet.getCurrentAirfield().getMagneticVariation();
-            instance.runwayAltitude = currentDataObjectSet.getCurrentRunway().getAltitude();
-            instance.gliderPositionAltitude = currentDataObjectSet.getCurrentGliderPosition().getAltitude();
+            instance.runwayHeading = currentDataObjectSet.getCurrentRunway().getMagneticHeading() 
+                    + currentDataObjectSet.getCurrentAirfield().getMagneticVariation();
+            instance.gliderPositionAltitude = currentDataObjectSet.getCurrentGliderPosition().getElevation();
             instance.gliderPositionLatitude = currentDataObjectSet.getCurrentGliderPosition().getLatitude();
             instance.gliderPositionLongitude = currentDataObjectSet.getCurrentGliderPosition().getLongitude();
-            instance.winchPositionAltitude = currentDataObjectSet.getCurrentWinchPosition().getAltitude();
+            instance.winchPositionAltitude = currentDataObjectSet.getCurrentWinchPosition().getElevation();
             instance.winchPositionLatitude = currentDataObjectSet.getCurrentWinchPosition().getLatitude();
             instance.winchPositionLongitude = currentDataObjectSet.getCurrentWinchPosition().getLongitude();
-
-            instance.brakePressure = currentDataObjectSet.getCurrentWinch().getBrakePressure();
-            if(!currentDataObjectSet.getCurrentWinch().getDriveList().isEmpty()){
-                instance.reductionRatio = currentDataObjectSet.getCurrentWinch().getDriveList().get(0).getReductionRatio();
-            }
-            else{
-                instance.reductionRatio = 0;
-            }
 
             //Based on current Drum class
             instance.drumCoreDiameter = currentDataObjectSet.getCurrentDrum().getCoreDiameter();
@@ -253,7 +260,8 @@ public class CurrentLaunchInformation implements Observer{
                     instance.pressure = 0;
                 }
                 if (!temperatureStr.equals("") && !pressureStr.equals("")){
-                    instance.calculatedDensityAltitude = calculateDensityAltitude(instance.temperature, instance.pressure);
+                    instance.calculatedDensityAltitude = 
+                            calculateDensityAltitude(instance.temperature, instance.pressure);
                 } else{
                     instance.calculatedDensityAltitude = 0;
                 }
@@ -287,14 +295,21 @@ public class CurrentLaunchInformation implements Observer{
                 {
                     instance.windDirection = 0;
                 }
-                instance.runLength = calculateRunLength(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
-                                               instance.winchPositionAltitude, instance.winchPositionLatitude, instance.winchPositionLongitude);
-                instance.runSlope = calculateRunSlope(instance.gliderPositionAltitude, instance.gliderPositionLatitude, instance.gliderPositionLongitude,
-                                               instance.winchPositionAltitude, instance.winchPositionLatitude, instance.winchPositionLongitude);
-                instance.runHeading = calculateHeading(instance.gliderPositionLatitude, instance.gliderPositionLongitude,
-                                               instance.winchPositionLatitude, instance.winchPositionLongitude, instance.airfieldMagneticVariation);
+                instance.runLength = calculateRunLength(instance.gliderPositionAltitude, 
+                        instance.gliderPositionLatitude, instance.gliderPositionLongitude,
+                                               instance.winchPositionAltitude, instance.winchPositionLatitude, 
+                                               instance.winchPositionLongitude);
+                instance.runSlope = calculateRunSlope(instance.gliderPositionAltitude, 
+                        instance.gliderPositionLatitude, instance.gliderPositionLongitude,
+                                               instance.winchPositionAltitude, 
+                                               instance.winchPositionLatitude, instance.winchPositionLongitude);
+                instance.runHeading = calculateHeading(instance.gliderPositionLatitude, 
+                                               instance.gliderPositionLongitude,
+                                               instance.winchPositionLatitude, 
+                                               instance.winchPositionLongitude, instance.airfieldMagneticVariation);
                 instance.gliderLaunchMass = calculateGliderLaunchMass(instance.pilotWeight, instance.gliderEmptyWeight,
-                                                instance.gliderBallast, instance.gliderBaggage, instance.passengerWeight);
+                                                instance.gliderBallast, 
+                                                instance.gliderBaggage, instance.passengerWeight);
                 instance.windDegreeOffset = calculateRelativeDirection(instance.runHeading, instance.windDirection);
                 instance.headwindComponent = calculateHeadwind(instance.windDegreeOffset, instance.averageWindSpeed);
                 instance.crosswindComponent = calculateCrosswind(instance.windDegreeOffset, instance.averageWindSpeed);
@@ -368,7 +383,8 @@ public class CurrentLaunchInformation implements Observer{
     //functions to determine derived values
     public static float calculateRunLength(float gliderAltitude, float gliderLatitude, float gliderLongitude,
                                            float winchAltitude, float winchLatitude, float winchLongitude){
-        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
+        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude))
+                * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
         double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitude - gliderLatitude));
         double altitudeChange = winchAltitude - gliderAltitude;
         float length = (float)Math.sqrt((xRun * xRun) + (yRise * yRise) + (altitudeChange * altitudeChange));
@@ -377,7 +393,8 @@ public class CurrentLaunchInformation implements Observer{
     
     public static float calculateRunSlope(float gliderAltitude, float gliderLatitude, float gliderLongitude,
                                            float winchAltitude, float winchLatitude, float winchLongitude){
-        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
+        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude))
+                * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
         double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitude - gliderLatitude));
         double altitudeChange = winchAltitude - gliderAltitude;
         float slope = (float)(Math.asin(altitudeChange / Math.sqrt((xRun * xRun) + (yRise * yRise))));
@@ -386,7 +403,8 @@ public class CurrentLaunchInformation implements Observer{
     
     public static float calculateHeading(float gliderLatitude, float gliderLongitude,
                                         float winchLatitude, float winchLongitude, float magneticVariation){
-        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude)) * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
+        double xRun = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLongitude - gliderLongitude))
+                * Math.sin(Math.toRadians((winchLatitude + gliderLatitude)/2));
         double yRise = RADIUS_OF_EARTH * Math.sin(Math.toRadians(winchLatitude - gliderLatitude));
         float angle = ((float)(Math.toDegrees(Math.atan2(xRun, yRise))) + (magneticVariation)) % 360f;
         return angle;
@@ -405,23 +423,30 @@ public class CurrentLaunchInformation implements Observer{
         return (float) (averageWindSpeed * Math.cos(Math.toRadians(degreeChange)));
     }
     
-    public static float calculateWindDirection(float runDirection, float headaverageWindSpeed, float crossaverageWindSpeed){
+    public static float calculateWindDirection(float runDirection, float headaverageWindSpeed, 
+            float crossaverageWindSpeed){
         return runDirection + (float) Math.toDegrees(Math.atan2(crossaverageWindSpeed, headaverageWindSpeed));
     }
     
     public static float calculateWindSpeed(float headaverageWindSpeed, float crossaverageWindSpeed){
-        return (float) Math.sqrt((headaverageWindSpeed * headaverageWindSpeed) + (crossaverageWindSpeed * crossaverageWindSpeed));
+        return (float) Math.sqrt((headaverageWindSpeed * headaverageWindSpeed) 
+                + (crossaverageWindSpeed * crossaverageWindSpeed));
     }
     
     public static float calculateDensityAltitude(float temperature, float pressure){
         //Using the dry air approximation equation from the National Weather Service
-        return (float) (145442.16 * (1 - Math.pow(((17.326 * pressure)/(459.67 + ((temperature - 32.0) * (5.0/9.0)))), 0.235)) / 3.2808);
+        return (float) (145442.16 * (1 - Math.pow(((17.326 * pressure)/(459.67 
+                + ((temperature - 32.0) * (5.0/9.0)))), 0.235)) / 3.2808);
     }
     
     public static float calculateGliderLaunchMass(float pilotWeight, float gliderEmptyWeight,
                                             float gliderBallast, float gliderBaggage, float passengerWeight){
-        //System.out.println("Adding: " + pilotWeight + ", " + gliderEmptyWeight + ", " + gliderBallast + ", " + gliderBaggage + ", " + passengerWeight);
-        //System.out.println("= " + pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
+        /*
+        System.out.println("Adding: " + pilotWeight + ", " + gliderEmptyWeight + ", " 
+        + gliderBallast + ", " + gliderBaggage + ", " + passengerWeight);
+        System.out.println("= " + pilotWeight + gliderEmptyWeight + gliderBallast 
+        + gliderBaggage + passengerWeight);
+        */
         return (pilotWeight + gliderEmptyWeight + gliderBallast + gliderBaggage + passengerWeight);
     }
     
@@ -1087,7 +1112,7 @@ public class CurrentLaunchInformation implements Observer{
             return instance.pilotCapacity;
         }
     }
-    public int getPilotPreference()
+    public float getPilotPreference()
     {
         if(instance == null)
         {
@@ -1602,6 +1627,83 @@ public class CurrentLaunchInformation implements Observer{
         else
         {
             return instance.gliderLaunchMass;
+        }
+    }
+
+    public float getWindDirectionWinch() {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.winchWindDirection;
+        }    
+    }
+
+    public float getWindSpeedWinch() {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.WinchWindSpeed;
+        }    
+    }
+
+    public float getWindGustWinch() {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.winchWindGust;
+        }    
+    }
+
+    public float getWindDirectionGlider() {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.gliderWindDirection;
+        }    
+    }
+
+    public float getWindGustGlider() {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.gliderWindGust;
+        }    
+    }
+
+    public float getWindSpeedGlider() {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.gliderWindSpeed;
+        }    
+    }
+
+    public float getAltimeter() {
+        if(instance == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return instance.altimeter;
         }
     }
 }

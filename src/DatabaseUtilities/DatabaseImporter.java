@@ -20,6 +20,7 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
 import DataObjects.*;
+import static DatabaseUtilities.DatabaseInitialization.connect;
 import java.sql.PreparedStatement;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -33,34 +34,12 @@ public class DatabaseImporter{
     private static BufferedReader br;
     private static Connection connection;
     
-    public static void importDatabase(File zipFile, List<String> importList) throws ClassNotFoundException, SQLException 
-    {
-        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
-        connection = null;
-
-        //Check for DB drivers
-        try {
-            Class.forName(clientDriverName);
-            Class.forName(driverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDb ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-
-        //try to connect
-        try {
-            connection = DriverManager.getConnection(databaseConnectionName);
-        }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Correctly loaded the JavaDb ClientDriver, something else is wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-        
+    public static void importDatabase(File zipFile, List<String> importList) {
+        connection = connect();
         try {
             importTable(connection, zipFile, importList);
             
-        }catch(Exception e) {
+        }catch(IOException | ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Couldn't import", "Error", JOptionPane.INFORMATION_MESSAGE);
             //e.printStackTrace();
         }
@@ -69,7 +48,8 @@ public class DatabaseImporter{
     }
     
     
-    private static void importTable(Connection connect, File file, List<String> importList) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
+    private static void importTable(Connection connect, File file, List<String> importList)
+            throws SQLException, FileNotFoundException, IOException, ClassNotFoundException {
         
         //System.out.println(importList.toString());
         
@@ -174,9 +154,9 @@ public class DatabaseImporter{
                     Float.parseFloat(gliderData[9]), Float.parseFloat(gliderData[10]), 
                     Float.parseFloat(gliderData[11]), Boolean.parseBoolean(gliderData[12]), 
                     Boolean.parseBoolean(gliderData[13]), gliderData[14]);
-            importer.setId(gliderData[0]);
+            importer.setId(Integer.parseInt(gliderData[0]));
             try {
-                DatabaseDataObjectUtilities.addSailplaneToDB(importer);
+                DatabaseEntryInsert.addSailplaneToDB(importer);
             }catch(Exception e)
             {   }
         }
@@ -186,11 +166,11 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] pilotData = s.split(",",-1);
-            Pilot importer = new Pilot(pilotData[0], pilotData[1], pilotData[2], pilotData[3], Float.parseFloat(pilotData[4]), pilotData[5], pilotData[6], pilotData[7], pilotData[8], pilotData[9]);
-            try {
-                DatabaseDataObjectUtilities.addPilotToDB(importer);
-            } catch(SQLIntegrityConstraintViolationException e)
-            {   }
+            Pilot importer = new Pilot(Integer.parseInt(pilotData[0]), pilotData[1], 
+                    pilotData[2], pilotData[3], Float.parseFloat(pilotData[4]), pilotData[5], 
+                    Float.parseFloat(pilotData[6]), pilotData[7], pilotData[8], pilotData[9]);
+            DatabaseEntryInsert.addPilotToDB(importer);
+            
         }
     }
     
@@ -198,13 +178,11 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] airfieldData = s.split(",",-1);
-            Airfield importer = new Airfield(airfieldData[1], airfieldData[2], Float.parseFloat(airfieldData[3]), Float.parseFloat(airfieldData[4]), 
+            Airfield importer = new Airfield(airfieldData[1], airfieldData[2], 
+                    Float.parseFloat(airfieldData[3]), Float.parseFloat(airfieldData[4]), 
                     Float.parseFloat(airfieldData[5]), Float.parseFloat(airfieldData[6]), airfieldData[7]);
-            importer.setId(airfieldData[0]);
-            try {
-                DatabaseDataObjectUtilities.addAirfieldToDB(importer);
-            } catch(SQLIntegrityConstraintViolationException e)
-            {   }
+            importer.setId(Integer.parseInt(airfieldData[0]));
+            DatabaseEntryInsert.addAirfieldToDB(importer);
         }
     }
     
@@ -212,13 +190,11 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] runwayData = s.split(",",-1);
-            Runway importer = new Runway(runwayData[1], Float.parseFloat(runwayData[2]), runwayData[3], Float.parseFloat(runwayData[5]), runwayData[6]);
-            importer.setId(runwayData[0]);
-            importer.setParentId(runwayData[4]);
-            try {
-                DatabaseDataObjectUtilities.addRunwayToDB(importer);
-            } catch(SQLIntegrityConstraintViolationException e)
-            {   }
+            Runway importer = new Runway(runwayData[2], Float.parseFloat(runwayData[3]), 
+                    runwayData[4]);
+            importer.setId(Integer.parseInt(runwayData[0]));
+            importer.setParentId(Integer.parseInt(runwayData[1]));
+            DatabaseEntryInsert.addRunwayToDB(importer);
         }
     }
     
@@ -226,18 +202,12 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] gliderPositionData = s.split(",",-1);
-            GliderPosition importer = new GliderPosition(gliderPositionData[1], gliderPositionData[2], gliderPositionData[4], Float.parseFloat(gliderPositionData[6]), 
-                    Float.parseFloat(gliderPositionData[7]), Float.parseFloat(gliderPositionData[8]), gliderPositionData[9]);
-            importer.setId(gliderPositionData[0]);
-            importer.setAirfieldParentId(gliderPositionData[5]);
-            importer.setRunwayParentId(gliderPositionData[3]);
-            try {
-                DatabaseDataObjectUtilities.addGliderPositionToDB(importer);
-            } catch(SQLIntegrityConstraintViolationException e)
-            {   }
-            catch(Exception e) {
-                //e.printStackTrace();
-            }
+            GliderPosition importer = new GliderPosition(gliderPositionData[1], 
+                    Float.parseFloat(gliderPositionData[2]), Float.parseFloat(gliderPositionData[3]), 
+                    Float.parseFloat(gliderPositionData[4]), gliderPositionData[5]);
+            importer.setId(Integer.parseInt(gliderPositionData[0]));
+            importer.setRunwayParentId(Integer.parseInt(gliderPositionData[1]));
+            DatabaseEntryInsert.addGliderPositionToDB(importer);
         }
     }
     
@@ -245,15 +215,12 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] winchPositionData = s.split(",",-1);
-            WinchPosition importer = new WinchPosition(winchPositionData[1], winchPositionData[2], winchPositionData[4], Float.parseFloat(winchPositionData[6]), 
-                    Float.parseFloat(winchPositionData[7]), Float.parseFloat(winchPositionData[8]), winchPositionData[9]);
-            importer.setId(winchPositionData[0]);
-            importer.setAirfieldParentId(winchPositionData[5]);
-            importer.setRunwayParentId(winchPositionData[3]);
-            try {
-                DatabaseDataObjectUtilities.addWinchPositionToDB(importer);
-            } catch(SQLIntegrityConstraintViolationException e)
-            {   }
+            WinchPosition importer = new WinchPosition(winchPositionData[2], Float.parseFloat(winchPositionData[3]), 
+                    Float.parseFloat(winchPositionData[4]), Float.parseFloat(winchPositionData[5]), 
+                    winchPositionData[6]);
+            importer.setId(Integer.parseInt(winchPositionData[0]));
+            importer.setRunwayParentId(Integer.parseInt(winchPositionData[1]));
+            DatabaseEntryInsert.addWinchPositionToDB(importer);
         }
     }
     
@@ -261,12 +228,10 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] parachuteData = s.split(",",-1);
-            Parachute importer = new Parachute(Integer.parseInt(parachuteData[0]), Float.parseFloat(parachuteData[1]), Float.parseFloat(parachuteData[2]), Integer.parseInt(parachuteData[3])); 
-                    
-            try {
-                DatabaseDataObjectUtilities.addParachuteToDB(importer);
-            } catch(SQLIntegrityConstraintViolationException e)
-            {   }
+            Parachute importer = new Parachute(Integer.parseInt(parachuteData[0]), parachuteData[1], 
+                    Float.parseFloat(parachuteData[2]), Float.parseFloat(parachuteData[3]), 
+                    Float.parseFloat(parachuteData[4]), parachuteData[5]); 
+            DatabaseEntryInsert.addParachuteToDB(importer);
         }
     }
     
@@ -274,12 +239,9 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] profileData = s.split(",",-1);
-            Profile importer = new Profile(profileData[0], profileData[1], profileData[2]); 
-                    
-            try {
-                DatabaseDataObjectUtilities.addProfileToDB(importer);
-            } catch(SQLIntegrityConstraintViolationException e)
-            {   }
+            Operator importer = new Operator(Integer.parseInt(profileData[0]), profileData[1], 
+                    profileData[2]); 
+            DatabaseEntryInsert.addOperatorToDB(importer);
         }
     }
     
@@ -287,17 +249,12 @@ public class DatabaseImporter{
         String s;
         while((s = br.readLine()) != null) {
             String[] messagesData = s.split(",", -1);
-            
-            try {
-                PreparedStatement insertStatement = connection.prepareStatement(
-                "INSERT INTO Preference(timestamp, message)"
-                        + "VALUES (?, ?)");
+            PreparedStatement insertStatement = connection.prepareStatement(
+                "INSERT INTO Preference(timestamp, message) VALUES (?, ?)");
                 insertStatement.setString(1, String.valueOf(messagesData[0]));
                 insertStatement.setString(2, messagesData[1]);
                 insertStatement.executeUpdate();
                 insertStatement.close();               
-            }catch(Exception e)
-            {   }
         }
     }
 }

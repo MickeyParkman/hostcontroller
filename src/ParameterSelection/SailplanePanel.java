@@ -11,11 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
@@ -23,26 +19,23 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import java.awt.Font;
 import javax.swing.JButton;
 import Communications.Observer;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
-import DatabaseUtilities.DatabaseUnitSelectionUtilities;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import DataObjects.CurrentLaunchInformation;
 import DataObjects.RecentLaunchSelections;
+import DatabaseUtilities.DatabaseEntrySelect;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 
 public class SailplanePanel extends JPanel implements Observer{
-    private List<Sailplane> sailplanes = new ArrayList<Sailplane>();
+    private List<Sailplane> sailplanes = new ArrayList();
     private CurrentDataObjectSet currentData;
     JScrollPane sailplaneScrollPane = new JScrollPane();
     private JLabel emptyWeightUnitsLabel = new JLabel();
@@ -175,28 +168,34 @@ public class SailplanePanel extends JPanel implements Observer{
             sailplaneJList.setSelectedValue(currentSailplane.toString(), true);
             sailplaneScrollPane.setViewportView(sailplaneJList);
 
-            nNumberField.setText(currentSailplane.getId());
+            nNumberField.setText("" + currentSailplane.getRegistration());
             nNumberField.setBackground(Color.GREEN);
 
-            weakLinkField.setText(String.valueOf(currentSailplane.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
+            weakLinkField.setText(String.valueOf(currentSailplane.getMaxWeakLinkStrength() 
+                    * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
             weakLinkField.setBackground(Color.GREEN);
 
-            tensionField.setText(String.valueOf(currentSailplane.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
+            tensionField.setText(String.valueOf(currentSailplane.getMaxTension() 
+                    * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
             tensionField.setBackground(Color.GREEN);
 
             releaseAngleField.setText(String.valueOf(currentSailplane.getCableReleaseAngle()));
             releaseAngleField.setBackground(Color.GREEN);
 
-            stallSpeedField.setText(String.valueOf(currentSailplane.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
+            stallSpeedField.setText(String.valueOf(currentSailplane.getIndicatedStallSpeed() 
+                    * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
             stallSpeedField.setBackground(Color.GREEN);
 
-            grossWeightField.setText(String.valueOf(currentSailplane.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
+            grossWeightField.setText(String.valueOf(currentSailplane.getMaximumGrossWeight() 
+                    * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
             grossWeightField.setBackground(Color.GREEN);
 
-            emptyWeightField.setText(String.valueOf(currentSailplane.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
+            emptyWeightField.setText(String.valueOf(currentSailplane.getEmptyWeight() 
+                    * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
             emptyWeightField.setBackground(Color.GREEN);
 
-            winchingSpeedField.setText(String.valueOf(currentSailplane.getMaxWinchingSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
+            winchingSpeedField.setText(String.valueOf(currentSailplane.getMaxWinchingSpeed() 
+                    * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
             winchingSpeedField.setBackground(Color.GREEN);
 
             if(currentSailplane.getCarryBallast())
@@ -256,7 +255,7 @@ public class SailplanePanel extends JPanel implements Observer{
                 Sailplane theSailplane = (Sailplane)sailplaneJList.getSelectedValue();
                 currentData.setCurrentGlider(theSailplane);
                 
-                nNumberField.setText(theSailplane.getId());
+                nNumberField.setText("" + theSailplane.getRegistration());
                 nNumberField.setBackground(Color.GREEN);
                 nNumberField.setHorizontalAlignment(JTextField.RIGHT);
 
@@ -320,17 +319,12 @@ public class SailplanePanel extends JPanel implements Observer{
     }
     
     private void initSailPlaneList() {
-        try{
             RecentLaunchSelections recent = RecentLaunchSelections.getRecentLaunchSelections();
-            sailplanes = DatabaseUtilities.DatabaseDataObjectUtilities.getSailplanes();
+            sailplanes = DatabaseEntrySelect.getSailplanes();
             List<Sailplane> recentSailplanes = recent.getRecentSailplane();
             for (int i = 0; i < recentSailplanes.size(); i++){
                 sailplanes.add(0, recentSailplanes.get(i));
             }
-        }catch(SQLException e) {
-        } catch (ClassNotFoundException ex) {
-
-        }
     }
     
     /**

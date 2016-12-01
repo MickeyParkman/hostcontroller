@@ -6,11 +6,9 @@ import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.WinchPosition;
-import DatabaseUtilities.DatabaseEntryEdit;
 import DatabaseUtilities.DatabaseEntryIdCheck;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -61,7 +58,7 @@ public class AddEditWinchPosFrame extends JFrame {
 
 
         if (!isEditEntry || editWinchPos == null){
-            editWinchPos = new WinchPosition("", "", "", 0, 0, 0, "");
+            editWinchPos = new WinchPosition("", 0, 0, 0, "");
         }
         this.isEditEntry = isEditEntry;
         currentWinchPos = editWinchPos;
@@ -112,7 +109,8 @@ public class AddEditWinchPosFrame extends JFrame {
 
         altitudeField = new JTextField();
         if (isEditEntry){
-            altitudeField.setText(String.valueOf((currentWinchPos.getAltitude() * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID))));
+            altitudeField.setText(String.valueOf((currentWinchPos.getElevation()
+                    * UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID))));
         }
         altitudeField.setColumns(10);
         altitudeField.setBounds(135, 36, 200, 20);
@@ -211,20 +209,15 @@ public class AddEditWinchPosFrame extends JFrame {
     }
 	
     public void deleteCommand(){
-        try{
-            int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentWinchPos.getName() + "?",
-                "Delete Winch Position", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if (choice == 0){
-                DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentWinchPos);
-                objectSet.cleafGliderPosition();
-                JOptionPane.showMessageDialog(rootPane, currentWinchPos.toString() + " successfully deleted.");
-                parent.update("4");
-                this.dispose();
-            }
-        }catch (ClassNotFoundException e2) {
-            JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }catch (Exception e3) {
-
+        int choice = JOptionPane.showConfirmDialog(rootPane, 
+            "Are you sure you want to delete " + currentWinchPos.getName() + "?",
+            "Delete Winch Position", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (choice == 0){
+            DatabaseUtilities.DatabaseEntryDelete.DeleteEntry(currentWinchPos);
+            objectSet.cleafGliderPosition();
+            JOptionPane.showMessageDialog(rootPane, currentWinchPos.toString() + " successfully deleted.");
+            parent.update("4");
+            this.dispose();
         }
     }
 
@@ -242,34 +235,28 @@ public class AddEditWinchPosFrame extends JFrame {
     protected void submitData(){
         if (isComplete()){
             String winchPosId = nameField.getText();
-            float altitude = Float.parseFloat(altitudeField.getText()) / UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID);
+            float altitude = Float.parseFloat(altitudeField.getText()) 
+                    / UnitConversionRate.convertDistanceUnitIndexToFactor(winchPosAltitudeUnitsID);
             float longitude = Float.parseFloat(longitudeField.getText());
             float latitude = Float.parseFloat(latitudeField.getText());
             
-            String runwayParent = "";
-            String runwayParentId = "";
-            String airfieldParent = "";
-            String airfieldParentId = "";
+            int runwayParentId = 0;
             
             try{
-                runwayParent = objectSet.getCurrentRunway().getName();
                 runwayParentId = objectSet.getCurrentRunway().getId();
-                airfieldParent = objectSet.getCurrentAirfield().getDesignator();
-                airfieldParentId = objectSet.getCurrentAirfield().getId();
             }catch (Exception e){
                 
             }
             
-            WinchPosition newWinchPos = new WinchPosition(winchPosId, 
-                    runwayParent, airfieldParent, altitude,
+            WinchPosition newWinchPos = new WinchPosition(winchPosId, altitude,
                     latitude, longitude, "");
             newWinchPos.setId(currentWinchPos.getId());
             newWinchPos.setRunwayParentId(runwayParentId);
-            newWinchPos.setAirfieldParentId(airfieldParentId);
             try{
                 objectSet.setCurrentWinchPosition(newWinchPos);
                 Object[] options = {"One-time Launch", "Save to Database"};
-                int choice = JOptionPane.showOptionDialog(rootPane, "Do you want to use this Winch Position for a one-time launch or save it to the database?",
+                int choice = JOptionPane.showOptionDialog(rootPane, 
+                        "Do you want to use this Winch Position for a one-time launch or save it to the database?",
                     "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);     
                 if (choice == 0){
                     parent.update("4");
@@ -282,11 +269,11 @@ public class AddEditWinchPosFrame extends JFrame {
                     }
                     else{
                         Random randomId = new Random();
-                        newWinchPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                        newWinchPos.setId(randomId.nextInt(100000000));
                         while (DatabaseEntryIdCheck.IdCheck(newWinchPos)){
-                            newWinchPos.setId(String.valueOf(randomId.nextInt(100000000)));
+                            newWinchPos.setId(randomId.nextInt(100000000));
                         }
-                        DatabaseUtilities.DatabaseDataObjectUtilities.addWinchPositionToDB(newWinchPos);
+                        DatabaseUtilities.DatabaseEntryInsert.addWinchPositionToDB(newWinchPos);
                     }
                     parent.update("4");
                     this.dispose();
@@ -295,10 +282,13 @@ public class AddEditWinchPosFrame extends JFrame {
                 if(e1.getErrorCode() == 30000){
 
                     e1.printStackTrace();
-                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the Winch Position " + newWinchPos.toString() + " already exists in the database");
+                    JOptionPane.showMessageDialog(rootPane, "Sorry, but the Winch Position " 
+                            + newWinchPos.toString() + " already exists in the database");
                 }
             }catch (ClassNotFoundException e2) {
-                JOptionPane.showMessageDialog(rootPane, "Error: No access to database currently. Please try again later.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(rootPane, 
+                        "Error: No access to database currently. Please try again later.", 
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e3) {
 
             }
@@ -348,11 +338,13 @@ public class AddEditWinchPosFrame extends JFrame {
             Float.parseFloat(latitude);
             
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(rootPane, "Please input correct numerical values", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "Please input correct numerical values", 
+                    "Error", JOptionPane.INFORMATION_MESSAGE);
             //ew = new ErrWindow("Please input correct numerical values");
             return false;
         }catch(Exception e){
-            JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "Please complete all required fields\n" 
+                    + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
             //ew = new ErrWindow("Please complete all required fields\n" + e.getMessage());
             return false;
         }

@@ -2,21 +2,21 @@ package Configuration;
 
 import DataObjects.CurrentDataObjectSet;
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import DataObjects.Profile;
-import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DataObjects.Operator;
+import DatabaseUtilities.DatabaseEntryInsert;
+import DatabaseUtilities.DatabaseEntryIdCheck;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,12 +52,18 @@ public class SaveAsNewFrame extends JFrame {
             SaveButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
                             String profileName = textField.getText();
-                            Profile newProfile = currentData.getCurrentProfile();
-                            //System.out.println(currentData.getCurrentProfile().getUnitSetting("flightWeight"));
-                            newProfile.setID(profileName);
-                            currentData.setCurrentProfile(newProfile);
+                            Operator newProfile = currentData.getCurrentProfile();
+                            newProfile.setName(profileName);
+                            Random randomId = new Random();
+                            int id = randomId.nextInt(100000000);
                         try {
-                            DatabaseDataObjectUtilities.addProfileToDB(newProfile);
+                            while (DatabaseEntryIdCheck.IdCheck(newProfile)){
+                                id = randomId.nextInt(100000000);
+                            }
+                            newProfile.setID(id);
+                            currentData.setCurrentProfile(newProfile);
+                        
+                            DatabaseEntryInsert.addOperatorToDB(newProfile);
                         } catch (SQLException ex) {
                             Logger.getLogger(SaveAsNewFrame.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ClassNotFoundException ex) {

@@ -5,12 +5,16 @@
  */
 package DatabaseUtilities;
 
+import static Communications.ErrorLogger.logError;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
 import DataObjects.*;
+import static DatabaseUtilities.DatabaseInitialization.WINCH_PRAM_VERSION;
+import static DatabaseUtilities.DatabaseInitialization.connect;
 import ParameterSelection.Capability;
 import ParameterSelection.Preference;
+import java.security.SecureRandom;
 /**
  *
  * @author dbennett3
@@ -22,235 +26,376 @@ public class DatabaseEntryEdit
      * performs the update string created in the functions below
      * 
      * @param updateString update sql string to be executed
-     * @throws ClassNotFoundException
      * @throws SQLException 
      */
-    private static void Update(String updateString) throws ClassNotFoundException, SQLException
-    {
-        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
-        PreparedStatement ps = null;
-        Connection connection = null;
-        
-        //Check for DB drivers
-        try {
-            Class.forName(clientDriverName);
-            Class.forName(driverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDB ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-        
-        //Try to connect
-        try {
-            connection = DriverManager.getConnection(databaseConnectionName);
-        } catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Loaded JavaDB ClientDriver, something else wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-        
+    private static boolean Update(PreparedStatement ps) throws SQLException {
         //Update the value given
-        try {
-            ps = connection.prepareStatement(updateString);
-            ps.execute();
-            ps.close();
-        }catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }finally
-        {
-
-        }
+        ps.executeUpdate();
+        ps.close();
+        return true;
     }
-    
     
     /**
      * updates the pilot table in the database with the new pilot data in the object passed in
      * 
      * @param pilot pilot object that is to be updated
-     * @throws Exception 
+     * @return false if update fails
      */
-    public static void UpdateEntry(Pilot pilot) throws Exception
-    {
-        String updateString;
-        updateString = "UPDATE PILOT SET "
-                + "first_name = '" + pilot.getFirstName() + "',"
-                + "middle_name = '" + pilot.getMiddleName() + "',"
-                + "last_name = '" + pilot.getLastName() + "',"
-                + "flight_weight = " + String.valueOf(pilot.getWeight()) + ","
-                + "capability = " + Capability.convertCapabilityStringToNum(pilot.getCapability()) + ","
-                + "preference = " + Preference.convertPreferenceStringToNum(pilot.getPreference()) + ","
-                + "emergency_contact_info = '" + pilot.getEmergencyContact() + "',"
-                + "emergency_medical_info = '" + pilot.getMedInfo() + "',"
-                + "optional_info = '" + pilot.getOptionalInfo() + "'"
-                + "WHERE pilot_id = '" + pilot.getPilotId() + "'";
+    public static boolean updateEntry(Pilot pilot) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE PILOT SET "
+                    + "first_name = ?, middle_name = ?, last_name = ?, flight_weight = ?, "
+                    + "capability = ?, preference = ?, emergency_contact_name = ?, "
+                    + "emergency_contact_phone = ?, optional_info = ? "
+                    + "WHERE pilot_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
+            stmt.setString(1, pilot.getFirstName());
+            stmt.setString(2, pilot.getMiddleName());
+            stmt.setString(3, pilot.getLastName());
+            stmt.setFloat(4, pilot.getWeight());
+            stmt.setInt(5, Capability.convertCapabilityStringToNum(pilot.getCapability()));
+            stmt.setFloat(6, pilot.getPreference());
+            stmt.setString(7, pilot.getEmergencyName());
+            stmt.setString(8, pilot.getEmergencyPhone());
+            stmt.setString(9, pilot.getOptionalInfo());
+            stmt.setInt(10, pilot.getPilotId());
         
-        Update(updateString);
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
     
-    public static void UpdateEntry(Profile theProfile) throws Exception
-    {
-        String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
-        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        try{
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
-        } catch(java.lang.ClassNotFoundException e) {
-            throw e;
+    public static boolean UpdateEntry(Operator theProfile) {
+        try (Connection connect = connect()) {
+            if(connect == null) {
+                return false;
+            }
+            PreparedStatement stmt = connect.prepareStatement(
+                "UPDATE Operator SET first_name = ?, middle_name = ?, last_name = ?, "
+                        + "admin = ?, optional_info = ?, "
+                        + "unitSettings = ? WHERE operator_id = ?");
+            stmt.setString(1, theProfile.getFirst());
+            stmt.setString(2, theProfile.getMiddle());
+            stmt.setString(3, theProfile.getLast());
+            stmt.setBoolean(4, theProfile.getAdmin());
+            stmt.setString(5, theProfile.getInfo());
+            stmt.setString(6, theProfile.getUnitSettingsForStorage());
+            stmt.setInt(7, theProfile.getID());
+            
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
         }
+        return false;
+    }
+    
+    public static boolean ChangePassword(Operator theProfile, String newPass) {
+        byte[] bsalt = new byte[newPass.length()];
+        String salt = "";
+        SecureRandom ran = new SecureRandom();
+        ran.nextBytes(bsalt);
+        for(byte b: bsalt) {
+            salt += b;
+        }
+        newPass = salt + newPass;     
+           
+        byte[] hashedInput = new byte[newPass.length()+224];
+     
+        Whirlpool w = new Whirlpool();
+        w.NESSIEinit();
+        w.NESSIEadd(newPass);
+        w.NESSIEfinalize(hashedInput); 
+        String hash = w.display(hashedInput);
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
-            PreparedStatement ProfileInsertStatement = connect.prepareStatement(
-                "UPDATE Profile SET unitSettings = ?, displayPrefs = ? WHERE id = ?");
-            ProfileInsertStatement.setString(3, theProfile.getID());
-            ProfileInsertStatement.setString(1, theProfile.getUnitSettingsForStorage());
-            ProfileInsertStatement.setString(2, theProfile.getDisplayPrefsForStorage());
-            ProfileInsertStatement.executeUpdate();
-            ProfileInsertStatement.close();
-            //System.out.println(theProfile.getID() + ": " + theProfile.getUnitSettingsForStorage());
-        }catch(SQLException e) {
-            throw e;
+        try (Connection connect = connect()) {
+            if(connect == null) {
+                return false;
+            }
+            PreparedStatement stmt = connect.prepareStatement(
+                "UPDATE Operator SET salt = ?, hash = ? WHERE operator_id = ?");
+            stmt.setString(1, salt);
+            stmt.setString(2, hash);
+            stmt.setInt(3, theProfile.getID());
+            
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
         }
+        return false;
     }
     
     /**
      * updates the sailplane table in the database with the new sailplane data in the object passed in
      * 
      * @param sailplane sailplane object that is to be updated
-     * @throws Exception 
+     * @return false if update fails
      */
-    public static void UpdateEntry(Sailplane sailplane) throws Exception
-    {
-        String updateString;
-        updateString = "UPDATE GLIDER SET "
-                + "reg_number = '" + sailplane.getRegistration() + "', "
-                + "name = '" + sailplane.getName() + "', "
-                + "owner = '" + sailplane.getOwner() + "', "
-                + "type = '" + sailplane.getType() + "', "
-                + "max_gross_weight = " + String.valueOf(sailplane.getMaxGrossWeight()) + ", "
-                + "empty_weight = " + String.valueOf(sailplane.getEmptyWeight()) + ", "
-                + "indicated_stall_speed = " + String.valueOf(sailplane.getIndicatedStallSpeed()) + ", "
-                + "max_winching_speed = " + String.valueOf(sailplane.getMaxWinchingSpeed()) + ", "
-                + "max_tension = " + String.valueOf(sailplane.getMaxTension()) + ", "
-                + "cable_release_angle = " + String.valueOf(sailplane.getCableReleaseAngle()) + ", "
-                + "carry_ballast = " + String.valueOf(sailplane.storeCarryBallast()) + ", "
-                + "multiple_seats = " + String.valueOf(sailplane.storeMultipleSeats()) + ", "
-                + "optional_info = '" + sailplane.getOptionalInfo() + "' "
-                + "WHERE glider_id = '" + sailplane.getId() + "'";
+    public static boolean UpdateEntry(Sailplane sailplane) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE GLIDER SET "
+                    + "reg_number = ?, common_name = ?, owner = ?, type = ?, "
+                    + "max_gross_weight = ?, empty_weight = ?, indicated_stall_speed = ?, "
+                    + "max_winching_speed = ?, max_weak_link_strength = ?, max_tension = ?, "
+                    + "cable_release_angle = ?, carry_ballast = ?, multiple_seats = ?, optional_info = ? "
+                    + "WHERE glider_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
+            stmt.setString(1, sailplane.getRegistration());
+            stmt.setString(2, sailplane.getName());
+            stmt.setString(3, sailplane.getOwner());
+            stmt.setString(4, sailplane.getType());
+            stmt.setFloat(5, sailplane.getMaxGrossWeight());
+            stmt.setFloat(6, sailplane.getEmptyWeight());
+            stmt.setFloat(7, sailplane.getIndicatedStallSpeed());
+            stmt.setFloat(8, sailplane.getMaxWinchingSpeed());
+            stmt.setFloat(9, sailplane.getMaxWeakLinkStrength());
+            stmt.setFloat(10, sailplane.getMaxTension());
+            stmt.setFloat(11, sailplane.getCableReleaseAngle());
+            stmt.setBoolean(12, sailplane.getCarryBallast());
+            stmt.setBoolean(13, sailplane.getMultipleSeats());
+            stmt.setString(14, sailplane.getOptionalInfo());
+            stmt.setInt(15, sailplane.getId());
         
-        Update(updateString);
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
     
     /**
      * updates the airfield table in the database with the new airfield data in the object passed in
      * 
      * @param airfield airfield object that is to be updated
-     * @throws Exception 
+     * @return false if update fails
      */
-    public static void UpdateEntry(Airfield airfield) throws Exception
-    {
-        String updateString;
-        updateString = "UPDATE AIRFIELD SET "
-                + "name = '" + airfield.getName() + "', "
-                + "designator = '" + airfield.getDesignator() + "', "
-                + "altitude = '" + String.valueOf(airfield.getAltitude()) + "', "
-                + "magnetic_variation = '" + String.valueOf(airfield.getMagneticVariation()) + "', "
-                + "latitude = " + String.valueOf(airfield.getLatitude()) + ", "
-                + "longitude = " + String.valueOf(airfield.getLongitude()) + ", "
-                + "optional_info = '" + airfield.getOptionalInfo() + "' "
-                + "WHERE airfield_id = '" + airfield.getId() + "'";
+    public static boolean UpdateEntry(Airfield airfield) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE AIRFIELD SET "
+                    + "name = ?, designator = ?, elevation = ?, magnetic_variation = ?, "
+                    + "latitude = ?, longitude = ?, utc_offset = ?, optional_info = ? "
+                    + "WHERE airfield_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
         
-        Update(updateString);
+            stmt.setString(1, airfield.getName());
+            stmt.setString(2, airfield.getDesignator());
+            stmt.setFloat(3, airfield.getElevation());
+            stmt.setFloat(4, airfield.getMagneticVariation());
+            stmt.setFloat(5, airfield.getLatitude());
+            stmt.setFloat(6, airfield.getLongitude());
+            stmt.setInt(7, airfield.getUTC());
+            stmt.setString(8, airfield.getOptionalInfo());
+            stmt.setInt(9, airfield.getId());
+        
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;    
     }
     
     /**
      * updates the runway table in the database with the new runway data in the object passed in
      * 
      * @param runway runway object that is to be updated
-     * @throws Exception 
+     * @return false if update fails
      */
-    public static void UpdateEntry(Runway runway) throws Exception
-    {
-        String updateString;
-        updateString = "UPDATE RUNWAY SET "
-                + "runway_name = '" + runway.getName() + "', "
-                + "parent = '" + runway.getParent() + "', "
-                + "magnetic_heading = " + runway.getMagneticHeading() + ", "
-                + "altitude = " + String.valueOf(runway.getAltitude()) + ", "
-                + "optional_info = '" + runway.getOptionalInfo() + "' "
-                + "WHERE runway_id = '" + runway.getId() + "' "
-                + "AND parent_id = '" + runway.getParentId() + "' ";
-        Update(updateString);
+    public static boolean UpdateEntry(Runway runway) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE RUNWAY SET "
+                    + "runway_name = ?, "
+                    + "magnetic_heading = ?, "
+                    + "optional_info = ? "
+                    + "WHERE runway_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
+            stmt.setString(1, runway.getName());
+            stmt.setFloat(2, runway.getMagneticHeading());
+            stmt.setString(3, runway.getOptionalInfo());
+            stmt.setInt(4, runway.getId());
+        
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
     
     /**
      * updates the GliderPosition table in the database with the new position data in the object passed in
      * 
      * @param position GliderPosition object that is to be updated
-     * @throws Exception 
+     * @return false if update fails
      */
-    public static void UpdateEntry(GliderPosition position) throws Exception
-    {
-        String updateString;
-        updateString = "UPDATE GLIDERPOSITION SET "
-                + "position_id = '" + position.getGliderPositionId() + "', "
-                + "runway_parent = '" + position.getRunwayParent() + "', "
-                + "airfield_parent = '" + position.getAirfieldParent() + "', "
-                + "altitude = " + position.getAltitude() + ", "
-                + "latitude = " + position.getLatitude() + ", "
-                + "longitude = " + position.getLongitude() + ", "
-                + "optional_info = '" + position.getOptionalInfo() + "' "
-                + "WHERE glider_position_id = '" + position.getId() + "' ";
-                //+ "AND runway_parent_id = '" + position.getRunwayParentId() + "' "
-                //+ "AND airfield_parent_id = '" + position.getAirfieldParentId() + "' ";
-        Update(updateString);
+    public static boolean UpdateEntry(GliderPosition position) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE GLIDERPOSITION SET "
+                    + "position_name = ?, elevation = ?, latitude = ?, "
+                    + "longitude = ?, optional_info = ? "
+                    + "WHERE glider_position_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
+            stmt.setString(1, position.getName());
+            stmt.setFloat(2, position.getElevation());
+            stmt.setFloat(3, position.getLatitude());
+            stmt.setFloat(4, position.getLongitude());
+            stmt.setString(5, position.getOptionalInfo());
+            stmt.setInt(6, position.getId());
+        
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
     
     /**
      * updates the WinchPosition table in the database with the new position data in the object passed in
      * 
      * @param position WinchPosition object that is to be updated
-     * @throws Exception 
+     * @return false if update fails
      */
-    public static void UpdateEntry(WinchPosition position) throws Exception
-    {
-        String updateString;
-        updateString = "UPDATE WINCHPOSITION SET "
-                + "name = '" + position.getName() + "', "
-                + "runway_parent = '" + position.getRunwayParent() + "', "
-                + "airfield_parent = '" + position.getAirfieldParent() + "', "
-                + "altitude = " + String.valueOf(position.getAltitude()) + ", "
-                + "latitude = " + String.valueOf(position.getLatitude()) + ", "
-                + "longitude = " + String.valueOf(position.getLongitude()) + ", "
-                + "optional_info = '" + position.getOptionalInfo() + "' "
-                + "WHERE winch_position_id = '" + position.getId() + "' ";
-                //+ "AND runway_parent_id = '" + position.getRunwayParent() + "' "
-                //+ "AND airfield_parent_id = '" + position.getAirfieldParent() + "' ";
-      
-        Update(updateString);
+    public static boolean UpdateEntry(WinchPosition position) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE WINCHPOSITION SET "
+                    + "position_name = ?, elevation = ?, latitude = ?, "
+                    + "longitude = ?, optional_info = ? "
+                    + "WHERE winch_position_id = ? ";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
+        
+            stmt.setString(1, position.getName());
+            stmt.setFloat(2, position.getElevation());
+            stmt.setFloat(3, position.getLatitude());
+            stmt.setFloat(4, position.getLongitude());
+            stmt.setString(5, position.getOptionalInfo());
+            stmt.setInt(6, position.getId());
+        
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
     
     /**
      * updates the parachute in the database with the new parachute data in the object passed in
      * 
      * @param drum drum object that is to be updated
-     * @throws Exception 
+     * @return false if update fails
      */
-    public static void UpdateEntry(Drum drum) throws Exception
-    {
-        String updateString;
-        updateString = "UPDATE DRUM SET "
-                + "drum_name = " + String.valueOf(drum.getName()) + " "
-                + "core_diameter = " + String.valueOf(drum.getCoreDiameter()) + " "
-                + "kfactor = " + String.valueOf(drum.getKFactor()) + " "
-                + "cable_length = " + String.valueOf(drum.getCableLength()) + " "
-                + "launch_number = " + String.valueOf(drum.getNumLaunches())
-                + "WHERE drum_id = '" + drum.getID() + "'";
-        
-        Update(updateString);
+    public static boolean UpdateEntry(Drum drum) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE DRUM SET "
+                    + "drum_name = ?, "
+                    + "core_diameter = ?, "
+                    + "kfactor = ?, "
+                    + "cable_length = ?, "
+                    + "number_of_launches = ?, "
+                    + "maximum_working_tension = ?, "
+                    + "optional_info = ? "
+                    + "WHERE drum_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
+            stmt.setString(1, drum.getName());
+            stmt.setFloat(2, drum.getCoreDiameter());
+            stmt.setFloat(3, drum.getKFactor());
+            stmt.setFloat(4, drum.getCableLength());
+            stmt.setInt(5, drum.getNumLaunches());
+            stmt.setFloat(6, drum.getMaxTension());
+            stmt.setString(7, drum.getOptionalInfo());
+            stmt.setInt(8, drum.getId());
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
+    }
+    
+    /**
+     * updates the parachute in the database with the new parachute data in the object passed in
+     * 
+     * @param winch drum object that is to be updated
+     * @return false if update fails
+     */
+    public static boolean UpdateEntry(Winch winch) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE Winch SET "
+                    + "name = ?, "
+                    + "owner = ?, "
+                    + "wc_version = ?, "
+                    + "w1 = ?, w2 = ?, w3 = ?, w4 = ?, w5 = ?, "
+                    + "w6 = ?, w7 = ?, w8 = ?, w9 = ?, w10 = ?, "
+                    + "w11 = ?, w12 = ?, w13 = ?, w14 = ?, w15 = ?, "
+                    + "w16 = ?, "
+                    + "meteorological_check_time = ?, " 
+                    + "meteorological_verify_time = ?, "
+                    + "run_orientation_tolerance = ?, "
+                    + "optional_info = ? "
+                    + "WHERE winch_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
+            
+            stmt.setString(1, winch.getName());
+            stmt.setString(2, winch.getOwner());
+            stmt.setString(3, WINCH_PRAM_VERSION);
+            stmt.setFloat(4, winch.getW1());
+            stmt.setFloat(5, winch.getW2());
+            stmt.setFloat(6, winch.getW3());
+            stmt.setFloat(7, winch.getW4());
+            stmt.setFloat(8, winch.getW5());
+            stmt.setFloat(9, winch.getW6());
+            stmt.setFloat(10, winch.getW7());
+            stmt.setFloat(11, winch.getW8());
+            stmt.setFloat(12, winch.getW9());
+            stmt.setFloat(13, winch.getW10());
+            stmt.setFloat(14, winch.getW11());
+            stmt.setFloat(15, winch.getW12());
+            stmt.setFloat(16, winch.getW13());
+            stmt.setFloat(17, winch.getW14());
+            stmt.setFloat(18, winch.getW15());
+            stmt.setFloat(19, winch.getW16());
+            stmt.setInt(20, winch.meteorologicalCheckTime());
+            stmt.setInt(21, winch.meteorologicalVerifyTime());
+            stmt.setFloat(22, winch.runOrientationTolerance());
+            stmt.setString(23, winch.getOptionalInfo());
+            stmt.setInt(24, winch.getId());
+
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
     
     
@@ -258,20 +403,29 @@ public class DatabaseEntryEdit
      * updates the parachute in the database with the new parachute data in the object passed in
      * 
      * @param parachute parachute object that is to be updated
-     * @throws Exception 
+     * @return false if update fails
      */
-    public static void UpdateEntry(Parachute parachute) throws Exception
-    {
-        String updateString;
-        updateString = "UPDATE PARACHUTE SET "
-                + "lift = " + String.valueOf(parachute.getLift()) + " "
-                + "drag = " + String.valueOf(parachute.getDrag()) + " "
-                + "weight = " + String.valueOf(parachute.getWeight()) + " "
-                + "WHERE parachute_id = '" + parachute.getParachuteNumber() + "'";
-        
-        Update(updateString);
+    public static boolean UpdateEntry(Parachute parachute) {
+        try(Connection conn = connect()) {
+            if(conn == null) {
+                return false;
+            }
+            String updateString = "UPDATE PARACHUTE SET "
+                    + "name = ?, lift = ?, drag = ?, "
+                    + "weight = ?, optional_info = ? "
+                    + "WHERE parachute_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(updateString);
+            stmt.setString(1, parachute.getName());
+            stmt.setFloat(2, parachute.getLift());
+            stmt.setFloat(3, parachute.getDrag());
+            stmt.setFloat(4, parachute.getWeight());
+            stmt.setString(5, parachute.getInfo());
+            stmt.setInt(6, parachute.getParachuteId());
+            return Update(stmt);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return false;
     }
-    
-    
-    
 }

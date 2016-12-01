@@ -11,7 +11,7 @@ package DataObjects;
  * @author Noah Fujioka
  */
 public class LaunchMetaData {
-    Profile currentOperatorProfile;
+    Operator currentOperatorProfile;
     Pilot currentPilot;
     Sailplane currentSailplane;
     Airfield currentAirfield;
@@ -27,7 +27,7 @@ public class LaunchMetaData {
     public LaunchMetaData(){
     }
     
-    public LaunchMetaData(Profile newProfile, Pilot newPilot, Sailplane newSailplane,
+    public LaunchMetaData(Operator newProfile, Pilot newPilot, Sailplane newSailplane,
             Airfield newAirfield, Runway newRunway, GliderPosition newPosition,
             Parachute newParachute, Drum newDrum, Winch newWinch, 
             Environmental newEnvironmental, long newStartTimestamp,
@@ -52,7 +52,7 @@ public class LaunchMetaData {
                 ", " + startTimestamp);
     }
 
-    public Profile getProfile(){
+    public Operator getProfile(){
         return currentOperatorProfile;
     }
     

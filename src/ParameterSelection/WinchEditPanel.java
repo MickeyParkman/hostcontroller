@@ -5,9 +5,7 @@ import DataObjects.Drive;
 import DataObjects.Drum;
 import DataObjects.Parachute;
 import DataObjects.Winch;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 /**
  *
@@ -67,17 +64,21 @@ public class WinchEditPanel extends JPanel {
     }
     
     private void updateDrumList() {
+        /*
         currentDrums = data.getCurrentWinch().getDrumsForDrive("1");
         for(Drum drum : currentDrums) {
             drumModel.addElement(drum);
         }
+        */
     }
     
     private void updateParachuteList() {
+        /*
         currentParas = data.getCurrentWinch().getParachuteList();
         for(Parachute para : currentParas) {
             paraModel.addElement(para);
         }
+        */
     }
     
     private void initComponents()
@@ -133,8 +134,10 @@ public class WinchEditPanel extends JPanel {
                     Winch curWinch = (Winch)winchList.getSelectedValue();
                     data.setCurrentWinch(curWinch);
                     winchNameField.setText("Name: " + curWinch.getName());
+                    /*
                     winchBrakePressureField.setText("Brake Pressure: " + String.valueOf(curWinch.getBrakePressure()));
                     winchOptDataField.setText("Optional Data: " + curWinch.getOptionalData());
+                    */
                     updateDrumList();
                     updateParachuteList();
                 }
@@ -191,10 +194,10 @@ public class WinchEditPanel extends JPanel {
                 if(paraList.getSelectedIndex() >= 0){
                     Parachute curPara = (Parachute)paraList.getSelectedValue();
                     paraNameField.setText("Name: " + curPara.getName());
-                    paraIDField.setText("ID: " + String.valueOf(curPara.getId()));
-                    paraLiftField.setText("Lift: " + String.valueOf(curPara.getLift()));
-                    paraDragField.setText("Drag: " + String.valueOf(curPara.getDrag()));
-                    paraWeightField.setText("Weight: " + String.valueOf(curPara.getWeight()));
+                    paraIDField.setText("ID: " + curPara.getParachuteId());
+                    paraLiftField.setText("Lift: " + curPara.getLift());
+                    paraDragField.setText("Drag: " + curPara.getDrag());
+                    paraWeightField.setText("Weight: " + curPara.getWeight());
                 }
             }
         });
@@ -206,17 +209,8 @@ public class WinchEditPanel extends JPanel {
     }
     
     private ArrayList<Winch> getWinchList() {
-        ArrayList<Winch> result = new ArrayList<>();
-        Winch testWinch = new Winch("Winch 1", "Primary Winch", (float)2.0);
-        Drive drive = new Drive("1", (float)1.0);
-        drive.addDrum(new Drum("Drum 1", (float)1.0, (float)1.0, (float)1000.0));
-        drive.addDrum(new Drum("Drum 2", (float)2.0, (float)2.0, (float)2000.0));
-        testWinch.addDrive(drive);
-        
-        testWinch.addParachute(new Parachute("Parachute 1", 0, (float)0.5, (float)0.5, 25));
-        testWinch.addParachute(new Parachute("Parachute 2", 1, (float)0.77, (float)0.67, 55));
-        testWinch.addParachute(new Parachute("Parachute 3", 2, (float)0.23, (float)0.34, 35));
-        
+        ArrayList<Winch> result = new ArrayList();
+        Winch testWinch = new Winch();
         result.add(testWinch);
         return result;
     }

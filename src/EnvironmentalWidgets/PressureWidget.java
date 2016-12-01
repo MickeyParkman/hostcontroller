@@ -8,6 +8,7 @@ package EnvironmentalWidgets;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
+import DataObjects.Operator;
 import java.awt.Color;
 /**
  *
@@ -51,7 +52,8 @@ public class PressureWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("pressure");
+        Operator temp = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile();
+        unitId = temp.getUnitSetting("pressure");
         unit.setText(" " + UnitLabelUtilities.pressureUnitIndexToString(unitId));
     }
     

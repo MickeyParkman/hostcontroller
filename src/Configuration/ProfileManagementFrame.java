@@ -1,7 +1,8 @@
 package Configuration;
 
+import static Communications.ErrorLogger.logError;
 import DataObjects.CurrentDataObjectSet;
-import DataObjects.Profile;
+import DataObjects.Operator;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import java.awt.Color;
 import java.util.Random;
 import Communications.Observer;
 import DatabaseUtilities.DatabaseEntryEdit;
+import DatabaseUtilities.DatabaseEntrySelect;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -29,7 +31,7 @@ public class ProfileManagementFrame extends JFrame {
     private ProfileDisplayPanel ProfileDisplayPanel;
     private ProfileOtherPanel ProfileOtherPanel;
     private SaveAsNewFrame SaveAsNewFrame;
-    private List<Profile> names = new ArrayList<Profile>();
+    private List<Operator> names = new ArrayList<Operator>();
     private JScrollPane profileScrollPane;
     private JList profileJList;
     private CurrentDataObjectSet currentData;
@@ -124,7 +126,7 @@ public class ProfileManagementFrame extends JFrame {
     public void selectButtonClicked()
     {
         if(profileJList.getSelectedIndex() >= 0){
-            Profile selectedProfile = (Profile)profileJList.getSelectedValue();
+            Operator selectedProfile = (Operator)profileJList.getSelectedValue();
             currentData.setCurrentProfile(selectedProfile);
             parent.update();
         }
@@ -134,7 +136,7 @@ public class ProfileManagementFrame extends JFrame {
     public void saveButtonClicked()
     {
         getUnitsForProfile();
-        Profile currentProfile_ = currentData.getCurrentProfile();
+        Operator currentProfile_ = currentData.getCurrentProfile();
         currentProfile_.setUnitSetting("flightWeight", UnitConversionToIndexUtilities.weightUnitStringToIndex(flightWeightUnits));
         currentProfile_.setUnitSetting("emptyWeight", UnitConversionToIndexUtilities.weightUnitStringToIndex(emptyWeightUnits));
         currentProfile_.setUnitSetting("maxGrossWeight", UnitConversionToIndexUtilities.weightUnitStringToIndex(maxGrossWeightUnits));
@@ -175,8 +177,8 @@ public class ProfileManagementFrame extends JFrame {
     {
         getUnitsForProfile();
         Random randomId = new Random();
-        String temp = String.valueOf(randomId.nextInt(100000000));
-        Profile newProfile = new Profile(temp,"{}","{}");
+        int temp = randomId.nextInt(100000000);
+        Operator newProfile = new Operator(temp,"{}","{}");
         
         newProfile.setUnitSetting("flightWeight", 1);
         newProfile.setUnitSetting("emptyWeight", 1);
@@ -215,8 +217,8 @@ public class ProfileManagementFrame extends JFrame {
     {
         getUnitsForProfile();
         Random randomId = new Random();
-        String temp = String.valueOf(randomId.nextInt(100000000));
-        Profile newProfile = new Profile(temp,"{}","{}");
+        int temp = randomId.nextInt(100000000);
+        Operator newProfile = new Operator(temp,"{}","{}");
         newProfile.setUnitSetting("flightWeight", UnitConversionToIndexUtilities.weightUnitStringToIndex(flightWeightUnits));
         newProfile.setUnitSetting("emptyWeight", UnitConversionToIndexUtilities.weightUnitStringToIndex(emptyWeightUnits));
         newProfile.setUnitSetting("maxGrossWeight", UnitConversionToIndexUtilities.weightUnitStringToIndex(maxGrossWeightUnits));
@@ -251,16 +253,7 @@ public class ProfileManagementFrame extends JFrame {
 
     private void initProfileList() 
     {
-        try
-        {
-            names = DatabaseUtilities.DatabaseDataObjectUtilities.getProfiles();
-        }
-        catch(SQLException e) 
-        {   
-        } 
-        catch (ClassNotFoundException ex) 
-        {     
-        }
+            names = DatabaseEntrySelect.getOperators();
     }
 
     /**
@@ -281,7 +274,7 @@ public class ProfileManagementFrame extends JFrame {
     private void profileJListSelectionChanged(ListSelectionEvent listSelectionEvent) {
         if(profileJList.getSelectedIndex() >= 0){
             try{
-                Profile selectedProfile = (Profile)profileJList.getSelectedValue();
+                Operator selectedProfile = (Operator)profileJList.getSelectedValue();
                 currentData.setCurrentProfile(selectedProfile);
                 
                 flightWeightUnitsID = currentData.getCurrentProfile().getUnitSetting("flightWeight");

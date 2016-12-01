@@ -12,33 +12,31 @@ package DataObjects;
  * @author garreola-gutierrez, matt dargen, dbennett3, Noah Fujioka
  */
 public class Runway {
-    String id;
+    int id;
+    int parentId;
     String runwayName;
     float magneticHeading;
-    String parent;
-    String parentId;
-    float altitude;
     String optionalInfo;
     
-    public Runway(String runwayName, float magneticHeading, String parent, float altitude, String optional){
+    public Runway(String runwayName, float magneticHeading, String optional){
        this.runwayName = runwayName;
        this.magneticHeading = magneticHeading;
-       this.parent = parent;
-       this.altitude = altitude;
        this.optionalInfo = optional;
     }
     
-    public String getId(){
-        if (id != null){
-            return id;
-        }
-        else{
-            id = "";
-            return id;
-        }
+    public Runway(int id, int pid, String runwayName, float magneticHeading, String optional){
+       this.id = id;
+       this.parentId = pid;
+       this.runwayName = runwayName;
+       this.magneticHeading = magneticHeading;
+       this.optionalInfo = optional;
     }
     
-    public void setId(String newId){
+    public int getId(){
+        return id;
+    }
+    
+    public void setId(int newId){
         id = newId;
     }
     
@@ -50,32 +48,19 @@ public class Runway {
        return magneticHeading; 
     }
     
-    public String getParent() {
-        return parent;
+    public int getParentId(){
+        return parentId;
     }
     
-    public String getParentId(){
-        if (parentId != null){
-            return parentId;
-        }
-        else{
-            parentId = "";
-            return parentId;
-        }
-    }
-    
-    public void setParentId(String newParentId){
+    public void setParentId(int newParentId){
         parentId = newParentId;
     }    
-    
-    public float getAltitude() {
-        return altitude;
-    }
     
     public String getOptionalInfo() {
         return optionalInfo;
     }
     
+    @Override
     public String toString() {
       return runwayName;
     } 

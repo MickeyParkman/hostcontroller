@@ -8,6 +8,7 @@ package EnvironmentalWidgets;
 
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.CurrentLaunchInformation;
+import DataObjects.Operator;
 
 /**
  *
@@ -32,7 +33,8 @@ public class RunSlopeWidget extends EnvironmentalWidget {
 
     @Override
     public void setupUnits() {
-        unitId = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile().getUnitSetting("runslope");
+        Operator temp = CurrentDataObjectSet.getCurrentDataObjectSet().getCurrentProfile();
+        unitId = temp.getUnitSetting("runslope");
         unit.setText(" degrees");
     }
     

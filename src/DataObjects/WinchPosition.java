@@ -11,38 +11,38 @@ package DataObjects;
  * @author dbennett3, Noah Fujioka
  */
 public class WinchPosition {
-    String id;
+    int id;
+    int runwayParentId;
     String name;
-    String runwayParent;
-    String runwayParentId;
-    String airfieldParent;
-    String airfieldParentId;
     float altitude;
     float latitude;
     float longitude;
     String optionalInfo;
     
-    public WinchPosition(String name, String runwayParent, String airfieldParent, float altitude, float latitude, float longitude, String optional) {
+    public WinchPosition(String name, float altitude, float latitude, float longitude, String optional) {
         this.name = name;
-        this.runwayParent = runwayParent;
-        this.airfieldParent = airfieldParent;
         this.altitude = altitude;
         this.latitude = latitude;
         this.longitude = longitude;
         this.optionalInfo = optional;
     }
     
-    public String getId(){
-        if (id != null){
-            return id;
-        }
-        else{
-            id = "";
-            return id;
-        }
+    public WinchPosition(int id, int pid, String name, float altitude, 
+            float latitude, float longitude, String optional){
+        this.id = id;
+        this.runwayParentId = pid;
+        this.name = name;
+        this.altitude = altitude;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.optionalInfo = optional;
     }
     
-    public void setId(String newId){
+    public int getId(){
+        return id;
+    }
+    
+    public void setId(int newId){
         id = newId;
     }
     
@@ -50,43 +50,16 @@ public class WinchPosition {
         return name;
     }
     
-    public String getRunwayParent() {
-        return runwayParent;
-    }
 
-    public String getRunwayParentId(){
-        if (runwayParentId != null){
-            return runwayParentId;
-        }
-        else{
-            runwayParentId = "";
-            return runwayParentId;
-        }
+    public int getRunwayParentId(){
+        return runwayParentId;
     }
     
-    public void setRunwayParentId(String newRunwayParentId){
+    public void setRunwayParentId(int newRunwayParentId){
         runwayParentId = newRunwayParentId;
     } 
     
-    public String getAirfieldParent(){
-       return airfieldParent; 
-    }
-    
-    public String getAirfieldParentId(){
-        if (airfieldParentId != null){
-            return airfieldParentId;
-        }
-        else{
-            airfieldParentId = "";
-            return airfieldParentId;
-        }
-    }
-    
-    public void setAirfieldParentId(String newAirfieldParentId){
-        airfieldParentId = newAirfieldParentId;
-    } 
-    
-    public float getAltitude() {
+    public float getElevation() {
         return altitude;
     }
     

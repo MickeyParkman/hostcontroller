@@ -12,19 +12,47 @@ import java.util.HashMap;
  * 
  * @author jtroxel
  */
-public class Profile {
-    private String id;
+public class Operator {
+    private int id;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private boolean admin;
+    private String info;
     private HashMap<String,Integer> unitSettings;
-    private HashMap<String,Integer> displayPrefs;
 
-    public Profile(String id, String settings, String prefs) {
-        unitSettings = new HashMap<String, Integer>();
-        displayPrefs = new HashMap<String, Integer>();
+    public Operator(int id, String settings) {
+        unitSettings = new HashMap();
         this.id = id;
-        initSettingsFromString(settings, prefs);
+        firstName = "";
+        middleName = "";
+        lastName = "";
+        admin = false;
+        info = "";
+        initSettingsFromString(settings);
+    }
+    public Operator(int id, String name, String settings) {
+        firstName = name;
+        unitSettings = new HashMap();
+        this.id = id;        
+        middleName = "";
+        lastName = "";
+        admin = false;
+        info = "";
+        initSettingsFromString(settings);
+    }
+    public Operator(int id, String f, String m, String l, boolean admin, String info, String settings) {
+        firstName = f;
+        lastName = l;
+        middleName = m;
+        this.admin = admin;
+        this.info = info;
+        unitSettings = new HashMap();
+        this.id = id;
+        initSettingsFromString(settings);
     }
         
-    private void initSettingsFromString(String settings, String prefs) {
+    private void initSettingsFromString(String settings) {
         if(!settings.equals("{}")) {
             /* settings could be "{'PILOT_WEIGHT':0,'SAILPLANE_WEIGHT':1}" */
             settings = settings.replace("{","");
@@ -44,44 +72,22 @@ public class Profile {
                 unitSettings.put(hashId.toUpperCase(), hashValue);
             }
         }
-
-        if(!prefs.equals("{}")) {
-            prefs = prefs.replace("{","");
-            prefs = prefs.replace("}","");
-            String[] prefsArray = prefs.split(","); //["'PILOT_WEIGHT':0"]
-            for (String pref : prefsArray) {
-                int hashValue = 0;
-                String[] prefArray = pref.split(":");
-                String hashId = prefArray[0].replace("'","");
-                try {
-                    hashValue = Integer.parseInt(prefArray[1]);
-                } catch (NumberFormatException nfe) {
-                    // for now, do nothing;
-                }
-                displayPrefs.put(hashId.toUpperCase(), hashValue);
-            }
-        }
     }
     
-    public void setID(String id) {
+    public void setID(int id) {
         this.id = id;
+    }
+    
+    public void setName(String name) {
+        this.firstName = name;
     }
 
     public void setUnitSetting(String id, int value) {
         unitSettings.put(id.toUpperCase(), value);
     }   
 
-    public void setDisplayPref(String id, int value) {
-        displayPrefs.put(id.toUpperCase(), value);
-    }
-
     public int getUnitSetting(String id) {
         if (unitSettings.containsKey(id.toUpperCase())) return unitSettings.get(id.toUpperCase());
-        else return -1;
-    }
-  
-    public int getDisplayPref(String id) {
-        if (displayPrefs.containsKey(id.toUpperCase())) return displayPrefs.get(id.toUpperCase());
         else return -1;
     }
 
@@ -98,27 +104,33 @@ public class Profile {
         result += "}";
         return result;
     }
-
-    public String getDisplayPrefsForStorage() {
-        String result = "{";
-        for (int i = 0; i < displayPrefs.size(); i++) {
-            String id = (String) displayPrefs.keySet().toArray()[i];
-            result += "'" + id + "':";
-            result += Integer.toString(displayPrefs.get(id));
-            if (i != displayPrefs.size() - 1) {
-                result += ",";
-            }
-        }
-        result += "}";
-        return result;  
-    }
     
-    public String getID() {
+    public int getID() {
         return id;
     }
-
+    
+    public boolean getAdmin() {
+        return admin;
+    }
+    
+    public String getFirst() {
+        return firstName;
+    }
+    
+    public String getMiddle() {
+        return middleName;
+    }
+    
+    public String getLast() {
+        return lastName;
+    }
+    
+    public String getInfo() {
+        return info;
+    }
+    
     @Override
     public String toString() { 
-        return (id);
+        return firstName + " " + middleName + " " + lastName;
     }
 }

@@ -8,9 +8,6 @@ import DataObjects.Winch;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -24,11 +21,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
@@ -75,6 +68,7 @@ public class DEBUGWinchEditPanel extends JPanel implements Observer {
         JLabel winchName = new JLabel("WINCH: " + winch.getName());
         winchName.setAlignmentX(Component.CENTER_ALIGNMENT);
         WinchPanel.add(winchName);
+        /*
         for(Drum d : winch.getDrumsForDrive("Drive 1")) {
             JPanel drum = new JPanel();
             JLabel drumName = new JLabel("DRUM: " + d.toString());
@@ -88,6 +82,7 @@ public class DEBUGWinchEditPanel extends JPanel implements Observer {
             para.add(paraName);
             WinchPanel.add(para);
         }
+        */
         
         DEBUGWinchPanel.add(WinchPanel);
         if(isSelected) DEBUGWinchPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
@@ -178,13 +173,13 @@ public class DEBUGWinchEditPanel extends JPanel implements Observer {
                     loadedWinch.setName(parts[1]);
                     break;
                 case "winch-id":
-                    loadedWinch.setId(parts[1]);
+                    //loadedWinch.setId(parts[1]);
                     break;
                 case "winch-optional-data":
-                    loadedWinch.setOptionalData(parts[1]);
+                    //loadedWinch.setOptionalData(parts[1]);
                     break;
                 case "winch-brake-pressure":
-                    loadedWinch.setBrakePressure(Float.parseFloat(parts[1]));
+                    //loadedWinch.setBrakePressure(Float.parseFloat(parts[1]));
                     break;
                 case "drive":
                     curDrive = new Drive();
@@ -196,7 +191,7 @@ public class DEBUGWinchEditPanel extends JPanel implements Observer {
                     curDrive.setReductionRatio(Float.parseFloat(parts[1]));
                     break;
                 case "end-drive":
-                    loadedWinch.addDrive(curDrive);
+                    //loadedWinch.addDrive(curDrive);
                     break;
                 case "drum":
                     curDrum = new Drum();
@@ -224,7 +219,7 @@ public class DEBUGWinchEditPanel extends JPanel implements Observer {
                     curPara.setName(parts[1]);
                     break;
                 case "parachute-number":
-                    curPara.setParachuteNumber(Integer.parseInt(parts[1]));
+                    curPara.setParachuteId(Integer.parseInt(parts[1]));
                     break;
                 case "parachute-lift":
                     curPara.setLift(Float.parseFloat(parts[1]));
@@ -236,7 +231,7 @@ public class DEBUGWinchEditPanel extends JPanel implements Observer {
                     curPara.setWeight(Float.parseFloat(parts[1]));
                     break;
                 case "end-parachute":
-                    loadedWinch.addParachute(curPara);
+                    //loadedWinch.addParachute(curPara);
                     break;
             }
         }

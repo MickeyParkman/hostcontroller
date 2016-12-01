@@ -5,7 +5,8 @@ package DataObjects;
  * @author Noah Fujioka
  */
 
-import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DatabaseUtilities.DatabaseEntryInsert;
+import DatabaseUtilities.DatabaseEntrySelect;
 
 public class FlightSummary {
     private String startTimestamp;
@@ -30,7 +31,7 @@ public class FlightSummary {
     
     public void setCurrentDataObjectSet(){
         try{
-            DatabaseDataObjectUtilities.setCurrentDataObjectSetToFlight(this);
+            DatabaseEntrySelect.setCurrentDataObjectSetToFlight(this);
         }catch(Exception e){
             System.out.println("Error 404: Flight not found");
             //e.printStackTrace();
