@@ -52,13 +52,7 @@ public class RecentLaunchesPanel extends javax.swing.JPanel implements Observer 
         this.add(RecentLaunchScrollPane, BorderLayout.CENTER);
         
         
-        try{
             recentFlights = DatabaseEntrySelect.getFlights();
-        }catch(SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-
-        }
         
         DefaultListModel recentFlightsModel = new DefaultListModel();
         for(Object str: recentFlights){

@@ -2,9 +2,10 @@ package DataObjects;
 
 public class Drum {
     
-    private int drumId; //should be same as drum number
+    private int drumId;
     private int winchId;
     private String name;
+    private int drumNum;
     private float coreDiameter;
     private float kFactor;
     private float cableLength;
@@ -33,11 +34,12 @@ public class Drum {
         drive = d;
     }
     
-    public Drum(int id, int wid, String n, float cDi, float kF, float cL, 
+    public Drum(int id, int wid, String n, int dnum, float cDi, float kF, float cL, 
             float cDe, float dsem, int num, float mt, String info) {
         drumId = id;
         winchId = wid;
         name = n;
+        drumNum = dnum;
         coreDiameter = cDi;
         kFactor = kF;
         cableLength = cL;
@@ -115,6 +117,10 @@ public class Drum {
     
     public int getWinchId() {
         return winchId;
+    }
+    
+    public int getDrumNumber() {
+        return drumNum;
     }
     
     public float getMaxTension() {

@@ -20,12 +20,8 @@ import ParameterSelection.CurrentScenario;
 import ParameterSelection.EnvironmentalWindow;
 import ParameterSelection.DEBUGWinchEditPanel;
 import java.io.File;
-import java.sql.SQLException;
 import Communications.MessagePipeline;
-import DatabaseUtilities.DatabaseEntryInsert;
 import static DatabaseUtilities.DatabaseInitialization.HOSTCONTROLLER_VERSION;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MainWindow extends JFrame {
     private JMenuBar topMenu;

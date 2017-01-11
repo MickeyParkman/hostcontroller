@@ -5,7 +5,6 @@
  */
 package Configuration;
 
-import DatabaseUtilities.DatabaseExporter;
 import DatabaseUtilities.DatabaseImporter;
 import ParameterSelection.ParameterSelectionPanel;
 import java.awt.BorderLayout;
@@ -18,12 +17,9 @@ import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -38,8 +34,8 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox SelectAllCheck;
     private javax.swing.JScrollPane TableListPanel;
     private javax.swing.JList TableList;
-    private List<String> names = new ArrayList<String>();
-    private List<String> fileNames = new ArrayList<String>();
+    private List<String> names = new ArrayList<>();
+    private List<String> fileNames = new ArrayList<>();
     private File file;
     private ParameterSelectionPanel selectionPanel;
     
@@ -58,8 +54,10 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
         ZipInputStream zin = new ZipInputStream(new FileInputStream(file));
         for(ZipEntry e; (e = zin.getNextEntry()) != null;) {
             String fileName = e.toString();
-            fileNames.add(fileName);
-            names.add(GetNameFromFile(fileName));
+            if(fileName.contains("_")) {
+                fileNames.add(fileName);
+                names.add(GetNameFromFile(fileName));
+            }
         }
     }
     
@@ -122,16 +120,21 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
                         //System.out.println(orderedTables.toString());
                         
                         try{
-                            DatabaseImporter.importDatabase(file, orderedTables);
+                            DatabaseImporter.importDatabase(file, selectedTables);
                             //Done twice for possible foreign key contraints. Ugly solution
                             //DatabaseImporter.importDatabase(file, orderedTables);
                             selectionPanel.update();
                             getFrame().dispose();
                         }catch(Exception e)
                         {
+                            logError(e);
                             JOptionPane.showMessageDialog(rootPane, "Couldn't import", "Error", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }  
+
+            private void logError(Exception e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
                                          
                 });
         panel.add(submitButton);
@@ -164,7 +167,7 @@ public class DatabaseImportFrame extends javax.swing.JFrame {
     }
 
     public List<String> orderList(List<String> listStr) {
-        List<String> orderedList = new ArrayList<String>();
+        List<String> orderedList = new ArrayList<>();
         
         for(String s : listStr) {
             if(s.contains("AIRFIELD")) {

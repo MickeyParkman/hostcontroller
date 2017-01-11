@@ -528,6 +528,7 @@ public class DatabaseInitialization {
                 + "(drum_id INT, "
                 + "winch_id INT, "
                 + "drum_name VARCHAR(30), "
+                + "drum_number INT, "
                 + "core_diameter FLOAT, "
                 + "kfactor FLOAT, "
                 + "cable_length FLOAT, "
@@ -590,7 +591,7 @@ public class DatabaseInitialization {
                 + ""
                 + "reg_number VARCHAR(30),"
                 + "common_name VARCHAR(30),"
-                + "owner VARCHAR(30),"
+                + "glider_owner VARCHAR(30),"
                 + "type VARCHAR(30),"
                 + "max_gross_weight FLOAT,"
                 + "empty_weight FLOAT,"
@@ -615,6 +616,20 @@ public class DatabaseInitialization {
                 + "ballast FLOAT, "
                 + "baggage FLOAT, "
                 + "passenger_weight FLOAT, "
+                + ""
+                + "drum_name VARCHAR(30), " 
+                + "drum_number INT, "
+                + "core_diameter FLOAT, "
+                + "kfactor FLOAT, "
+                + "cable_length FLOAT, "
+                + "cable_density FLOAT, "
+                + "drum_system_emass FLOAT, " //Drum System Equivalent Mass
+                + "number_of_launches INT, "
+                + "maximum_working_tension FLOAT, "
+                + "parachute_name VARCHAR(30), "
+                + "parachute_lift FLOAT, "
+                + "parachute_drag FLOAT, "
+                + "parachute_weight FLOAT, "
                 + ""
                 + "airfield_info INT, "
                 + "FOREIGN KEY (capability) REFERENCES Capability (capability_id), "
@@ -648,21 +663,9 @@ public class DatabaseInitialization {
                 + "winch_position_elevation FLOAT, "
                 + "winch_position_latitude FLOAT, "
                 + "winch_position_longitude FLOAT, "
+                + ""
                 + "winch_name VARCHAR(30), " 
                 + "winch_owner VARCHAR(30), "
-                + "" 
-                + "drum_number INT, "
-                + "core_diameter FLOAT, "
-                + "kfactor FLOAT, "
-                + "cable_length FLOAT, "
-                + "cable_density FLOAT, "
-                + "drum_system_emass FLOAT, " //Drum System Equivalent Mass
-                + "number_of_launches INT, "
-                + "maximum_working_tension FLOAT, "
-                + "parachute_name VARCHAR(30), "
-                + "parachute_lift FLOAT, "
-                + "parachute_drag FLOAT, "
-                + "parachute_weight FLOAT, "
                 + "PRIMARY KEY (table_id))";
         try (Statement createPastLaunchesInfoTableStatement = connect.createStatement()) {
             createPastLaunchesInfoTableStatement.execute(createPrevInfo);
@@ -688,7 +691,6 @@ public class DatabaseInitialization {
                 + "hash VARCHAR(60), "
                 + "optional_info LONG VARCHAR, "
                 + "unitSettings LONG VARCHAR, "
-                + "displayPrefs LONG VARCHAR, "
                 + "PRIMARY KEY (operator_id))";
         try (Statement createProfileTableStatement = connect.createStatement()) {
             createProfileTableStatement.execute(createProfileString);

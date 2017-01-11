@@ -5,28 +5,25 @@ package DataObjects;
  * @author Noah Fujioka
  */
 
-import DatabaseUtilities.DatabaseEntryInsert;
 import DatabaseUtilities.DatabaseEntrySelect;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 
 public class FlightSummary {
-    private String startTimestamp;
-    private String pilotId;
-    private String pilotFirstName;
-    private String pilotLastName;
-    private String gliderNnumber;
+    private final Timestamp startTimestamp;
+    private final String pilotFirstName;
+    private final String pilotMiddleName;
+    private final String pilotLastName;
+    private final String gliderNnumber;
     
-    public FlightSummary(String startTimestamp, String pilotId, 
-            String pilotFirstName, String pilotLastName, String gliderNnumber){
+    public FlightSummary(Timestamp startTimestamp, String pilotFirstName, 
+            String pilotLastName, String pilotMiddleName, String gliderNnumber){
             this.startTimestamp = startTimestamp;
-            this.pilotId = pilotId;
             this.pilotFirstName = pilotFirstName;
             this.pilotLastName = pilotLastName;
+            this.pilotMiddleName = pilotMiddleName;
             this.gliderNnumber = gliderNnumber;
-    }
-    
-    public String toString(){
-        return startTimestamp + ", " + pilotFirstName + " " + pilotLastName +
-                ", " + gliderNnumber;
     }
     
     public void setCurrentDataObjectSet(){
@@ -38,11 +35,95 @@ public class FlightSummary {
         }
     }
     
-    public String getStartTimestamp(){
+    public String getFirst() {
+        return this.pilotFirstName;
+    }
+    
+    public String getLast() {
+        return this.pilotLastName;
+    }
+    
+    public String getMiddle() {
+        return this.pilotMiddleName;
+    }
+    
+    public LocalDateTime getLocalTime() {
+        return this.startTimestamp.toLocalDateTime();
+    }
+    
+    public String getGliderNumber() {
+        return this.gliderNnumber;
+    }
+    
+    public Timestamp getStartTimestamp(){
         return startTimestamp;
     }
     
-    public String getPilotId(){
-        return pilotId;
+    public class ByFirstName implements Comparator<FlightSummary>{
+
+        @Override
+        public int compare(FlightSummary f1, FlightSummary f2) {
+            return f1.getFirst().compareTo(f2.getFirst());
+        }
+
+        @Override
+        public Comparator reversed() {
+            return Comparator.super.reversed(); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
+    public class ByLasttName implements Comparator<FlightSummary> {
+
+        @Override
+        public int compare(FlightSummary f1, FlightSummary f2) {
+            return f1.getLast().compareTo(f2.getLast());
+        }
+
+        @Override
+        public Comparator reversed() {
+            return Comparator.super.reversed(); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
+    
+    public class ByMiddleName implements Comparator<FlightSummary>{
+
+        @Override
+        public int compare(FlightSummary f1, FlightSummary f2) {
+            return f1.getMiddle().compareTo(f2.getMiddle());
+        }
+
+        @Override
+        public Comparator reversed() {
+            return Comparator.super.reversed(); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
+    
+    public class ByGlider implements Comparator<FlightSummary>{
+
+        @Override
+        public int compare(FlightSummary f1, FlightSummary f2) {
+            return f1.getGliderNumber().compareTo(f2.getGliderNumber());
+        }
+
+        @Override
+        public Comparator reversed() {
+            return Comparator.super.reversed(); //To change body of generated methods, choose Tools | Templates.
+        }   
+    }
+    
+    public class ByTime implements Comparator<FlightSummary>{
+
+        @Override
+        public int compare(FlightSummary f1, FlightSummary f2) {
+            return f1.getLocalTime().compareTo(f2.getLocalTime());
+        }
+
+        @Override
+        public Comparator reversed() {
+            return Comparator.super.reversed(); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     }
 }

@@ -6,9 +6,6 @@
 
 package DataObjects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This class stores the relevant data about a drum on the winch
  * 
@@ -33,10 +30,11 @@ public class Winch {
         name = "";
     }
     
-    public Winch(String name, String owner, String wc, float w1, float w2, float w3,
+    public Winch(int id, String name, String owner, String wc, float w1, float w2, float w3,
             float w4, float w5, float w6, float w7, float w8, float w9, float w10, float w11, float w12,
             float w13, float w14, float w15, float w16, int mct, int mvt, float rot, String info) {
         //driveList = new ArrayList<>();
+        this.id = id;
         this.name = name;
         this.owner = owner;
         this.wc_version = wc;

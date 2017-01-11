@@ -13,7 +13,6 @@ import DataObjects.*;
 import static DatabaseUtilities.DatabaseInitialization.WINCH_PRAM_VERSION;
 import static DatabaseUtilities.DatabaseInitialization.connect;
 import ParameterSelection.Capability;
-import ParameterSelection.Preference;
 import java.security.SecureRandom;
 /**
  *
@@ -315,22 +314,28 @@ public class DatabaseEntryEdit
             }
             String updateString = "UPDATE DRUM SET "
                     + "drum_name = ?, "
+                    + "drum_number = ?, "
                     + "core_diameter = ?, "
                     + "kfactor = ?, "
                     + "cable_length = ?, "
+                    + "cable_density = ?, "
+                    + "drum_system_emass = ?, "
                     + "number_of_launches = ?, "
                     + "maximum_working_tension = ?, "
                     + "optional_info = ? "
                     + "WHERE drum_id = ?";
             PreparedStatement stmt = conn.prepareStatement(updateString);
             stmt.setString(1, drum.getName());
-            stmt.setFloat(2, drum.getCoreDiameter());
-            stmt.setFloat(3, drum.getKFactor());
-            stmt.setFloat(4, drum.getCableLength());
-            stmt.setInt(5, drum.getNumLaunches());
-            stmt.setFloat(6, drum.getMaxTension());
-            stmt.setString(7, drum.getOptionalInfo());
-            stmt.setInt(8, drum.getId());
+            stmt.setInt(2, drum.getDrumNumber());
+            stmt.setFloat(3, drum.getCoreDiameter());
+            stmt.setFloat(4, drum.getKFactor());
+            stmt.setFloat(5, drum.getCableLength());
+            stmt.setFloat(6, drum.getCableDensity());
+            stmt.setFloat(7, drum.getSystemEquivalentMass());
+            stmt.setInt(8, drum.getNumLaunches());
+            stmt.setFloat(9, drum.getMaxTension());
+            stmt.setString(10, drum.getOptionalInfo());
+            stmt.setInt(11, drum.getId());
             return Update(stmt);
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);

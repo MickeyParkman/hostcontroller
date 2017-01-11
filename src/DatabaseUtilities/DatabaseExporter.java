@@ -5,6 +5,8 @@
  */
 package DatabaseUtilities;
 
+import static Communications.ErrorLogger.logError;
+import static DatabaseUtilities.DatabaseInitialization.connect;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,45 +29,23 @@ public class DatabaseExporter {
      * The location of the files is its own folder in the final build 
      * 
      * @param tableName name of the table that is to be exported
-     * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @param zipName
      */
-    public static void exportDatabase(List<String> tableName, String zipName) throws ClassNotFoundException, SQLException {
-        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;create=true";
-        Connection connection = null;
-        
-        //Check for DB drivers
-        try {
-            Class.forName(clientDriverName);
-            Class.forName(driverName);
-        }catch(java.lang.ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDb ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-        
+    public static boolean exportDatabase(List<String> tableName, String zipName) {
+        Connection connection = connect();
         //try to connect
-        try {
-            connection = DriverManager.getConnection(databaseConnectionName);
-        }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Correctly loaded the JavaDb ClientDriver, somethin else is wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
+        if(connection == null) {
+            return false;
         }
+        return exportTable(connection, tableName, zipName);
         
-        try {
-            exportTable(connection, tableName, zipName);
-        }catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Couldn't export table", "Error", JOptionPane.INFORMATION_MESSAGE);
-            e.printStackTrace();
-        }
     }
     
-    private static void exportTable(Connection connect, List<String> names, String zipName) throws SQLException, FileNotFoundException, IOException {
+    private static boolean exportTable(Connection connect, List<String> names, String zipName) {
         
-        FileOutputStream fos = null;
-        ZipOutputStream zos = null;
-        ZipEntry ze = null;
+        FileOutputStream fos;
+        ZipOutputStream zos;
+        ZipEntry ze;
         
         try {
             fos = new FileOutputStream(zipName);
@@ -75,8 +55,16 @@ public class DatabaseExporter {
             
             for(String str : names)
             {
-                String resultString = "";
-                String fileName = "output_" + str + "_" + timestamp + ".csv";
+                String resultString;
+                String fileName = "";
+                if(str.equalsIgnoreCase("VERSION")) {
+                    fileName = "__output_" + str + "_" + timestamp + ".csv";                    
+                } else if(str.equalsIgnoreCase("airfield") || 
+                        str.equalsIgnoreCase("runway") || str.equalsIgnoreCase("winch")) {
+                    fileName = "_output_" + str + "_" + timestamp + ".csv";                    
+                } else {
+                    fileName = "output_" + str + "_" + timestamp + ".csv";
+                }
                 
                 ze = new ZipEntry(fileName);
                 zos.putNextEntry(ze);
@@ -102,13 +90,20 @@ public class DatabaseExporter {
                 
                 zos.closeEntry();
             }
-            
-        }catch(Exception e)
-        { }
-        finally{
+            zos.finish();
             zos.close();
-            fos.close();
+            
+        }catch(IOException e) { 
+            JOptionPane.showMessageDialog(null, "File not Found", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+            return false;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error exporting", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+            return false;
         }
+        
+        return true;
     } 
 
     

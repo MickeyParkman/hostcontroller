@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  * @author Alex Williams
  */
 public class DatabaseUnitSelectionUtilities {
-    private static final String databaseConnectionName = "jdbc:derby:WinchCommonsTest12DataBase;";
+    private static final String databaseConnectionName = "jdbc:derby:hcDatabase;";
     private static final String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
     

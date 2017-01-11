@@ -5,6 +5,7 @@
  */
 package Configuration;
 
+import static Communications.ErrorLogger.logError;
 import DatabaseUtilities.DatabaseEntrySelect;
 import DatabaseUtilities.DatabaseExporter;
 import java.awt.BorderLayout;
@@ -45,7 +46,8 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
     {
         try {
             names = DatabaseEntrySelect.getTables();
-        }catch(Exception e) {
+        }catch(ClassNotFoundException | SQLException e) {
+            logError(e);
         }
     }
     
@@ -92,12 +94,12 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
                         JFileChooser chooser = new JFileChooser();
                         chooser.setDialogTitle("Save");
                         chooser.setApproveButtonText("Save");
-                        String filePath = "";
-                        String fileName = "";
-                        String zipLocation = "";
+                        String filePath;
+                        String fileName;
+                        String zipLocation;
                         int option = chooser.showOpenDialog(DatabaseExportFrame.this);
                         if(option == JFileChooser.APPROVE_OPTION) {
-                            List<String> selectedTables = new ArrayList<String>();
+                            List<String> selectedTables;
                             selectedTables = TableList.getSelectedValuesList();
                             File file = chooser.getSelectedFile();
                             File chosen = chooser.getCurrentDirectory();
@@ -109,7 +111,7 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
                             try{
                             DatabaseExporter.exportDatabase(selectedTables, zipLocation);
                             getFrame().dispose();
-                            }catch(Exception e)
+                            }catch(Exception e) 
                             {
                                 JOptionPane.showMessageDialog(rootPane, "Couldn't export", "Error", JOptionPane.INFORMATION_MESSAGE);
                             }

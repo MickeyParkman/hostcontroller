@@ -112,7 +112,8 @@ public class DatabaseEntrySelect {
                     + "FROM Parachute ORDER BY drum_name");
             while (theDrums.next()) {
                 int id = theDrums.getInt("drum_id");
-                String drum_name = theDrums.getString("name");
+                String drum_name = theDrums.getString("drum_name");
+                int drum_number = theDrums.getInt("drum_number");
                 float core_diameter = theDrums.getFloat("core_diameter");
                 float kfactor = theDrums.getFloat("kfactor");
                 float cable_length = theDrums.getFloat("cable_length");
@@ -122,7 +123,7 @@ public class DatabaseEntrySelect {
                 float max_tension = theDrums.getFloat("maximum_working_tension");
                 int winchId = theDrums.getInt("winch_id");
                 String info = theDrums.getString("optional_info");
-                Drum newDrum = new Drum(id, winchId, drum_name, core_diameter, 
+                Drum newDrum = new Drum(id, winchId, drum_name, drum_number, core_diameter, 
                         kfactor, cable_length, cable_density, drum_system_emass,
                         launch_number, max_tension, info);
                 drums.add(newDrum);
@@ -186,11 +187,36 @@ public class DatabaseEntrySelect {
      * Pulls the summary list of flights from the database
      *
      * @return the list of flights in the database
-     * @throws SQLException if the table in the database can't be accessed
-     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
      */
-    public static List<FlightSummary> getFlights() throws SQLException, ClassNotFoundException {
-        return new ArrayList();
+    public static List<FlightSummary> getFlights() {
+        List<FlightSummary> flights = new ArrayList<>();
+        try (Connection connect = connect()){
+            Statement stmt = connect.createStatement();
+            ResultSet theFlights = stmt.executeQuery("SELECT start_timestamp, "
+                    + "first_name, last_name, middle_name, reg_number "
+                    + "FROM PreviousLaunches ORDER BY start_timestamp");
+            
+            while(theFlights.next()) {
+                Timestamp startTimestamp = theFlights.getTimestamp(1); 
+                String pilotFirstName = theFlights.getString(2);
+                String pilotLastName = theFlights.getString(3);
+                String pilotMiddleName = theFlights.getString(4);
+                String gliderNnumber = theFlights.getString(5);
+                
+                FlightSummary newFlight = new FlightSummary(startTimestamp, 
+                        pilotFirstName, pilotLastName, pilotMiddleName, gliderNnumber);
+                flights.add(newFlight);
+            }
+            theFlights.close();
+            stmt.close();
+            connect.close();
+            return flights;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, could not retreve Flights",
+                    "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
+        return flights;
     }
 
     /**
@@ -236,11 +262,69 @@ public class DatabaseEntrySelect {
      *
      * @param flightInformation contains the summary information of the flight
      * @post the current information contains the past flight information
-     * @throws SQLException if the table in the database can't be accessed
-     * @throws ClassNotFoundException If Apache Derby drivers can't be loaded
      */
-    public static void setCurrentDataObjectSetToFlight(FlightSummary flightInformation) 
-            throws SQLException, ClassNotFoundException {
+    public static void setCurrentDataObjectSetToFlight(FlightSummary flightInformation) {
+        try (Connection connect = connect()) {
+            PreparedStatement stmt = connect.prepareStatement("SELECT * "
+                    + "FROM PreviousLaunches "
+                    + "WHERE start_timestamp = ?");
+            stmt.setTimestamp(1, flightInformation.getStartTimestamp());
+            
+            ResultSet theFlight = stmt.executeQuery();
+            CurrentDataObjectSet currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
+            if(theFlight.next()) {
+                //Create Pilot
+                String pilotFirstName = theFlight.getString("first_name");
+                String pilotLastName = theFlight.getString("last_name");
+                String pilotMiddleName = theFlight.getString("middle_name");
+                float pilotWeight = theFlight.getFloat("flight_weight");
+                int pilotCapability = theFlight.getInt("capability");
+                float pilotPreference = theFlight.getFloat("preference");
+                String emergencyName = theFlight.getString("emergency_contact_name");
+                String emergencyPhone = theFlight.getString("emergency_contact_phone");
+                String optionalInfo = theFlight.getString("pilot_optional_info");
+                
+                Pilot newPilot = new Pilot(0, pilotFirstName, pilotLastName, pilotMiddleName, pilotWeight , 
+                        Capability.convertCapabilityNumToString(pilotCapability), pilotPreference, 
+                        emergencyName, emergencyPhone, optionalInfo);
+                currentDataObjectSet.setCurrentPilot(newPilot);
+                
+                //Create Glider
+                String gliderNNumber = theFlight.getString("reg_number");
+                String commonName = theFlight.getString("common_name");
+                String gliderOwner = theFlight.getString("glider_owner");
+                String gliderType = theFlight.getString("type");
+                
+                float gliderMaxGrossWeight = theFlight.getFloat("max_gross_weight"); 
+                float gliderEmptyWeight = theFlight.getFloat("empty_weight");
+                float gliderStallSpeed = theFlight.getFloat("indicated_stall_speed");
+                float gliderMaxWinchingSpeed = theFlight.getFloat("max_winching_speed");
+                float gliderMaxWeakLinkStrength = theFlight.getFloat("max_weak_link_strength");
+                float gliderMaxTension = theFlight.getFloat("max_tension");
+                float gliderCableAngle = theFlight.getFloat("cable_release_angle");
+                
+                boolean ballast = theFlight.getBoolean("carry_ballast");
+                boolean multipleSeats = theFlight.getBoolean("multiple_seats");
+                optionalInfo = theFlight.getString("glider_optional_info");
+                
+                Sailplane newSailplane = new Sailplane(gliderNNumber, commonName, gliderOwner, gliderType,
+                        gliderMaxGrossWeight, gliderEmptyWeight, gliderStallSpeed, gliderMaxWinchingSpeed, 
+                        gliderMaxWeakLinkStrength, gliderMaxTension, gliderCableAngle, 
+                        ballast, multipleSeats, optionalInfo);
+                currentDataObjectSet.setCurrentGlider(newSailplane);
+                
+                CurrentLaunchInformation currentLaunchInformation = 
+                        CurrentLaunchInformation.getCurrentLaunchInformation();                
+                currentLaunchInformation.setGliderBallast(theFlight.getFloat("ballast"));
+                currentLaunchInformation.setPassengerWeight(theFlight.getFloat("passenger_weight"));
+                currentLaunchInformation.setGliderBaggage(theFlight.getFloat("baggage"));
+            }
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, could not repopulate current data",
+                    "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+        }
         
     }
 

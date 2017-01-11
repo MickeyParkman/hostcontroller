@@ -302,18 +302,22 @@ public class DatabaseEntryInsert {
                 return false;
             }
             PreparedStatement DrumInsertStatement = connect.prepareStatement(
-                "INSERT INTO Drum(drum_id, drum_name, core_diameter, kfactor, cable_length,"
-                        + "number_of_launches, maximum_working_tension, winch_id, optional_info) "
-                        + "values (?,?,?,?,?,?,?,?,?)");
+                "INSERT INTO Drum(drum_id, drum_name, drum_number, core_diameter, kfactor, "
+                        + "cable_length, cable_density, drum_system_emass, number_of_launches, "
+                        + "maximum_working_tension, winch_id, optional_info) "
+                        + "values (?,?,?,?,?,?,?,?,?,?,?,?)");
             DrumInsertStatement.setInt(1, theDrum.getId());
             DrumInsertStatement.setString(2, theDrum.getName());
-            DrumInsertStatement.setFloat(3, theDrum.getCoreDiameter());
-            DrumInsertStatement.setFloat(4, theDrum.getKFactor());
-            DrumInsertStatement.setFloat(5, theDrum.getCableLength());
-            DrumInsertStatement.setInt(6, theDrum.getNumLaunches());
-            DrumInsertStatement.setFloat(7, theDrum.getMaxTension());
-            DrumInsertStatement.setInt(8, theDrum.getWinchId());
-            DrumInsertStatement.setString(9, theDrum.getOptionalInfo());
+            DrumInsertStatement.setInt(3, theDrum.getDrumNumber());
+            DrumInsertStatement.setFloat(4, theDrum.getCoreDiameter());
+            DrumInsertStatement.setFloat(5, theDrum.getKFactor());
+            DrumInsertStatement.setFloat(6, theDrum.getCableLength());
+            DrumInsertStatement.setFloat(7, theDrum.getCableDensity());
+            DrumInsertStatement.setFloat(8, theDrum.getSystemEquivalentMass());
+            DrumInsertStatement.setInt(9, theDrum.getNumLaunches());
+            DrumInsertStatement.setFloat(10, theDrum.getMaxTension());
+            DrumInsertStatement.setInt(11, theDrum.getWinchId());
+            DrumInsertStatement.setString(12, theDrum.getOptionalInfo());
             DrumInsertStatement.executeUpdate();
             DrumInsertStatement.close();
         }catch(SQLException e) {
@@ -392,6 +396,39 @@ public class DatabaseEntryInsert {
      * Adds the relevant data for a profile to the database
      * 
      * @param theProfile the profile to add to the database
+     * @return false if add fails
+     */
+    public static boolean addOperatorToDB(Operator theProfile, String salt, String hash) {
+        try (Connection connect = connect()) {
+            if(connect == null) {
+                return false;
+            }
+            PreparedStatement ProfileInsertStatement = connect.prepareStatement(
+                "INSERT INTO Operator(operator_id, first_name, middle_name, last_name, admin,"
+                        + "salt, hash, optional_info, unitSettings)"
+                        + "values (?,?,?,?,?,?,?,?,?)");
+            ProfileInsertStatement.setInt(1, theProfile.getID());
+            ProfileInsertStatement.setString(2, theProfile.getFirst());
+            ProfileInsertStatement.setString(3, theProfile.getMiddle());
+            ProfileInsertStatement.setString(4, theProfile.getLast());
+            ProfileInsertStatement.setBoolean(5, theProfile.getAdmin());
+            ProfileInsertStatement.setString(6, salt);
+            ProfileInsertStatement.setString(7, hash);
+            ProfileInsertStatement.setString(8, theProfile.getInfo());
+            ProfileInsertStatement.setString(9, theProfile.getUnitSettingsForStorage());
+            ProfileInsertStatement.executeUpdate();
+            ProfileInsertStatement.close();
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error executing", "Error", JOptionPane.INFORMATION_MESSAGE);
+            logError(e);
+            return false;
+        }
+        return true;
+    }
+    /**
+     * Adds the relevant data for a profile to the database
+     * 
+     * @param theProfile the profile to add to the database
      * @param pass the password for the operator
      * @return false if add fails
      */
@@ -448,6 +485,7 @@ public class DatabaseEntryInsert {
      * 
      * @param startTime the start of the launch
      * @param endTime the end of the launch
+     * @param airfieldChanged if airfield information has changed
      * @return false if add fails
      */
     public static boolean addLaunchToDB(double startTime, double endTime, boolean airfieldChanged) {
@@ -472,7 +510,7 @@ public class DatabaseEntryInsert {
                         //Glider Info
                         + "reg_number, "
                         + "common_name, "
-                        + "owner, "
+                        + "glider_owner, "
                         + "type, "
                         + "max_gross_weight, "
                         + "empty_weight, "
@@ -494,6 +532,21 @@ public class DatabaseEntryInsert {
                         + "density_altitude, " 
                         + "temperature, " 
                         + "altimeter_setting, "
+                        //Drum
+                        + "drum_name, "
+                        + "drum_number, "
+                        + "core_diameter, "
+                        + "kfactor, "
+                        + "cable_length, "
+                        + "cable_density, "
+                        + "drum_system_emass, " //Drum System Equivalent Mass
+                        + "number_of_launches, "
+                        + "maximum_working_tension, "
+                        //Parachute
+                        + "parachute_name, "
+                        + "parachute_lift, "
+                        + "parachute_drag, "
+                        + "parachute_weight, "
                         //Additional info
                         + "ballast, "
                         + "baggage, "
@@ -503,7 +556,8 @@ public class DatabaseEntryInsert {
                         + "?,?,?,?,?,?,?,?,?,?,"//10
                         + "?,?,?,?,?,?,?,?,?,?,"//10
                         + "?,?,?,?,?,?,?,?,?,?,"//10
-                        + "?,?,?,?,?,?,?,?)");//8
+                        + "?,?,?,?,?,?,?,?,?,?,"//10
+                        + "?,?,?,?,?,?,?,?,?,?,?)");//11
             CurrentDataObjectSet currentDataObjectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
             PreviousLaunchesInsert.setTimestamp(1, new Timestamp((long)startTime));
             PreviousLaunchesInsert.setTimestamp(2, new Timestamp((long)endTime));
@@ -535,7 +589,6 @@ public class DatabaseEntryInsert {
             PreviousLaunchesInsert.setString(25, currentDataObjectSet.getCurrentSailplane().getOptionalInfo());
             
             CurrentLaunchInformation currentLaunchInformation = CurrentLaunchInformation.getCurrentLaunchInformation();
-            //TODO 
             
             PreviousLaunchesInsert.setFloat(26, currentLaunchInformation.getWindDirectionWinch());
             PreviousLaunchesInsert.setFloat(27, currentLaunchInformation.getWindSpeedWinch());
@@ -546,10 +599,25 @@ public class DatabaseEntryInsert {
             PreviousLaunchesInsert.setFloat(32, currentLaunchInformation.getDensityAltitude());
             PreviousLaunchesInsert.setFloat(33, currentLaunchInformation.getTemperature());
             PreviousLaunchesInsert.setFloat(34, currentLaunchInformation.getAltimeter());
-            
-            PreviousLaunchesInsert.setFloat(35, currentLaunchInformation.getGliderBallast());
-            PreviousLaunchesInsert.setFloat(36, currentLaunchInformation.getGliderBaggage());
-            PreviousLaunchesInsert.setFloat(37, currentLaunchInformation.getPassengerWeight());
+            //Drum
+            PreviousLaunchesInsert.setString(35, currentDataObjectSet.getCurrentDrum().getName());
+            PreviousLaunchesInsert.setInt(36, currentDataObjectSet.getCurrentDrum().getDrumNumber());
+            PreviousLaunchesInsert.setFloat(37, currentDataObjectSet.getCurrentDrum().getCoreDiameter());
+            PreviousLaunchesInsert.setFloat(38, currentDataObjectSet.getCurrentDrum().getKFactor());
+            PreviousLaunchesInsert.setFloat(39, currentDataObjectSet.getCurrentDrum().getCableLength());
+            PreviousLaunchesInsert.setFloat(40, currentDataObjectSet.getCurrentDrum().getCableDensity());
+            PreviousLaunchesInsert.setFloat(41, currentDataObjectSet.getCurrentDrum().getSystemEquivalentMass());
+            PreviousLaunchesInsert.setFloat(42, currentDataObjectSet.getCurrentDrum().getNumLaunches());
+            PreviousLaunchesInsert.setFloat(43, currentDataObjectSet.getCurrentDrum().getMaxTension());
+            //Parachute
+            PreviousLaunchesInsert.setString(44, currentDataObjectSet.getCurrentDrum().getParachute().getName());
+            PreviousLaunchesInsert.setFloat(45, currentDataObjectSet.getCurrentDrum().getParachute().getLift());
+            PreviousLaunchesInsert.setFloat(46, currentDataObjectSet.getCurrentDrum().getParachute().getDrag());
+            PreviousLaunchesInsert.setFloat(47, currentDataObjectSet.getCurrentDrum().getParachute().getWeight()); 
+            //Additional info
+            PreviousLaunchesInsert.setFloat(48, currentLaunchInformation.getGliderBallast());
+            PreviousLaunchesInsert.setFloat(49, currentLaunchInformation.getGliderBaggage());
+            PreviousLaunchesInsert.setFloat(50, currentLaunchInformation.getPassengerWeight());
             
             if(airfieldChanged || Airfield_Key == -1) {
                 Random randomId = new Random();
@@ -584,24 +652,8 @@ public class DatabaseEntryInsert {
                             //Winch
                             + "winch_name, " 
                             + "winch_owner, "
-                            //Drum
-                            + "drum_number, "
-                            + "core_diameter, "
-                            + "kfactor, "
-                            + "cable_length, "
-                            + "cable_density, "
-                            + "drum_system_emass, " //Drum System Equivalent Mass
-                            + "number_of_launches, "
-                            + "maximum_working_tension, "
-                            //Parachute
-                            + "parachute_name, "
-                            + "parachute_lift, "
-                            + "parachute_drag, "
-                            + "parachute_weight, "
                             + "values (?,?,?,?,?,?,?,?,?,?," //10
-                            + "?,?,?,?,?,?,?,?,?,?," //10
-                            + "?,?,?,?,?,?,?,?,?,?," //10
-                            + "?,?)"); //2
+                            + "?,?,?,?,?,?,?,?,?,?)"); //10
                 PreviousAirfieldInsert.setInt(1, Airfield_Key);
                 //Airfield
                 PreviousAirfieldInsert.setString(2, currentDataObjectSet.getCurrentAirfield().getName());
@@ -627,26 +679,12 @@ public class DatabaseEntryInsert {
                 //Winch
                 PreviousAirfieldInsert.setString(19, currentDataObjectSet.getCurrentWinch().getName());
                 PreviousAirfieldInsert.setString(20, currentDataObjectSet.getCurrentWinch().getOwner());
-                //Drum
-                PreviousAirfieldInsert.setInt(21, currentDataObjectSet.getCurrentDrum().getId());
-                PreviousAirfieldInsert.setFloat(22, currentDataObjectSet.getCurrentDrum().getCoreDiameter());
-                PreviousAirfieldInsert.setFloat(23, currentDataObjectSet.getCurrentDrum().getKFactor());
-                PreviousAirfieldInsert.setFloat(24, currentDataObjectSet.getCurrentDrum().getCableLength());
-                PreviousAirfieldInsert.setFloat(25, currentDataObjectSet.getCurrentDrum().getCableDensity());
-                PreviousAirfieldInsert.setFloat(26, currentDataObjectSet.getCurrentDrum().getSystemEquivalentMass());
-                PreviousAirfieldInsert.setFloat(27, currentDataObjectSet.getCurrentDrum().getNumLaunches());
-                PreviousAirfieldInsert.setFloat(28, currentDataObjectSet.getCurrentDrum().getMaxTension());
-                //Parachute
-                PreviousAirfieldInsert.setString(29, currentDataObjectSet.getCurrentDrum().getParachute().getName());
-                PreviousAirfieldInsert.setFloat(30, currentDataObjectSet.getCurrentDrum().getParachute().getLift());
-                PreviousAirfieldInsert.setFloat(31, currentDataObjectSet.getCurrentDrum().getParachute().getDrag());
-                PreviousAirfieldInsert.setFloat(32, currentDataObjectSet.getCurrentDrum().getParachute().getWeight());
                 
                 PreviousAirfieldInsert.executeUpdate();
                 PreviousAirfieldInsert.close();
             }
             
-            PreviousLaunchesInsert.setInt(38, Airfield_Key);
+            PreviousLaunchesInsert.setInt(51, Airfield_Key);
             PreviousLaunchesInsert.executeUpdate();
             PreviousLaunchesInsert.close();
         }catch(SQLException | ClassNotFoundException e) {
