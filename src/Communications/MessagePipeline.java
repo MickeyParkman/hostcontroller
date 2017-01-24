@@ -1,17 +1,12 @@
 package Communications;
 
-import DatabaseUtilities.DatabaseEntryInsert;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 
 public class MessagePipeline implements Runnable {
     

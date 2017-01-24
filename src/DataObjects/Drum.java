@@ -2,36 +2,26 @@ package DataObjects;
 
 public class Drum {
     
-    private int drumId;
-    private int winchId;
-    private String name;
-    private int drumNum;
-    private float coreDiameter;
-    private float kFactor;
-    private float cableLength;
-    private float cableDensity;
-    private float systemEquivalentMass;
-    private int numLaunches;
-    private float maxTension;
+    private int drumId;                 //randomly generated id
+    private int winchId;                //the winches random id
+    private String name;                //Drum's name
+    private int drumNum;                //Drum's unique number
+    private float coreDiameter;         //Drum's core diameter
+    private float kFactor;              //Drum's K-Factor
+    private float cableLength;          //Length of the cable
+    private float cableDensity;         //Density of the cable
+    private float systemEquivalentMass; //Drum System Equivalent Mass
+    private int numLaunches;            //Number of lauches this drum has done
+    private float maxTension;           //Maximum tension the cable can happen
     private String info;
     
-    private Parachute para;
-    private Drive drive;
+    private Parachute para;             //Currently attached parachute
+    private Drive drive;                //Yea I got no clue
 
-
+    //constructors
     public Drum()
     {
 
-    }
-    
-    public Drive getDrive()
-    {
-        return drive;
-    }
-    
-    public void setDrive(Drive d)
-    {
-        drive = d;
     }
     
     public Drum(int id, int wid, String n, int dnum, float cDi, float kF, float cL, 
@@ -60,6 +50,18 @@ public class Drum {
         this.info = info;
     }
     
+    //getters and setters
+    
+    public Drive getDrive()
+    {
+        return drive;
+    }
+    
+    public void setDrive(Drive d)
+    {
+        drive = d;
+    }
+    
     public void setId(int i) {
         drumId = i;
     }
@@ -71,7 +73,9 @@ public class Drum {
     
     public void setCoreDiameter(float cd)
     {
-        coreDiameter = cd;
+        if(cd > 0) {
+            coreDiameter = cd;
+        }
     }
     
     public void setKFactor(float k)
@@ -81,14 +85,9 @@ public class Drum {
     
     public void setCableLength(float cl)
     {
-        cableLength = cl;
-    }
-    
-    public String toString() {
-        if(para == null) 
-            return drive.getName() + " - " + name + " (NO PARACHUTE)";
-        else 
-            return drive.getName() + " - " + name + " (" + para.getName() + ")";
+        if(cl > 0) {
+            cableLength = cl;
+        }
     }
     
     public int getId() {
@@ -152,5 +151,17 @@ public class Drum {
 
     public float getCableDensity() {
         return cableDensity;
+    }
+    
+    @Override
+    public String toString() {
+        if(para == null) 
+            return drive.getName() + " - " + name + " (NO PARACHUTE)";
+        else 
+            return drive.getName() + " - " + name + " (" + para.getName() + ")";
+    }
+    
+    public boolean check() {
+        return !name.equals("") && para != null;
     }
 }

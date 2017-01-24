@@ -13,18 +13,21 @@ package DataObjects;
  * @date    11/19/2014
  */
 public class Winch {
-    private int id;
-    private String name;
-    private String owner;
-    private String wc_version;
+    private int id;                         //randomly generated id
+    private String name;                    //name of the winch
+    private String owner;                   //owner of the winch
+    private String wc_version;              //version number of the parameters below
+    
+    //16 parameters set by an administrator
     private float w1, w2, w3, w4, w5, w6, w7, w8, 
             w9, w10, w11, w12, w13, w14, w15, w16;
-    private int meteorological_check_time;
-    private int meteorological_verify_time;
-    private float run_orientation_tolerance;
+    private int meteorological_check_time;      //time before operator is warned about old data
+    private int meteorological_verify_time;     //time before operator is forced to check old data
+    private float run_orientation_tolerance;    //TODO Remeber what this did
     private String info;
     //private List<Drum> driveList;
 
+    //constructers
     public Winch() {
         //driveList = new ArrayList<>();
         name = "";
@@ -60,6 +63,8 @@ public class Winch {
         this.info = info;
     }
     
+    
+    //getters and setters
     public int getId(){
         return id;
     }
@@ -169,5 +174,10 @@ public class Winch {
     public String toString()
     {
         return name;
+    }
+    
+    //check for valid winch
+    public boolean check() {
+        return !name.equals("") && !owner.equals("");
     }
 }

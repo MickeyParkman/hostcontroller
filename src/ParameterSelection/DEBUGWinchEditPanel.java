@@ -132,7 +132,7 @@ public class DEBUGWinchEditPanel extends JPanel implements Observer {
     {
         DEBUGWinch = loadWinchFile(filepath);
         CurrentDataObjectSet.getCurrentDataObjectSet().setCurrentWinch(DEBUGWinch);
-        CurrentDataObjectSet.getCurrentDataObjectSet().notifyWithString();
+        CurrentDataObjectSet.getCurrentDataObjectSet().forceUpdate();
         DEBUGMainPanel.removeAll();
         DEBUGMainPanel.add(buttonPanel);
         buildWinchPanel(DEBUGWinch, true);

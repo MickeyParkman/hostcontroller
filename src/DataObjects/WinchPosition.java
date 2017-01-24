@@ -11,13 +11,15 @@ package DataObjects;
  * @author dbennett3, Noah Fujioka
  */
 public class WinchPosition {
-    int id;
-    int runwayParentId;
-    String name;
-    float altitude;
-    float latitude;
-    float longitude;
+    int id;                 //random id
+    int runwayParentId;     //parent runway random id
+    String name;            //runway's name
+    float altitude;         //distance from sea level
+    float latitude;         //global y coordinate
+    float longitude;        //global x coordinate
     String optionalInfo;
+    
+    //constructers
     
     public WinchPosition(String name, float altitude, float latitude, float longitude, String optional) {
         this.name = name;
@@ -38,6 +40,8 @@ public class WinchPosition {
         this.optionalInfo = optional;
     }
     
+    
+    //getters and setters
     public int getId(){
         return id;
     }
@@ -75,7 +79,13 @@ public class WinchPosition {
         return optionalInfo;
     }
 
-        public String toString() {
+    @Override
+    public String toString() {
         return name;
+    }
+    
+    //check to see if object is valid
+    public boolean check() {
+        return !name.equals("");
     }
 }

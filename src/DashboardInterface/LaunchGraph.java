@@ -45,7 +45,6 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.Layer;
 
 /**
  * This UI class implements the graph of relevant data about a launch using the 

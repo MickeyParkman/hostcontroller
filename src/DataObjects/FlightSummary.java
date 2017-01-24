@@ -17,6 +17,8 @@ public class FlightSummary {
     private final String pilotLastName;
     private final String gliderNnumber;
     
+    //constructors
+    
     public FlightSummary(Timestamp startTimestamp, String pilotFirstName, 
             String pilotLastName, String pilotMiddleName, String gliderNnumber){
             this.startTimestamp = startTimestamp;
@@ -26,6 +28,7 @@ public class FlightSummary {
             this.gliderNnumber = gliderNnumber;
     }
     
+    //getters and setters
     public void setCurrentDataObjectSet(){
         try{
             DatabaseEntrySelect.setCurrentDataObjectSetToFlight(this);
@@ -72,7 +75,11 @@ public class FlightSummary {
         }
         
     }
-    public class ByLasttName implements Comparator<FlightSummary> {
+
+    /*
+     * comparators for sorting flight summery objects
+     */
+    public class ByLastName implements Comparator<FlightSummary> {
 
         @Override
         public int compare(FlightSummary f1, FlightSummary f2) {

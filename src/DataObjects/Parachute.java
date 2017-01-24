@@ -11,16 +11,15 @@ package DataObjects;
  * @author Alec Jacuzzi, dbennett3
  */
 public class Parachute {
-    private int parachuteId;
-    private String name;
-    private float lift;
-    private float drag;
-    private float weight;
+    private int parachuteId;    //random id
+    private String name;        //parachute name
+    private float lift;         //how much lift he parachute has
+    private float drag;         //how much drag the parachute creates
+    private float weight;       //how much the parachute weighs
     private String info;
     
-    
+    //constructors
     public Parachute() {
-        //Parachute ID number
         parachuteId = 0;
         lift = 0;
         drag = 0;
@@ -48,20 +47,14 @@ public class Parachute {
     * This method always works, only if Parachute already
     * exists.
     *
-    * @param  newParachuteNumber  the int that is used to identify 
-    *                of the Parachute object
+    * @param  newParachuteNumber used to identify of the Parachute object
     */
     public void setParachuteId(int newParachuteNumber) {
         parachuteId = newParachuteNumber;
     }
     
-    /**
-    * This method can change the lift of a Parachute object.
-    * This method always works, only if Parachute already
-    * exists.
-    *
-    * @param  newLift  the float that is contains the parachute lift
-    */
+    //setters and getters
+    
     public void setLift(float newLift) {
         lift = newLift;
     }
@@ -71,13 +64,6 @@ public class Parachute {
         weight = w;
     }
     
-    /**
-    * This method can change the drag of a Parachute object.
-    * This method always works, only if Parachute already
-    * exists.
-    *
-    * @param  newDrag  the float that contains the drag
-    */
     public void setDrag(float newDrag) {
         drag = newDrag;
     }
@@ -87,20 +73,10 @@ public class Parachute {
         name = s;
     }
     
-    /**
-    * Returns a Parachute object lift. 
-    * This method always returns immediately,only if Parachute exists. 
-    * @return      the lift of the Parachute object
-    */
     public float getLift() {
         return lift;
     }
     
-    /**
-    * Returns a Parachute object drag. 
-    * This method always returns immediately,only if Parachute exists. 
-    * @return      the drag of the Parachute object
-    */
     public float getDrag() {
         return drag;
     }
@@ -121,7 +97,13 @@ public class Parachute {
         return info;
     }
     
+    @Override
     public String toString() {
         return name;
+    }
+    
+    //check if parachute is valid
+    public boolean check() {
+        return !name.equals("");
     }
 }

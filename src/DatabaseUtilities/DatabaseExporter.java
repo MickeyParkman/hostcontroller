@@ -7,7 +7,6 @@ package DatabaseUtilities;
 
 import static Communications.ErrorLogger.logError;
 import static DatabaseUtilities.DatabaseInitialization.connect;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -30,6 +29,7 @@ public class DatabaseExporter {
      * 
      * @param tableName name of the table that is to be exported
      * @param zipName
+     * @return 
      */
     public static boolean exportDatabase(List<String> tableName, String zipName) {
         Connection connection = connect();
@@ -41,6 +41,7 @@ public class DatabaseExporter {
         
     }
     
+    //exports tables listed in names into a single zip file
     private static boolean exportTable(Connection connect, List<String> names, String zipName) {
         
         FileOutputStream fos;
@@ -56,7 +57,7 @@ public class DatabaseExporter {
             for(String str : names)
             {
                 String resultString;
-                String fileName = "";
+                String fileName;
                 if(str.equalsIgnoreCase("VERSION")) {
                     fileName = "__output_" + str + "_" + timestamp + ".csv";                    
                 } else if(str.equalsIgnoreCase("airfield") || 

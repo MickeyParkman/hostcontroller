@@ -468,7 +468,7 @@ public class DatabaseEntrySelect {
     }
     
     public static List<String> getTables() throws SQLException, ClassNotFoundException {
-        try(Connection connect = DatabaseEntryIdCheck.connectEx()) {
+        try(Connection connect = DatabaseInitialization.connectEx()) {
             Statement stmt = connect.createStatement();
             ResultSet theTables = stmt.executeQuery("SELECT * FROM SYS.SYSTABLES");
             List<String> tables = new ArrayList();

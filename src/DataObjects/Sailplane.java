@@ -13,48 +13,21 @@ package DataObjects;
  */
 
 public class Sailplane {
-    int id;
-    //reg_number of the plane
-    String regNumber;
-    
-    //glider name
-    String name;
-    
-    //name of the owner
-    String owner;
-    
-    //type of the plane
-    String type;
-    
-    //max gross weight of the plane
-    float maximumGrossWeight;
-    
-    //empty weight of the plane
-    float emptyWeight;
-    
-    //stall speed of the plane
-    float indicatedStallSpeed;
-    
-    //max winching speed of the plane
-    float maximumWinchingSpeed;
-    
-    //max weak link of the plane
-    float maximumAllowableWeakLinkStrength;
-    
-    //max tension of the plane
-    float maximumTension;
-    
-    //cable release angle of the plane
-    float cableReleaseAngle;
-    
-    //boolean on whether or not the plane can carry ballast
-    boolean carryBallast;
-    
-    //boolean on whether or not the plane can carry passengers
-    boolean multipleSeats;
-    
-    //optional info on the plane
-    String optionalInfo;
+    int id;                                 //randomly generated id
+    String regNumber;                       //reg_number of the plane
+    String name;                            //glider name
+    String owner;                           //name of the owner
+    String type;                            //type of the plane
+    float maximumGrossWeight;               //max weight plane can carry
+    float emptyWeight;                      //empty weight of the plane
+    float indicatedStallSpeed;              //stall speed of the plane
+    float maximumWinchingSpeed;             //max winching speed of the plane
+    float maximumAllowableWeakLinkStrength; //max weak link of the plane
+    float maximumTension;                   //max tension of the plane
+    float cableReleaseAngle;                //cable release angle of the plane
+    boolean carryBallast;                   //whether or not the plane can carry ballast
+    boolean multipleSeats;                  //whether or not the plane can carry passengers
+    String optionalInfo;                    //optional info on the plane
     
     float ballast;
     
@@ -107,6 +80,8 @@ public class Sailplane {
         
         ballast = 0;
     }
+    
+    //getters and setters
     
     public void setId(int id) {
         this.id = id;
@@ -187,5 +162,10 @@ public class Sailplane {
     @Override
     public String toString() {
         return name + " " + regNumber + " " + owner;
+    }
+    
+    //check for valid glider
+    public boolean check() {
+        return !name.equals("") && !regNumber.equals("");
     }
 }

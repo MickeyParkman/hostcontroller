@@ -12,27 +12,19 @@ package DataObjects;
  * @author awilliams5, dbennett3, Noah Fujioka
  */
 public class Pilot {
-    //Pilot's unique id
-    int pilotId;
-    //Pilot's last name
-    String lastName;
-    //Pilot's first name
-    String firstName;
-    //Pilot's middle name
-    String middleName;
-    //Pilot's weight
-    float flightWeight;
-    //Pilot's capability
-    String capability;
-    //Pilot's paunch preference
-    float preference;
-    //Pilot's Emergency Contact Info
-    String emergencyContact;
-    //Pilot's Emergency Medical Info
-    String medInfo;
-    //Pilot's optional_info
+    
+    int pilotId;                //randomly genrated id
+    String lastName;            //Pilot's last name
+    String firstName;           //Pilot's first name
+    String middleName;          //Pilot's middle name
+    float flightWeight;         //Pilot's weight
+    String capability;          //Pilot's capability
+    float preference;           //Pilot's launch preference
+    String emergencyContact;    //Emergency Contact name
+    String emergencyPhone;      //Emergency Contact number
     String optional_info;
     
+    //constructors
     public Pilot(int pilotId, String firstName, String lastName, String middleName,
             float weight, String capability, float preference, String emergencyContact,
             String medInfo, String optional) {
@@ -44,9 +36,11 @@ public class Pilot {
         this.capability = capability;
         this.preference = preference;
         this.emergencyContact = emergencyContact;
-        this.medInfo = medInfo;
+        this.emergencyPhone = medInfo;
         this.optional_info = optional;
     }
+    
+    //setters and getters
     
     public int getPilotId() {
         return pilotId;
@@ -84,7 +78,7 @@ public class Pilot {
     }
     
     public String getEmergencyPhone() {
-        return medInfo;
+        return emergencyPhone;
     }
     
     public String getOptionalInfo() {
@@ -94,6 +88,11 @@ public class Pilot {
     @Override
     public String toString() { 
         return (firstName + " " + middleName + " " + lastName);
+    }
+    
+    //check if pilot is set
+    public boolean check() {
+        return !lastName.equals("") && !firstName.equals("") && flightWeight != 0;
     }
     
     /**

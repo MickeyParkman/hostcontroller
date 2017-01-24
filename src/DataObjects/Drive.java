@@ -1,5 +1,10 @@
 package DataObjects;
 
+/*
+Yea, I don't know what this is for.
+If your reading this you can probably find a way to get rid of it
+*/
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -13,14 +13,15 @@ package DataObjects;
  */
 public class GliderPosition {
     
-    int id;
-    int runwayParentId;
-    String positionName;
-    float altitude;
-    float latitude;
-    float longitude;
+    int id;                 //randomly generated id
+    int runwayParentId;     //runways id
+    String positionName;    //the positions name
+    float altitude;         //distance from sea level
+    float latitude;         //global y coordinate
+    float longitude;        //global x coordinate
     String optionalInfo;
     
+    //constructors
     public GliderPosition(String name, float altitude, float latitude, float longitude, String optional){
        this.positionName = name;
        this.altitude = altitude;
@@ -39,6 +40,8 @@ public class GliderPosition {
         this.longitude = longitude;
         this.optionalInfo = optional;
     }
+    
+    //getters and setters
     public int getId(){
         return id;
     }
@@ -74,8 +77,14 @@ public class GliderPosition {
         return optionalInfo;
     }
 
+    @Override
     public String toString() {
         return positionName;
+    }
+    
+    //check for valid object
+    public boolean check() {
+        return !positionName.equals("");
     }
 }
 

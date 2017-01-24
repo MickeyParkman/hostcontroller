@@ -20,8 +20,7 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
 import DataObjects.*;
-import static DatabaseUtilities.DatabaseInitialization.HOSTCONTROLLER_VERSION;
-import static DatabaseUtilities.DatabaseInitialization.connect;
+import static DatabaseUtilities.DatabaseInitialization.*;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -32,8 +31,8 @@ import java.util.List;
  */
 public class DatabaseImporter{
     
-    private static BufferedReader br;
-    private static Connection connection;
+    private static BufferedReader br; //private global
+    private static Connection connection; //private global
     
     public static boolean importDatabase(File zipFile, List<String> importList) {
         connection = connect();
@@ -71,7 +70,7 @@ public class DatabaseImporter{
             br = new BufferedReader(isr);
             
             if(importList.contains(fileName)) {
-                if(fileName.contains("_VERSION")) {
+                if(fileName.contains("_VERSION_")) {
                     System.out.println("Importing VERSION");
                     if(!importVersion()) {
                         connection.close();
@@ -100,7 +99,7 @@ public class DatabaseImporter{
                     importPilot();
                 } else if(fileName.contains("_PROFILE_")) {
                     System.out.println("Importing PROFILE");
-                    importProfile();
+                    importOperator();
                 } else if(fileName.contains("_DRUM_")) {
                     System.out.println("Importing Drum");
                     importDrum();
@@ -114,7 +113,8 @@ public class DatabaseImporter{
                     System.out.println("Importing PreviousAirfield");
                     importPreviousAirfieldInfo();
                 } else if(fileName.contains("_OPERATOR_")) {
-                    
+                    System.out.println("Importing operators");
+                    importOperator();
                 }
             }
             
@@ -171,6 +171,7 @@ public class DatabaseImporter{
     
     private static void importGlider() throws IOException {
         String s;
+        cleanGlider(connection);
         while((s = br.readLine()) != null) {
             String[] gliderData = s.split(",", -1);
             int id = Integer.parseInt(gliderData[0]);
@@ -196,6 +197,7 @@ public class DatabaseImporter{
     
     private static void importPilot() throws IOException {
         String s;
+        cleanPilot(connection);
         while((s = br.readLine()) != null) {
             String[] pilotData = s.split(",",-1);
             int id = Integer.parseInt(pilotData[0]); 
@@ -217,6 +219,7 @@ public class DatabaseImporter{
     
     private static void importAirfield() throws IOException {
         String s;
+        cleanAirfield(connection);
         while((s = br.readLine()) != null) {
             String[] airfieldData = s.split(",",-1);
             int id = Integer.parseInt(airfieldData[0]);
@@ -235,6 +238,7 @@ public class DatabaseImporter{
     
     private static void importRunway() throws IOException {
         String s;
+        cleanRunway(connection);
         while((s = br.readLine()) != null) {
             String[] runwayData = s.split(",",-1);
             int id = Integer.parseInt(runwayData[0]);
@@ -249,6 +253,7 @@ public class DatabaseImporter{
     
     private static void importGliderPosition() throws IOException {
         String s;
+        cleanGliderPosition(connection);
         while((s = br.readLine()) != null) {
             String[] gliderPositionData = s.split(",",-1);
             int id = Integer.parseInt(gliderPositionData[0]);
@@ -265,6 +270,7 @@ public class DatabaseImporter{
     
     private static void importWinchPosition() throws IOException {
         String s;
+        cleanWinchPosition(connection);
         while((s = br.readLine()) != null) {
             String[] winchPositionData = s.split(",",-1);
             int id = Integer.parseInt(winchPositionData[0]);
@@ -282,6 +288,7 @@ public class DatabaseImporter{
     
     private static void importParachute() throws IOException {
         String s;
+        cleanParachute(connection);
         while((s = br.readLine()) != null) {
             String[] parachuteData = s.split(",",-1);
             int id = Integer.parseInt(parachuteData[0]);
@@ -295,8 +302,9 @@ public class DatabaseImporter{
         }
     }
     
-    private static void importProfile() throws IOException {
+    private static void importOperator() throws IOException {
         String s;
+        cleanOperator(connection);
         while((s = br.readLine()) != null) {
             String[] profileData = s.split(",",-1);
             int id = Integer.parseInt(profileData[0]);
@@ -316,6 +324,7 @@ public class DatabaseImporter{
 
     private static void importDrum() throws IOException {
         String s;
+        cleanDrum(connection);
         while((s = br.readLine()) != null) {
             String[] drumData = s.split(",",-1);
             int id = Integer.parseInt(drumData[0]);
@@ -338,6 +347,7 @@ public class DatabaseImporter{
 
     private static void importWinch() throws IOException {
         String s;
+        cleanWinch(connection); //also cleans Drum
         while((s = br.readLine()) != null) {
             String[] winchData = s.split(",",-1);
             int id = Integer.parseInt(winchData[0]);
@@ -374,6 +384,7 @@ public class DatabaseImporter{
 
     private static void importPreviousLaunches() throws IOException, SQLException {
             String s;
+            cleanPrevLaunches(connection);
             PreparedStatement PreviousLaunchesInsert = connection.prepareStatement(
                 "INSERT INTO PreviousLaunches("
                         + "start_timestamp, "
@@ -469,7 +480,7 @@ public class DatabaseImporter{
             PreviousLaunchesInsert.setBoolean(23, Boolean.parseBoolean(launchData[22]));
             PreviousLaunchesInsert.setBoolean(24, Boolean.parseBoolean(launchData[23]));
             PreviousLaunchesInsert.setString(25, launchData[24]);
-                        
+            //Enviroment    
             PreviousLaunchesInsert.setFloat(26, Float.parseFloat(launchData[25]));
             PreviousLaunchesInsert.setFloat(27, Float.parseFloat(launchData[26]));
             PreviousLaunchesInsert.setFloat(28, Float.parseFloat(launchData[27]));
@@ -507,6 +518,7 @@ public class DatabaseImporter{
 
     private static void importPreviousAirfieldInfo() throws IOException, SQLException {
             String s;
+            cleanPrevAirfield(connection); //this will also clean previous launches
             PreparedStatement PreviousAirfieldInsert = connection.prepareStatement(
                     "INSERT INTO PreviousAirfieldInfo("
                             + "table_id, "
@@ -566,7 +578,6 @@ public class DatabaseImporter{
                 
                 PreviousAirfieldInsert.executeUpdate();
             }
-                PreviousAirfieldInsert.close();
-                
+                PreviousAirfieldInsert.close();           
     }
 }

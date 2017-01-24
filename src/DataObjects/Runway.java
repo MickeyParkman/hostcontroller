@@ -12,11 +12,13 @@ package DataObjects;
  * @author garreola-gutierrez, matt dargen, dbennett3, Noah Fujioka
  */
 public class Runway {
-    int id;
-    int parentId;
-    String runwayName;
-    float magneticHeading;
+    int id;                 //randomly genterated id
+    int parentId;           //airfield's random id
+    String runwayName;      //runway's name
+    float magneticHeading;  //degrees from magnetic north
     String optionalInfo;
+    
+    //constructers
     
     public Runway(String runwayName, float magneticHeading, String optional){
        this.runwayName = runwayName;
@@ -32,6 +34,8 @@ public class Runway {
        this.optionalInfo = optional;
     }
     
+    
+    //getters and setters
     public int getId(){
         return id;
     }
@@ -64,4 +68,9 @@ public class Runway {
     public String toString() {
       return runwayName;
     } 
+    
+    //check to see if the object is valid
+    public boolean check() {
+        return !runwayName.equals("");
+    }
 }

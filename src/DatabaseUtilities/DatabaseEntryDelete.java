@@ -18,6 +18,7 @@ import static DatabaseUtilities.DatabaseInitialization.connect;
  */
 public class DatabaseEntryDelete {
     
+    //workhorse method, does the actual deleting
     private static boolean Delete(PreparedStatement ps) throws SQLException {
         //Update the value given
         ps.execute();
@@ -25,6 +26,10 @@ public class DatabaseEntryDelete {
         return true;
     }
     
+    /* Long list of overloaded methods called DeleteEntry
+     * they are used to delete table entries that have a specific data object
+     * attached to it. return's true if delete was successful, false if not
+     */
     public static boolean DeleteEntry(Pilot pilot) {
         try(Connection conn = connect()) {
             if(conn == null) {

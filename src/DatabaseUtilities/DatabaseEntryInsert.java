@@ -11,7 +11,6 @@ import DataObjects.*;
 import static DatabaseUtilities.DatabaseInitialization.WINCH_PRAM_VERSION;
 import static DatabaseUtilities.DatabaseInitialization.connect;
 import ParameterSelection.Capability;
-import ParameterSelection.Preference;
 import java.security.SecureRandom;
 import java.sql.*;
 import java.util.Random;
@@ -362,10 +361,10 @@ public class DatabaseEntryInsert {
     /**
      * Adds the relevant data for a profile to the database
      * 
-     * @param theProfile the profile to add to the database
+     * @param theOperator the profile to add to the database
      * @return false if add fails
      */
-    public static boolean addOperatorToDB(Operator theProfile) {
+    public static boolean addOperatorToDB(Operator theOperator) {
         try (Connection connect = connect()) {
             if(connect == null) {
                 return false;
@@ -374,15 +373,15 @@ public class DatabaseEntryInsert {
                 "INSERT INTO Operator(operator_id, first_name, middle_name, last_name, admin,"
                         + "salt, hash, optional_info, unitSettings)"
                         + "values (?,?,?,?,?,?,?,?,?)");
-            ProfileInsertStatement.setInt(1, theProfile.getID());
-            ProfileInsertStatement.setString(2, theProfile.getFirst());
-            ProfileInsertStatement.setString(3, theProfile.getMiddle());
-            ProfileInsertStatement.setString(4, theProfile.getLast());
-            ProfileInsertStatement.setBoolean(5, theProfile.getAdmin());
+            ProfileInsertStatement.setInt(1, theOperator.getID());
+            ProfileInsertStatement.setString(2, theOperator.getFirst());
+            ProfileInsertStatement.setString(3, theOperator.getMiddle());
+            ProfileInsertStatement.setString(4, theOperator.getLast());
+            ProfileInsertStatement.setBoolean(5, theOperator.getAdmin());
             ProfileInsertStatement.setString(6, "");
             ProfileInsertStatement.setString(7, "");
-            ProfileInsertStatement.setString(8, theProfile.getInfo());
-            ProfileInsertStatement.setString(9, theProfile.getUnitSettingsForStorage());
+            ProfileInsertStatement.setString(8, theOperator.getInfo());
+            ProfileInsertStatement.setString(9, theOperator.getUnitSettingsForStorage());
             ProfileInsertStatement.executeUpdate();
             ProfileInsertStatement.close();
         }catch(SQLException e) {
@@ -393,9 +392,11 @@ public class DatabaseEntryInsert {
         return true;
     }
     /**
-     * Adds the relevant data for a profile to the database
+     * used to import an operator from a file
      * 
      * @param theProfile the profile to add to the database
+     * @param salt salt from a database backup
+     * @param hash hash from a database backup
      * @return false if add fails
      */
     public static boolean addOperatorToDB(Operator theProfile, String salt, String hash) {
@@ -426,7 +427,7 @@ public class DatabaseEntryInsert {
         return true;
     }
     /**
-     * Adds the relevant data for a profile to the database
+     * Adds the relevant data for a profile to the database with a password
      * 
      * @param theProfile the profile to add to the database
      * @param pass the password for the operator

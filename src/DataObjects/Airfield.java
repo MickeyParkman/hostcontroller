@@ -12,17 +12,17 @@ package DataObjects;
  * @author garreola-gutierrez, dbennett3, Noah Fujioka
  */
 public class Airfield {
-    int id;
-    String name;
-    String designator;
-    float altitude;
-    float magneticVariation;
-    float latitude;
-    float longitude;
-    int utcOffset;
+    int id;                     //randomly generated id
+    String name;                //name of the airfield
+    String designator;          //the 3 charecter designator
+    float altitude;             //distance from sea level
+    float magneticVariation;    //varation from true north and magnetic north
+    float latitude;             //global y coordinate
+    float longitude;            //global x coordinate
+    int utcOffset;              //time difference from Universal Time
     String optionalInfo;
     
-    
+    //constructors
     public Airfield(String name, String designator, float altitude, float magneticVariation, 
             float latitude, float longitude, String optional) {
        this.name = name;
@@ -46,6 +46,7 @@ public class Airfield {
         this.optionalInfo = optional;
     }
     
+    //getters and setters
     public int getId(){
         return id;
     }
@@ -85,7 +86,13 @@ public class Airfield {
         return optionalInfo;
     }
 
+    @Override
     public String toString() {
         return name + " (" + designator + ")";
+    }
+    
+    //check for valid data
+    public boolean check() {
+        return !name.equals("") && !this.designator.equals("");
     }
 }

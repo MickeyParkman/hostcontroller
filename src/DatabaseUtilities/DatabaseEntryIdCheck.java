@@ -9,37 +9,14 @@ import static Communications.ErrorLogger.logError;
 import java.sql.*;
 
 import DataObjects.*;
-import javax.swing.JOptionPane;
+import static DatabaseUtilities.DatabaseInitialization.connectEx;
 /**
  *
  * @author nfujioka
  */
 public class DatabaseEntryIdCheck {
     
-    public static Connection connectEx() throws ClassNotFoundException, SQLException {//other connect in Initialization
-        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:hcDatabase;create=true";
-        Connection connection = null;
-        //Check for DB drivers
-        try {
-            Class.forName(clientDriverName);
-            Class.forName(driverName);
-        } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Can't load JavaDb ClientDriver", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-        //Try to connect to the specified database
-        try {
-            connection = DriverManager.getConnection(databaseConnectionName);
-        } catch (SQLException e) {
-            //TODO Fix error handling
-            JOptionPane.showMessageDialog(null, "Correctly loaded the JavaDb ClientDriver, " + "somethin else is wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
-            throw e;
-        }
-        return connection;
-    }
-    
+    //workhorse method, does the actual checking of the ids
     private static boolean IdCheck(PreparedStatement stmt) throws SQLException {
         boolean result;
         //Update the value given
@@ -48,6 +25,10 @@ public class DatabaseEntryIdCheck {
         stmt.close();
         return result;
     }
+    
+    /* These methods will make sure that the randomly generated IDs 
+     * for each data object is a unique primary key
+     */
     
     public static boolean IdCheck(Pilot pilot) throws SQLException, ClassNotFoundException {
         try(Connection conn = connectEx()) {
@@ -182,6 +163,27 @@ public class DatabaseEntryIdCheck {
             throw e;
         }
     }
+
+    static boolean IdCheck(int Airfield_Key) throws SQLException, ClassNotFoundException {  {
+        try(Connection conn = connectEx()) {
+            if(conn == null) {
+                return false;
+            }
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM PreviousAirfieldInfo WHERE table_id = ?");
+            stmt.setInt(1, Airfield_Key);
+            
+            return IdCheck(stmt);
+            } catch(SQLException | ClassNotFoundException e) {
+                logError(e);
+                throw e;
+            }
+        }
+    }
+    
+    /* The password matching method, since operators don't know what thier password is
+     * (for obvious security reasons) so the operator and the password to check against
+     * are matched here to see if it matches the hash.
+     */
     
     public static boolean matchPassword(Operator operator, String check)
             throws SQLException, ClassNotFoundException {
@@ -210,22 +212,6 @@ public class DatabaseEntryIdCheck {
         } catch(SQLException | ClassNotFoundException e) {
             logError(e);
             throw e;
-        }
-    }
-
-    static boolean IdCheck(int Airfield_Key) throws SQLException, ClassNotFoundException {  {
-        try(Connection conn = connectEx()) {
-            if(conn == null) {
-                return false;
-            }
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM PreviousAirfieldInfo WHERE table_id = ?");
-            stmt.setInt(1, Airfield_Key);
-            
-            return IdCheck(stmt);
-            } catch(SQLException | ClassNotFoundException e) {
-                logError(e);
-                throw e;
-            }
         }
     }
 }

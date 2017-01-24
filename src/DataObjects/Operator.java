@@ -13,13 +13,15 @@ import java.util.HashMap;
  * @author jtroxel
  */
 public class Operator {
-    private int id;
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private boolean admin;
+    private int id;                                 //operators random id
+    private String firstName;                       //Operators' first name
+    private String middleName;                      //Operators' middle name
+    private String lastName;                        //Operators' last name
+    private boolean admin;                          //Operators' privlige level
     private String info;
-    private HashMap<String,Integer> unitSettings;
+    private HashMap<String,Integer> unitSettings;   //Unit display preferences
+    
+    //constructers
 
     public Operator(int id, String settings) {
         unitSettings = new HashMap();
@@ -51,7 +53,9 @@ public class Operator {
         this.id = id;
         initSettingsFromString(settings);
     }
-        
+     
+    
+    //sets the hashmap
     private void initSettingsFromString(String settings) {
         if(!settings.equals("{}")) {
             /* settings could be "{'PILOT_WEIGHT':0,'SAILPLANE_WEIGHT':1}" */
@@ -74,6 +78,8 @@ public class Operator {
         }
     }
     
+    
+    //getters and setters
     public void setID(int id) {
         this.id = id;
     }
@@ -89,20 +95,6 @@ public class Operator {
     public int getUnitSetting(String id) {
         if (unitSettings.containsKey(id.toUpperCase())) return unitSettings.get(id.toUpperCase());
         else return -1;
-    }
-
-    public String getUnitSettingsForStorage() {
-        String result = "{";
-        for (int i = 0; i < unitSettings.size(); i++) {
-            String id = (String) unitSettings.keySet().toArray()[i];
-            result += "'" + id + "':";
-            result += Integer.toString(unitSettings.get(id));
-            if (i != unitSettings.size() - 1) {
-                result += ",";
-            }
-        }
-        result += "}";
-        return result;
     }
     
     public int getID() {
@@ -127,6 +119,21 @@ public class Operator {
     
     public String getInfo() {
         return info;
+    }
+    
+    //converts hash map into a parseable string
+    public String getUnitSettingsForStorage() {
+        String result = "{";
+        for (int i = 0; i < unitSettings.size(); i++) {
+            String id = (String) unitSettings.keySet().toArray()[i];
+            result += "'" + id + "':";
+            result += Integer.toString(unitSettings.get(id));
+            if (i != unitSettings.size() - 1) {
+                result += ",";
+            }
+        }
+        result += "}";
+        return result;
     }
     
     @Override

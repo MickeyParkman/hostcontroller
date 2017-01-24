@@ -70,7 +70,13 @@ public class DatabaseEntryEdit
         return false;
     }
     
-    public static boolean UpdateEntry(Operator theProfile) {
+    /**
+     * updates the operator table in the database with the new operator data in the object passed in
+     * 
+     * @param theOperator profile object that is to be updated
+     * @return false if update fails
+     */
+    public static boolean UpdateEntry(Operator theOperator) {
         try (Connection connect = connect()) {
             if(connect == null) {
                 return false;
@@ -79,13 +85,13 @@ public class DatabaseEntryEdit
                 "UPDATE Operator SET first_name = ?, middle_name = ?, last_name = ?, "
                         + "admin = ?, optional_info = ?, "
                         + "unitSettings = ? WHERE operator_id = ?");
-            stmt.setString(1, theProfile.getFirst());
-            stmt.setString(2, theProfile.getMiddle());
-            stmt.setString(3, theProfile.getLast());
-            stmt.setBoolean(4, theProfile.getAdmin());
-            stmt.setString(5, theProfile.getInfo());
-            stmt.setString(6, theProfile.getUnitSettingsForStorage());
-            stmt.setInt(7, theProfile.getID());
+            stmt.setString(1, theOperator.getFirst());
+            stmt.setString(2, theOperator.getMiddle());
+            stmt.setString(3, theOperator.getLast());
+            stmt.setBoolean(4, theOperator.getAdmin());
+            stmt.setString(5, theOperator.getInfo());
+            stmt.setString(6, theOperator.getUnitSettingsForStorage());
+            stmt.setInt(7, theOperator.getID());
             
             return Update(stmt);
         } catch(SQLException e) {
@@ -95,7 +101,14 @@ public class DatabaseEntryEdit
         return false;
     }
     
-    public static boolean ChangePassword(Operator theProfile, String newPass) {
+    /**
+     * Changes the password of the operator passed in
+     * 
+     * @param theOperator operator object that is to be updated
+     * @param newPass new password of the current operator
+     * @return false if update fails
+     */
+    public static boolean ChangePassword(Operator theOperator, String newPass) {
         byte[] bsalt = new byte[newPass.length()];
         String salt = "";
         SecureRandom ran = new SecureRandom();
@@ -121,7 +134,7 @@ public class DatabaseEntryEdit
                 "UPDATE Operator SET salt = ?, hash = ? WHERE operator_id = ?");
             stmt.setString(1, salt);
             stmt.setString(2, hash);
-            stmt.setInt(3, theProfile.getID());
+            stmt.setInt(3, theOperator.getID());
             
             return Update(stmt);
         } catch(SQLException e) {
