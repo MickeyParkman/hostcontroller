@@ -5,6 +5,7 @@
  */
 package ParameterSelection;
 
+import AddEditPanels.*;
 import Communications.Observer;
 import Configuration.ProfileManagementFrame;
 import DataObjects.*;
@@ -15,7 +16,6 @@ import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
@@ -25,16 +25,24 @@ import java.io.IOException;
  */
 public class CurrentScenario implements Observer
 {
-    @FXML SubScene   pilotPane;
-    @FXML SubScene   gliderPane;
-    @FXML SubScene   airfieldPane;
-    @FXML SubScene   runwayPane;
-    @FXML SubScene   gliderPosPane;
-    @FXML SubScene   winchPosPane;
-    @FXML SubScene   drumPane;
-    @FXML SubScene    parachutePane;
-    @FXML GridPane   scenarioHomePane;
+    @FXML SubScene   pilotPanel;
+    @FXML SubScene   gliderPanel;
+    @FXML SubScene   airfieldPanel;
+    @FXML SubScene   runwayPanel;
+    @FXML SubScene   gliderPosPanel;
+    @FXML SubScene   winchPosPanel;
+    @FXML SubScene   drumPanel;
+    @FXML SubScene    parachutePanel;
+    @FXML GridPane   scenarioHomePanel;
     @FXML AnchorPane flightDashboardPanel;
+    
+    @FXML SubScene pilotAddEditPanel;
+    @FXML SubScene gliderAddEditPanel;
+    @FXML SubScene airfieldAddEditPanel;
+    @FXML SubScene runwayAddEditPanel;
+    @FXML SubScene gliderPositionAddEditPanel;
+    @FXML SubScene winchPositionAddEditPanel;
+    
     @FXML Button     pilotButton;
     @FXML Button     gliderButton;
     @FXML Button     airfieldButton;
@@ -57,64 +65,90 @@ public class CurrentScenario implements Observer
         data.attach(this);
     }
 
-    @FXML public void EditAirFieldButton_Click(javafx.event.ActionEvent e)
-    {
-        airfieldPane.toFront();
-    }
-
-    @FXML public void PilotButton_Click(javafx.event.ActionEvent e)
-    {
-        pilotPane.toFront();
-    }
-
-    @FXML public void GliderButton_Click(javafx.event.ActionEvent e)
-    {
-        gliderPane.toFront();
-    }
-
-    @FXML public void DrumButton_Click(javafx.event.ActionEvent e) { drumPane.toFront(); }
-
+    @FXML public void EditAirFieldButton_Click(javafx.event.ActionEvent e) { airfieldPanel.toFront(); }
+    @FXML public void PilotButton_Click(javafx.event.ActionEvent e) { pilotPanel.toFront(); }
+    @FXML public void GliderButton_Click(javafx.event.ActionEvent e) { gliderPanel.toFront(); }
+    @FXML public void DrumButton_Click(javafx.event.ActionEvent e) { drumPanel.toFront(); }    
+    
     @FXML protected void initialize() throws IOException
     {
+        //initialize the addEdit classes to be passed to the view panels
+        AddEditAirfieldFrame editAirfield = new AddEditAirfieldFrame(airfieldPanel);
+        AirfieldPanel airfield = new AirfieldPanel(airfieldAddEditPanel, runwayPanel, editAirfield);
+        editAirfield.attach(airfield);
+        //AddEditRunwayFrame editRunway = new AddEditRunwayFrame(runwayPanel);
+        
+        //Load the display panes
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ParameterSelection/PilotScene.fxml"));
-        loader.setController(new PilotPanel(scenarioHomePane));
+        loader.setController(new PilotPanel(pilotAddEditPanel, scenarioHomePanel));
         Parent root = loader.load();
-        pilotPane.setRoot(root);
+        pilotPanel.setRoot(root);
 
         loader = new FXMLLoader(getClass().getResource("/ParameterSelection/SailplaneScene.fxml"));
-        loader.setController(new SailplanePanel(scenarioHomePane));
+        loader.setController(new SailplanePanel(gliderAddEditPanel, scenarioHomePanel));
         root = loader.load();
-        gliderPane.setRoot(root);
+        gliderPanel.setRoot(root);
 
         loader = new FXMLLoader(getClass().getResource("/ParameterSelection/AirfieldScene.fxml"));
-        loader.setController(new AirfieldPanel(runwayPane));
+        loader.setController(airfield);
         root = loader.load();
-        airfieldPane.setRoot(root);
+        airfieldPanel.setRoot(root);
 
         loader = new FXMLLoader(getClass().getResource("/ParameterSelection/RunwayScene.fxml"));
-        loader.setController(new RunwayPanel(gliderPane));
+        loader.setController(new RunwayPanel(runwayAddEditPanel, gliderPosPanel));
         root = loader.load();
-        runwayPane.setRoot(root);
+        runwayPanel.setRoot(root);
 
         loader = new FXMLLoader(getClass().getResource("/ParameterSelection/GliderPositionScene.fxml"));
-        loader.setController(new GliderPositionPanel(winchPosPane));
+        loader.setController(new GliderPositionPanel(gliderPositionAddEditPanel, winchPosPanel));
         root = loader.load();
-        gliderPosPane.setRoot(root);
+        gliderPosPanel.setRoot(root);
 
         loader = new FXMLLoader(getClass().getResource("/ParameterSelection/WinchPositionScene.fxml"));
-        loader.setController(new WinchPositionPanel(scenarioHomePane));
+        loader.setController(new WinchPositionPanel(winchPositionAddEditPanel, scenarioHomePanel));
         root = loader.load();
-        winchPosPane.setRoot(root);
+        winchPosPanel.setRoot(root);
 
         loader = new FXMLLoader(getClass().getResource("/ParameterSelection/DrumScene.fxml"));
-        loader.setController(new DrumPanel(parachutePane));
+        loader.setController(new DrumPanel(parachutePanel));
         root = loader.load();
-        drumPane.setRoot(root);
+        drumPanel.setRoot(root);
 
         loader = new FXMLLoader(getClass().getResource("/ParameterSelection/ParachuteScene.fxml"));
-        loader.setController(new ParachutePanel(scenarioHomePane));
+        loader.setController(new ParachutePanel(scenarioHomePanel));
         root = loader.load();
-        parachutePane.setRoot(root);
+        parachutePanel.setRoot(root);
+        
+        //Load the Add/Edit Panes
+        loader = new FXMLLoader(getClass().getResource("/AddEditPanels/AddEditAirfieldPanel.fxml"));
+        loader.setController(editAirfield);
+        root = loader.load();
+        airfieldAddEditPanel.setRoot(root);
+        
+        loader = new FXMLLoader(getClass().getResource("/AddEditPanels/AddEditRunwayPanel.fxml"));
+        loader.setController(new AddEditRunwayFrame(runwayPanel));
+        root = loader.load();
+        runwayAddEditPanel.setRoot(root);
+        
+        loader = new FXMLLoader(getClass().getResource("/AddEditPanels/AddEditGliderPositionPanel.fxml"));
+        loader.setController(new AddEditGliderPosFrame(gliderPosPanel));
+        root = loader.load();
+        gliderPositionAddEditPanel.setRoot(root);
+        
+        loader = new FXMLLoader(getClass().getResource("/AddEditPanels/AddEditWinchPositionPanel.fxml"));
+        loader.setController(new AddEditWinchPosFrame(winchPosPanel));
+        root = loader.load();
+        winchPositionAddEditPanel.setRoot(root);
+        
+        loader = new FXMLLoader(getClass().getResource("/AddEditPanels/AddEditPilotPanel.fxml"));
+        loader.setController(new AddEditPilotPanel(pilotPanel));
+        root = loader.load();
+        pilotAddEditPanel.setRoot(root);
+        
+        loader = new FXMLLoader(getClass().getResource("/AddEditPanels/AddEditGliderPanel.fxml"));
+        loader.setController(new AddEditGlider(gliderPanel));
+        root = loader.load();
+        gliderAddEditPanel.setRoot(root);
 
         loadScenario();
     }

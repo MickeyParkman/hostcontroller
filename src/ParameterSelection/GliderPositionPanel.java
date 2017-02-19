@@ -1,29 +1,15 @@
 package ParameterSelection;
 
-import AddEditPanels.AddEditGliderPosFrame;
 import Communications.Observer;
-import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
-import DataObjects.GliderPosition;
-import DataObjects.RecentLaunchSelections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by micha on 10/18/2016.
@@ -34,6 +20,7 @@ public class GliderPositionPanel extends JPanel implements Observer
 
     private CurrentDataObjectSet currentData;
 
+    SubScene editGliderPositionPanel;
     SubScene winchPosPane;
 
     @FXML TableView gliderPositionTable;
@@ -47,9 +34,10 @@ public class GliderPositionPanel extends JPanel implements Observer
     @FXML Label longitudeUnitLabel;
     @FXML Label latitudeUnitLabel;
 
-    public GliderPositionPanel(SubScene winchPosPane)
+    public GliderPositionPanel(SubScene editGliderPositionPanel, SubScene winchPosPane)
     {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        this.editGliderPositionPanel = editGliderPositionPanel;
         this.winchPosPane = winchPosPane;
     }
 
@@ -92,4 +80,6 @@ public class GliderPositionPanel extends JPanel implements Observer
     }
 
     @FXML public void ChooseWinchPosButton_Click(javafx.event.ActionEvent e) { winchPosPane.toFront(); }
+    
+    @FXML public void NewGliderPositionButton_Click(ActionEvent e) { editGliderPositionPanel.toFront(); }
 }

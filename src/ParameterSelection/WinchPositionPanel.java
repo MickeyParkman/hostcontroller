@@ -1,29 +1,16 @@
 package ParameterSelection;
 
-import AddEditPanels.AddEditWinchPosFrame;
 import Communications.Observer;
-import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
-import DataObjects.RecentLaunchSelections;
-import DataObjects.WinchPosition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
 
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by micha on 10/18/2016.
@@ -33,6 +20,7 @@ public class WinchPositionPanel extends JPanel implements Observer
     private CurrentDataObjectSet currentData;
     private int winchPosAltitudeUnitsID;
 
+    SubScene editWinchPositionPanel;
     GridPane scenarioHomePane;
 
     @FXML
@@ -47,9 +35,10 @@ public class WinchPositionPanel extends JPanel implements Observer
     @FXML Label longitudeUnitLabel;
     @FXML Label latitudeUnitLabel;
 
-    public WinchPositionPanel(GridPane scenarioHomePane)
+    public WinchPositionPanel(SubScene editWinchPositionPanel, GridPane scenarioHomePane)
     {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        this.editWinchPositionPanel = editWinchPositionPanel;
         this.scenarioHomePane = scenarioHomePane;
     }
 
@@ -92,4 +81,6 @@ public class WinchPositionPanel extends JPanel implements Observer
     }
 
     @FXML public void AirfieldFinishButton_Click(javafx.event.ActionEvent e) { scenarioHomePane.toFront(); }
+    
+    @FXML public void NewWinchPositionButton_Click(ActionEvent e) { editWinchPositionPanel.toFront(); }
 }

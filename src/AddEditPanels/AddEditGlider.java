@@ -1,60 +1,49 @@
 package AddEditPanels;
 
-import static Communications.ErrorLogger.logError;
 import Communications.Observer;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.Sailplane;
-import DatabaseUtilities.DatabaseEntryDelete;
-import DatabaseUtilities.DatabaseEntryEdit;
-import DatabaseUtilities.DatabaseEntryIdCheck;
-
-import java.awt.Color;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.Random;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.SubScene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 
-public class AddEditGlider extends JFrame {
-
-    private JPanel contentPane;
-    private JTextField nNumberField;
-    private JTextField emptyWeightField;
-    private JTextField grossWeightField;
-    private JTextField stallSpeedField;
-    private JTextField weakLinkField;
-    private JTextField tensionField;
-    private JTextField releaseAngleField;
-    private JTextField winchingSpeedField;
-    private JCheckBox ballastCheckBox;
-    private JCheckBox multipleSeatsCheckBox;
+public class AddEditGlider extends AddEditPanel {
+    
+    @FXML private TextField nNumberField;
+    @FXML private TextField ownerField;
+    @FXML private TextField emptyWeightField;
+    @FXML private TextField grossWeightField;
+    @FXML private TextField stallSpeedField;
+    @FXML private TextField weakLinkField;
+    @FXML private TextField tensionField;
+    @FXML private TextField releaseAngleField;
+    @FXML private TextField winchingSpeedField;
+    @FXML private TextArea optionalInformationArea;
+    private CheckBox ballastCheckBox;
+    private CheckBox multipleSeatsCheckBox;
     private Sailplane currentGlider;
     private boolean isEditEntry;
     private Observer parent;
     private CurrentDataObjectSet currentData;
-    private JLabel emptyWeightUnitsLabel = new JLabel();
-    private JLabel maxGrossWeightUnitsLabel = new JLabel();
-    private JLabel stallSpeedUnitsLabel = new JLabel();
-    private JLabel tensionUnitsLabel = new JLabel();
-    private JLabel weakLinkStrengthUnitsLabel = new JLabel();
-    private JLabel winchingSpeedUnitsLabel = new JLabel();
+    @FXML private Label emptyWeightUnitsLabel;
+    @FXML private Label maxGrossWeightUnitsLabel;
+    @FXML private Label stallSpeedUnitsLabel;
+    @FXML private Label tensionUnitsLabel;
+    @FXML private Label weakLinkStrengthUnitsLabel;
+    @FXML private Label winchingSpeedUnitsLabel;
     private int emptyWeightUnitsID;
     private int maxGrossWeightUnitsID;
     private int stallSpeedUnitsID;
     private int tensionUnitsID;
     private int weakLinkStrengthUnitsID;
-    private int winchingSpeedUnitsID;
+    private int winchingSpeedUnitsID;        
     
     public void setupUnits()
     {
@@ -88,11 +77,12 @@ public class AddEditGlider extends JFrame {
         parent = o;
     }
     
+    public AddEditGlider(SubScene gliderPane)
+    {
+        super(gliderPane);
+    }
     
-    /**
-     * Create the frame.
-     */
-    public AddEditGlider(Sailplane sailplaneEdited, boolean isEditEntry) {
+    public void edit(Sailplane sailplaneEdited, boolean isEditEntry) {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         setupUnits();
         
@@ -102,208 +92,19 @@ public class AddEditGlider extends JFrame {
             sailplaneEdited = new Sailplane("", "", "", "", 0, 0, 0, 0, 0, 0, 0, false, false, "");
         }
         currentGlider = sailplaneEdited;
-        
-        setTitle("Glider");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 746, 320);
-        
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
-
-        JLabel nNumberLabel = new JLabel("Registration Number:");
-        nNumberLabel.setBounds(10, 11, 125, 14);
-        contentPane.add(nNumberLabel);
-        
-        JLabel emptyWeightLabel = new JLabel("Empty Weight:");
-        emptyWeightLabel.setBounds(10, 36, 86, 14);
-        contentPane.add(emptyWeightLabel);
-        
-        JLabel maxGrossWeightLabel = new JLabel("Max Gross Weight:");
-        maxGrossWeightLabel.setBounds(10, 61, 117, 14);
-        contentPane.add(maxGrossWeightLabel);
-        
-        JLabel lblIndicatedStallSpeed = new JLabel("Indicated Stall Speed:");
-        lblIndicatedStallSpeed.setBounds(10, 86, 140, 14);
-        contentPane.add(lblIndicatedStallSpeed);
-        
-        stallSpeedField = new JTextField();
+               
         if (isEditEntry){
-            stallSpeedField.setText(String.valueOf(currentGlider.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));
-        }
-        stallSpeedField.setBounds(160, 83, 110, 20);
-        contentPane.add(stallSpeedField);
-        stallSpeedField.setColumns(10);
-        
-        grossWeightField = new JTextField();
-        if (isEditEntry){
-            grossWeightField.setText(String.valueOf(currentGlider.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));
-        }
-        grossWeightField.setBounds(160, 58, 110, 20);
-        contentPane.add(grossWeightField);
-        grossWeightField.setColumns(10);
-        
-        emptyWeightField = new JTextField();
-        if (isEditEntry){
-            emptyWeightField.setText(String.valueOf(currentGlider.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));
-        }
-        emptyWeightField.setBounds(160, 33, 110, 20);
-        contentPane.add(emptyWeightField);
-        emptyWeightField.setColumns(10);
-        
-        nNumberField = new JTextField(currentGlider.getRegistration());
-        nNumberField.setBounds(160, 8, 110, 20);
-        contentPane.add(nNumberField);
-        nNumberField.setColumns(10);
-        
-        ballastCheckBox = new JCheckBox("Can Carry Ballast?");
-        ballastCheckBox.setSelected(currentGlider.getCarryBallast());
-        ballastCheckBox.setBounds(10, 117, 154, 23);
-        contentPane.add(ballastCheckBox);
-        
-        JLabel maxWinchingSpeedLabel = new JLabel("Max Winching Speed:");
-        maxWinchingSpeedLabel.setBounds(320, 11, 140, 14);
-        contentPane.add(maxWinchingSpeedLabel);
-        
-        JLabel maxWeakLinkLabel = new JLabel("Max Weak Link Strength:");
-        maxWeakLinkLabel.setBounds(320, 36, 159, 14);
-        contentPane.add(maxWeakLinkLabel);
-        
-        JLabel maxTensionLabel = new JLabel("Max Tension:");
-        maxTensionLabel.setBounds(320, 61, 140, 14);
-        contentPane.add(maxTensionLabel);
-        
-        JLabel cableReleaseAngleLabel = new JLabel("Cable Release Angle:");
-        cableReleaseAngleLabel.setBounds(320, 86, 140, 14);
-        contentPane.add(cableReleaseAngleLabel);
-        
-        multipleSeatsCheckBox = new JCheckBox("Multiple Seats?");
-        multipleSeatsCheckBox.setSelected(currentGlider.getMultipleSeats());
-        multipleSeatsCheckBox.setBounds(320, 117, 159, 23);
-        contentPane.add(multipleSeatsCheckBox);
-        
-        weakLinkField = new JTextField();
-        if (isEditEntry){
-            weakLinkField.setText(String.valueOf(currentGlider.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));
-        }
-        weakLinkField.setBounds(487, 33, 120, 20);
-        contentPane.add(weakLinkField);
-        weakLinkField.setColumns(10);
-        
-        tensionField = new JTextField();
-        if (isEditEntry){
-            tensionField.setText(String.valueOf(currentGlider.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));
-        }
-        tensionField.setBounds(487, 58, 120, 20);
-        contentPane.add(tensionField);
-        tensionField.setColumns(10);
-        
-        releaseAngleField = new JTextField();
-        if (isEditEntry){
-            releaseAngleField.setText(String.valueOf(currentGlider.getCableReleaseAngle()));
-        }
-        releaseAngleField.setBounds(487, 83, 120, 20);
-        contentPane.add(releaseAngleField);
-        releaseAngleField.setColumns(10);
-        
-        winchingSpeedField = new JTextField();
-        if (isEditEntry){
+            stallSpeedField.setText(String.valueOf(currentGlider.getIndicatedStallSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(stallSpeedUnitsID)));        
+            grossWeightField.setText(String.valueOf(currentGlider.getMaximumGrossWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(maxGrossWeightUnitsID)));        
+            emptyWeightField.setText(String.valueOf(currentGlider.getEmptyWeight() * UnitConversionRate.convertWeightUnitIndexToFactor(emptyWeightUnitsID)));        
+            weakLinkField.setText(String.valueOf(currentGlider.getMaxWeakLinkStrength() * UnitConversionRate.convertTensionUnitIndexToFactor(weakLinkStrengthUnitsID)));        
+            tensionField.setText(String.valueOf(currentGlider.getMaxTension() * UnitConversionRate.convertTensionUnitIndexToFactor(tensionUnitsID)));        
+            releaseAngleField.setText(String.valueOf(currentGlider.getCableReleaseAngle()));        
             winchingSpeedField.setText(String.valueOf(currentGlider.getMaxWinchingSpeed() * UnitConversionRate.convertSpeedUnitIndexToFactor(winchingSpeedUnitsID)));
-        }
-        winchingSpeedField.setBounds(487, 8, 120, 20);
-        contentPane.add(winchingSpeedField);
-        winchingSpeedField.setColumns(10);
-        
-        JLabel RequiredNoteLabel = new JLabel("All fields required");
-        RequiredNoteLabel.setBounds(10, 150, 200, 14);
-        contentPane.add(RequiredNoteLabel);
-
-/*
-        JLabel lblUnits = new JLabel("Units*");
-        lblUnits.setBounds(290, 44, 46, 14);
-        contentPane.add(lblUnits);
-
-        JLabel label = new JLabel("Units*");
-        label.setBounds(290, 75, 46, 14);
-        contentPane.add(label);
-
-        JLabel label_1 = new JLabel("Units*");
-        label_1.setBounds(290, 106, 46, 14);
-        contentPane.add(label_1);
-
-        JLabel label_2 = new JLabel("Units*");
-        label_2.setBounds(290, 137, 46, 14);
-        contentPane.add(label_2);*/
-
-        JButton submitButton = new JButton("Submit");
-        submitButton.setBounds(0, 180, 89, 23);
-        submitButton.setBackground(new Color(200,200,200));
-        contentPane.add(submitButton);
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                submitData();
-            }
-        });
-        
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setEnabled(isEditEntry);
-        deleteButton.setBounds(90, 180, 89, 23);
-        deleteButton.setBackground(new Color(200,200,200));
-        contentPane.add(deleteButton);
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                deleteCommand();
-            }
-        });
-
-        JButton clearButton = new JButton("Clear");
-        clearButton.setBounds(180, 180, 89, 23);
-        clearButton.setBackground(new Color(200,200,200));
-        contentPane.add(clearButton);
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                clearData();
-            }
-        });
-
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.setBounds(270, 180, 89, 23);
-        cancelButton.setBackground(new Color(200,200,200));
-        contentPane.add(cancelButton);
-        
-        emptyWeightUnitsLabel.setBounds(280, 36, 46, 14);
-        contentPane.add(emptyWeightUnitsLabel);
-        
-        maxGrossWeightUnitsLabel.setBounds(280, 61, 46, 14);
-        contentPane.add(maxGrossWeightUnitsLabel);
-        
-        stallSpeedUnitsLabel.setBounds(280, 86, 46, 14);
-        contentPane.add(stallSpeedUnitsLabel);
-        
-        winchingSpeedUnitsLabel.setBounds(617, 11, 46, 14);
-        contentPane.add(winchingSpeedUnitsLabel);
-        
-        weakLinkStrengthUnitsLabel.setBounds(617, 36, 46, 14);
-        contentPane.add(weakLinkStrengthUnitsLabel);
-        
-        tensionUnitsLabel.setBounds(617, 61, 46, 14);
-        contentPane.add(tensionUnitsLabel);
-        
-        JLabel releaseAngelUnitsLabel = new JLabel("degrees");
-        releaseAngelUnitsLabel.setBounds(617, 86, 60, 14);
-        contentPane.add(releaseAngelUnitsLabel);
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                cancelCommand();
-            }
-        });
+        }             
     }
     
+    /*
     public void deleteCommand(){
             int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGlider.getId() + "?",
                 "Delete Glider", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -481,10 +282,7 @@ public class AddEditGlider extends JFrame {
         weakLinkField.setBackground(Color.WHITE);
         tensionField.setBackground(Color.WHITE);
         releaseAngleField.setBackground(Color.WHITE);
-    }
-    
-    public void cancelCommand(){
-        this.dispose();
-    }
-
+        
+    }    
+*/
 }

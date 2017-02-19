@@ -3,6 +3,7 @@ package mainhost;
 import Configuration.DatabaseExportFrame;
 import Configuration.DatabaseImportFrame;
 import Configuration.ProfileManagementFrame;
+import DashboardInterface.CableOutSpeedDial;
 import DashboardInterface.FlightDashboard;
 import DashboardInterface.StateMachineDiagram;
 import DataObjects.CurrentDataObjectSet;
@@ -124,8 +125,8 @@ public class MainWindow {
         SwingUtilities.invokeLater(() -> {
             javafx.scene.paint.Color fxBackgroundCol = javafx.scene.paint.Color.WHITESMOKE;
             Color awtBackground = new Color((float) fxBackgroundCol.getRed(), (float) fxBackgroundCol.getGreen(), (float) fxBackgroundCol.getBlue(), (float) fxBackgroundCol.getOpacity());
-            //JPanel cableOut = new CableOutSpeedDial(awtBackground);
-            //cableOutSpeedSwingNode.setContent(cableOut);
+            JPanel cableOut = new CableOutSpeedDial(awtBackground);
+            cableOutSpeedSwingNode.setContent(cableOut);
             stateMachineSwingNode.setContent(stateMachine);
             stateMachineSwingNode.getContent().setBackground(awtBackground);
         });

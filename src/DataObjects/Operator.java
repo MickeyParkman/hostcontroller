@@ -23,6 +23,16 @@ public class Operator {
     
     //constructers
 
+    private Operator() {//Default admin, should not be saved
+        id = 0;
+        firstName = "Amane";
+        middleName = "";
+        lastName = "Mochizuki";
+        admin = true;
+        info = "This is a temporary administrator account, it should not be saved.";
+        initSettingsFromString("{}");
+    }
+    
     public Operator(int id, String settings) {
         unitSettings = new HashMap();
         this.id = id;
@@ -63,7 +73,6 @@ public class Operator {
             settings = settings.replace("}","");
             String[] settingsArray = settings.split(","); //["'PILOT_WEIGHT':0"]
             
-            //System.out.println("asdfas" + settings + "asdfasfasdfs");
             for (String setting : settingsArray) {
                 int hashValue = 0;
                 String[] settingArray = setting.split(":");
@@ -134,6 +143,12 @@ public class Operator {
         }
         result += "}";
         return result;
+    }
+    
+    //you should probably edit this method somehow
+    //to stop it from creating an admin when one exits
+    public Operator defaultAccount() {
+        return new Operator();
     }
     
     @Override

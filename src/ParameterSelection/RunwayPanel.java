@@ -1,26 +1,15 @@
 package ParameterSelection;
 
-import AddEditPanels.AddEditRunwayFrame;
 import Communications.Observer;
 import Configuration.UnitLabelUtilities;
 import DataObjects.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by micha on 10/18/2016.
@@ -30,6 +19,7 @@ public class RunwayPanel extends JPanel implements Observer
     private int runwayMagneticHeadingUnitsID;
     private CurrentDataObjectSet currentData;
 
+    SubScene editRunwayPanel;
     SubScene gliderPosPane;
 
     @FXML TableView gliderTable;
@@ -37,9 +27,10 @@ public class RunwayPanel extends JPanel implements Observer
     @FXML Label magneticHeadingLabel;
     @FXML Label magneticHeadingUnitLabel;
 
-    public RunwayPanel(SubScene gliderPosPane)
+    public RunwayPanel(SubScene editRunwayPanel, SubScene gliderPosPane)
     {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        this.editRunwayPanel = editRunwayPanel;
         this.gliderPosPane = gliderPosPane;
     }
 
@@ -81,8 +72,11 @@ public class RunwayPanel extends JPanel implements Observer
         return this;
     }
 
-    @FXML public void ChooseGliderPosButton_Click(javafx.event.ActionEvent e)
+    @FXML public void ChooseGliderPosButton_Click(ActionEvent e)
     {
         gliderPosPane.toFront();
     }
+    
+    @FXML public void NewRunwayButton_Click(ActionEvent e) { editRunwayPanel.toFront(); }
+    
 }

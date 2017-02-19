@@ -1,47 +1,22 @@
 package ParameterSelection;
 
-import AddEditPanels.AddEditWinchPosFrame;
-import AddEditPanels.AddEditGliderPosFrame;
 import AddEditPanels.AddEditAirfieldFrame;
-import AddEditPanels.AddEditRunwayFrame;
 import Communications.Observer;
-import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.Airfield;
-import DataObjects.GliderPosition;
 import DataObjects.CurrentDataObjectSet;
-import DataObjects.RecentLaunchSelections;
-import DataObjects.Runway;
-import DataObjects.WinchPosition;
 import DatabaseUtilities.DatabaseEntrySelect;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
-import java.awt.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 
 public class AirfieldPanel extends JPanel implements Observer{
@@ -53,7 +28,9 @@ public class AirfieldPanel extends JPanel implements Observer{
     private int latitudeUnitsID;
     private int UTCUnitsID;
 
-    SubScene runwayPane;
+    SubScene editAirfieldPanel;
+    SubScene runwayPanel;
+    AddEditAirfieldFrame editFrame;
 
     @FXML TableView airfieldTable;
 
@@ -73,15 +50,31 @@ public class AirfieldPanel extends JPanel implements Observer{
     /**
      * Creates new form sailplanePanel
      */
-    public AirfieldPanel(SubScene runwayPane) {
+    public AirfieldPanel(SubScene editAirfieldPanel, SubScene runwayPanel, AddEditAirfieldFrame editFrame) {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
-        this.runwayPane = runwayPane;
+        this.editAirfieldPanel = editAirfieldPanel;
+        this.runwayPanel = runwayPanel;
+        this.editFrame = editFrame;
     }
 
     @FXML protected void initialize()
     {
-        loadData();
-        setupUnits();
+        TableColumn airfieldCol = (TableColumn) airfieldTable.getColumns().get(0);
+        airfieldCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn designatorCol = (TableColumn) airfieldTable.getColumns().get(1);
+        designatorCol.setCellValueFactory(new PropertyValueFactory<>("designator"));
+
+        airfieldTable.setItems(FXCollections.observableList(DatabaseEntrySelect.getAirfields()));
+        airfieldTable.getSelectionModel().selectedItemProperty().addListener((ObservableValue observable, Object oldValue, Object newValue) -> {
+            if(newValue != null)
+            {
+                currentData.setCurrentAirfield((Airfield) newValue);
+                loadData();
+            }
+        });
+        airfieldTable.getSelectionModel().selectFirst();
+        loadData();        
     }
 
     public void loadData()
@@ -94,16 +87,8 @@ public class AirfieldPanel extends JPanel implements Observer{
             longitudeLabel.setText("" + currentData.getCurrentAirfield().getLongitude());
             latitudeLabel.setText("" + currentData.getCurrentAirfield().getLatitude());
             UTCOffsetLabel.setText("" + currentData.getCurrentAirfield().getUTC());
-        }
-
-        TableColumn airfieldCol = (TableColumn) airfieldTable.getColumns().get(0);
-        airfieldCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        TableColumn designatorCol = (TableColumn) airfieldTable.getColumns().get(0);
-        designatorCol.setCellValueFactory(new PropertyValueFactory<>("designator"));
-
-        airfieldTable.setItems(FXCollections.observableList(DatabaseEntrySelect.getAirfields()));
-
+            setupUnits();
+        }       
     }
 
     public void setupUnits()
@@ -129,8 +114,8 @@ public class AirfieldPanel extends JPanel implements Observer{
     {          
         setupUnits();
         if(s.equals("1"))
-        {
-
+        {            
+            airfieldTable.setItems(FXCollections.observableList(DatabaseEntrySelect.getAirfields()));
         }
         else if(s.equals("2"))
         {
@@ -155,7 +140,22 @@ public class AirfieldPanel extends JPanel implements Observer{
 
     }
 
-    @FXML public void ChooseRunwayButton_Click(javafx.event.ActionEvent e) { runwayPane.toFront(); }
+    @FXML public void ChooseRunwayButton_Click(ActionEvent e) { runwayPanel.toFront(); }
+    @FXML public void NewAirfieldButton_Click(ActionEvent e) 
+    {       
+        editFrame.edit(null);
+        editAirfieldPanel.toFront();
+    }
+    
+    @FXML public void EditAirfieldButton_Click(ActionEvent e)
+    {
+        Airfield selected = (Airfield) airfieldTable.getSelectionModel().getSelectedItem();
+        if(selected != null)
+        {
+            editFrame.edit(selected);
+            editAirfieldPanel.toFront();
+        }
+    }
 
     @Override
     public void update() {

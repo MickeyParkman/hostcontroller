@@ -6,39 +6,28 @@ import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentDataObjectSet;
 import DataObjects.GliderPosition;
-import DatabaseUtilities.DatabaseEntryEdit;
-import DatabaseUtilities.DatabaseEntryIdCheck;
-import java.awt.BorderLayout;
-import java.awt.Color;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.SubScene;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.Random;
-import javax.swing.JOptionPane;
-import javax.swing.border.MatteBorder;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 
-public class AddEditGliderPosFrame extends JFrame {
-
-    private JPanel contentPane;
-    private JTextField latitudeField;
-    private JTextField longitudeField;
-    private JTextField altitudeField;
-    private JTextField nameField;
+public class AddEditGliderPosFrame extends AddEditPanel {    
+    @FXML private TextField latitudeField;
+    @FXML private TextField longitudeField;
+    @FXML private TextField altitudeField;
+    @FXML private TextField nameField;
+    @FXML private TextArea optionalInformationArea;
     private CurrentDataObjectSet objectSet;
     private GliderPosition currentGliderPos;
     private boolean isEditEntry;
     private Observer parent;
-    private JLabel gliderPosAltitudeUnitsLabel = new JLabel(); 
+    @FXML private Label gliderPosAltitudeUnitsLabel; 
     private int gliderPosAltitudeUnitsID;
-    
+        
     public void setupUnits()
     {
         gliderPosAltitudeUnitsID = objectSet.getCurrentProfile().getUnitSetting("gliderPosAltitude");
@@ -51,10 +40,9 @@ public class AddEditGliderPosFrame extends JFrame {
         parent = o;
     }
     
-    /**
-     * Create the frame.
-     */
-    public AddEditGliderPosFrame(GliderPosition editGliderPos, boolean isEditEntry) {
+    public AddEditGliderPosFrame(SubScene gliderPosPanel) { super(gliderPosPanel); }
+    
+    public void edit(GliderPosition editGliderPos, boolean isEditEntry) {
         objectSet = CurrentDataObjectSet.getCurrentDataObjectSet();
         setupUnits();
 
@@ -63,151 +51,15 @@ public class AddEditGliderPosFrame extends JFrame {
         }
         this.isEditEntry = isEditEntry;
         currentGliderPos = editGliderPos;
-
-        setTitle("Glider Position");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(new BorderLayout(0, 0));
-        setContentPane(contentPane);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        contentPane.add(panel, BorderLayout.CENTER);
-
-        JLabel nameLabel = new JLabel("Name:");
-        nameLabel.setBounds(10, 14, 46, 14);
-        panel.add(nameLabel);
-
-        JLabel altitudeLabel = new JLabel("Altitude:");
-        altitudeLabel.setBounds(10, 39, 46, 14);
-        panel.add(altitudeLabel);
-
-        JLabel longitudeLabel = new JLabel("Longitude:");
-        longitudeLabel.setBounds(10, 64, 80, 14);
-        panel.add(longitudeLabel);
-
-        JLabel latitudeLabel = new JLabel("Latitude:");
-        latitudeLabel.setBounds(10, 89, 80, 14);
-        panel.add(latitudeLabel);
-
-        latitudeField = new JTextField();
+        
         if (isEditEntry){
-            latitudeField.setText(String.valueOf(currentGliderPos.getLatitude()));
-        }
-        latitudeField.setColumns(10);
-        latitudeField.setBounds(135, 86, 200, 20);
-        panel.add(latitudeField);
-
-        longitudeField = new JTextField();
-        if (isEditEntry){
-            longitudeField.setText(String.valueOf(currentGliderPos.getLongitude()));
-        }
-        longitudeField.setColumns(10);
-        longitudeField.setBounds(135, 61, 200, 20);
-        panel.add(longitudeField);
-
-        altitudeField = new JTextField();
-        if (isEditEntry){
+            latitudeField.setText(String.valueOf(currentGliderPos.getLatitude()));        
+            longitudeField.setText(String.valueOf(currentGliderPos.getLongitude()));        
             altitudeField.setText(String.valueOf(currentGliderPos.getElevation() * UnitConversionRate.convertDistanceUnitIndexToFactor(gliderPosAltitudeUnitsID)));
-        }
-        altitudeField.setColumns(10);
-        altitudeField.setBounds(135, 36, 200, 20);
-        panel.add(altitudeField);
-
-        nameField = new JTextField(currentGliderPos.getName());
-        nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        nameField.setColumns(10);
-        nameField.setBounds(135, 11, 200, 20);
-        panel.add(nameField);
-        
-        JLabel ParentAirfieldLabel = new JLabel("Parent Airfield: ");
-        ParentAirfieldLabel.setBounds(10, 126, 220, 14);
-        panel.add(ParentAirfieldLabel);
-        
-        try{
-        JLabel ParentAirfieldNameLabel = new JLabel(objectSet.getCurrentAirfield().getName());
-        ParentAirfieldNameLabel.setBounds(135, 126, 220, 14);
-        panel.add(ParentAirfieldNameLabel);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        JLabel parentRunwayLabel = new JLabel("Parent Runway: ");
-        parentRunwayLabel.setBounds(10, 151, 220, 14);
-        panel.add(parentRunwayLabel);
-        try{
-        JLabel parentRunwayNameLabel = new JLabel(objectSet.getCurrentRunway().getName());
-        parentRunwayNameLabel.setBounds(135, 151, 220, 14);
-        panel.add(parentRunwayNameLabel);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        
-
-        JLabel requiredNoteLabel = new JLabel("All fields are required");
-        requiredNoteLabel.setBounds(10, 210, 200, 14);
-        panel.add(requiredNoteLabel);
-
-        JButton submitButton = new JButton("Submit");
-        submitButton.setBounds(0, 228, 89, 23);
-        submitButton.setBackground(new Color(200,200,200));
-        panel.add(submitButton);
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                submitData();
-            }
-        });
-        
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setEnabled(isEditEntry);
-        deleteButton.setBounds(90, 228, 89, 23);
-        deleteButton.setBackground(new Color(200,200,200));
-        panel.add(deleteButton);
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                deleteCommand();
-            }
-        });
-
-        JButton clearButton = new JButton("Clear");
-        clearButton.setBounds(180, 228, 89, 23);
-        clearButton.setBackground(new Color(200,200,200));
-        panel.add(clearButton);
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                clearData();
-            }
-        });
-
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.setBounds(270, 228, 89, 23);
-        cancelButton.setBackground(new Color(200,200,200));
-        panel.add(cancelButton);
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                dispose();
-            }
-        });
-        
-        JLabel latitudeUnitsLabel = new JLabel("degrees");
-        latitudeUnitsLabel.setBounds(345, 89, 60, 14);
-        panel.add(latitudeUnitsLabel);
-        
-        JLabel longitudeUnitsLabel = new JLabel("degrees");
-        longitudeUnitsLabel.setBounds(345, 64, 60, 14);
-        panel.add(longitudeUnitsLabel);
-        
-        gliderPosAltitudeUnitsLabel.setBounds(345, 39, 46, 14);
-        panel.add(gliderPosAltitudeUnitsLabel);
-    }
+        }        
+    }        
 	
-    public void deleteCommand(){
+    /*public void deleteCommand(){
             int choice = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete " + currentGliderPos.getName() + "?",
                 "Delete Glider Position", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (choice == 0){
@@ -342,5 +194,5 @@ public class AddEditGliderPosFrame extends JFrame {
     }
     return true;
 }
-
+*/
 }

@@ -1,45 +1,19 @@
 package ParameterSelection;
 
-import AddEditPanels.AddEditPilotPanel;
 import Communications.Observer;
-import Configuration.UnitConversionRate;
 import DataObjects.CurrentDataObjectSet;
-import DataObjects.RecentLaunchSelections;
 import DataObjects.Pilot;
-import DatabaseUtilities.DatabaseUnitSelectionUtilities;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
-import javax.swing.JRadioButton;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.ButtonGroup;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-import javax.swing.border.MatteBorder;
 import Configuration.UnitLabelUtilities;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 public class PilotPanel implements Observer{
 
@@ -47,6 +21,7 @@ public class PilotPanel implements Observer{
     private CurrentDataObjectSet currentData;
 
     GridPane scenarioHomePane;
+    SubScene editPilotPanel;
 
     @FXML TableView pilotTable;
     @FXML Slider preferenceSlider;
@@ -58,8 +33,9 @@ public class PilotPanel implements Observer{
 
     private int flightWeightUnitsID;
 
-    public PilotPanel(GridPane scenarioHomePane) {
+    public PilotPanel(SubScene editPilotPanel, GridPane scenarioHomePane) {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
+        this.editPilotPanel = editPilotPanel;
         this.scenarioHomePane = scenarioHomePane;
     }
 
@@ -145,5 +121,7 @@ public class PilotPanel implements Observer{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @FXML public void PilotFinishButton_Click(javafx.event.ActionEvent e) { scenarioHomePane.toFront(); }
+    @FXML public void PilotFinishButton_Click(ActionEvent e) { scenarioHomePane.toFront(); }
+    
+    @FXML public void NewPilotButton_Click(ActionEvent e) { editPilotPanel.toFront(); }
 }

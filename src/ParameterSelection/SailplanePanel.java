@@ -6,12 +6,14 @@ import DataObjects.Sailplane;
 import java.awt.Color;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
+import javafx.event.ActionEvent;
 
 import Communications.Observer;
 import Configuration.UnitConversionRate;
 import Configuration.UnitLabelUtilities;
 import DataObjects.CurrentLaunchInformation;
 import javafx.fxml.FXML;
+import javafx.scene.SubScene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -65,15 +67,17 @@ public class SailplanePanel implements Observer{
 
     private CurrentLaunchInformation launchInfo;
 
-    GridPane scenarioHomePane;
+    SubScene editSailplanePanel;
+    GridPane scenarioHomePane;    
 
     /**
      * Creates new form sailplanePanel
      */
-    public SailplanePanel(GridPane scenarioHomePane) {
+    public SailplanePanel(SubScene editSailplanePanel, GridPane scenarioHomePane) {
         currentData = CurrentDataObjectSet.getCurrentDataObjectSet();
         launchInfo = CurrentLaunchInformation.getCurrentLaunchInformation();
         launchInfo.setSailplanePanel(this);
+        this.editSailplanePanel = editSailplanePanel;
         this.scenarioHomePane = scenarioHomePane;
     }
 
@@ -110,7 +114,11 @@ public class SailplanePanel implements Observer{
         }
     }
 
-    @FXML public void GliderFinishButton_Click(javafx.event.ActionEvent e) { scenarioHomePane.toFront(); }
+    @FXML public void GliderFinishButton_Click(ActionEvent e) { scenarioHomePane.toFront(); }
+    
+    @FXML public void NewSailplaneButton_Click(ActionEvent e) { editSailplanePanel.toFront(); }
+    
+    
     public String getbaggageField()
     {
         return(baggageField.getText());
@@ -206,5 +214,5 @@ public class SailplanePanel implements Observer{
     @Override
     public void update(String msg) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }        
 }

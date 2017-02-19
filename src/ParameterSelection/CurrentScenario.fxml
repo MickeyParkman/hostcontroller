@@ -13,49 +13,79 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SubScene fx:id="parachutePane" height="599.0" width="800.0">
+      <SubScene fx:id="winchPositionAddEditPanel" height="599.0" width="800.0">
         <root>
           <Region />
         </root>
       </SubScene>
-      <SubScene fx:id="drumPane" height="599.0" width="800.0">
+      <SubScene fx:id="gliderPositionAddEditPanel" height="599.0" width="800.0">
         <root>
           <Region />
         </root>
       </SubScene>
-      <SubScene fx:id="gliderPane" height="599.0" width="800.0">
+      <SubScene fx:id="runwayAddEditPanel" height="599.0" width="800.0">
+        <root>
+          <Region />
+        </root>
+      </SubScene>
+      <SubScene fx:id="gliderAddEditPanel" height="599.0" width="800.0">
+        <root>
+          <Region />
+        </root>
+      </SubScene>
+      <SubScene fx:id="pilotAddEditPanel" height="599.0" width="800.0">
+        <root>
+          <Region />
+        </root>
+      </SubScene>
+      <SubScene fx:id="airfieldAddEditPanel" height="599.0" width="800.0">
          <root>
             <Region />
          </root>
       </SubScene>
-      <SubScene fx:id="pilotPane" height="599.0" width="800.0">
+      <SubScene fx:id="parachutePanel" height="599.0" width="800.0">
+        <root>
+          <Region />
+        </root>
+      </SubScene>
+      <SubScene fx:id="drumPanel" height="599.0" width="800.0">
+        <root>
+          <Region />
+        </root>
+      </SubScene>
+      <SubScene fx:id="gliderPanel" height="599.0" width="800.0">
          <root>
             <Region />
          </root>
       </SubScene>
-      <SubScene fx:id="winchPosPane" height="599.0" width="800.0">
+      <SubScene fx:id="pilotPanel" height="599.0" width="800.0">
          <root>
             <Region />
          </root>
       </SubScene>
-      <SubScene fx:id="gliderPosPane" height="599.0" width="800.0">
+      <SubScene fx:id="winchPosPanel" height="599.0" width="800.0">
          <root>
             <Region />
          </root>
       </SubScene>
-      <SubScene fx:id="runwayPane" height="599.0" width="800.0">
+      <SubScene fx:id="gliderPosPanel" height="599.0" width="800.0">
          <root>
             <Region />
          </root>
       </SubScene>
-      <SubScene fx:id="airfieldPane" height="599.0" width="800.0">
+      <SubScene fx:id="runwayPanel" height="599.0" width="800.0">
          <root>
             <Region />
          </root>
       </SubScene>
-      <GridPane fx:id="scenarioHomePane" prefHeight="599.0" prefWidth="800.0" style="-fx-background-color: white;">
+      <SubScene fx:id="airfieldPanel" height="599.0" width="800.0">
+         <root>
+            <Region />
+         </root>
+      </SubScene>
+      <GridPane fx:id="scenarioHomePanel" prefHeight="599.0" prefWidth="800.0" style="-fx-background-color: white;">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -68,15 +98,17 @@
             <Group GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                <children>
                   <Rectangle fx:id="pilotGridBackground" arcHeight="5.0" arcWidth="5.0" fill="#dfe0e1" height="250.0" stroke="BLACK" strokeType="INSIDE" width="344.0" />
-                  <Label layoutX="5.0" layoutY="-2.0" text="Pilot">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
-                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="5.0" layoutY="60.0" orientation="VERTICAL" prefHeight="182.0" prefWidth="335.0">
+                  <Label layoutX="5.0" layoutY="-2.0" style="-fx-font-size: 3.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Pilot" />
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="5.0" layoutY="43.0" orientation="VERTICAL" prefHeight="199.0" prefWidth="335.0">
                      <children>
-                        <Label text="Pilot Name" />
-                        <Button fx:id="pilotButton" mnemonicParsing="false" onAction="#PilotButton_Click" text="Select Pilot" />
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Pilot Name">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Button fx:id="pilotButton" mnemonicParsing="false" onAction="#PilotButton_Click" style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Select Pilot">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Button>
                      </children>
                   </FlowPane>
                </children>
@@ -84,16 +116,21 @@
             <Group GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
                <children>
                   <Rectangle fx:id="gliderGridBackground" arcHeight="5.0" arcWidth="5.0" fill="#dfe0e1" height="250.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" width="345.0" />
-                  <Label layoutX="210.0" layoutY="-2.0" text="Glider">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
-                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="5.0" layoutY="60.0" orientation="VERTICAL" prefHeight="182.0" prefWidth="335.0">
+                  <Label layoutX="210.0" layoutY="-2.0" style="-fx-font-size: 3.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Glider" />
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="5.0" layoutY="43.0" orientation="VERTICAL" prefHeight="199.0" prefWidth="335.0">
                      <children>
-                        <Label text="N-Number" />
-                        <Label text="Total Weight" />
-                        <Button fx:id="gliderButton" mnemonicParsing="false" onAction="#GliderButton_Click" text="Select Glider" />
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="N-Number">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Total Weight">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Button fx:id="gliderButton" mnemonicParsing="false" onAction="#GliderButton_Click" style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Select Glider">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Button>
                      </children>
                   </FlowPane>
                </children>
@@ -101,18 +138,29 @@
             <Group GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <children>
                   <Rectangle fx:id="runDescriptionGridBackground" arcHeight="5.0" arcWidth="5.0" fill="#dfe0e1" height="250.0" stroke="BLACK" strokeType="INSIDE" width="345.0" />
-                  <Label layoutX="3.0" layoutY="186.0" text="Run Description">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
-                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="5.0" layoutY="7.0" orientation="VERTICAL" prefHeight="182.0" prefWidth="335.0">
+                  <Label layoutX="3.0" layoutY="203.0" style="-fx-font-size: 3.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Run Description" />
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="5.0" layoutY="7.0" orientation="VERTICAL" prefHeight="199.0" prefWidth="335.0">
                      <children>
-                        <Label text="Airfield Name  -   Designator" />
-                        <Label text="Magnetic Heading" />
-                        <Label text="Glider Position" />
-                        <Label text="Winch Position" />
-                        <Button fx:id="airfieldButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditAirFieldButton_Click" text="Select Run Description" />
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Airfield Name  -   Designator">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Magnetic Heading">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Glider Position">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Winch Position">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Button fx:id="airfieldButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#EditAirFieldButton_Click" style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Select Run Description">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Button>
                      </children>
                   </FlowPane>
                </children>
@@ -120,16 +168,21 @@
             <Group GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <children>
                   <Rectangle fx:id="drumGridBackground" arcHeight="5.0" arcWidth="5.0" fill="#dfe0e1" height="250.0" stroke="BLACK" strokeType="INSIDE" width="345.0" />
-                  <Label layoutX="221.0" layoutY="186.0" text="Drum">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
-                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="5.0" layoutY="7.0" orientation="VERTICAL" prefHeight="182.0" prefWidth="335.0">
+                  <Label layoutX="221.0" layoutY="203.0" style="-fx-font-size: 3.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Drum" />
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="5.0" layoutY="7.0" orientation="VERTICAL" prefHeight="199.0" prefWidth="335.0">
                      <children>
-                        <Label text="Drum Info" />
-                        <Label text="Parachute Info" />
-                        <Button fx:id="drumButton" mnemonicParsing="false" onAction="#DrumButton_Click" text="Select Drum" />
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Drum Info">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Label style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Parachute Info">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Label>
+                        <Button fx:id="drumButton" mnemonicParsing="false" onAction="#DrumButton_Click" style="-fx-font-size: 1.16em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Select Drum">
+                           <font>
+                              <Font name="SansSerif Bold" size="14.0" />
+                           </font></Button>
                      </children>
                   </FlowPane>
                </children>

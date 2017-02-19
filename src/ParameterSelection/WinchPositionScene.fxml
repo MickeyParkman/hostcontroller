@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -16,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="winchPosPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="winchPosPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <TableView fx:id="winchPositionTable" prefHeight="200.0" prefWidth="210.0" BorderPane.alignment="CENTER">
          <columns>
@@ -44,96 +40,117 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label prefHeight="70.0" prefWidth="341.0" text="Winch Position" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="70.0" prefWidth="350.0" style="-fx-font-size: 4em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Winch Position" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
-                  <Font name="System Bold" size="48.0" />
+                  <Font name="SansSerif Bold" size="38.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="New Winch Position" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Button mnemonicParsing="false" onAction="#NewWinchPositionButton_Click" prefHeight="60.0" prefWidth="120.0" style="-fx-font-size: 1.33em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="New Winch Position" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
-                  <Font size="14.0" />
+                  <Font name="SansSerif Bold" size="16.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Edit Winch Position" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="120.0" style="-fx-font-size: 1.33em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Edit Winch Position" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
-                  <Font size="14.0" />
+                  <Font name="SansSerif Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="nextScenarioHomeButton" mnemonicParsing="false" onAction="#AirfieldFinishButton_Click" prefHeight="50.0" prefWidth="120.0" text="Finish" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Button fx:id="nextScenarioHomeButton" mnemonicParsing="false" onAction="#AirfieldFinishButton_Click" prefHeight="60.0" prefWidth="120.0" style="-fx-font-size: 1.33em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Finish" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <font>
-                  <Font size="14.0" />
+                  <Font name="SansSerif Bold" size="16.0" />
                </font>
             </Button>
             <FlowPane alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
                   <FlowPane alignment="CENTER" prefHeight="8.0" prefWidth="200.0">
                      <children>
-                        <Label text="Position Name:">
+                        <Label style="-fx-font-size: 1.33em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Position Name:">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="SansSerif Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="positionNameLabel" text="Label">
+                        <Label fx:id="positionNameLabel" style="-fx-font-size: 1.16em; -fx-font-family: SansSerif;" text="Label">
                            <padding>
                               <Insets left="2.0" />
                            </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
                         </Label>
                      </children>
                   </FlowPane>
                   <FlowPane alignment="CENTER" prefHeight="8.0" prefWidth="200.0">
                      <children>
-                        <Label text="Altitude:">
+                        <Label style="-fx-font-size: 1.33em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Altitude:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="SansSerif Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="altitudeLabel" text="Label">
+                        <Label fx:id="altitudeLabel" style="-fx-font-size: 1.16em; -fx-font-family: SansSerif;" text="Label">
                            <padding>
                               <Insets left="2.0" />
                            </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
                         </Label>
-                        <Label fx:id="altitudeUnitLabel" text="Unit">
+                        <Label fx:id="altitudeUnitLabel" style="-fx-font-size: 1.16em; -fx-font-family: SansSerif;" text="Unit">
                            <padding>
                               <Insets left="2.0" />
                            </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
                         </Label>
                      </children>
                   </FlowPane>
                   <FlowPane alignment="CENTER" prefHeight="8.0" prefWidth="200.0">
                      <children>
-                        <Label text="Longitude:">
+                        <Label style="-fx-font-size: 1.33em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Longitude:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="SansSerif Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="longitudeLabel" text="Label">
+                        <Label fx:id="longitudeLabel" style="-fx-font-size: 1.16em; -fx-font-family: SansSerif;" text="Label">
                            <padding>
                               <Insets left="2.0" />
                            </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
                         </Label>
-                        <Label fx:id="longitudeUnitLabel" text="Unit">
+                        <Label fx:id="longitudeUnitLabel" style="-fx-font-size: 1.16em; -fx-font-family: SansSerif;" text="Unit">
                            <padding>
                               <Insets left="2.0" />
                            </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
                         </Label>
                      </children>
                   </FlowPane>
                   <FlowPane alignment="CENTER" prefHeight="8.0" prefWidth="200.0">
                      <children>
-                        <Label text="Latitude:">
+                        <Label style="-fx-font-size: 1.33em; -fx-font-weight: Bold; -fx-font-family: SansSerif;" text="Latitude:">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="SansSerif Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="latitudeLabel" text="Label">
+                        <Label fx:id="latitudeLabel" style="-fx-font-size: 1.16em; -fx-font-family: SansSerif;" text="Label">
                            <padding>
                               <Insets left="2.0" />
                            </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
                         </Label>
-                        <Label fx:id="latitudeUnitLabel" text="Unit">
+                        <Label fx:id="latitudeUnitLabel" style="-fx-font-size: 1.16em; -fx-font-family: SansSerif;" text="Unit">
                            <padding>
                               <Insets left="2.0" />
                            </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
                         </Label>
                      </children>
                   </FlowPane>
